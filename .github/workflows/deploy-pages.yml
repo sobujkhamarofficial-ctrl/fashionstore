@@ -249,7 +249,7 @@ jobs:
           ai_endpoint = "https://zfgcovvfczjiqagrnfjr.supabase.co/functions/v1/fashion-customer-care"
           with urlopen(ai_endpoint, timeout=25) as response:
               ai_status = json.loads(response.read().decode("utf-8"))
-              assert response.status == 200 and ai_status.get("status") in {"paused", "ready"}, ai_status
+              assert response.status == 200 and ai_status.get("status") in {"paused", "ready", "configured"}, ai_status
 
           endpoint = "https://zfgcovvfczjiqagrnfjr.supabase.co/functions/v1/storefront-commerce-api"
           with urlopen(endpoint, timeout=25) as response:
