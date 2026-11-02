@@ -58,6 +58,7 @@
       return;
     }
     button.disabled=true;
+    let created=false;
     message.textContent="Creating the owner account securely…";
     try{
       const response=await fetch(API,{
@@ -75,14 +76,15 @@
       const result=await response.json().catch(function(){return {};});
       if(!response.ok||!result.ok)throw new Error(result.error||"The owner account could not be created.");
       form.reset();
-      form.hidden=true;
+      form.querySelectorAll("input").forEach(function(input){input.disabled=true;});
       message.textContent="Owner account created successfully for "+ADMIN_EMAIL+". Open the normal admin sign-in page and use your new password.";
       message.classList.add("ok");
+      created=true;
     }catch(error){
       message.textContent=error&&error.message?error.message:"Setup failed. Please try again.";
       message.classList.remove("ok");
     }finally{
-      button.disabled=false;
+      if(!created)button.disabled=false;
     }
   });
 })();
