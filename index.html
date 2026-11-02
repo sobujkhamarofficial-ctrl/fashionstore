@@ -583,7 +583,7 @@
         root.querySelector('#f-men-category-panel').hidden=slug!=='men';
         root.querySelector('.f-men-heading h1').textContent=slug==='men'?"Men's Collection":item.title;
         root.querySelector('.f-men-crumb').innerHTML=slug==='men'?'<a href="#f-top" data-f-home>Home</a> / Men':'<a href="#f-top" data-f-home>Home</a> / <a href="/fashionstore/men/" data-f-men-route="men">Men</a> / '+item.title;
-        root.querySelector('.f-men-total').textContent=slug==='men'?'1,362 products':(item.count===null?'Accessories collection':item.count+' products');
+        root.querySelector('.f-men-total').textContent=slug==='men'?'76 orderable catalogue items':(item.count===null?'Accessories collection':item.count+' products');
         root.querySelector('#f-men-search').value='';root.querySelector('#f-men-sort').value='featured';
         root.querySelector('#f-men-min').value='';root.querySelector('#f-men-max').value='';
         root.querySelectorAll('[data-f-men-quick]').forEach(b=>b.classList.toggle('active',b.dataset.fMenQuick==='all'));
@@ -748,7 +748,7 @@
     <section class="f-men-shop" id="f-men-shop">
       <div class="f-men-offers"><strong>Special Offers</strong><button class="active" data-f-men-quick="all">All Men</button><button data-f-men-quick="mega">Mega Deal</button><button data-f-men-quick="new">New Arrival</button><button data-f-men-quick="top">Top Selling</button><button data-f-men-quick="merch">Merchandise</button></div>
       <div class="f-container f-catalog-pilot-note"><p>FORME pilot catalogue: listed prices, product imagery, size options and stock are sample information pending store verification. Adding an item sends an order request; final price, delivery charge and availability are confirmed before acceptance.</p></div>
-      <div class="f-container f-men-heading"><div class="f-men-crumb"><a href="#f-top" data-f-home>Home</a> / Men</div><div class="f-men-heading-line"><div><h1>Men's Collection</h1><p>Everyday essentials, considered fits and modern classics.</p></div><span class="f-men-total">1,362 products</span></div></div>
+      <div class="f-container f-men-heading"><div class="f-men-crumb"><a href="#f-top" data-f-home>Home</a> / Men</div><div class="f-men-heading-line"><div><h1>Men's Collection</h1><p>Everyday essentials, considered fits and modern classics.</p></div><span class="f-men-total">76 orderable catalogue items</span></div></div>
       <div class="f-container f-men-category-panel" id="f-men-category-panel">
         <div class="f-men-category-top"><div><b>Explore men's categories</b><small>Choose a category to open its own product page.</small></div><span>22 categories</span></div>
         <div class="f-men-category-group"><div class="f-men-category-group-title"><b>Topwear</b><small>8 categories</small></div><div class="f-men-category-links">

@@ -71,7 +71,7 @@ def directory(cats):
         items=[c for c in cats if c["group"]==group]
         links="".join(f'<a class="f-men-category-link" href="{href(c["slug"])}"><b>{esc(c["title"])}</b><small>6 styles to explore</small></a>' for c in items)
         groups.append(f'<section class="f-men-category-group"><div class="f-men-category-group-title"><b>{group}</b><small>{len(items)} categories</small></div><div class="f-men-category-links">{links}</div></section>')
-    return ('<section class="f-static-categories"><div class="f-men-category-top"><div><b>Explore men\'s categories</b><small>Every category has its own collection page with six products.</small></div>'
+    return ('<section class="f-static-categories"><div class="f-men-category-top"><div><b>Explore men\'s categories</b><small>Every category has its own collection page with six catalogue listings.</small></div>'
       f'<span>{len(cats)} categories</span></div>'+''.join(groups)+'</section>')
 def category_nav(cats,active):
     links="".join(f'<a href="{href(c["slug"])}"'+(' class="active"' if c["slug"]==active else "")+f'>{esc(c["title"])}</a>' for c in cats)
@@ -83,9 +83,9 @@ def make_page(title,desc,cats,selected=None):
     listing=directory(cats) if main else category_nav(cats,slug)
     if main:
         featured=[c["products"][0] for c in cats][:12]
-        products_label="12 featured styles"; section_title="Featured men's pieces"
+        products_label="12 featured catalogue listings"; section_title="Featured men's pieces"
     else:
-        featured=selected["products"]; products_label="6 products"; section_title=f'{esc(title)} collection'
+        featured=selected["products"]; products_label="6 catalogue listings"; section_title=f'{esc(title)} collection'
     cards="".join(card(p,i==0) for i,p in enumerate(featured))
     warning='<p class="f-catalog-note">Product showcase · sample names, illustrative prices and Unsplash imagery. Replace with verified stock, final prices and details before accepting orders.</p>'
     page_title="Men's Collection" if main else title
@@ -105,7 +105,7 @@ def main():
     cats=data["categories"]
     assert len(cats)==22 and all(len(c["products"])==6 for c in cats)
     OUT.mkdir(parents=True,exist_ok=True)
-    (OUT/"index.html").write_text(make_page("Men's Collection","Explore men's everyday essentials, considered fits and modern classics. Browse all 22 categories and discover 12 featured styles.",cats),encoding="utf-8")
+    (OUT/"index.html").write_text(make_page("Men's Collection","Explore men's everyday essentials, considered fits and modern classics. Browse all 22 categories and discover selected product listings.",cats),encoding="utf-8")
     for c in cats:
         folder=OUT/c["slug"]; folder.mkdir(parents=True,exist_ok=True)
         desc=f'Explore the FORME {c["title"]} collection. Browse six selected sample products in this category.'

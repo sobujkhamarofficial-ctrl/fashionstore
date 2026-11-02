@@ -165,6 +165,8 @@ jobs:
 
           print("Verified 6 department dropdowns on homepage, Men pages and all 5 collection landing pages.")
           PY
+      - name: Verify every generated internal link and local image
+        run: python3 scripts/verify_storefront.py
       - name: Verify ecommerce, policies and journal integration
         run: |
           node --check assets/admin.js
@@ -333,7 +335,7 @@ jobs:
           print("Order tracking API reached the database and safely rejected an unknown order.")
           PY
       - name: Validate Python build scripts
-        run: python3 -m py_compile scripts/build_collection_pages.py scripts/build_men_catalog.py scripts/download_fashion_photos.py scripts/build_store_content.py
+        run: python3 -m py_compile scripts/build_collection_pages.py scripts/build_men_catalog.py scripts/download_fashion_photos.py scripts/build_store_content.py scripts/verify_storefront.py
       - name: Verify branded not-found page and image fallbacks
         run: |
           python3 - <<'PY'

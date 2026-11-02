@@ -71,3 +71,19 @@ a{color:inherit;text-decoration:none}
 .fc-track-totals{max-width:500px;border-top:1px solid #e5e0d7;margin-top:16px;padding-top:12px}
 .fc-track-totals div{display:flex;justify-content:space-between;gap:18px;padding:6px 0;font-size:13px}
 .fc-track-totals div:last-child{font-size:15px;color:#263b32}
+
+
+/* Checkout cart editor: responsive quantity, variant and remove controls */
+.fc-checkout-item{display:grid;grid-template-columns:76px minmax(0,1fr);gap:16px;align-items:start;margin-bottom:12px;padding:16px}
+.fc-checkout-thumb{width:76px;height:96px;object-fit:cover;background:#eee;display:block}
+.fc-checkout-item-details{min-width:0}
+.fc-checkout-item-details h3{font:500 17px/1.3 Georgia,serif;margin:0 0 5px;overflow-wrap:anywhere}
+.fc-checkout-item-price{font-size:12px;color:var(--fc-muted);margin:0 0 12px}
+.fc-checkout-item-details label{display:block;font-size:11px;font-weight:700;margin:0 0 5px}
+.fc-checkout-item-details input{width:100%;max-width:360px;padding:10px;border:1px solid var(--fc-line);background:var(--fc-white);font:12px Arial,sans-serif}
+.fc-quantity-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px}
+.fc-qty-button{width:34px;height:34px;border:1px solid var(--fc-line);background:var(--fc-white);color:var(--fc-ink);font-size:18px}
+.fc-qty-button:disabled{opacity:.35;cursor:not-allowed}
+.fc-qty-value{min-width:22px;text-align:center;font-size:13px;font-weight:700}
+.fc-remove-item{border:0;background:transparent;color:#9a4f43;text-decoration:underline;font-size:11px;padding:8px 5px;cursor:pointer}
+@media(max-width:520px){.fc-checkout-item{grid-template-columns:58px minmax(0,1fr);gap:11px;padding:12px}.fc-checkout-thumb{width:58px;height:78px}.fc-checkout-item-details h3{font-size:15px}}
