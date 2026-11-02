@@ -1,0 +1,102 @@
+(function () {
+  "use strict";
+  const API = "https://zfgcovvfczjiqagrnfjr.supabase.co/functions/v1/storefront-commerce-api";
+  const KEY = "sb_publishable_EWY6B3OF8lOQB7uB7jBZRA_3MwimKRy";
+  const form = document.getElementById("fc-track-form");
+  const status = document.getElementById("fc-track-status");
+  const result = document.getElementById("fc-track-result");
+  const submit = document.getElementById("fc-track-submit");
+
+  const stages = [
+    ["pending_review","Request received","Your request is saved. FORME still needs to verify the product, stock, final price and delivery details."],
+    ["contacted","Customer contacted","The store has contacted you about your request."],
+    ["confirmed","Order confirmed","The product and delivery details have been agreed."],
+    ["processing","Preparing order","Your order is being prepared."],
+    ["shipped","Handed to delivery","The parcel has been handed to the delivery service."],
+    ["delivered","Delivered","The order has been marked as delivered."],
+    ["cancelled","Cancelled","This order request has been cancelled."],
+    ["rejected","Could not be accepted","The store could not accept this order request. Contact customer care for details."]
+  ];
+
+  function element(tag, cls, value) {
+    const node = document.createElement(tag);
+    if (cls) node.className = cls;
+    if (value !== undefined) node.textContent = value;
+    return node;
+  }
+  function money(value) {
+    return value === null || value === undefined ? "To be confirmed" : "৳" + Number(value).toLocaleString("en-BD");
+  }
+  function render(order) {
+    result.innerHTML = "";
+    const heading = element("h2","", "Order " + order.order_number);
+    const date = element("p","fc-meta", "Request date: " + new Date(order.created_at).toLocaleString("en-GB"));
+    const current = stages.findIndex(s => s[0] === order.status);
+    const stage = stages[current] || stages[0];
+    const statusCard = element("div","fc-card");
+    const statusTitle = element("h3","",stage[1]);
+    const statusCopy = element("p","",stage[2]);
+    statusCard.append(statusTitle,statusCopy);
+    const timeline = element("ol","fc-track-timeline");
+    const visibleStages = stages.slice(0,6);
+    visibleStages.forEach((s,i)=>{
+      const li=element("li", i<=Math.max(0,current) && current<6 ? "done" : "");
+      const point=element("span","fc-track-point",i<=Math.max(0,current)&&current<6 ? "✓" : String(i+1));
+      const label=element("span","",s[1]);
+      li.append(point,label);
+      timeline.append(li);
+    });
+    if(current>=6){
+      const terminal=element("p","fc-note",stage[2]);
+      statusCard.append(terminal);
+    }
+    const itemHeading=element("h3","","Items in this request");
+    const itemList=element("ul","fc-track-items");
+    (order.items||[]).forEach(item=>{
+      const parts=[item.product_name,"Qty "+item.quantity,item.requested_variant||""].filter(Boolean).join(" · ");
+      itemList.append(element("li","",parts));
+    });
+    const totals=element("div","fc-track-totals");
+    [["Item subtotal",money(order.subtotal_bdt)],["Delivery",money(order.delivery_charge_bdt)],["Final total",money(order.final_total_bdt)]].forEach(pair=>{
+      const row=element("div","");
+      row.append(element("span","",pair[0]),element("strong","",pair[1]));
+      totals.append(row);
+    });
+    const payment=element("p","fc-meta","Payment status: "+String(order.payment_status||"not collected").replaceAll("_"," "));
+    const note=element("div","fc-note","Order status is updated by the store team. The tracking page shows the latest status saved in the store records; it is not a live courier GPS tracker.");
+    result.append(heading,date,statusCard,timeline,itemHeading,itemList,totals,payment,note);
+    result.hidden=false;
+  }
+
+  if(form){
+    form.addEventListener("submit",async event=>{
+      event.preventDefault();
+      result.hidden=true;
+      status.textContent="";
+      submit.disabled=true;
+      submit.textContent="Checking…";
+      try{
+        const data=new FormData(form);
+        const response=await fetch(API,{
+          method:"POST",
+          headers:{"Content-Type":"application/json","apikey":KEY},
+          body:JSON.stringify({
+            action:"track",
+            order_number:String(data.get("order_number")||"").trim(),
+            customer_phone:String(data.get("customer_phone")||"").trim(),
+            website:String(data.get("website")||"")
+          })
+        });
+        const payload=await response.json().catch(()=>({}));
+        if(!response.ok||!payload.ok||!payload.order)throw new Error(payload.error||"We could not find that order.");
+        render(payload.order);
+        status.textContent="Order information verified.";
+      }catch(error){
+        status.textContent=error&&error.message?error.message:"Tracking is temporarily unavailable.";
+      }finally{
+        submit.disabled=false;
+        submit.textContent="Check order status";
+      }
+    });
+  }
+})();
