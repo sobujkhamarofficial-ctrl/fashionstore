@@ -28,6 +28,15 @@ jobs:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
+      - name: Generate Men category pages
+        run: |
+          mkdir -p men
+          cp index.html men/index.html
+          for category in half-sleeve-t-shirt full-sleeve-t-shirt polo-t-shirt shirt panjabi hoodie jacket sweatshirt comfy-trouser sports-trouser jeans joggers cargo-pants chino-pants shorts pajama face-mask underwear socks wallet belt cap; do
+            mkdir -p "men/$category"
+            cp index.html "men/$category/index.html"
+          done
+
       - name: Upload static storefront
         uses: actions/upload-pages-artifact@v3
         with:
