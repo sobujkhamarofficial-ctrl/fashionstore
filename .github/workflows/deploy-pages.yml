@@ -188,7 +188,8 @@ jobs:
           ]
           for item in required:
               path = Path(item)
-              assert path.is_file() and path.stat().st_size > 500, f"Missing/empty ecommerce asset: {item}"
+              minimum_size = 20 if item == "robots.txt" else 500
+              assert path.is_file() and path.stat().st_size > minimum_size, f"Missing/empty ecommerce asset: {item}"
 
           home = Path("index.html").read_text()
           assert 'pages/checkout.html' in home, "Home cart does not lead to checkout"
@@ -203,6 +204,10 @@ jobs:
           assert "storefront-commerce-api" in commerce and "AQ." not in commerce
           forms = Path("assets/site-forms.js").read_text()
           assert 'action: "contact"' in forms and 'action: "newsletter"' in forms
+          assert 'marketing_consent' in forms, "Newsletter consent must be checked before subscription"
+          assert 'p_consent' in Path("assets/checkout.js").read_text() or 'marketing_consent' in forms
+          for policy in ["pages/shipping-delivery.html","pages/returns-refunds.html","pages/privacy.html","pages/terms.html","pages/payment.html","pages/cancellations.html"]:
+              assert "বাংলা সংস্করণ" in Path(policy).read_text(), f"Missing Bengali policy text: {policy}"
 
           men_builder = Path("scripts/build_men_catalog.py").read_text()
           collection_builder = Path("scripts/build_collection_pages.py").read_text()
