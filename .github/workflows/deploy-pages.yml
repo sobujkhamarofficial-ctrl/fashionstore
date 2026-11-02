@@ -219,6 +219,52 @@ jobs:
               assert "FORME" in Path(page).read_text()
           print(f"Verified {len(required)} ecommerce assets/pages, checkout controls, newsletter/contact API and Journal links.")
           PY
+      - name: Smoke test Supabase order API and database connection
+        run: |
+          python3 - <<'PY'
+          import json
+          from urllib.error import HTTPError
+          from urllib.request import Request, urlopen
+
+          endpoint = "https://zfgcovvfczjiqagrnfjr.supabase.co/functions/v1/storefront-commerce-api"
+          with urlopen(endpoint, timeout=25) as response:
+              health = json.loads(response.read().decode("utf-8"))
+              assert response.status == 200 and health.get("status") == "ready", health
+
+          payload = {
+              "action": "order",
+              "order": {
+                  "customer_name": "FORME automated deployment check",
+                  "customer_phone": "01712345678",
+                  "customer_email": "",
+                  "delivery_address": "Deployment check address, test only",
+                  "district": "Dhaka",
+                  "area": "Test",
+                  "postal_code": "",
+                  "customer_note": "Automated smoke test; this request must roll back.",
+                  "privacy_consent": True,
+                  "terms_accepted": True,
+                  "items": [{"product_id": "__ci_invalid_product__", "quantity": 1}]
+              }
+          }
+          request = Request(
+              endpoint,
+              data=json.dumps(payload).encode("utf-8"),
+              headers={"Content-Type": "application/json"},
+              method="POST",
+          )
+          try:
+              with urlopen(request, timeout=30) as response:
+                  status = response.status
+                  body = json.loads(response.read().decode("utf-8"))
+          except HTTPError as error:
+              status = error.code
+              body = json.loads(error.read().decode("utf-8"))
+
+          assert status == 400, {"status": status, "body": body}
+          assert "not available" in body.get("error", "").lower(), body
+          print("Supabase commerce API reached the database; invalid test product was safely rejected.")
+          PY
       - name: Validate Python build scripts
         run: python3 -m py_compile scripts/build_collection_pages.py scripts/build_men_catalog.py scripts/download_fashion_photos.py scripts/build_store_content.py
       - name: Verify branded not-found page and image fallbacks
