@@ -250,15 +250,14 @@ def build_page(node, department, parts, ancestors, siblings, is_department=False
 <p>{esc(description)}</p>
 <div class="structure-meta">{esc(hierarchy_note)}</div>
 </section>
-<div class="stage-note"><strong>Six real fashion photographs.</strong> Curated photos are downloaded and bundled with the FORME storefront for dependable loading.</div>
+<div class="stage-note"><strong>Collection inspiration gallery.</strong> These category pages help you explore styles. Individual product listings, verified prices, sizes and stock are being added separately; gallery images are not an offer to sell a specific item.</div>
 {child_section}
 {gallery}
 {sibling_links}
 {parent_label_html}
 </div>
 </main>
-<footer class="site-footer"><div class="page-container"><a class="site-logo" href="{BASE}">FORME<span>EVERYDAY, REFINED</span></a><p>Curated fashion photography · Locally bundled FORME image assets.</p><a href="{BASE}">Return to FORME home ↗</a></div></footer>
-<script src="{BASE}assets/customer-care.js" defer></script>
+<footer class="site-footer"><div class="page-container"><a class="site-logo" href="{BASE}">FORME<span>EVERYDAY, REFINED</span></a><p>Curated fashion photography · Explore the FORME catalogue.</p><a href="{BASE}blog/">Journal</a> · <a href="{BASE}pages/shipping-delivery.html">Shipping</a> · <a href="{BASE}pages/returns-refunds.html">Returns</a> · <a href="{BASE}pages/privacy.html">Privacy</a> · <a href="{BASE}pages/terms.html">Terms</a> · <a href="{BASE}pages/contact.html">Contact</a><p><a href="{BASE}">Return to FORME home ↗</a></p></div></footer>
 </body>
 </html>
 '''
