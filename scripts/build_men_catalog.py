@@ -47,7 +47,7 @@ def header(cats):
       f'<a href="{BASE}" class="f-logo">FORME<small>EVERYDAY, REFINED</small></a>'
       '<nav class="f-nav" aria-label="Main navigation">'
       f'<a href="{href("men")}" class="f-nav-men-link f-nav-active">Men</a>'
-      '<details class="f-native-mega" id="f-men-native-mega"><summary class="f-nav-men-toggle" aria-label="Open men categories"><span aria-hidden="true">⌄</span></summary>'+menu+'</details>'
+      + '<details class="f-native-mega" id="f-men-native-mega"><summary class="f-nav-men-toggle" aria-label="Open men categories"><span aria-hidden="true">⌄</span></summary>'+menu+'</details>'
       + other_nav
       + '</nav><div class="f-actions"><a class="f-icon" href="'+BASE+'#f-new-in" aria-label="Browse new arrivals"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg></a></div>'
       + '</div></header>')
