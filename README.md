@@ -49,6 +49,12 @@ Supabase project: `forme-fashion-backend`
 - `store_product_reviews`: order-verified product reviews awaiting moderation or publication.
 - `store_request_throttles`: hashed contact fingerprints for persistent request rate limits.
 
+## Store operations
+
+New order requests are private. For the pilot, the store owner can review and update them in the [Supabase Table Editor](https://supabase.com/dashboard/project/zfgcovvfczjiqagrnfjr/editor) after signing in to the Supabase project. Use `store_orders` to review customer requests and update the order status, final price, delivery charge, courier, tracking number and estimated delivery date. Use `store_order_items` to view the item details. Do not make these tables public.
+
+Use `store_product_reviews` to review new submissions. Change `publication_status` to `published` only after verifying the delivered order and content; do not delete genuine negative reviews merely because they are negative. Set `store_products.details_verified` and `availability_status` only after checking actual inventory and the exact SKU, size/variant and price.
+
 Public browser code uses only the Supabase publishable key. The Gemini and Supabase server secrets remain in Supabase Edge Function secrets and are not stored in this repository.
 
 ## Deployment
