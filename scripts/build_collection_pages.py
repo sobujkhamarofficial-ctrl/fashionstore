@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate image-free, multi-level FORME category pages."""
+"""Generate multi-level FORME category pages with six unique original illustrations per page."""
 from html import escape
 import base64
 import hashlib
@@ -512,11 +512,12 @@ def main():
     )
     if total_pages != expected:
         raise AssertionError(f"Page count mismatch: generated {total_pages}, expected {expected}")
+    total_images = total_pages * 6
     print(
-        f"Generated {total_pages} unique, image-free pages across "
-        f"{len(departments)} departments, {total_groups} collections, "
+        f"Generated {total_pages} unique pages with {total_images} original visuals "
+        f"({len(departments)} departments, {total_groups} collections, "
         f"{total_categories} categories, {total_subcategories} sub-categories "
-        f"and {total_nested} nested sub-categories."
+        f"and {total_nested} nested sub-categories)."
     )
 
 
