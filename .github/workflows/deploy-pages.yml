@@ -105,6 +105,30 @@ jobs:
           assert len(seen_paths) == 2215
           print(f"Verified {pages} unique image-free pages: 5 departments, {groups} groups, {categories} categories, {subcategories} sub-categories and {nested} nested sub-categories.")
           PY
+
+      - name: Verify department dropdown navigation
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+
+          home = Path("index.html").read_text()
+          assert home.count('class="f-native-mega"') >= 6, "Homepage desktop menus are incomplete"
+          assert home.count('class="f-mobile-categories"') >= 6, "Homepage mobile menus are incomplete"
+
+          Path("men/index.html").read_text()
+          men_page = Path("men/index.html").read_text()
+          assert men_page.count('class="f-native-mega"') >= 6, "Men page desktop dropdowns are incomplete"
+
+          data = json.loads(Path("collections/catalog.json").read_text())
+          for department in data["departments"]:
+              page = Path(department["slug"]) / "index.html"
+              body = page.read_text()
+              assert body.count('class="nav-dropdown"') == 6, str(page)
+              assert "nav-mega" in body, str(page)
+
+          print("Verified 6 department dropdowns on homepage, Men pages and all 5 collection landing pages.")
+          PY
       - name: Upload static storefront
         uses: actions/upload-pages-artifact@v3
         with:
