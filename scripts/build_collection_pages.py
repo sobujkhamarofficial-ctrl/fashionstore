@@ -211,7 +211,7 @@ def main():
     if len(departments) != 5:
         raise AssertionError(f"Expected 5 departments, found {len(departments)}")
 
-    total_pages = total_groups = total_categories = total_subcategories = 0
+    total_pages = total_groups = total_categories = total_subcategories = total_nested = 0
     seen_departments = set()
     for department in departments:
         if department["slug"] in seen_departments or department["slug"] == "men":
@@ -229,15 +229,27 @@ def main():
                 if not category["subcategories"]:
                     raise AssertionError(f"No sub-categories under {category['title']}")
                 total_subcategories += len(category["subcategories"])
+                for subcategory in category["subcategories"]:
+                    nested_options = subcategory.get("subcategories", [])
+                    if len(nested_options) != 4:
+                        raise AssertionError(
+                            f"Expected 4 nested options under {subcategory['title']}, "
+                            f"found {len(nested_options)}"
+                        )
+                    total_nested += len(nested_options)
         total_pages += build_tree(department, department, is_department=True)
 
-    expected = len(departments) + total_groups + total_categories + total_subcategories
+    expected = (
+        len(departments) + total_groups + total_categories
+        + total_subcategories + total_nested
+    )
     if total_pages != expected:
         raise AssertionError(f"Page count mismatch: generated {total_pages}, expected {expected}")
     print(
         f"Generated {total_pages} unique, image-free pages across "
         f"{len(departments)} departments, {total_groups} collections, "
-        f"{total_categories} categories and {total_subcategories} sub-categories."
+        f"{total_categories} categories, {total_subcategories} sub-categories "
+        f"and {total_nested} nested sub-categories."
     )
 
 
