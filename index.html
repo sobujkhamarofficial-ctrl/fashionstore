@@ -391,9 +391,10 @@
       const root = document.querySelector('#forme-storefront');
       if (!root) return;
       const CART_STORAGE_KEY = 'forme-cart-v1';
-      const cart = (()=>{try{const saved=JSON.parse(localStorage.getItem(CART_STORAGE_KEY)||'[]');return Array.isArray(saved)?saved.filter(p=>p&&p.id&&p.name&&Number(p.price)>0).slice(0,10):[];}catch(_){return [];}})();
+      const cart = (()=>{try{const saved=JSON.parse(localStorage.getItem(CART_STORAGE_KEY)||'[]');if(!Array.isArray(saved))return [];let units=0;return saved.slice(0,10).filter(p=>p&&p.id&&p.name&&Number(p.price)>0).map(p=>{const qty=Math.min(10,Math.max(1,Number(p.qty)||1),Math.max(0,20-units));units+=qty;return {...p,price:Number(p.price),qty};}).filter(p=>p.qty>0);}catch(_){return [];}})();
       const wishlist = new Set();
       const money = n => '৳' + Number(n).toLocaleString('en-BD');
+      const cartQuantity = () => cart.reduce((sum,p)=>sum+Number(p.qty||0),0);
       const menProducts = [
         {id:'m1',name:'Mens Premium Blank T-shirt - White',category:'Half Sleeve T-shirt',price:485,old:640,discount:24,save:155,image:'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=82',badge:'New Arrival'},
         {id:'m2',name:'Mens Premium T-Shirt - Brownie',category:'Half Sleeve T-shirt',price:690,old:900,discount:23,save:210,image:'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=700&q=82',badge:'Top Selling',free:true},
@@ -530,13 +531,13 @@
       };
       root.addEventListener('click',e=>{
         const add=e.target.closest('[data-f-add]');
-        if(add){const id=add.dataset.fAdd, card=add.closest('.f-product'), data={id,name:card.dataset.name,price:Number(card.dataset.price),image:card.dataset.image};const found=cart.find(p=>p.id===id);if(found)found.qty++;else cart.push({...data,qty:1});updateCart();toast('Added to your bag.');return;}
+        if(add){const id=add.dataset.fAdd, card=add.closest('.f-product'), data={id,name:card.dataset.name,price:Number(card.dataset.price),image:card.dataset.image};if(cartQuantity()>=20){toast('Your bag can contain up to 20 items in total.');return;}const found=cart.find(p=>p.id===id);if(found){if(found.qty>=10){toast('Maximum 10 units of one item.');return;}found.qty++;}else{if(cart.length>=10){toast('Your bag can contain up to 10 different items.');return;}cart.push({...data,qty:1});}updateCart();toast('Added to your bag. Final price and availability will be confirmed.');return;}
         const wish=e.target.closest('[data-f-wish]');
         if(wish){const id=wish.dataset.fWish;wishlist.has(id)?wishlist.delete(id):wishlist.add(id);wish.classList.toggle('active',wishlist.has(id));toast(wishlist.has(id)?'Saved to your wishlist.':'Removed from your wishlist.');return;}
         const tab=e.target.closest('[data-f-filter]');
         if(tab){root.querySelectorAll('.f-tab').forEach(t=>t.classList.toggle('active',t===tab));const filter=tab.dataset.fFilter;let visible=0;root.querySelectorAll('.f-product').forEach(card=>{const show=filter==='All'||card.dataset.category===filter;card.hidden=!show;if(show)visible++;});const empty=root.querySelector('#f-no-results');empty.hidden=visible!==0;return;}
         const qty=e.target.closest('[data-f-qty]');
-        if(qty){const item=cart.find(p=>p.id===qty.dataset.fQty);item.qty+=Number(qty.dataset.fDelta);if(item.qty<1)cart.splice(cart.indexOf(item),1);updateCart();return;}
+        if(qty){const item=cart.find(p=>p.id===qty.dataset.fQty);const delta=Number(qty.dataset.fDelta);if(delta>0&&(item.qty>=10||cartQuantity()>=20)){toast(item.qty>=10?'Maximum 10 units of one item.':'Your bag can contain up to 20 items in total.');return;}item.qty+=delta;if(item.qty<1)cart.splice(cart.indexOf(item),1);updateCart();return;}
         const remove=e.target.closest('[data-f-remove]');if(remove){const i=cart.findIndex(p=>p.id===remove.dataset.fRemove);if(i>=0)cart.splice(i,1);updateCart();return;}
         if(e.target.closest('#f-cart-open')){openCart();return;}
         if(e.target.closest('#f-cart-close')||e.target===overlay){closePanels();return;}
