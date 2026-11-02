@@ -5,7 +5,13 @@
   function readCart() {
     try {
       const list = JSON.parse(localStorage.getItem(KEY) || "[]");
-      return Array.isArray(list) ? list.filter(x => x && x.id && Number(x.price) > 0).slice(0, 10) : [];
+      if (!Array.isArray(list)) return [];
+      let units = 0;
+      return list.slice(0, 10).filter(x => x && x.id && Number(x.price) > 0).map(x => {
+        const qty = Math.min(10, Math.max(1, Number(x.qty) || 1), Math.max(0, 20 - units));
+        units += qty;
+        return { ...x, price: Number(x.price), qty };
+      }).filter(x => x.qty > 0);
     } catch (_) { return []; }
   }
   function saveCart(cart) {
@@ -30,6 +36,7 @@
     addButton.textContent = count ? "Review bag · " + count + " · " + money(subtotal) : "Your bag is empty";
     addButton.classList.toggle("has-items", count > 0);
   }
+  function cartQuantity() { return cart.reduce((sum, item) => sum + Number(item.qty || 0), 0); }
   function notify(message) {
     toast.textContent = message;
     toast.classList.add("visible");
@@ -50,9 +57,17 @@
       notify("This sample item is not available for an order request yet.");
       return;
     }
+    if (cartQuantity() >= 20) {
+      notify("Your bag can contain up to 20 items in total.");
+      return;
+    }
     const existing = cart.find(item => item.id === id);
     if (existing) {
-      existing.qty = Math.min(10, Number(existing.qty || 1) + 1);
+      if (Number(existing.qty || 1) >= 10) {
+        notify("Maximum 10 units of one item.");
+        return;
+      }
+      existing.qty = Number(existing.qty || 1) + 1;
     } else {
       if (cart.length >= 10) {
         notify("Your bag can contain up to 10 different items.");
