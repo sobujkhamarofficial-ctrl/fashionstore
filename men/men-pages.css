@@ -428,3 +428,12 @@
 .f-static-legal{display:flex;flex-wrap:wrap;gap:10px 16px}
 .f-static-legal a{font-size:10px;color:rgba(255,255,255,.82)}
 @media(max-width:600px){.fc-static-cart{right:12px;bottom:12px;min-height:46px;font-size:10px;padding:0 14px}}
+
+/* Product card purchase actions: catalogue pages */
+#forme-storefront .f-static-product .f-product-photo{position:relative}
+#forme-storefront .f-static-product .f-product-actions{position:absolute;left:10px;right:10px;bottom:10px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:7px;z-index:5}
+#forme-storefront .f-static-product .f-product-actions button{display:flex;align-items:center;justify-content:center;width:100%;min-width:0;min-height:42px;padding:7px 6px;border:1px solid #263b32;border-radius:0;background:#263b32;color:#fffefa;font:700 9px/1.2 Arial,sans-serif;letter-spacing:.045em;text-align:center;text-transform:uppercase;cursor:pointer;transition:filter .18s,transform .18s}
+#forme-storefront .f-static-product .f-product-actions .f-buy-now{border-color:#b76f50;background:#b76f50}
+#forme-storefront .f-static-product .f-product-actions button:hover{filter:brightness(1.09);transform:translateY(-1px)}
+#forme-storefront .f-static-product .f-product-actions button:focus-visible{outline:2px solid #b76f50;outline-offset:3px}
+@media(max-width:420px){#forme-storefront .f-static-product .f-product-actions{left:7px;right:7px;bottom:7px;gap:5px}#forme-storefront .f-static-product .f-product-actions button{min-height:39px;font-size:8px;padding:6px 4px}}
