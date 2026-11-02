@@ -258,6 +258,7 @@ def build_page(node, department, parts, ancestors, siblings, is_department=False
 </div>
 </main>
 <footer class="site-footer"><div class="page-container"><a class="site-logo" href="{BASE}">FORME<span>EVERYDAY, REFINED</span></a><p>Curated fashion photography · Locally bundled FORME image assets.</p><a href="{BASE}">Return to FORME home ↗</a></div></footer>
+<script src="{BASE}assets/customer-care.js" defer></script>
 </body>
 </html>
 '''
