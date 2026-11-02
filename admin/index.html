@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow,noarchive">
 <meta name="theme-color" content="#F7F5F0">
 <title>FORME Admin · Order Management</title>
-<link rel="stylesheet" href="/fashionstore/assets/admin.css?v=20261103-2">
+<link rel="stylesheet" href="/fashionstore/assets/admin.css?v=20261103-3">
 </head>
 <body class="fa-body">
 <div class="fa-shell">
@@ -47,10 +47,10 @@
       <section class="fa-orders-panel">
         <div class="fa-panel-head"><div><span class="fa-eyebrow">CUSTOMER REQUESTS</span><h2>Orders</h2></div><span id="fa-order-count" class="fa-count">0 records</span></div>
         <div class="fa-toolbar"><label class="fa-search">⌕ <input id="fa-search" type="search" placeholder="Search reference, name or phone"></label><select id="fa-filter" aria-label="Filter orders"><option value="all">All statuses</option><option value="pending_review">Pending review</option><option value="contacted">Contacted</option><option value="confirmed">Confirmed</option><option value="processing">Processing</option><option value="shipped">Shipped</option><option value="delivered">Delivered</option><option value="cancelled">Cancelled</option><option value="rejected">Rejected</option></select></div>
-        <div class="fa-table-wrap"><table><thead><tr><th>Order</th><th>Customer</th><th>Placed</th><th>Items</th><th>Subtotal</th><th>Status</th><th></th></tr></thead><tbody id="fa-order-rows"><tr><td colspan="7" class="fa-empty-cell">Loading orders…</td></tr></tbody></table></div>
+        <div class="fa-table-wrap"><table><thead><tr><th>Order</th><th>Customer</th><th>Placed</th><th>Items</th><th>Subtotal</th><th>Payment</th><th>Status</th><th></th></tr></thead><tbody id="fa-order-rows"><tr><td colspan="8" class="fa-empty-cell">Loading orders…</td></tr></tbody></table></div>
         <div id="fa-empty" class="fa-empty" hidden>No orders match this view.</div>
       </section>
-      <p class="fa-footnote">Customer requests are not automatically accepted. Verify product availability and final pricing before confirming an order. Payment is recorded only after it has actually been received.</p>
+      <p class="fa-footnote">COD orders arrive as pending review. Verify product availability, requested size or variant, final price and delivery charge before confirming dispatch. Record payment only after it has actually been received.</p>
     </section>
   </main>
   <footer class="fa-footer"><span>FORME · PRIVATE ADMIN</span><a href="/fashionstore/">Return to storefront ↗</a></footer>
@@ -62,5 +62,5 @@
     <div id="fa-detail-content"></div>
   </section>
 </div>
-<script src="/fashionstore/assets/admin.js?v=20261103-2" defer></script>
+<script src="/fashionstore/assets/admin.js?v=20261103-3" defer></script>
 </body></html>
