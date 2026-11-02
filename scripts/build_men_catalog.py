@@ -14,13 +14,41 @@ def header(cats):
         n=sum(1 for c in cats if c["group"]==group)
         parts.append(f'<div class="f-mega-group"><b>{group}</b><div class="f-mega-links">{links}</div></div>')
     menu='<div class="f-mega-menu" id="f-men-mega-menu"><div class="f-mega-inner">'+''.join(parts)+f'<a class="f-mega-all" href="{href("men")}">View all men\'s items ↗</a></div></div>'
+    other_menus=[]
+    collection_data=json.loads((ROOT/"collections"/"catalog.json").read_text(encoding="utf-8"))
+    for department in collection_data["departments"]:
+        dept_slug=department["slug"]
+        groups=[]
+        for group in department["groups"]:
+            group_url=f'{BASE}{dept_slug}/{group["slug"]}/'
+            links="".join(
+                f'<a href="{BASE}{dept_slug}/{group["slug"]}/{category["slug"]}/">{esc(category["title"])}</a>'
+                for category in group["categories"]
+            )
+            groups.append(
+                f'<div class="f-mega-group"><b><a href="{group_url}">{esc(group["title"])}</a></b>'
+                f'<div class="f-mega-links">{links}</div></div>'
+            )
+        other_menu=(
+            f'<div class="f-mega-menu" id="f-{dept_slug}-mega-menu"><div class="f-mega-inner">'
+            + ''.join(groups)
+            + f'<a class="f-mega-all" href="{BASE}{dept_slug}/">View all {esc(department["title"])} ↗</a>'
+            + '</div></div>'
+        )
+        other_menus.append(
+            f'<a href="{BASE}{dept_slug}/">{esc(department["title"])}</a>'
+            f'<details class="f-native-mega" id="f-{dept_slug}-native-mega">'
+            f'<summary class="f-nav-men-toggle" aria-label="Open {esc(department["title"])} categories"><span aria-hidden="true">⌄</span></summary>'
+            f'{other_menu}</details>'
+        )
+    other_nav=''.join(other_menus)
     return ('<div class="f-announcement">Discover the new season edit <strong>·</strong> Everyday pieces, thoughtfully chosen</div>'
       '<header class="f-header"><div class="f-container f-head-main">'
       f'<a href="{BASE}" class="f-logo">FORME<small>EVERYDAY, REFINED</small></a>'
       '<nav class="f-nav" aria-label="Main navigation">'
       f'<a href="{href("men")}" class="f-nav-men-link f-nav-active">Men</a>'
       '<details class="f-native-mega" id="f-men-native-mega"><summary class="f-nav-men-toggle" aria-label="Open men categories"><span aria-hidden="true">⌄</span></summary>'+menu+'</details>'
-      f'<a href="{BASE}women/">Women</a><a href="{BASE}teens/">Teens</a><a href="{BASE}kids/">Kids</a><a href="{BASE}sports/">Sports</a><a href="{BASE}accessories/">Accessories</a>'
+      + other_nav
       '</nav><div class="f-actions"><a class="f-icon" href="'+BASE+'#f-new-in" aria-label="Browse new arrivals"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg></a></div>'
       '</div></header>')
 def card(p,priority=False):
