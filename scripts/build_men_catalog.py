@@ -55,7 +55,7 @@ def card(p,priority=False):
     badge=f'<span class="f-product-tag">{esc(p["badge"])}</span>' if p.get("badge") else ""
     loading="eager" if priority else "lazy"
     high=' fetchpriority="high"' if priority else ""
-    product_id=f'men-{p["id"]}'
+    product_id=str(p.get('product_id') or f'men-{p["id"]}')
     return ('<article class="f-product f-static-product"'
       f' data-id="{esc(product_id)}" data-name="{esc(p["name"])}" data-price="{int(p["price"])}" data-image="{esc(p["image"])}">'
       '<div class="f-product-photo">'
@@ -71,7 +71,7 @@ def directory(cats):
         items=[c for c in cats if c["group"]==group]
         links="".join(f'<a class="f-men-category-link" href="{href(c["slug"])}"><b>{esc(c["title"])}</b><small>6 styles to explore</small></a>' for c in items)
         groups.append(f'<section class="f-men-category-group"><div class="f-men-category-group-title"><b>{group}</b><small>{len(items)} categories</small></div><div class="f-men-category-links">{links}</div></section>')
-    return ('<section class="f-static-categories"><div class="f-men-category-top"><div><b>Explore men\'s categories</b><small>Every category has its own collection page with six catalogue listings.</small></div>'
+    return ('<section class="f-static-categories"><div class="f-men-category-top"><div><b>Explore men\'s categories</b><small>Every category has its own collection page with catalogue listings.</small></div>'
       f'<span>{len(cats)} categories</span></div>'+''.join(groups)+'</section>')
 def category_nav(cats,active):
     links="".join(f'<a href="{href(c["slug"])}"'+(' class="active"' if c["slug"]==active else "")+f'>{esc(c["title"])}</a>' for c in cats)
@@ -85,7 +85,7 @@ def make_page(title,desc,cats,selected=None):
         featured=[c["products"][0] for c in cats][:12]
         products_label="12 featured catalogue listings"; section_title="Featured men's pieces"
     else:
-        featured=selected["products"]; products_label="6 catalogue listings"; section_title=f'{esc(title)} collection'
+        featured=selected["products"]; products_label=f'{len(featured)} catalogue listing{"s" if len(featured) != 1 else ""}'; section_title=f'{esc(title)} collection'
     cards="".join(card(p,i==0) for i,p in enumerate(featured))
     warning='<p class="f-catalog-note">Product showcase · sample names, illustrative prices and Unsplash imagery. Replace with verified stock, final prices and details before accepting orders.</p>'
     page_title="Men's Collection" if main else title
@@ -103,12 +103,12 @@ def make_page(title,desc,cats,selected=None):
 def main():
     data=json.loads((OUT/"catalog.json").read_text(encoding="utf-8"))
     cats=data["categories"]
-    assert len(cats)==22 and all(len(c["products"])==6 for c in cats)
+    assert len(cats)==23 and all(len(c["products"])>=1 for c in cats)
     OUT.mkdir(parents=True,exist_ok=True)
-    (OUT/"index.html").write_text(make_page("Men's Collection","Explore men's everyday essentials, considered fits and modern classics. Browse all 22 categories and discover selected product listings.",cats),encoding="utf-8")
+    (OUT/"index.html").write_text(make_page("Men's Collection","Explore men's everyday essentials, considered fits and modern classics. Browse all 23 categories and discover selected catalogue listings.",cats),encoding="utf-8")
     for c in cats:
         folder=OUT/c["slug"]; folder.mkdir(parents=True,exist_ok=True)
-        desc=f'Explore the FORME {c["title"]} collection. Browse six selected sample products in this category.'
+        desc=f'Explore the FORME {c["title"]} collection. Browse the catalogue listings in this category.'
         (folder/"index.html").write_text(make_page(c["title"],desc,cats,c),encoding="utf-8")
     old=OUT/"men"; old.mkdir(parents=True,exist_ok=True)
     (old/"index.html").write_text('<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=/fashionstore/men/"><link rel="canonical" href="https://sobujkhamarofficial-ctrl.github.io/fashionstore/men/"><title>Men | FORME</title><script>location.replace("/fashionstore/men/")</script></head><body><a href="/fashionstore/men/">Continue to Men\'s Collection</a></body></html>',encoding="utf-8")

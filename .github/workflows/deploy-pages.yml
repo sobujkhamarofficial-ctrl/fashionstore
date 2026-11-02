@@ -38,21 +38,21 @@ jobs:
           import json
           from pathlib import Path
           cats = json.loads(Path("men/catalog.json").read_text())["categories"]
-          assert len(cats) == 22
+          assert len(cats) == 23
           total = 0
           for c in cats:
               p = Path("men") / c["slug"] / "index.html"
               assert p.is_file() and p.stat().st_size > 1000, str(p)
               text = p.read_text()
-              assert len(c["products"]) == 6
-              assert text.count('class="f-product f-static-product"') == 6, c["slug"]
-              assert text.count('data-f-add="men-') == 6, f"Missing Add to Cart controls: {c['slug']}"
-              assert text.count('data-f-buy-now="men-') == 6, f"Missing Buy Now controls: {c['slug']}"
+              assert len(c["products"]) >= 1
+              assert text.count('class="f-product f-static-product"') == len(c["products"]), c["slug"]
+              assert text.count('data-f-add="') == len(c["products"]), f"Missing Add to Cart controls: {c['slug']}"
+              assert text.count('data-f-buy-now="') == len(c["products"]), f"Missing Buy Now controls: {c['slug']}"
               assert 'assets/commerce-pages.js' in text, f"Missing commerce runtime: {c['slug']}"
               total += len(c["products"])
-          assert total == 132, total
-          assert Path("men/index.html").read_text().count('class="f-men-category-link"') == 22
-          print(f"Verified 22 categories and {total} products.")
+          assert total == 133, total
+          assert Path("men/index.html").read_text().count('class="f-men-category-link"') == 23
+          print(f"Verified 23 categories and {total} catalogue listings.")
           PY
 
       - name: Download real, licensed fashion photography
