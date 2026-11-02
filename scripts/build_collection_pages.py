@@ -257,7 +257,7 @@ def build_page(node, department, parts, ancestors, siblings, is_department=False
 {parent_label_html}
 </div>
 </main>
-<footer class="site-footer"><div class="page-container"><a class="site-logo" href="{BASE}">FORME<span>EVERYDAY, REFINED</span></a><p>Curated fashion photography · Explore the FORME catalogue.</p><a href="{BASE}blog/">Journal</a> · <a href="{BASE}pages/shipping-delivery.html">Shipping</a> · <a href="{BASE}pages/returns-refunds.html">Returns</a> · <a href="{BASE}pages/privacy.html">Privacy</a> · <a href="{BASE}pages/terms.html">Terms</a> · <a href="{BASE}pages/contact.html">Contact</a><p><a href="{BASE}">Return to FORME home ↗</a></p></div></footer>
+<footer class="site-footer"><div class="page-container"><a class="site-logo" href="{BASE}">FORME<span>EVERYDAY, REFINED</span></a><p>Curated fashion photography · Explore the FORME catalogue.</p><a href="{BASE}blog/">Journal</a> · <a href="{BASE}pages/shipping-delivery.html">Shipping</a> · <a href="{BASE}pages/returns-refunds.html">Returns</a> · <a href="{BASE}pages/reviews.html">Reviews</a> · <a href="{BASE}pages/privacy.html">Privacy</a> · <a href="{BASE}pages/terms.html">Terms</a> · <a href="{BASE}pages/contact.html">Contact</a><p><a href="{BASE}">Return to FORME home ↗</a></p></div></footer>
 </body>
 </html>
 '''
