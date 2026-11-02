@@ -108,7 +108,7 @@
         '<form class="fa-form"><textarea class="fa-input" rows="1" maxlength="1200" placeholder="Ask FORME a question…" aria-label="Your message" disabled></textarea><button class="fa-send" type="submit" aria-label="Send message" disabled><svg viewBox="0 0 24 24"><path d="m21 3-7.5 18-3.7-7.8L2 9.5 21 3Z"/><path d="M9.8 13.2 14 9"/></svg></button></form>' +
         '<div class="fa-foot">AI responses are guidance only · Store availability is confirmed by our team</div>' +
       '</section>' +
-      '<button type="button" class="fa-launch" aria-expanded="false" aria-label="Open FORME assistant"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H5l1.7-3A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8 10h8M8 13.5h5"/></svg><span>ASK FORME</span><i class="fa-launch-dot" aria-hidden="true"></i></button>';
+      '<button type="button" class="fa-launch" aria-expanded="false" aria-label="Open FORME chat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H5l1.7-3A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8 10h8M8 13.5h5"/></svg><span>ASK MORE</span><i class="fa-launch-dot" aria-hidden="true"></i></button>';
     document.body.appendChild(root);
     panel = root.querySelector(".fa-panel");
     launch = root.querySelector(".fa-launch");
