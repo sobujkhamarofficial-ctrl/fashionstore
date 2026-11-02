@@ -261,6 +261,12 @@ jobs:
               health = json.loads(response.read().decode("utf-8"))
               assert response.status == 200 and health.get("status") == "ready", health
 
+          # Give each workflow run a distinct test contact so persistent rate limits
+          # from previous successful runs cannot make this smoke test fail.
+          import os
+          run_id = os.environ.get("GITHUB_RUN_ID", "00000000")
+          phone = "019" + run_id[-8:].zfill(8)
+
           payload = {
               "action": "order",
               "order": {
@@ -295,9 +301,6 @@ jobs:
           assert "not available" in body.get("error", "").lower(), body
           print("Supabase commerce API reached the database; invalid test product was safely rejected.")
 
-          import os
-          run_id = os.environ.get("GITHUB_RUN_ID", "00000000")
-          phone = "019" + run_id[-8:].zfill(8)
           track_payload = {
               "action": "track",
               "order_number": "FRM-CI-" + run_id,
