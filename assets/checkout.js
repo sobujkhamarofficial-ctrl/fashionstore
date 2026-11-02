@@ -121,7 +121,7 @@
       const explanation = document.createElement("p");
       explanation.textContent = "This is not yet a confirmed order. FORME must verify the items, final price, delivery charge and estimated delivery date, then contact you for your agreement. No payment has been collected.";
       const links = document.createElement("p");
-      links.innerHTML = '<a href="/fashionstore/">Continue browsing</a> · <a href="/fashionstore/pages/contact.html">Contact customer care</a>';
+      links.innerHTML = '<a href="/fashionstore/pages/order-tracking.html">Track this request</a> · <a href="/fashionstore/">Continue browsing</a> · <a href="/fashionstore/pages/contact.html">Contact customer care</a>';
       success.append(heading,ref,total,explanation,links);
     } catch (error) {
       status.textContent = error && error.message ? error.message : "Something went wrong. Please try again.";
