@@ -45,16 +45,17 @@
   }
 
   document.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-f-add]");
+    const button = event.target.closest("[data-f-add], [data-f-buy-now]");
     if (!button) return;
+    const buyNow = button.hasAttribute("data-f-buy-now");
     const card = button.closest(".f-static-product");
     if (!card) return;
-    const id = card.dataset.id;
+    const id = buyNow ? button.dataset.fBuyNow : button.dataset.fAdd;
     const name = card.dataset.name;
     const price = Number(card.dataset.price);
     const image = card.dataset.image;
     if (!id || !name || !Number.isFinite(price) || price <= 0) {
-      notify("This sample item is not available for an order request yet.");
+      notify("This item is not available for an order request yet.");
       return;
     }
     if (cartQuantity() >= 20) {
@@ -77,6 +78,10 @@
     }
     saveCart(cart);
     render();
+    if (buyNow) {
+      window.location.assign("/fashionstore/pages/checkout.html");
+      return;
+    }
     notify("Added to your bag. Final price and availability will be confirmed.");
   });
 
