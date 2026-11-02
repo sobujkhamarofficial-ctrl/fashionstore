@@ -14,6 +14,8 @@ FORME is an editorial-style fashion storefront for Bangladesh. The site is publi
 - Locally bundled fashion photography for collection gallery pages.
 - Men catalogue cards connected to a shared local shopping bag.
 - Checkout order-request form connected to Supabase Edge Functions.
+- Private order tracking by matching order reference and checkout mobile number.
+- Verified customer review submissions, with explicit publication consent and manual moderation.
 - Server-side product ID and price validation; the server calculates the item subtotal from the database rather than trusting browser-supplied prices.
 - Order requests and item snapshots stored in Supabase tables with Row Level Security enabled.
 - Contact messages and optional newsletter subscriptions stored in the backend.
@@ -44,6 +46,8 @@ Supabase project: `forme-fashion-backend`
 - `store_order_items`: product snapshots requested by customers.
 - `store_contact_messages`: customer support queue.
 - `store_newsletter_subscribers`: opt-in email list.
+- `store_product_reviews`: order-verified product reviews awaiting moderation or publication.
+- `store_request_throttles`: hashed contact fingerprints for persistent request rate limits.
 
 Public browser code uses only the Supabase publishable key. The Gemini and Supabase server secrets remain in Supabase Edge Function secrets and are not stored in this repository.
 
