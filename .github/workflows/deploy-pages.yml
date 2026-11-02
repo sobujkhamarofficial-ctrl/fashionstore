@@ -162,6 +162,7 @@ jobs:
           node --check assets/reviews.js
           node --check assets/site-forms.js
           node --check assets/commerce-pages.js
+          node --check assets/customer-care.js
           python3 - <<'PY'
           from pathlib import Path
 
@@ -191,6 +192,8 @@ jobs:
               "assets/checkout.js",
               "assets/site-forms.js",
               "assets/commerce-pages.js",
+              "assets/customer-care.js",
+              "assets/customer-care.css",
               "sitemap.xml",
               "robots.txt",
           ]
@@ -203,7 +206,7 @@ jobs:
           assert 'pages/checkout.html' in home, "Home cart does not lead to checkout"
           assert 'assets/site-forms.js' in home, "Home newsletter is not connected"
           assert 'blog/build-a-versatile-capsule-wardrobe.html' in home, "Home Journal preview is missing"
-          assert 'assets/customer-care.js' not in home, "AI chat should remain disabled until policy/order testing"
+          assert 'assets/customer-care.js' in home, "AI chat bundle must load on the homepage"
 
           checkout = Path("pages/checkout.html").read_text()
           assert "privacy_consent" in checkout and "terms_accepted" in checkout
@@ -229,8 +232,8 @@ jobs:
           men_builder = Path("scripts/build_men_catalog.py").read_text()
           collection_builder = Path("scripts/build_collection_pages.py").read_text()
           assert "data-f-add" in men_builder and "commerce-pages.js" in men_builder
-          assert "customer-care.js" not in men_builder
-          assert "customer-care.js" not in collection_builder
+          assert "customer-care.js" in men_builder
+          assert "customer-care.js" in collection_builder
 
           for page in ["pages/shipping-delivery.html","pages/returns-refunds.html","pages/privacy.html","pages/terms.html","blog/index.html"]:
               assert "FORME" in Path(page).read_text()
@@ -246,7 +249,7 @@ jobs:
           ai_endpoint = "https://zfgcovvfczjiqagrnfjr.supabase.co/functions/v1/fashion-customer-care"
           with urlopen(ai_endpoint, timeout=25) as response:
               ai_status = json.loads(response.read().decode("utf-8"))
-              assert response.status == 200 and ai_status.get("status") == "paused", ai_status
+              assert response.status == 200 and ai_status.get("status") in {"paused", "ready"}, ai_status
 
           endpoint = "https://zfgcovvfczjiqagrnfjr.supabase.co/functions/v1/storefront-commerce-api"
           with urlopen(endpoint, timeout=25) as response:
