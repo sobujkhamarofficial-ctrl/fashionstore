@@ -94,8 +94,15 @@ jobs:
               seen_paths.add(key)
               body = path.read_text()
               sources = re.findall(r'<img class="gallery-image" src="([^"]+)"', body)
+              links = re.findall(r'<a class="visual-image-link" href="([^"]+)"', body)
+              actions = re.findall(r'<a class="visual-action" href="([^"]+)"', body)
               assert len(sources) == 6, f"Expected 6 gallery photos in {key}; found {len(sources)}"
               assert len(set(sources)) == 6, f"Expected six different photos in {key}"
+              assert len(links) == 6, f"Every gallery photo must be clickable in {key}"
+              assert len(actions) == 6, f"Every gallery photo must have an exploration action in {key}"
+              assert links == actions, f"Image and action destinations must match in {key}"
+              for destination in links:
+                  assert destination.startswith("/fashionstore/"), f"Unexpected visual destination in {key}: {destination}"
               for source in sources:
                   prefix = "/fashionstore/assets/fashion-photos/"
                   assert source.startswith(prefix), f"Unexpected image source in {key}: {source}"
