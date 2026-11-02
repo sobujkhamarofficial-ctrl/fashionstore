@@ -404,3 +404,5 @@
 #forme-storefront .f-static-products{margin-top:32px}
 @media(max-width:980px){#forme-storefront .f-static-product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 13px}}
 @media(max-width:680px){#forme-storefront .f-static-product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 10px}#forme-storefront .f-static-product .f-product-name{font-size:11px;min-height:42px}#forme-storefront .f-static-product .f-product-info{padding-top:8px}}
+
+#forme-storefront .f-native-mega[open] .f-mega-menu{visibility:visible;opacity:1;pointer-events:auto;transform:translateY(0)}#forme-storefront .f-native-mega[open] .f-nav-men-toggle span{transform:rotate(180deg)}#forme-storefront .f-mega-group b a{color:var(--f-clay);font:inherit;letter-spacing:inherit;text-transform:inherit}#forme-storefront .f-mega-group b a:hover{color:var(--f-green);text-decoration:underline}
