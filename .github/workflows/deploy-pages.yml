@@ -243,6 +243,11 @@ jobs:
           from urllib.error import HTTPError
           from urllib.request import Request, urlopen
 
+          ai_endpoint = "https://zfgcovvfczjiqagrnfjr.supabase.co/functions/v1/fashion-customer-care"
+          with urlopen(ai_endpoint, timeout=25) as response:
+              ai_status = json.loads(response.read().decode("utf-8"))
+              assert response.status == 200 and ai_status.get("status") == "paused", ai_status
+
           endpoint = "https://zfgcovvfczjiqagrnfjr.supabase.co/functions/v1/storefront-commerce-api"
           with urlopen(endpoint, timeout=25) as response:
               health = json.loads(response.read().decode("utf-8"))
