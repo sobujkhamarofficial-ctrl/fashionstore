@@ -36,23 +36,34 @@ jobs:
           test -s men/men/index.html
           python3 - <<'PY'
           import json
+          import re
           from pathlib import Path
           cats = json.loads(Path("men/catalog.json").read_text())["categories"]
           assert len(cats) == 23
           total = 0
+          all_ids = []
           for c in cats:
               p = Path("men") / c["slug"] / "index.html"
               assert p.is_file() and p.stat().st_size > 1000, str(p)
-              text = p.read_text()
-              assert len(c["products"]) >= 1
-              assert text.count('class="f-product f-static-product"') == len(c["products"]), c["slug"]
-              assert text.count('data-f-add="') == len(c["products"]), f"Missing Add to Cart controls: {c['slug']}"
-              assert text.count('data-f-buy-now="') == len(c["products"]), f"Missing Buy Now controls: {c['slug']}"
-              assert 'assets/commerce-pages.js' in text, f"Missing commerce runtime: {c['slug']}"
-              total += len(c["products"])
+              body = p.read_text()
+              products = c["products"]
+              assert len(products) >= 1, c["slug"]
+              expected = [item["product_id"] for item in products]
+              assert all(expected), f"Missing database product IDs: {c['slug']}"
+              assert len(expected) == len(set(expected)), f"Duplicate IDs inside {c['slug']}"
+              assert all(item.get("availability_status") == "needs_confirmation" for item in products), c["slug"]
+              add_ids = re.findall(r'data-f-add="([^"]+)"', body)
+              buy_ids = re.findall(r'data-f-buy-now="([^"]+)"', body)
+              assert add_ids == expected, f"Add to Cart IDs do not match database products: {c['slug']}"
+              assert buy_ids == expected, f"Buy Now IDs do not match database products: {c['slug']}"
+              assert body.count('class="f-product f-static-product"') == len(products), c["slug"]
+              assert 'assets/commerce-pages.js' in body, f"Missing commerce runtime: {c['slug']}"
+              all_ids.extend(expected)
+              total += len(products)
+          assert len(all_ids) == len(set(all_ids)), "Duplicate database product IDs across Men categories"
           assert total == 133, total
           assert Path("men/index.html").read_text().count('class="f-men-category-link"') == 23
-          print(f"Verified 23 categories and {total} catalogue listings.")
+          print(f"Verified 23 categories, {total} DB-linked products, and matching Buy Now / Add to Cart IDs.")
           PY
 
       - name: Download real, licensed fashion photography

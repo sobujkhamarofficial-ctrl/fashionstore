@@ -69,7 +69,7 @@ def directory(cats):
     groups=[]
     for group in ("Topwear","Bottomwear","Accessories"):
         items=[c for c in cats if c["group"]==group]
-        links="".join(f'<a class="f-men-category-link" href="{href(c["slug"])}"><b>{esc(c["title"])}</b><small>6 styles to explore</small></a>' for c in items)
+        links="".join(f'<a class="f-men-category-link" href="{href(c["slug"])}"><b>{esc(c["title"])}</b><small>{len(c["products"])} listings to explore</small></a>' for c in items)
         groups.append(f'<section class="f-men-category-group"><div class="f-men-category-group-title"><b>{group}</b><small>{len(items)} categories</small></div><div class="f-men-category-links">{links}</div></section>')
     return ('<section class="f-static-categories"><div class="f-men-category-top"><div><b>Explore men\'s categories</b><small>Every category has its own collection page with catalogue listings.</small></div>'
       f'<span>{len(cats)} categories</span></div>'+''.join(groups)+'</section>')
@@ -87,7 +87,7 @@ def make_page(title,desc,cats,selected=None):
     else:
         featured=selected["products"]; products_label=f'{len(featured)} catalogue listing{"s" if len(featured) != 1 else ""}'; section_title=f'{esc(title)} collection'
     cards="".join(card(p,i==0) for i,p in enumerate(featured))
-    warning='<p class="f-catalog-note">Product showcase · sample names, illustrative prices and Unsplash imagery. Replace with verified stock, final prices and details before accepting orders.</p>'
+    warning='<p class="f-catalog-note">FORME pilot catalogue · product names and listed prices are database-backed; photographs are representative catalogue imagery. Stock, sizes, variants and final delivery charges require confirmation. Buy Now creates a pending COD order request, not a confirmed dispatch.</p>'
     page_title="Men's Collection" if main else title
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -99,13 +99,13 @@ def make_page(title,desc,cats,selected=None):
 {listing}<section class="f-static-products"><div class="f-section-head"><div><span class="f-kicker">The collection</span><h2>{section_title}</h2></div><span class="f-men-total">{products_label}</span></div>
 {warning}<div class="f-static-product-grid">{cards}</div></section>
 <a class="f-static-back" href="{href("men")}">← Back to Men's Collection</a></div></main>
-<footer class="f-static-footer"><div class="f-container"><strong class="f-logo">FORME<small>EVERYDAY, REFINED</small></strong><small>Sample catalogue · Product details, final prices and availability require confirmation</small><nav class="f-static-legal"><a href="{BASE}blog/">Journal</a><a href="{BASE}pages/shipping-delivery.html">Shipping</a><a href="{BASE}pages/returns-refunds.html">Returns</a><a href="{BASE}pages/reviews.html">Reviews</a><a href="{BASE}pages/order-tracking.html">Track order</a><a href="{BASE}pages/privacy.html">Privacy</a><a href="{BASE}pages/terms.html">Terms</a><a href="{BASE}pages/contact.html">Contact</a></nav><a href="{BASE}" style="font-size:10px;color:#fff">Home ↗</a></div></footer></div><script src="{BASE}assets/commerce-pages.js?v=20261103-1" defer></script><script src="{BASE}assets/customer-care.js?v=20261102-3" defer></script></body></html>'''
+<footer class="f-static-footer"><div class="f-container"><strong class="f-logo">FORME<small>EVERYDAY, REFINED</small></strong><small>Pilot catalogue · stock, variants and final delivery details are confirmed by the store before dispatch</small><nav class="f-static-legal"><a href="{BASE}blog/">Journal</a><a href="{BASE}pages/shipping-delivery.html">Shipping</a><a href="{BASE}pages/returns-refunds.html">Returns</a><a href="{BASE}pages/reviews.html">Reviews</a><a href="{BASE}pages/order-tracking.html">Track order</a><a href="{BASE}pages/privacy.html">Privacy</a><a href="{BASE}pages/terms.html">Terms</a><a href="{BASE}pages/contact.html">Contact</a></nav><a href="{BASE}" style="font-size:10px;color:#fff">Home ↗</a></div></footer></div><script src="{BASE}assets/commerce-pages.js?v=20261103-1" defer></script><script src="{BASE}assets/customer-care.js?v=20261102-3" defer></script></body></html>'''
 def main():
     data=json.loads((OUT/"catalog.json").read_text(encoding="utf-8"))
     cats=data["categories"]
     assert len(cats)==23 and all(len(c["products"])>=1 for c in cats)
     OUT.mkdir(parents=True,exist_ok=True)
-    (OUT/"index.html").write_text(make_page("Men's Collection","Explore men's everyday essentials, considered fits and modern classics. Browse all 23 categories and discover selected catalogue listings.",cats),encoding="utf-8")
+    (OUT/"index.html").write_text(make_page("Men's Collection","Explore men's everyday essentials, considered fits and modern classics. Browse all 23 categories and discover database-linked catalogue listings.",cats),encoding="utf-8")
     for c in cats:
         folder=OUT/c["slug"]; folder.mkdir(parents=True,exist_ok=True)
         desc=f'Explore the FORME {c["title"]} collection. Browse the catalogue listings in this category.'

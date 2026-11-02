@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "license": "Unsplash License",
-  "notice": "Demonstration catalogue: sample product names, illustrative prices and photos. Replace with verified inventory details before accepting orders.",
+  "notice": "FORME pilot catalogue linked to store_products records. Product names and listed prices are database-backed; photographs are representative catalogue images, not verified product photographs. Stock, sizes, variants and final delivery charges require store confirmation. Every new request remains pending review until the team confirms it.",
   "categories": [
     {
       "slug": "half-sleeve-t-shirt",
@@ -9,58 +9,76 @@
       "group": "Topwear",
       "products": [
         {
-          "id": "half-sleeve-t-shirt-01",
+          "id": "men-half-sleeve-t-shirt-01",
+          "product_id": "men-half-sleeve-t-shirt-01",
           "name": "Essential Crew Tee — Cloud",
           "price": 480,
-          "compareAt": 590,
-          "badge": "New Edit",
           "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85",
-          "description": "Half Sleeve T-shirt • Classic fit"
+          "description": "Half Sleeve T-shirt • Classic fit",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "half-sleeve-t-shirt-02",
+          "id": "men-half-sleeve-t-shirt-02",
+          "product_id": "men-half-sleeve-t-shirt-02",
           "name": "Heavyweight Oversized Tee — Graphite",
           "price": 555,
-          "compareAt": 680,
-          "badge": "Popular",
           "image": "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=900&q=85",
-          "description": "Half Sleeve T-shirt • Soft everyday feel"
+          "description": "Half Sleeve T-shirt • Soft everyday feel",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "half-sleeve-t-shirt-03",
+          "id": "men-half-sleeve-t-shirt-03",
+          "product_id": "men-half-sleeve-t-shirt-03",
           "name": "Everyday Cotton Tee — Olive",
           "price": 630,
-          "compareAt": 770,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1625910513413-5efba2c5e9a2?auto=format&fit=crop&w=900&q=85",
-          "description": "Half Sleeve T-shirt • Versatile styling"
+          "description": "Half Sleeve T-shirt • Versatile styling",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "half-sleeve-t-shirt-04",
+          "id": "men-half-sleeve-t-shirt-04",
+          "product_id": "men-half-sleeve-t-shirt-04",
           "name": "Relaxed Fit Tee — Sand",
           "price": 705,
-          "compareAt": 860,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1618354691438-25bc04584c23?auto=format&fit=crop&w=900&q=85",
-          "description": "Half Sleeve T-shirt • Comfort-led design"
+          "description": "Half Sleeve T-shirt • Comfort-led design",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "half-sleeve-t-shirt-05",
+          "id": "men-half-sleeve-t-shirt-05",
+          "product_id": "men-half-sleeve-t-shirt-05",
           "name": "Minimal Logo Tee — Black",
           "price": 780,
-          "compareAt": 950,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=900&q=85",
-          "description": "Half Sleeve T-shirt • Easy to pair"
+          "description": "Half Sleeve T-shirt • Easy to pair",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "half-sleeve-t-shirt-06",
+          "id": "men-half-sleeve-t-shirt-06",
+          "product_id": "men-half-sleeve-t-shirt-06",
           "name": "Premium Slub Tee — Stone",
           "price": 855,
-          "compareAt": 1040,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=900&q=85",
-          "description": "Half Sleeve T-shirt • Considered finish"
+          "description": "Half Sleeve T-shirt • Considered finish",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         }
       ]
     },
@@ -70,58 +88,76 @@
       "group": "Topwear",
       "products": [
         {
-          "id": "full-sleeve-t-shirt-01",
+          "id": "men-full-sleeve-t-shirt-01",
+          "product_id": "men-full-sleeve-t-shirt-01",
           "name": "Classic Long Sleeve Tee — Chalk",
           "price": 650,
-          "compareAt": 790,
-          "badge": "New Edit",
           "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85",
-          "description": "Full Sleeve T-shirt • Classic fit"
+          "description": "Full Sleeve T-shirt • Classic fit",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "full-sleeve-t-shirt-02",
+          "id": "men-full-sleeve-t-shirt-02",
+          "product_id": "men-full-sleeve-t-shirt-02",
           "name": "Ribbed Full Sleeve Tee — Ink",
           "price": 725,
-          "compareAt": 880,
-          "badge": "Popular",
           "image": "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=900&q=85",
-          "description": "Full Sleeve T-shirt • Soft everyday feel"
+          "description": "Full Sleeve T-shirt • Soft everyday feel",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "full-sleeve-t-shirt-03",
+          "id": "men-full-sleeve-t-shirt-03",
+          "product_id": "men-full-sleeve-t-shirt-03",
           "name": "Weekend Layer Tee — Moss",
           "price": 800,
-          "compareAt": 980,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1625910513413-5efba2c5e9a2?auto=format&fit=crop&w=900&q=85",
-          "description": "Full Sleeve T-shirt • Versatile styling"
+          "description": "Full Sleeve T-shirt • Versatile styling",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "full-sleeve-t-shirt-04",
+          "id": "men-full-sleeve-t-shirt-04",
+          "product_id": "men-full-sleeve-t-shirt-04",
           "name": "Soft Cotton Long Sleeve — Ash",
           "price": 875,
-          "compareAt": 1070,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1618354691438-25bc04584c23?auto=format&fit=crop&w=900&q=85",
-          "description": "Full Sleeve T-shirt • Comfort-led design"
+          "description": "Full Sleeve T-shirt • Comfort-led design",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "full-sleeve-t-shirt-05",
+          "id": "men-full-sleeve-t-shirt-05",
+          "product_id": "men-full-sleeve-t-shirt-05",
           "name": "Athletic Full Sleeve Tee — Navy",
           "price": 950,
-          "compareAt": 1160,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=900&q=85",
-          "description": "Full Sleeve T-shirt • Easy to pair"
+          "description": "Full Sleeve T-shirt • Easy to pair",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "full-sleeve-t-shirt-06",
+          "id": "men-full-sleeve-t-shirt-06",
+          "product_id": "men-full-sleeve-t-shirt-06",
           "name": "Relaxed Sleeve Tee — Oat",
           "price": 1025,
-          "compareAt": 1250,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=900&q=85",
-          "description": "Full Sleeve T-shirt • Considered finish"
+          "description": "Full Sleeve T-shirt • Considered finish",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         }
       ]
     },
@@ -131,58 +167,76 @@
       "group": "Topwear",
       "products": [
         {
-          "id": "polo-t-shirt-01",
+          "id": "men-polo-t-shirt-01",
+          "product_id": "men-polo-t-shirt-01",
           "name": "Classic Piqué Polo — Navy",
           "price": 890,
-          "compareAt": 1090,
-          "badge": "New Edit",
           "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85",
-          "description": "Polo T-shirt • Classic fit"
+          "description": "Polo T-shirt • Classic fit",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "polo-t-shirt-02",
+          "id": "men-polo-t-shirt-02",
+          "product_id": "men-polo-t-shirt-02",
           "name": "Textured Polo — Ivory",
           "price": 1000,
-          "compareAt": 1220,
-          "badge": "Popular",
           "image": "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=900&q=85",
-          "description": "Polo T-shirt • Soft everyday feel"
+          "description": "Polo T-shirt • Soft everyday feel",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "polo-t-shirt-03",
+          "id": "men-polo-t-shirt-03",
+          "product_id": "men-polo-t-shirt-03",
           "name": "Contrast Collar Polo — Olive",
           "price": 1110,
-          "compareAt": 1350,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1625910513413-5efba2c5e9a2?auto=format&fit=crop&w=900&q=85",
-          "description": "Polo T-shirt • Versatile styling"
+          "description": "Polo T-shirt • Versatile styling",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "polo-t-shirt-04",
+          "id": "men-polo-t-shirt-04",
+          "product_id": "men-polo-t-shirt-04",
           "name": "Everyday Polo — Charcoal",
           "price": 1220,
-          "compareAt": 1490,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1618354691438-25bc04584c23?auto=format&fit=crop&w=900&q=85",
-          "description": "Polo T-shirt • Comfort-led design"
+          "description": "Polo T-shirt • Comfort-led design",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "polo-t-shirt-05",
+          "id": "men-polo-t-shirt-05",
+          "product_id": "men-polo-t-shirt-05",
           "name": "Premium Knit Polo — Sand",
           "price": 1330,
-          "compareAt": 1620,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=900&q=85",
-          "description": "Polo T-shirt • Easy to pair"
+          "description": "Polo T-shirt • Easy to pair",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "polo-t-shirt-06",
+          "id": "men-polo-t-shirt-06",
+          "product_id": "men-polo-t-shirt-06",
           "name": "Smart Casual Polo — Burgundy",
           "price": 1440,
-          "compareAt": 1760,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=900&q=85",
-          "description": "Polo T-shirt • Considered finish"
+          "description": "Polo T-shirt • Considered finish",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         }
       ]
     },
@@ -192,58 +246,76 @@
       "group": "Topwear",
       "products": [
         {
-          "id": "shirt-01",
+          "id": "men-shirt-01",
+          "product_id": "men-shirt-01",
           "name": "Oxford Button-Down — White",
           "price": 1050,
-          "compareAt": 1280,
-          "badge": "New Edit",
           "image": "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=900&q=85",
-          "description": "Shirt • Classic fit"
+          "description": "Shirt • Classic fit",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "shirt-02",
+          "id": "men-shirt-02",
+          "product_id": "men-shirt-02",
           "name": "Linen Blend Shirt — Sky",
           "price": 1160,
-          "compareAt": 1420,
-          "badge": "Popular",
           "image": "https://images.unsplash.com/photo-1603252110481-7ba873bf42ab?auto=format&fit=crop&w=900&q=85",
-          "description": "Shirt • Soft everyday feel"
+          "description": "Shirt • Soft everyday feel",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "shirt-03",
+          "id": "men-shirt-03",
+          "product_id": "men-shirt-03",
           "name": "Everyday Check Shirt — Forest",
           "price": 1270,
-          "compareAt": 1550,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1620012253295-c15a3e3acfa4?auto=format&fit=crop&w=900&q=85",
-          "description": "Shirt • Versatile styling"
+          "description": "Shirt • Versatile styling",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "shirt-04",
+          "id": "men-shirt-04",
+          "product_id": "men-shirt-04",
           "name": "Textured Casual Shirt — Stone",
           "price": 1380,
-          "compareAt": 1680,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=900&q=85",
-          "description": "Shirt • Comfort-led design"
+          "description": "Shirt • Comfort-led design",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "shirt-05",
+          "id": "men-shirt-05",
+          "product_id": "men-shirt-05",
           "name": "Premium Poplin Shirt — Black",
           "price": 1490,
-          "compareAt": 1820,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1627225924765-552d49cf47ad?auto=format&fit=crop&w=900&q=85",
-          "description": "Shirt • Easy to pair"
+          "description": "Shirt • Easy to pair",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "shirt-06",
+          "id": "men-shirt-06",
+          "product_id": "men-shirt-06",
           "name": "Relaxed Overshirt — Taupe",
           "price": 1600,
-          "compareAt": 1950,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85",
-          "description": "Shirt • Considered finish"
+          "description": "Shirt • Considered finish",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         }
       ]
     },
@@ -253,58 +325,76 @@
       "group": "Topwear",
       "products": [
         {
-          "id": "panjabi-01",
+          "id": "men-panjabi-01",
+          "product_id": "men-panjabi-01",
           "name": "Classic Cotton Panjabi — Ivory",
           "price": 1490,
-          "compareAt": 1820,
-          "badge": "New Edit",
           "image": "https://images.unsplash.com/photo-1774527929685-0372244a6232?auto=format&fit=crop&w=900&q=85",
-          "description": "Panjabi • Classic fit"
+          "description": "Panjabi • Classic fit",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "panjabi-02",
+          "id": "men-panjabi-02",
+          "product_id": "men-panjabi-02",
           "name": "Festive Panjabi — Rose",
           "price": 1600,
-          "compareAt": 1950,
-          "badge": "Popular",
           "image": "https://images.unsplash.com/photo-1774437790995-9a8513532a25?auto=format&fit=crop&w=900&q=85",
-          "description": "Panjabi • Soft everyday feel"
+          "description": "Panjabi • Soft everyday feel",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "panjabi-03",
+          "id": "men-panjabi-03",
+          "product_id": "men-panjabi-03",
           "name": "Textured Panjabi — Mustard",
           "price": 1710,
-          "compareAt": 2090,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1774437787442-d58f8534ba9f?auto=format&fit=crop&w=900&q=85",
-          "description": "Panjabi • Versatile styling"
+          "description": "Panjabi • Versatile styling",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "panjabi-04",
+          "id": "men-panjabi-04",
+          "product_id": "men-panjabi-04",
           "name": "Premium Panjabi — Sage",
           "price": 1820,
-          "compareAt": 2220,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1774267230662-575d1f4ec1bd?auto=format&fit=crop&w=900&q=85",
-          "description": "Panjabi • Comfort-led design"
+          "description": "Panjabi • Comfort-led design",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "panjabi-05",
+          "id": "men-panjabi-05",
+          "product_id": "men-panjabi-05",
           "name": "Embroidered Panjabi — Lavender",
           "price": 1930,
-          "compareAt": 2350,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=85",
-          "description": "Panjabi • Easy to pair"
+          "description": "Panjabi • Easy to pair",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "panjabi-06",
+          "id": "men-panjabi-06",
+          "product_id": "men-panjabi-06",
           "name": "Everyday Panjabi — White",
           "price": 2040,
-          "compareAt": 2490,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&w=900&q=85",
-          "description": "Panjabi • Considered finish"
+          "description": "Panjabi • Considered finish",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         }
       ]
     },
@@ -314,58 +404,76 @@
       "group": "Topwear",
       "products": [
         {
-          "id": "hoodie-01",
+          "id": "men-hoodie-01",
+          "product_id": "men-hoodie-01",
           "name": "Essential Pullover Hoodie — Black",
           "price": 1590,
-          "compareAt": 1940,
-          "badge": "New Edit",
           "image": "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=85",
-          "description": "Hoodie • Classic fit"
+          "description": "Hoodie • Classic fit",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "hoodie-02",
+          "id": "men-hoodie-02",
+          "product_id": "men-hoodie-02",
           "name": "Soft Fleece Hoodie — Oat",
           "price": 1700,
-          "compareAt": 2070,
-          "badge": "Popular",
           "image": "https://images.unsplash.com/photo-1578681994506-b8f463449011?auto=format&fit=crop&w=900&q=85",
-          "description": "Hoodie • Soft everyday feel"
+          "description": "Hoodie • Soft everyday feel",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "hoodie-03",
+          "id": "men-hoodie-03",
+          "product_id": "men-hoodie-03",
           "name": "Relaxed Hoodie — Slate",
           "price": 1810,
-          "compareAt": 2210,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=900&q=85",
-          "description": "Hoodie • Versatile styling"
+          "description": "Hoodie • Versatile styling",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "hoodie-04",
+          "id": "men-hoodie-04",
+          "product_id": "men-hoodie-04",
           "name": "Zip-Up Hoodie — Navy",
           "price": 1920,
-          "compareAt": 2340,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1776843370483-4f793bc14739?auto=format&fit=crop&w=900&q=85",
-          "description": "Hoodie • Comfort-led design"
+          "description": "Hoodie • Comfort-led design",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "hoodie-05",
+          "id": "men-hoodie-05",
+          "product_id": "men-hoodie-05",
           "name": "Graphic Hoodie — Olive",
           "price": 2030,
-          "compareAt": 2480,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1559235434-81b47a0d62d3?auto=format&fit=crop&w=900&q=85",
-          "description": "Hoodie • Easy to pair"
+          "description": "Hoodie • Easy to pair",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "hoodie-06",
+          "id": "men-hoodie-06",
+          "product_id": "men-hoodie-06",
           "name": "Heavyweight Hoodie — Charcoal",
           "price": 2140,
-          "compareAt": 2610,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=85",
-          "description": "Hoodie • Considered finish"
+          "description": "Hoodie • Considered finish",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         }
       ]
     },
@@ -375,58 +483,76 @@
       "group": "Topwear",
       "products": [
         {
-          "id": "jacket-01",
+          "id": "men-jacket-01",
+          "product_id": "men-jacket-01",
           "name": "Suede Touch Jacket — Camel",
           "price": 2190,
-          "compareAt": 2670,
-          "badge": "New Edit",
           "image": "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=85",
-          "description": "Jacket • Classic fit"
+          "description": "Jacket • Classic fit",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "jacket-02",
+          "id": "men-jacket-02",
+          "product_id": "men-jacket-02",
           "name": "Denim Jacket — Indigo",
           "price": 2300,
-          "compareAt": 2810,
-          "badge": "Popular",
           "image": "https://images.unsplash.com/photo-1578681994506-b8f463449011?auto=format&fit=crop&w=900&q=85",
-          "description": "Jacket • Soft everyday feel"
+          "description": "Jacket • Soft everyday feel",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "jacket-03",
+          "id": "men-jacket-03",
+          "product_id": "men-jacket-03",
           "name": "Everyday Bomber — Black",
           "price": 2410,
-          "compareAt": 2940,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=900&q=85",
-          "description": "Jacket • Versatile styling"
+          "description": "Jacket • Versatile styling",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "jacket-04",
+          "id": "men-jacket-04",
+          "product_id": "men-jacket-04",
           "name": "Lightweight Utility Jacket — Olive",
           "price": 2520,
-          "compareAt": 3070,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1776843370483-4f793bc14739?auto=format&fit=crop&w=900&q=85",
-          "description": "Jacket • Comfort-led design"
+          "description": "Jacket • Comfort-led design",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "jacket-05",
+          "id": "men-jacket-05",
+          "product_id": "men-jacket-05",
           "name": "Classic Layer Jacket — Stone",
           "price": 2630,
-          "compareAt": 3210,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1559235434-81b47a0d62d3?auto=format&fit=crop&w=900&q=85",
-          "description": "Jacket • Easy to pair"
+          "description": "Jacket • Easy to pair",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "jacket-06",
+          "id": "men-jacket-06",
+          "product_id": "men-jacket-06",
           "name": "Textured Zip Jacket — Navy",
           "price": 2740,
-          "compareAt": 3340,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=85",
-          "description": "Jacket • Considered finish"
+          "description": "Jacket • Considered finish",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         }
       ]
     },
@@ -436,58 +562,76 @@
       "group": "Topwear",
       "products": [
         {
-          "id": "sweatshirt-01",
+          "id": "men-sweatshirt-01",
+          "product_id": "men-sweatshirt-01",
           "name": "Crewneck Sweatshirt — Ash",
           "price": 1190,
-          "compareAt": 1450,
-          "badge": "New Edit",
           "image": "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=85",
-          "description": "Sweatshirt • Classic fit"
+          "description": "Sweatshirt • Classic fit",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "sweatshirt-02",
+          "id": "men-sweatshirt-02",
+          "product_id": "men-sweatshirt-02",
           "name": "Premium Fleece Sweatshirt — Navy",
           "price": 1300,
-          "compareAt": 1590,
-          "badge": "Popular",
           "image": "https://images.unsplash.com/photo-1578681994506-b8f463449011?auto=format&fit=crop&w=900&q=85",
-          "description": "Sweatshirt • Soft everyday feel"
+          "description": "Sweatshirt • Soft everyday feel",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "sweatshirt-03",
+          "id": "men-sweatshirt-03",
+          "product_id": "men-sweatshirt-03",
           "name": "Relaxed Sweatshirt — Oat",
           "price": 1410,
-          "compareAt": 1720,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=900&q=85",
-          "description": "Sweatshirt • Versatile styling"
+          "description": "Sweatshirt • Versatile styling",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "sweatshirt-04",
+          "id": "men-sweatshirt-04",
+          "product_id": "men-sweatshirt-04",
           "name": "Minimal Crew Sweat — Forest",
           "price": 1520,
-          "compareAt": 1850,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1776843370483-4f793bc14739?auto=format&fit=crop&w=900&q=85",
-          "description": "Sweatshirt • Comfort-led design"
+          "description": "Sweatshirt • Comfort-led design",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "sweatshirt-05",
+          "id": "men-sweatshirt-05",
+          "product_id": "men-sweatshirt-05",
           "name": "Textured Sweatshirt — Graphite",
           "price": 1630,
-          "compareAt": 1990,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1559235434-81b47a0d62d3?auto=format&fit=crop&w=900&q=85",
-          "description": "Sweatshirt • Easy to pair"
+          "description": "Sweatshirt • Easy to pair",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "sweatshirt-06",
+          "id": "men-sweatshirt-06",
+          "product_id": "men-sweatshirt-06",
           "name": "Everyday Sweatshirt — Cream",
           "price": 1740,
-          "compareAt": 2120,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=85",
-          "description": "Sweatshirt • Considered finish"
+          "description": "Sweatshirt • Considered finish",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         }
       ]
     },
@@ -497,58 +641,76 @@
       "group": "Bottomwear",
       "products": [
         {
-          "id": "comfy-trouser-01",
+          "id": "men-comfy-trouser-01",
+          "product_id": "men-comfy-trouser-01",
           "name": "Relaxed Cotton Trouser — Stone",
           "price": 890,
-          "compareAt": 1090,
-          "badge": "New Edit",
           "image": "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=900&q=85",
-          "description": "Comfy Trouser • Classic fit"
+          "description": "Comfy Trouser • Classic fit",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "comfy-trouser-02",
+          "id": "men-comfy-trouser-02",
+          "product_id": "men-comfy-trouser-02",
           "name": "Everyday Drawstring Trouser — Navy",
           "price": 1000,
-          "compareAt": 1220,
-          "badge": "Popular",
           "image": "https://images.unsplash.com/photo-1506629905607-d9bd6c54b6f0?auto=format&fit=crop&w=900&q=85",
-          "description": "Comfy Trouser • Soft everyday feel"
+          "description": "Comfy Trouser • Soft everyday feel",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "comfy-trouser-03",
+          "id": "men-comfy-trouser-03",
+          "product_id": "men-comfy-trouser-03",
           "name": "Soft Twill Trouser — Olive",
           "price": 1110,
-          "compareAt": 1350,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=900&q=85",
-          "description": "Comfy Trouser • Versatile styling"
+          "description": "Comfy Trouser • Versatile styling",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "comfy-trouser-04",
+          "id": "men-comfy-trouser-04",
+          "product_id": "men-comfy-trouser-04",
           "name": "Tapered Comfort Trouser — Charcoal",
           "price": 1220,
-          "compareAt": 1490,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=900&q=85",
-          "description": "Comfy Trouser • Comfort-led design"
+          "description": "Comfy Trouser • Comfort-led design",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "comfy-trouser-05",
+          "id": "men-comfy-trouser-05",
+          "product_id": "men-comfy-trouser-05",
           "name": "Lounge Fit Trouser — Sand",
           "price": 1330,
-          "compareAt": 1620,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=900&q=85",
-          "description": "Comfy Trouser • Easy to pair"
+          "description": "Comfy Trouser • Easy to pair",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "comfy-trouser-06",
+          "id": "men-comfy-trouser-06",
+          "product_id": "men-comfy-trouser-06",
           "name": "Straight Comfort Trouser — Black",
           "price": 1440,
-          "compareAt": 1760,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=900&q=85",
-          "description": "Comfy Trouser • Considered finish"
+          "description": "Comfy Trouser • Considered finish",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         }
       ]
     },
@@ -558,58 +720,76 @@
       "group": "Bottomwear",
       "products": [
         {
-          "id": "sports-trouser-01",
+          "id": "men-sports-trouser-01",
+          "product_id": "men-sports-trouser-01",
           "name": "Active Track Trouser — Black",
           "price": 690,
-          "compareAt": 840,
-          "badge": "New Edit",
           "image": "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=900&q=85",
-          "description": "Sports Trouser • Classic fit"
+          "description": "Sports Trouser • Classic fit",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "sports-trouser-02",
+          "id": "men-sports-trouser-02",
+          "product_id": "men-sports-trouser-02",
           "name": "Performance Jogger — Navy",
           "price": 765,
-          "compareAt": 930,
-          "badge": "Popular",
           "image": "https://images.unsplash.com/photo-1506629905607-d9bd6c54b6f0?auto=format&fit=crop&w=900&q=85",
-          "description": "Sports Trouser • Soft everyday feel"
+          "description": "Sports Trouser • Soft everyday feel",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "sports-trouser-03",
+          "id": "men-sports-trouser-03",
+          "product_id": "men-sports-trouser-03",
           "name": "Training Trouser — Graphite",
           "price": 840,
-          "compareAt": 1020,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=900&q=85",
-          "description": "Sports Trouser • Versatile styling"
+          "description": "Sports Trouser • Versatile styling",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "sports-trouser-04",
+          "id": "men-sports-trouser-04",
+          "product_id": "men-sports-trouser-04",
           "name": "Quick-Dry Track Pant — Olive",
           "price": 915,
-          "compareAt": 1120,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=900&q=85",
-          "description": "Sports Trouser • Comfort-led design"
+          "description": "Sports Trouser • Comfort-led design",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "sports-trouser-05",
+          "id": "men-sports-trouser-05",
+          "product_id": "men-sports-trouser-05",
           "name": "Athletic Taper Trouser — Slate",
           "price": 990,
-          "compareAt": 1210,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=900&q=85",
-          "description": "Sports Trouser • Easy to pair"
+          "description": "Sports Trouser • Easy to pair",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "sports-trouser-06",
+          "id": "men-sports-trouser-06",
+          "product_id": "men-sports-trouser-06",
           "name": "Everyday Sports Trouser — Charcoal",
           "price": 1065,
-          "compareAt": 1300,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=900&q=85",
-          "description": "Sports Trouser • Considered finish"
+          "description": "Sports Trouser • Considered finish",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         }
       ]
     },
@@ -619,58 +799,76 @@
       "group": "Bottomwear",
       "products": [
         {
-          "id": "jeans-01",
+          "id": "men-jeans-01",
+          "product_id": "men-jeans-01",
           "name": "Straight Fit Denim — Mid Blue",
           "price": 1490,
-          "compareAt": 1820,
-          "badge": "New Edit",
           "image": "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=900&q=85",
-          "description": "Jeans • Classic fit"
+          "description": "Jeans • Classic fit",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "jeans-02",
+          "id": "men-jeans-02",
+          "product_id": "men-jeans-02",
           "name": "Classic Slim Jeans — Dark Indigo",
           "price": 1600,
-          "compareAt": 1950,
-          "badge": "Popular",
           "image": "https://images.unsplash.com/photo-1506629905607-d9bd6c54b6f0?auto=format&fit=crop&w=900&q=85",
-          "description": "Jeans • Soft everyday feel"
+          "description": "Jeans • Soft everyday feel",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "jeans-03",
+          "id": "men-jeans-03",
+          "product_id": "men-jeans-03",
           "name": "Relaxed Denim — Washed Black",
           "price": 1710,
-          "compareAt": 2090,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=900&q=85",
-          "description": "Jeans • Versatile styling"
+          "description": "Jeans • Versatile styling",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "jeans-04",
+          "id": "men-jeans-04",
+          "product_id": "men-jeans-04",
           "name": "Everyday Straight Jeans — Light Blue",
           "price": 1820,
-          "compareAt": 2220,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=900&q=85",
-          "description": "Jeans • Comfort-led design"
+          "description": "Jeans • Comfort-led design",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "jeans-05",
+          "id": "men-jeans-05",
+          "product_id": "men-jeans-05",
           "name": "Tapered Denim — Deep Blue",
           "price": 1930,
-          "compareAt": 2350,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=900&q=85",
-          "description": "Jeans • Easy to pair"
+          "description": "Jeans • Easy to pair",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "jeans-06",
+          "id": "men-jeans-06",
+          "product_id": "men-jeans-06",
           "name": "Vintage Wash Jeans — Charcoal",
           "price": 2040,
-          "compareAt": 2490,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=900&q=85",
-          "description": "Jeans • Considered finish"
+          "description": "Jeans • Considered finish",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         }
       ]
     },
@@ -680,58 +878,76 @@
       "group": "Bottomwear",
       "products": [
         {
-          "id": "joggers-01",
+          "id": "men-joggers-01",
+          "product_id": "men-joggers-01",
           "name": "Essential Jogger — Charcoal",
           "price": 850,
-          "compareAt": 1040,
-          "badge": "New Edit",
           "image": "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=900&q=85",
-          "description": "Joggers • Classic fit"
+          "description": "Joggers • Classic fit",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "joggers-02",
+          "id": "men-joggers-02",
+          "product_id": "men-joggers-02",
           "name": "Fleece Jogger — Heather Grey",
           "price": 960,
-          "compareAt": 1170,
-          "badge": "Popular",
           "image": "https://images.unsplash.com/photo-1506629905607-d9bd6c54b6f0?auto=format&fit=crop&w=900&q=85",
-          "description": "Joggers • Soft everyday feel"
+          "description": "Joggers • Soft everyday feel",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "joggers-03",
+          "id": "men-joggers-03",
+          "product_id": "men-joggers-03",
           "name": "Tapered Jogger — Black",
           "price": 1070,
-          "compareAt": 1310,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=900&q=85",
-          "description": "Joggers • Versatile styling"
+          "description": "Joggers • Versatile styling",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "joggers-04",
+          "id": "men-joggers-04",
+          "product_id": "men-joggers-04",
           "name": "Everyday Jogger — Olive",
           "price": 1180,
-          "compareAt": 1440,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=900&q=85",
-          "description": "Joggers • Comfort-led design"
+          "description": "Joggers • Comfort-led design",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "joggers-05",
+          "id": "men-joggers-05",
+          "product_id": "men-joggers-05",
           "name": "Active Jogger — Navy",
           "price": 1290,
-          "compareAt": 1570,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=900&q=85",
-          "description": "Joggers • Easy to pair"
+          "description": "Joggers • Easy to pair",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "joggers-06",
+          "id": "men-joggers-06",
+          "product_id": "men-joggers-06",
           "name": "Relaxed Fit Jogger — Stone",
           "price": 1400,
-          "compareAt": 1710,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=900&q=85",
-          "description": "Joggers • Considered finish"
+          "description": "Joggers • Considered finish",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         }
       ]
     },
@@ -741,58 +957,76 @@
       "group": "Bottomwear",
       "products": [
         {
-          "id": "cargo-pants-01",
+          "id": "men-cargo-pants-01",
+          "product_id": "men-cargo-pants-01",
           "name": "Utility Cargo Pant — Olive",
           "price": 1390,
-          "compareAt": 1700,
-          "badge": "New Edit",
           "image": "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=900&q=85",
-          "description": "Cargo Pants • Classic fit"
+          "description": "Cargo Pants • Classic fit",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "cargo-pants-02",
+          "id": "men-cargo-pants-02",
+          "product_id": "men-cargo-pants-02",
           "name": "Relaxed Cargo — Sand",
           "price": 1500,
-          "compareAt": 1830,
-          "badge": "Popular",
           "image": "https://images.unsplash.com/photo-1506629905607-d9bd6c54b6f0?auto=format&fit=crop&w=900&q=85",
-          "description": "Cargo Pants • Soft everyday feel"
+          "description": "Cargo Pants • Soft everyday feel",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "cargo-pants-03",
+          "id": "men-cargo-pants-03",
+          "product_id": "men-cargo-pants-03",
           "name": "Tapered Cargo — Black",
           "price": 1610,
-          "compareAt": 1960,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=900&q=85",
-          "description": "Cargo Pants • Versatile styling"
+          "description": "Cargo Pants • Versatile styling",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "cargo-pants-04",
+          "id": "men-cargo-pants-04",
+          "product_id": "men-cargo-pants-04",
           "name": "Everyday Cargo — Khaki",
           "price": 1720,
-          "compareAt": 2100,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=900&q=85",
-          "description": "Cargo Pants • Comfort-led design"
+          "description": "Cargo Pants • Comfort-led design",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "cargo-pants-05",
+          "id": "men-cargo-pants-05",
+          "product_id": "men-cargo-pants-05",
           "name": "Multi-Pocket Cargo — Slate",
           "price": 1830,
-          "compareAt": 2230,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=900&q=85",
-          "description": "Cargo Pants • Easy to pair"
+          "description": "Cargo Pants • Easy to pair",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "cargo-pants-06",
+          "id": "men-cargo-pants-06",
+          "product_id": "men-cargo-pants-06",
           "name": "Street Cargo Pant — Charcoal",
           "price": 1940,
-          "compareAt": 2370,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=900&q=85",
-          "description": "Cargo Pants • Considered finish"
+          "description": "Cargo Pants • Considered finish",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         }
       ]
     },
@@ -802,58 +1036,76 @@
       "group": "Bottomwear",
       "products": [
         {
-          "id": "chino-pants-01",
+          "id": "men-chino-pants-01",
+          "product_id": "men-chino-pants-01",
           "name": "Classic Chino — Beige",
           "price": 1290,
-          "compareAt": 1570,
-          "badge": "New Edit",
           "image": "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=900&q=85",
-          "description": "Chino Pants • Classic fit"
+          "description": "Chino Pants • Classic fit",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "chino-pants-02",
+          "id": "men-chino-pants-02",
+          "product_id": "men-chino-pants-02",
           "name": "Slim Cotton Chino — Navy",
           "price": 1400,
-          "compareAt": 1710,
-          "badge": "Popular",
           "image": "https://images.unsplash.com/photo-1506629905607-d9bd6c54b6f0?auto=format&fit=crop&w=900&q=85",
-          "description": "Chino Pants • Soft everyday feel"
+          "description": "Chino Pants • Soft everyday feel",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "chino-pants-03",
+          "id": "men-chino-pants-03",
+          "product_id": "men-chino-pants-03",
           "name": "Straight Chino — Olive",
           "price": 1510,
-          "compareAt": 1840,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=900&q=85",
-          "description": "Chino Pants • Versatile styling"
+          "description": "Chino Pants • Versatile styling",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "chino-pants-04",
+          "id": "men-chino-pants-04",
+          "product_id": "men-chino-pants-04",
           "name": "Smart Casual Chino — Stone",
           "price": 1620,
-          "compareAt": 1980,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=900&q=85",
-          "description": "Chino Pants • Comfort-led design"
+          "description": "Chino Pants • Comfort-led design",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "chino-pants-05",
+          "id": "men-chino-pants-05",
+          "product_id": "men-chino-pants-05",
           "name": "Stretch Chino — Charcoal",
           "price": 1730,
-          "compareAt": 2110,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=900&q=85",
-          "description": "Chino Pants • Easy to pair"
+          "description": "Chino Pants • Easy to pair",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "chino-pants-06",
+          "id": "men-chino-pants-06",
+          "product_id": "men-chino-pants-06",
           "name": "Weekend Chino — Sand",
           "price": 1840,
-          "compareAt": 2240,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=900&q=85",
-          "description": "Chino Pants • Considered finish"
+          "description": "Chino Pants • Considered finish",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         }
       ]
     },
@@ -863,58 +1115,76 @@
       "group": "Bottomwear",
       "products": [
         {
-          "id": "shorts-01",
+          "id": "men-shorts-01",
+          "product_id": "men-shorts-01",
           "name": "Everyday Cotton Shorts — Sand",
           "price": 590,
-          "compareAt": 720,
-          "badge": "New Edit",
           "image": "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=900&q=85",
-          "description": "Shorts • Classic fit"
+          "description": "Shorts • Classic fit",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "shorts-02",
+          "id": "men-shorts-02",
+          "product_id": "men-shorts-02",
           "name": "Relaxed Chino Shorts — Navy",
           "price": 665,
-          "compareAt": 810,
-          "badge": "Popular",
           "image": "https://images.unsplash.com/photo-1506629905607-d9bd6c54b6f0?auto=format&fit=crop&w=900&q=85",
-          "description": "Shorts • Soft everyday feel"
+          "description": "Shorts • Soft everyday feel",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "shorts-03",
+          "id": "men-shorts-03",
+          "product_id": "men-shorts-03",
           "name": "Active Shorts — Black",
           "price": 740,
-          "compareAt": 900,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=900&q=85",
-          "description": "Shorts • Versatile styling"
+          "description": "Shorts • Versatile styling",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "shorts-04",
+          "id": "men-shorts-04",
+          "product_id": "men-shorts-04",
           "name": "Weekend Drawstring Shorts — Olive",
           "price": 815,
-          "compareAt": 990,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=900&q=85",
-          "description": "Shorts • Comfort-led design"
+          "description": "Shorts • Comfort-led design",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "shorts-05",
+          "id": "men-shorts-05",
+          "product_id": "men-shorts-05",
           "name": "Textured Shorts — Stone",
           "price": 890,
-          "compareAt": 1090,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=900&q=85",
-          "description": "Shorts • Easy to pair"
+          "description": "Shorts • Easy to pair",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "shorts-06",
+          "id": "men-shorts-06",
+          "product_id": "men-shorts-06",
           "name": "Training Shorts — Charcoal",
           "price": 965,
-          "compareAt": 1180,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=900&q=85",
-          "description": "Shorts • Considered finish"
+          "description": "Shorts • Considered finish",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         }
       ]
     },
@@ -924,58 +1194,76 @@
       "group": "Bottomwear",
       "products": [
         {
-          "id": "pajama-01",
+          "id": "men-pajama-01",
+          "product_id": "men-pajama-01",
           "name": "Soft Cotton Pajama — Grey",
           "price": 650,
-          "compareAt": 790,
-          "badge": "New Edit",
           "image": "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=900&q=85",
-          "description": "Pajama • Classic fit"
+          "description": "Pajama • Classic fit",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "pajama-02",
+          "id": "men-pajama-02",
+          "product_id": "men-pajama-02",
           "name": "Relaxed Lounge Pajama — Navy",
           "price": 725,
-          "compareAt": 880,
-          "badge": "Popular",
           "image": "https://images.unsplash.com/photo-1506629905607-d9bd6c54b6f0?auto=format&fit=crop&w=900&q=85",
-          "description": "Pajama • Soft everyday feel"
+          "description": "Pajama • Soft everyday feel",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "pajama-03",
+          "id": "men-pajama-03",
+          "product_id": "men-pajama-03",
           "name": "Check Lounge Pajama — Blue",
           "price": 800,
-          "compareAt": 980,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=900&q=85",
-          "description": "Pajama • Versatile styling"
+          "description": "Pajama • Versatile styling",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "pajama-04",
+          "id": "men-pajama-04",
+          "product_id": "men-pajama-04",
           "name": "Everyday Pajama — Charcoal",
           "price": 875,
-          "compareAt": 1070,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=900&q=85",
-          "description": "Pajama • Comfort-led design"
+          "description": "Pajama • Comfort-led design",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "pajama-05",
+          "id": "men-pajama-05",
+          "product_id": "men-pajama-05",
           "name": "Lightweight Pajama — Cream",
           "price": 950,
-          "compareAt": 1160,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=900&q=85",
-          "description": "Pajama • Easy to pair"
+          "description": "Pajama • Easy to pair",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "pajama-06",
+          "id": "men-pajama-06",
+          "product_id": "men-pajama-06",
           "name": "Comfort Fit Pajama — Olive",
           "price": 1025,
-          "compareAt": 1250,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=900&q=85",
-          "description": "Pajama • Considered finish"
+          "description": "Pajama • Considered finish",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         }
       ]
     },
@@ -985,58 +1273,76 @@
       "group": "Accessories",
       "products": [
         {
-          "id": "face-mask-01",
+          "id": "men-face-mask-01",
+          "product_id": "men-face-mask-01",
           "name": "Reusable Cotton Face Mask — Black",
           "price": 90,
-          "compareAt": 110,
-          "badge": "New Edit",
           "image": "https://images.unsplash.com/photo-1584634731339-252c581abfc5?auto=format&fit=crop&w=900&q=85",
-          "description": "Face Mask • Classic fit"
+          "description": "Face Mask • Classic fit",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "face-mask-02",
+          "id": "men-face-mask-02",
+          "product_id": "men-face-mask-02",
           "name": "Soft Everyday Mask — Charcoal",
           "price": 125,
-          "compareAt": 150,
-          "badge": "Popular",
           "image": "https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=900&q=85",
-          "description": "Face Mask • Soft everyday feel"
+          "description": "Face Mask • Soft everyday feel",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "face-mask-03",
+          "id": "men-face-mask-03",
+          "product_id": "men-face-mask-03",
           "name": "Breathable Mask — Navy",
           "price": 160,
-          "compareAt": 200,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=900&q=85",
-          "description": "Face Mask • Versatile styling"
+          "description": "Face Mask • Versatile styling",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "face-mask-04",
+          "id": "men-face-mask-04",
+          "product_id": "men-face-mask-04",
           "name": "Three-Layer Fabric Mask — Olive",
           "price": 195,
-          "compareAt": 240,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1587614382346-4ec70e388b28?auto=format&fit=crop&w=900&q=85",
-          "description": "Face Mask • Comfort-led design"
+          "description": "Face Mask • Comfort-led design",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "face-mask-05",
+          "id": "men-face-mask-05",
+          "product_id": "men-face-mask-05",
           "name": "Comfort Fit Mask — Stone",
           "price": 230,
-          "compareAt": 280,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&w=900&q=85",
-          "description": "Face Mask • Easy to pair"
+          "description": "Face Mask • Easy to pair",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "face-mask-06",
+          "id": "men-face-mask-06",
+          "product_id": "men-face-mask-06",
           "name": "Classic Cotton Mask — Grey",
           "price": 265,
-          "compareAt": 320,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=900&q=85",
-          "description": "Face Mask • Considered finish"
+          "description": "Face Mask • Considered finish",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         }
       ]
     },
@@ -1046,58 +1352,76 @@
       "group": "Accessories",
       "products": [
         {
-          "id": "underwear-01",
+          "id": "men-underwear-01",
+          "product_id": "men-underwear-01",
           "name": "Cotton Boxer Brief — Black",
           "price": 190,
-          "compareAt": 230,
-          "badge": "New Edit",
           "image": "https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&w=900&q=85",
-          "description": "Underwear • Classic fit"
+          "description": "Underwear • Classic fit",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "underwear-02",
+          "id": "men-underwear-02",
+          "product_id": "men-underwear-02",
           "name": "Soft Stretch Trunk — Navy",
           "price": 225,
-          "compareAt": 270,
-          "badge": "Popular",
           "image": "https://images.unsplash.com/photo-1583743814966-8936f37f4678?auto=format&fit=crop&w=900&q=85",
-          "description": "Underwear • Soft everyday feel"
+          "description": "Underwear • Soft everyday feel",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "underwear-03",
+          "id": "men-underwear-03",
+          "product_id": "men-underwear-03",
           "name": "Everyday Cotton Brief — Charcoal",
           "price": 260,
-          "compareAt": 320,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=900&q=85",
-          "description": "Underwear • Versatile styling"
+          "description": "Underwear • Versatile styling",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "underwear-04",
+          "id": "men-underwear-04",
+          "product_id": "men-underwear-04",
           "name": "Comfort Waist Boxer — Grey",
           "price": 295,
-          "compareAt": 360,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85",
-          "description": "Underwear • Comfort-led design"
+          "description": "Underwear • Comfort-led design",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "underwear-05",
+          "id": "men-underwear-05",
+          "product_id": "men-underwear-05",
           "name": "Active Microfiber Trunk — Olive",
           "price": 330,
-          "compareAt": 400,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=900&q=85",
-          "description": "Underwear • Easy to pair"
+          "description": "Underwear • Easy to pair",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "underwear-06",
+          "id": "men-underwear-06",
+          "product_id": "men-underwear-06",
           "name": "Classic Cotton Boxer — Blue",
           "price": 365,
-          "compareAt": 450,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=900&q=85",
-          "description": "Underwear • Considered finish"
+          "description": "Underwear • Considered finish",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         }
       ]
     },
@@ -1107,58 +1431,76 @@
       "group": "Accessories",
       "products": [
         {
-          "id": "socks-01",
+          "id": "men-socks-01",
+          "product_id": "men-socks-01",
           "name": "Everyday Crew Socks — White",
           "price": 120,
-          "compareAt": 150,
-          "badge": "New Edit",
           "image": "https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?auto=format&fit=crop&w=900&q=85",
-          "description": "Socks • Classic fit"
+          "description": "Socks • Classic fit",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "socks-02",
+          "id": "men-socks-02",
+          "product_id": "men-socks-02",
           "name": "Ribbed Ankle Socks — Black",
           "price": 155,
-          "compareAt": 190,
-          "badge": "Popular",
           "image": "https://images.unsplash.com/photo-1582966772680-860e372bb558?auto=format&fit=crop&w=900&q=85",
-          "description": "Socks • Soft everyday feel"
+          "description": "Socks • Soft everyday feel",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "socks-03",
+          "id": "men-socks-03",
+          "product_id": "men-socks-03",
           "name": "Comfort Cotton Socks — Grey",
           "price": 190,
-          "compareAt": 230,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=85",
-          "description": "Socks • Versatile styling"
+          "description": "Socks • Versatile styling",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "socks-04",
+          "id": "men-socks-04",
+          "product_id": "men-socks-04",
           "name": "Sport Crew Socks — Navy",
           "price": 225,
-          "compareAt": 270,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1622560480654-d96214fdc887?auto=format&fit=crop&w=900&q=85",
-          "description": "Socks • Comfort-led design"
+          "description": "Socks • Comfort-led design",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "socks-05",
+          "id": "men-socks-05",
+          "product_id": "men-socks-05",
           "name": "Classic Rib Socks — Olive",
           "price": 260,
-          "compareAt": 320,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=900&q=85",
-          "description": "Socks • Easy to pair"
+          "description": "Socks • Easy to pair",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "socks-06",
+          "id": "men-socks-06",
+          "product_id": "men-socks-06",
           "name": "No-Show Socks — Stone",
           "price": 295,
-          "compareAt": 360,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=900&q=85",
-          "description": "Socks • Considered finish"
+          "description": "Socks • Considered finish",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         }
       ]
     },
@@ -1168,58 +1510,76 @@
       "group": "Accessories",
       "products": [
         {
-          "id": "wallet-01",
+          "id": "men-wallet-01",
+          "product_id": "men-wallet-01",
           "name": "Slim Leather Wallet — Tan",
           "price": 550,
-          "compareAt": 670,
-          "badge": "New Edit",
           "image": "https://images.unsplash.com/photo-1697551894947-25fba13585e6?auto=format&fit=crop&w=900&q=85",
-          "description": "Wallet • Classic fit"
+          "description": "Wallet • Classic fit",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "wallet-02",
+          "id": "men-wallet-02",
+          "product_id": "men-wallet-02",
           "name": "Classic Bifold Wallet — Brown",
           "price": 625,
-          "compareAt": 760,
-          "badge": "Popular",
           "image": "https://images.unsplash.com/photo-1772651983030-565c2b7be181?auto=format&fit=crop&w=900&q=85",
-          "description": "Wallet • Soft everyday feel"
+          "description": "Wallet • Soft everyday feel",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "wallet-03",
+          "id": "men-wallet-03",
+          "product_id": "men-wallet-03",
           "name": "Minimal Card Holder — Black",
           "price": 700,
-          "compareAt": 850,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1676276549687-6f51f6e406b0?auto=format&fit=crop&w=900&q=85",
-          "description": "Wallet • Versatile styling"
+          "description": "Wallet • Versatile styling",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "wallet-04",
+          "id": "men-wallet-04",
+          "product_id": "men-wallet-04",
           "name": "Everyday Fold Wallet — Espresso",
           "price": 775,
-          "compareAt": 950,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1531190260877-c8d11eb5afaf?auto=format&fit=crop&w=900&q=85",
-          "description": "Wallet • Comfort-led design"
+          "description": "Wallet • Comfort-led design",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "wallet-05",
+          "id": "men-wallet-05",
+          "product_id": "men-wallet-05",
           "name": "Compact Card Wallet — Mocha",
           "price": 850,
-          "compareAt": 1040,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=85",
-          "description": "Wallet • Easy to pair"
+          "description": "Wallet • Easy to pair",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "wallet-06",
+          "id": "men-wallet-06",
+          "product_id": "men-wallet-06",
           "name": "Textured Leather Wallet — Dark Brown",
           "price": 925,
-          "compareAt": 1130,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1622560480654-d96214fdc887?auto=format&fit=crop&w=900&q=85",
-          "description": "Wallet • Considered finish"
+          "description": "Wallet • Considered finish",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         }
       ]
     },
@@ -1229,58 +1589,76 @@
       "group": "Accessories",
       "products": [
         {
-          "id": "belt-01",
+          "id": "men-belt-01",
+          "product_id": "men-belt-01",
           "name": "Classic Leather Belt — Black",
           "price": 390,
-          "compareAt": 480,
-          "badge": "New Edit",
           "image": "https://images.unsplash.com/photo-1624222247344-550fb8b3b8c8?auto=format&fit=crop&w=900&q=85",
-          "description": "Belt • Classic fit"
+          "description": "Belt • Classic fit",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "belt-02",
+          "id": "men-belt-02",
+          "product_id": "men-belt-02",
           "name": "Everyday Buckle Belt — Brown",
           "price": 465,
-          "compareAt": 570,
-          "badge": "Popular",
           "image": "https://images.unsplash.com/photo-1622560480654-d96214fdc887?auto=format&fit=crop&w=900&q=85",
-          "description": "Belt • Soft everyday feel"
+          "description": "Belt • Soft everyday feel",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "belt-03",
+          "id": "men-belt-03",
+          "product_id": "men-belt-03",
           "name": "Minimal Dress Belt — Tan",
           "price": 540,
-          "compareAt": 660,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=85",
-          "description": "Belt • Versatile styling"
+          "description": "Belt • Versatile styling",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "belt-04",
+          "id": "men-belt-04",
+          "product_id": "men-belt-04",
           "name": "Reversible Casual Belt — Black",
           "price": 615,
-          "compareAt": 750,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1697551894947-25fba13585e6?auto=format&fit=crop&w=900&q=85",
-          "description": "Belt • Comfort-led design"
+          "description": "Belt • Comfort-led design",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "belt-05",
+          "id": "men-belt-05",
+          "product_id": "men-belt-05",
           "name": "Textured Leather Belt — Espresso",
           "price": 690,
-          "compareAt": 840,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1772651983030-565c2b7be181?auto=format&fit=crop&w=900&q=85",
-          "description": "Belt • Easy to pair"
+          "description": "Belt • Easy to pair",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "belt-06",
+          "id": "men-belt-06",
+          "product_id": "men-belt-06",
           "name": "Smart Casual Belt — Dark Brown",
           "price": 765,
-          "compareAt": 930,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1676276549687-6f51f6e406b0?auto=format&fit=crop&w=900&q=85",
-          "description": "Belt • Considered finish"
+          "description": "Belt • Considered finish",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         }
       ]
     },
@@ -1290,58 +1668,76 @@
       "group": "Accessories",
       "products": [
         {
-          "id": "cap-01",
+          "id": "men-cap-01",
+          "product_id": "men-cap-01",
           "name": "Classic Six-Panel Cap — Black",
           "price": 350,
-          "compareAt": 430,
-          "badge": "New Edit",
           "image": "https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=900&q=85",
-          "description": "Cap • Classic fit"
+          "description": "Cap • Classic fit",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "cap-02",
+          "id": "men-cap-02",
+          "product_id": "men-cap-02",
           "name": "Everyday Cotton Cap — Navy",
           "price": 425,
-          "compareAt": 520,
-          "badge": "Popular",
           "image": "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=85",
-          "description": "Cap • Soft everyday feel"
+          "description": "Cap • Soft everyday feel",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "cap-03",
+          "id": "men-cap-03",
+          "product_id": "men-cap-03",
           "name": "Relaxed Baseball Cap — Olive",
           "price": 500,
-          "compareAt": 610,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1534215754734-18e55d13e346?auto=format&fit=crop&w=900&q=85",
-          "description": "Cap • Versatile styling"
+          "description": "Cap • Versatile styling",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "cap-04",
+          "id": "men-cap-04",
+          "product_id": "men-cap-04",
           "name": "Minimal Logo Cap — Stone",
           "price": 575,
-          "compareAt": 700,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=85",
-          "description": "Cap • Comfort-led design"
+          "description": "Cap • Comfort-led design",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "cap-05",
+          "id": "men-cap-05",
+          "product_id": "men-cap-05",
           "name": "Sport Cap — Charcoal",
           "price": 650,
-          "compareAt": 790,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=85",
-          "description": "Cap • Easy to pair"
+          "description": "Cap • Easy to pair",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         },
         {
-          "id": "cap-06",
+          "id": "men-cap-06",
+          "product_id": "men-cap-06",
           "name": "Curved Brim Cap — Beige",
           "price": 725,
-          "compareAt": 880,
-          "badge": "",
           "image": "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=900&q=85",
-          "description": "Cap • Considered finish"
+          "description": "Cap • Considered finish",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         }
       ]
     },
@@ -1351,13 +1747,16 @@
       "group": "Bottomwear",
       "products": [
         {
-          "id": "formal-pants-01",
+          "id": "m11",
           "product_id": "m11",
           "name": "Mens Premium Formal Pant - Noble",
           "price": 1750,
-          "image": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=900&q=85",
-          "badge": "Stock confirmation required",
-          "description": "Formal Pants • Product details and availability require confirmation"
+          "image": "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=700&q=82",
+          "description": "Homepage men's product preview",
+          "badge": "Availability to confirm",
+          "availability_status": "needs_confirmation",
+          "details_verified": false,
+          "is_active": true
         }
       ]
     }
