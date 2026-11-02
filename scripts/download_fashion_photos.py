@@ -15,6 +15,11 @@ IMAGE_WIDTH = 1000
 
 # Unsplash photo IDs; all selected image pages are marked free to use under the Unsplash License.
 PHOTO_IDS = {
+    "bottoms": [
+        "photo-1687276154818-d555a7b337ba", "photo-1626596662792-12cdc7ecce71",
+        "photo-1591195853828-11db59a44f6b", "photo-1594633312681-425c7b97ccd1",
+        "photo-1542272604-787c3835535d", "photo-1624378439575-d8705ad7ae80",
+    ],
     "dress": [
         "photo-1651282621540-0c93c8c7e965", "photo-1704627363852-484e95695411",
         "photo-1721094781490-86de5145447c", "photo-1689626237016-f257f6f90bd2",
@@ -117,7 +122,8 @@ def download_photo(source, destination):
 def main():
     OUTPUT.mkdir(parents=True, exist_ok=True)
     pools = {kind: ["https://images.unsplash.com/" + photo_id for photo_id in ids] for kind, ids in PHOTO_IDS.items()}
-    pools.update(get_men_photo_pools())
+    for kind, sources in get_men_photo_pools().items():
+        pools[kind] = unique(sources + pools.get(kind, []))
     if set(pools) != set(EXPECTED_KINDS):
         raise RuntimeError(f"Photo types mismatch: {sorted(pools)}")
     manifest = ["# FORME fashion photography sources", "", "Real fashion photographs downloaded from Unsplash during the GitHub Pages build.", "Curated photo pages are marked free to use under the Unsplash License.", "Men's core-category photos are sourced from the existing Men product catalogue.", "License: https://unsplash.com/license", "", "Source photo URLs:", ""]
