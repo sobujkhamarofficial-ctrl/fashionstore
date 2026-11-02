@@ -493,7 +493,7 @@
       const menState = {category:'All',quick:'all',search:'',sort:'featured',min:0,max:99999};
       const routeBase = (()=>{const path=window.location.pathname;const menAt=path.indexOf('/men/');if(menAt>=0)return path.slice(0,menAt+1);if(path.endsWith('/index.html'))return path.slice(0,-10);if(path.endsWith('/'))return path;return path.slice(0,path.lastIndexOf('/')+1);})();
       const routeUrl = slug => slug==='home'?routeBase:slug==='men'?routeBase+'men/':routeBase+'men/'+slug+'/';
-      const routeFromPath = ()=>{const path=window.location.pathname;const relative=path.startsWith(routeBase)?path.slice(routeBase.length):path.replace(/^\\/+/, '');const parts=relative.split('/').filter(Boolean);if(parts[0]==='men'&&parts[1]&&menCategoryRoutes[parts[1]])return parts[1];if(parts[0]==='men')return 'men';return null;};
+      const routeFromPath = ()=>{const path=window.location.pathname;const relative=path.startsWith(routeBase)?path.slice(routeBase.length):path.replace(/^\/+/, '');const parts=relative.split('/').filter(Boolean);if(parts[0]==='men'&&parts[1]&&menCategoryRoutes[parts[1]])return parts[1];if(parts[0]==='men')return 'men';return null;};
       const megaMenu=root.querySelector('#f-men-mega-menu');
       const closeMegaMenu=()=>{if(megaMenu)megaMenu.classList.remove('open');const trigger=root.querySelector('[data-f-men-menu-toggle]');if(trigger)trigger.setAttribute('aria-expanded','false');};
       root.querySelectorAll('[data-f-men-route]').forEach(link=>{link.href=routeUrl(link.dataset.fMenRoute);});
@@ -698,32 +698,32 @@
       <div class="f-container f-men-category-panel" id="f-men-category-panel">
         <div class="f-men-category-top"><div><b>Explore men's categories</b><small>Choose a category to open its own product page.</small></div><span>22 categories</span></div>
         <div class="f-men-category-group"><div class="f-men-category-group-title"><b>Topwear</b><small>8 categories</small></div><div class="f-men-category-links">
-          <a class="f-men-category-link" href="?category=half-sleeve-t-shirt" data-f-men-route="half-sleeve-t-shirt"><b>Half Sleeve T-shirt</b><small>368 products</small></a>
-          <a class="f-men-category-link" href="?category=full-sleeve-t-shirt" data-f-men-route="full-sleeve-t-shirt"><b>Full Sleeve T-shirt</b><small>148 products</small></a>
-          <a class="f-men-category-link" href="?category=polo-t-shirt" data-f-men-route="polo-t-shirt"><b>Polo T-shirt</b><small>163 products</small></a>
-          <a class="f-men-category-link" href="?category=shirt" data-f-men-route="shirt"><b>Shirt</b><small>87 products</small></a>
-          <a class="f-men-category-link" href="?category=panjabi" data-f-men-route="panjabi"><b>Panjabi</b><small>144 products</small></a>
-          <a class="f-men-category-link" href="?category=hoodie" data-f-men-route="hoodie"><b>Hoodie</b><small>30 products</small></a>
-          <a class="f-men-category-link" href="?category=jacket" data-f-men-route="jacket"><b>Jacket</b><small>39 products</small></a>
-          <a class="f-men-category-link" href="?category=sweatshirt" data-f-men-route="sweatshirt"><b>Sweatshirt</b><small>17 products</small></a>
+          <a class="f-men-category-link" href="men/half-sleeve-t-shirt/" data-f-men-route="half-sleeve-t-shirt"><b>Half Sleeve T-shirt</b><small>368 products</small></a>
+          <a class="f-men-category-link" href="men/full-sleeve-t-shirt/" data-f-men-route="full-sleeve-t-shirt"><b>Full Sleeve T-shirt</b><small>148 products</small></a>
+          <a class="f-men-category-link" href="men/polo-t-shirt/" data-f-men-route="polo-t-shirt"><b>Polo T-shirt</b><small>163 products</small></a>
+          <a class="f-men-category-link" href="men/shirt/" data-f-men-route="shirt"><b>Shirt</b><small>87 products</small></a>
+          <a class="f-men-category-link" href="men/panjabi/" data-f-men-route="panjabi"><b>Panjabi</b><small>144 products</small></a>
+          <a class="f-men-category-link" href="men/hoodie/" data-f-men-route="hoodie"><b>Hoodie</b><small>30 products</small></a>
+          <a class="f-men-category-link" href="men/jacket/" data-f-men-route="jacket"><b>Jacket</b><small>39 products</small></a>
+          <a class="f-men-category-link" href="men/sweatshirt/" data-f-men-route="sweatshirt"><b>Sweatshirt</b><small>17 products</small></a>
         </div></div>
         <div class="f-men-category-group"><div class="f-men-category-group-title"><b>Bottomwear</b><small>8 categories</small></div><div class="f-men-category-links">
-          <a class="f-men-category-link" href="?category=comfy-trouser" data-f-men-route="comfy-trouser"><b>Comfy Trouser</b><small>48 products</small></a>
-          <a class="f-men-category-link" href="?category=sports-trouser" data-f-men-route="sports-trouser"><b>Sports Trouser</b><small>25 products</small></a>
-          <a class="f-men-category-link" href="?category=jeans" data-f-men-route="jeans"><b>Jeans</b><small>21 products</small></a>
-          <a class="f-men-category-link" href="?category=joggers" data-f-men-route="joggers"><b>Joggers</b><small>18 products</small></a>
-          <a class="f-men-category-link" href="?category=cargo-pants" data-f-men-route="cargo-pants"><b>Cargo Pants</b><small>19 products</small></a>
-          <a class="f-men-category-link" href="?category=chino-pants" data-f-men-route="chino-pants"><b>Chino Pants</b><small>12 products</small></a>
-          <a class="f-men-category-link" href="?category=shorts" data-f-men-route="shorts"><b>Shorts</b><small>42 products</small></a>
-          <a class="f-men-category-link" href="?category=pajama" data-f-men-route="pajama"><b>Pajama</b><small>5 products</small></a>
+          <a class="f-men-category-link" href="men/comfy-trouser/" data-f-men-route="comfy-trouser"><b>Comfy Trouser</b><small>48 products</small></a>
+          <a class="f-men-category-link" href="men/sports-trouser/" data-f-men-route="sports-trouser"><b>Sports Trouser</b><small>25 products</small></a>
+          <a class="f-men-category-link" href="men/jeans/" data-f-men-route="jeans"><b>Jeans</b><small>21 products</small></a>
+          <a class="f-men-category-link" href="men/joggers/" data-f-men-route="joggers"><b>Joggers</b><small>18 products</small></a>
+          <a class="f-men-category-link" href="men/cargo-pants/" data-f-men-route="cargo-pants"><b>Cargo Pants</b><small>19 products</small></a>
+          <a class="f-men-category-link" href="men/chino-pants/" data-f-men-route="chino-pants"><b>Chino Pants</b><small>12 products</small></a>
+          <a class="f-men-category-link" href="men/shorts/" data-f-men-route="shorts"><b>Shorts</b><small>42 products</small></a>
+          <a class="f-men-category-link" href="men/pajama/" data-f-men-route="pajama"><b>Pajama</b><small>5 products</small></a>
         </div></div>
         <div class="f-men-category-group"><div class="f-men-category-group-title"><b>Accessories</b><small>6 categories</small></div><div class="f-men-category-links">
-          <a class="f-men-category-link" href="?category=face-mask" data-f-men-route="face-mask"><b>Face Mask</b><small>101 products</small></a>
-          <a class="f-men-category-link" href="?category=underwear" data-f-men-route="underwear"><b>Underwear</b><small>54 products</small></a>
-          <a class="f-men-category-link" href="?category=socks" data-f-men-route="socks"><b>Socks</b><small>36 products</small></a>
-          <a class="f-men-category-link" href="?category=wallet" data-f-men-route="wallet"><b>Wallet</b><small>Leather & everyday</small></a>
-          <a class="f-men-category-link" href="?category=belt" data-f-men-route="belt"><b>Belt</b><small>Leather & everyday</small></a>
-          <a class="f-men-category-link" href="?category=cap" data-f-men-route="cap"><b>Cap</b><small>Everyday accessories</small></a>
+          <a class="f-men-category-link" href="men/face-mask/" data-f-men-route="face-mask"><b>Face Mask</b><small>101 products</small></a>
+          <a class="f-men-category-link" href="men/underwear/" data-f-men-route="underwear"><b>Underwear</b><small>54 products</small></a>
+          <a class="f-men-category-link" href="men/socks/" data-f-men-route="socks"><b>Socks</b><small>36 products</small></a>
+          <a class="f-men-category-link" href="men/wallet/" data-f-men-route="wallet"><b>Wallet</b><small>Leather & everyday</small></a>
+          <a class="f-men-category-link" href="men/belt/" data-f-men-route="belt"><b>Belt</b><small>Leather & everyday</small></a>
+          <a class="f-men-category-link" href="men/cap/" data-f-men-route="cap"><b>Cap</b><small>Everyday accessories</small></a>
         </div></div>
       </div>
       <div class="f-container f-men-layout">
