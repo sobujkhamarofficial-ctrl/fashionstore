@@ -1,0 +1,3031 @@
+{
+  "schemaVersion": 1,
+  "note": "Category hierarchy only. No product images, product listings, stock or prices are included in this stage.",
+  "departments": [
+    {
+      "slug": "women",
+      "title": "Women",
+      "description": "Explore women's everyday essentials, contemporary silhouettes, ethnic wear, dresses, bottomwear and finishing touches.",
+      "groups": [
+        {
+          "slug": "everyday-wear",
+          "title": "Everyday Wear",
+          "description": "Explore the everyday wear edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "t-shirts",
+              "title": "T-Shirts",
+              "description": "Browse the t-shirts range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "basic-t-shirts",
+                  "title": "Basic T-Shirts",
+                  "description": "Explore basic t-shirts options within t-shirts."
+                },
+                {
+                  "slug": "printed-t-shirts",
+                  "title": "Printed T-Shirts",
+                  "description": "Explore printed t-shirts options within t-shirts."
+                },
+                {
+                  "slug": "oversized-t-shirts",
+                  "title": "Oversized T-Shirts",
+                  "description": "Explore oversized t-shirts options within t-shirts."
+                },
+                {
+                  "slug": "ribbed-t-shirts",
+                  "title": "Ribbed T-Shirts",
+                  "description": "Explore ribbed t-shirts options within t-shirts."
+                }
+              ]
+            },
+            {
+              "slug": "tops",
+              "title": "Tops",
+              "description": "Browse the tops range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "casual-tops",
+                  "title": "Casual Tops",
+                  "description": "Explore casual tops options within tops."
+                },
+                {
+                  "slug": "crop-tops",
+                  "title": "Crop Tops",
+                  "description": "Explore crop tops options within tops."
+                },
+                {
+                  "slug": "sleeveless-tops",
+                  "title": "Sleeveless Tops",
+                  "description": "Explore sleeveless tops options within tops."
+                },
+                {
+                  "slug": "tunic-tops",
+                  "title": "Tunic Tops",
+                  "description": "Explore tunic tops options within tops."
+                }
+              ]
+            },
+            {
+              "slug": "shirts",
+              "title": "Shirts",
+              "description": "Browse the shirts range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "casual-shirts",
+                  "title": "Casual Shirts",
+                  "description": "Explore casual shirts options within shirts."
+                },
+                {
+                  "slug": "formal-shirts",
+                  "title": "Formal Shirts",
+                  "description": "Explore formal shirts options within shirts."
+                },
+                {
+                  "slug": "linen-shirts",
+                  "title": "Linen Shirts",
+                  "description": "Explore linen shirts options within shirts."
+                },
+                {
+                  "slug": "oversized-shirts",
+                  "title": "Oversized Shirts",
+                  "description": "Explore oversized shirts options within shirts."
+                }
+              ]
+            },
+            {
+              "slug": "blouses",
+              "title": "Blouses",
+              "description": "Browse the blouses range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "office-blouses",
+                  "title": "Office Blouses",
+                  "description": "Explore office blouses options within blouses."
+                },
+                {
+                  "slug": "embroidered-blouses",
+                  "title": "Embroidered Blouses",
+                  "description": "Explore embroidered blouses options within blouses."
+                },
+                {
+                  "slug": "puff-sleeve-blouses",
+                  "title": "Puff Sleeve Blouses",
+                  "description": "Explore puff sleeve blouses options within blouses."
+                },
+                {
+                  "slug": "party-blouses",
+                  "title": "Party Blouses",
+                  "description": "Explore party blouses options within blouses."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "ethnic-wear",
+          "title": "Ethnic Wear",
+          "description": "Explore the ethnic wear edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "kurtis",
+              "title": "Kurtis",
+              "description": "Browse the kurtis range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "straight-kurtis",
+                  "title": "Straight Kurtis",
+                  "description": "Explore straight kurtis options within kurtis."
+                },
+                {
+                  "slug": "a-line-kurtis",
+                  "title": "A-Line Kurtis",
+                  "description": "Explore a-line kurtis options within kurtis."
+                },
+                {
+                  "slug": "long-kurtis",
+                  "title": "Long Kurtis",
+                  "description": "Explore long kurtis options within kurtis."
+                },
+                {
+                  "slug": "embroidered-kurtis",
+                  "title": "Embroidered Kurtis",
+                  "description": "Explore embroidered kurtis options within kurtis."
+                }
+              ]
+            },
+            {
+              "slug": "salwar-kameez",
+              "title": "Salwar Kameez",
+              "description": "Browse the salwar kameez range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "2-piece-sets",
+                  "title": "2-Piece Sets",
+                  "description": "Explore 2-piece sets options within salwar kameez."
+                },
+                {
+                  "slug": "3-piece-sets",
+                  "title": "3-Piece Sets",
+                  "description": "Explore 3-piece sets options within salwar kameez."
+                },
+                {
+                  "slug": "cotton-salwar-kameez",
+                  "title": "Cotton Salwar Kameez",
+                  "description": "Explore cotton salwar kameez options within salwar kameez."
+                },
+                {
+                  "slug": "festive-salwar-kameez",
+                  "title": "Festive Salwar Kameez",
+                  "description": "Explore festive salwar kameez options within salwar kameez."
+                }
+              ]
+            },
+            {
+              "slug": "sarees",
+              "title": "Sarees",
+              "description": "Browse the sarees range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "cotton-sarees",
+                  "title": "Cotton Sarees",
+                  "description": "Explore cotton sarees options within sarees."
+                },
+                {
+                  "slug": "silk-sarees",
+                  "title": "Silk Sarees",
+                  "description": "Explore silk sarees options within sarees."
+                },
+                {
+                  "slug": "georgette-sarees",
+                  "title": "Georgette Sarees",
+                  "description": "Explore georgette sarees options within sarees."
+                },
+                {
+                  "slug": "party-sarees",
+                  "title": "Party Sarees",
+                  "description": "Explore party sarees options within sarees."
+                }
+              ]
+            },
+            {
+              "slug": "dupattas",
+              "title": "Dupattas",
+              "description": "Browse the dupattas range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "cotton-dupattas",
+                  "title": "Cotton Dupattas",
+                  "description": "Explore cotton dupattas options within dupattas."
+                },
+                {
+                  "slug": "chiffon-dupattas",
+                  "title": "Chiffon Dupattas",
+                  "description": "Explore chiffon dupattas options within dupattas."
+                },
+                {
+                  "slug": "embroidered-dupattas",
+                  "title": "Embroidered Dupattas",
+                  "description": "Explore embroidered dupattas options within dupattas."
+                },
+                {
+                  "slug": "printed-dupattas",
+                  "title": "Printed Dupattas",
+                  "description": "Explore printed dupattas options within dupattas."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "dresses-and-sets",
+          "title": "Dresses & Sets",
+          "description": "Explore the dresses & sets edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "casual-dresses",
+              "title": "Casual Dresses",
+              "description": "Browse the casual dresses range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "midi-dresses",
+                  "title": "Midi Dresses",
+                  "description": "Explore midi dresses options within casual dresses."
+                },
+                {
+                  "slug": "mini-dresses",
+                  "title": "Mini Dresses",
+                  "description": "Explore mini dresses options within casual dresses."
+                },
+                {
+                  "slug": "shirt-dresses",
+                  "title": "Shirt Dresses",
+                  "description": "Explore shirt dresses options within casual dresses."
+                },
+                {
+                  "slug": "wrap-dresses",
+                  "title": "Wrap Dresses",
+                  "description": "Explore wrap dresses options within casual dresses."
+                }
+              ]
+            },
+            {
+              "slug": "occasion-dresses",
+              "title": "Occasion Dresses",
+              "description": "Browse the occasion dresses range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "party-dresses",
+                  "title": "Party Dresses",
+                  "description": "Explore party dresses options within occasion dresses."
+                },
+                {
+                  "slug": "evening-dresses",
+                  "title": "Evening Dresses",
+                  "description": "Explore evening dresses options within occasion dresses."
+                },
+                {
+                  "slug": "maxi-dresses",
+                  "title": "Maxi Dresses",
+                  "description": "Explore maxi dresses options within occasion dresses."
+                },
+                {
+                  "slug": "cocktail-dresses",
+                  "title": "Cocktail Dresses",
+                  "description": "Explore cocktail dresses options within occasion dresses."
+                }
+              ]
+            },
+            {
+              "slug": "co-ord-sets",
+              "title": "Co-ord Sets",
+              "description": "Browse the co-ord sets range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "two-piece-co-ords",
+                  "title": "Two-Piece Co-ords",
+                  "description": "Explore two-piece co-ords options within co-ord sets."
+                },
+                {
+                  "slug": "three-piece-co-ords",
+                  "title": "Three-Piece Co-ords",
+                  "description": "Explore three-piece co-ords options within co-ord sets."
+                },
+                {
+                  "slug": "casual-co-ords",
+                  "title": "Casual Co-ords",
+                  "description": "Explore casual co-ords options within co-ord sets."
+                },
+                {
+                  "slug": "dressy-co-ords",
+                  "title": "Dressy Co-ords",
+                  "description": "Explore dressy co-ords options within co-ord sets."
+                }
+              ]
+            },
+            {
+              "slug": "jumpsuits",
+              "title": "Jumpsuits",
+              "description": "Browse the jumpsuits range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "casual-jumpsuits",
+                  "title": "Casual Jumpsuits",
+                  "description": "Explore casual jumpsuits options within jumpsuits."
+                },
+                {
+                  "slug": "wide-leg-jumpsuits",
+                  "title": "Wide-Leg Jumpsuits",
+                  "description": "Explore wide-leg jumpsuits options within jumpsuits."
+                },
+                {
+                  "slug": "utility-jumpsuits",
+                  "title": "Utility Jumpsuits",
+                  "description": "Explore utility jumpsuits options within jumpsuits."
+                },
+                {
+                  "slug": "occasion-jumpsuits",
+                  "title": "Occasion Jumpsuits",
+                  "description": "Explore occasion jumpsuits options within jumpsuits."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "bottomwear",
+          "title": "Bottomwear",
+          "description": "Explore the bottomwear edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "trousers",
+              "title": "Trousers",
+              "description": "Browse the trousers range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "straight-trousers",
+                  "title": "Straight Trousers",
+                  "description": "Explore straight trousers options within trousers."
+                },
+                {
+                  "slug": "wide-leg-trousers",
+                  "title": "Wide-Leg Trousers",
+                  "description": "Explore wide-leg trousers options within trousers."
+                },
+                {
+                  "slug": "tailored-trousers",
+                  "title": "Tailored Trousers",
+                  "description": "Explore tailored trousers options within trousers."
+                },
+                {
+                  "slug": "casual-trousers",
+                  "title": "Casual Trousers",
+                  "description": "Explore casual trousers options within trousers."
+                }
+              ]
+            },
+            {
+              "slug": "jeans",
+              "title": "Jeans",
+              "description": "Browse the jeans range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "skinny-jeans",
+                  "title": "Skinny Jeans",
+                  "description": "Explore skinny jeans options within jeans."
+                },
+                {
+                  "slug": "straight-jeans",
+                  "title": "Straight Jeans",
+                  "description": "Explore straight jeans options within jeans."
+                },
+                {
+                  "slug": "wide-leg-jeans",
+                  "title": "Wide-Leg Jeans",
+                  "description": "Explore wide-leg jeans options within jeans."
+                },
+                {
+                  "slug": "mom-fit-jeans",
+                  "title": "Mom-Fit Jeans",
+                  "description": "Explore mom-fit jeans options within jeans."
+                }
+              ]
+            },
+            {
+              "slug": "leggings",
+              "title": "Leggings",
+              "description": "Browse the leggings range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "basic-leggings",
+                  "title": "Basic Leggings",
+                  "description": "Explore basic leggings options within leggings."
+                },
+                {
+                  "slug": "high-waist-leggings",
+                  "title": "High-Waist Leggings",
+                  "description": "Explore high-waist leggings options within leggings."
+                },
+                {
+                  "slug": "sports-leggings",
+                  "title": "Sports Leggings",
+                  "description": "Explore sports leggings options within leggings."
+                },
+                {
+                  "slug": "thermal-leggings",
+                  "title": "Thermal Leggings",
+                  "description": "Explore thermal leggings options within leggings."
+                }
+              ]
+            },
+            {
+              "slug": "skirts",
+              "title": "Skirts",
+              "description": "Browse the skirts range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "mini-skirts",
+                  "title": "Mini Skirts",
+                  "description": "Explore mini skirts options within skirts."
+                },
+                {
+                  "slug": "midi-skirts",
+                  "title": "Midi Skirts",
+                  "description": "Explore midi skirts options within skirts."
+                },
+                {
+                  "slug": "maxi-skirts",
+                  "title": "Maxi Skirts",
+                  "description": "Explore maxi skirts options within skirts."
+                },
+                {
+                  "slug": "a-line-skirts",
+                  "title": "A-Line Skirts",
+                  "description": "Explore a-line skirts options within skirts."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "layers-and-knitwear",
+          "title": "Layers & Knitwear",
+          "description": "Explore the layers & knitwear edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "cardigans",
+              "title": "Cardigans",
+              "description": "Browse the cardigans range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "button-cardigans",
+                  "title": "Button Cardigans",
+                  "description": "Explore button cardigans options within cardigans."
+                },
+                {
+                  "slug": "longline-cardigans",
+                  "title": "Longline Cardigans",
+                  "description": "Explore longline cardigans options within cardigans."
+                },
+                {
+                  "slug": "cropped-cardigans",
+                  "title": "Cropped Cardigans",
+                  "description": "Explore cropped cardigans options within cardigans."
+                },
+                {
+                  "slug": "open-front-cardigans",
+                  "title": "Open-Front Cardigans",
+                  "description": "Explore open-front cardigans options within cardigans."
+                }
+              ]
+            },
+            {
+              "slug": "sweaters",
+              "title": "Sweaters",
+              "description": "Browse the sweaters range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "crewneck-sweaters",
+                  "title": "Crewneck Sweaters",
+                  "description": "Explore crewneck sweaters options within sweaters."
+                },
+                {
+                  "slug": "v-neck-sweaters",
+                  "title": "V-Neck Sweaters",
+                  "description": "Explore v-neck sweaters options within sweaters."
+                },
+                {
+                  "slug": "knit-sweaters",
+                  "title": "Knit Sweaters",
+                  "description": "Explore knit sweaters options within sweaters."
+                },
+                {
+                  "slug": "oversized-sweaters",
+                  "title": "Oversized Sweaters",
+                  "description": "Explore oversized sweaters options within sweaters."
+                }
+              ]
+            },
+            {
+              "slug": "jackets",
+              "title": "Jackets",
+              "description": "Browse the jackets range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "denim-jackets",
+                  "title": "Denim Jackets",
+                  "description": "Explore denim jackets options within jackets."
+                },
+                {
+                  "slug": "casual-jackets",
+                  "title": "Casual Jackets",
+                  "description": "Explore casual jackets options within jackets."
+                },
+                {
+                  "slug": "lightweight-jackets",
+                  "title": "Lightweight Jackets",
+                  "description": "Explore lightweight jackets options within jackets."
+                },
+                {
+                  "slug": "winter-jackets",
+                  "title": "Winter Jackets",
+                  "description": "Explore winter jackets options within jackets."
+                }
+              ]
+            },
+            {
+              "slug": "shrugs",
+              "title": "Shrugs",
+              "description": "Browse the shrugs range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "short-shrugs",
+                  "title": "Short Shrugs",
+                  "description": "Explore short shrugs options within shrugs."
+                },
+                {
+                  "slug": "long-shrugs",
+                  "title": "Long Shrugs",
+                  "description": "Explore long shrugs options within shrugs."
+                },
+                {
+                  "slug": "knit-shrugs",
+                  "title": "Knit Shrugs",
+                  "description": "Explore knit shrugs options within shrugs."
+                },
+                {
+                  "slug": "occasion-shrugs",
+                  "title": "Occasion Shrugs",
+                  "description": "Explore occasion shrugs options within shrugs."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "accessories",
+          "title": "Accessories",
+          "description": "Explore the accessories edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "handbags",
+              "title": "Handbags",
+              "description": "Browse the handbags range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "tote-bags",
+                  "title": "Tote Bags",
+                  "description": "Explore tote bags options within handbags."
+                },
+                {
+                  "slug": "shoulder-bags",
+                  "title": "Shoulder Bags",
+                  "description": "Explore shoulder bags options within handbags."
+                },
+                {
+                  "slug": "crossbody-bags",
+                  "title": "Crossbody Bags",
+                  "description": "Explore crossbody bags options within handbags."
+                },
+                {
+                  "slug": "clutches",
+                  "title": "Clutches",
+                  "description": "Explore clutches options within handbags."
+                }
+              ]
+            },
+            {
+              "slug": "scarves",
+              "title": "Scarves",
+              "description": "Browse the scarves range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "cotton-scarves",
+                  "title": "Cotton Scarves",
+                  "description": "Explore cotton scarves options within scarves."
+                },
+                {
+                  "slug": "silk-scarves",
+                  "title": "Silk Scarves",
+                  "description": "Explore silk scarves options within scarves."
+                },
+                {
+                  "slug": "printed-scarves",
+                  "title": "Printed Scarves",
+                  "description": "Explore printed scarves options within scarves."
+                },
+                {
+                  "slug": "winter-scarves",
+                  "title": "Winter Scarves",
+                  "description": "Explore winter scarves options within scarves."
+                }
+              ]
+            },
+            {
+              "slug": "belts",
+              "title": "Belts",
+              "description": "Browse the belts range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "classic-belts",
+                  "title": "Classic Belts",
+                  "description": "Explore classic belts options within belts."
+                },
+                {
+                  "slug": "wide-belts",
+                  "title": "Wide Belts",
+                  "description": "Explore wide belts options within belts."
+                },
+                {
+                  "slug": "slim-belts",
+                  "title": "Slim Belts",
+                  "description": "Explore slim belts options within belts."
+                },
+                {
+                  "slug": "woven-belts",
+                  "title": "Woven Belts",
+                  "description": "Explore woven belts options within belts."
+                }
+              ]
+            },
+            {
+              "slug": "jewellery",
+              "title": "Jewellery",
+              "description": "Browse the jewellery range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "earrings",
+                  "title": "Earrings",
+                  "description": "Explore earrings options within jewellery."
+                },
+                {
+                  "slug": "necklaces",
+                  "title": "Necklaces",
+                  "description": "Explore necklaces options within jewellery."
+                },
+                {
+                  "slug": "bracelets",
+                  "title": "Bracelets",
+                  "description": "Explore bracelets options within jewellery."
+                },
+                {
+                  "slug": "jewellery-sets",
+                  "title": "Jewellery Sets",
+                  "description": "Explore jewellery sets options within jewellery."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "teens",
+      "title": "Teens",
+      "description": "A dedicated edit for teen boys and girls, from casual basics and denim to modest styles, layers and school essentials.",
+      "groups": [
+        {
+          "slug": "teen-boys",
+          "title": "Teen Boys",
+          "description": "Explore the teen boys edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "t-shirts",
+              "title": "T-Shirts",
+              "description": "Browse the t-shirts range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "basic-t-shirts",
+                  "title": "Basic T-Shirts",
+                  "description": "Explore basic t-shirts options within t-shirts."
+                },
+                {
+                  "slug": "graphic-t-shirts",
+                  "title": "Graphic T-Shirts",
+                  "description": "Explore graphic t-shirts options within t-shirts."
+                },
+                {
+                  "slug": "oversized-t-shirts",
+                  "title": "Oversized T-Shirts",
+                  "description": "Explore oversized t-shirts options within t-shirts."
+                },
+                {
+                  "slug": "long-sleeve-t-shirts",
+                  "title": "Long-Sleeve T-Shirts",
+                  "description": "Explore long-sleeve t-shirts options within t-shirts."
+                }
+              ]
+            },
+            {
+              "slug": "polos",
+              "title": "Polos",
+              "description": "Browse the polos range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "classic-polos",
+                  "title": "Classic Polos",
+                  "description": "Explore classic polos options within polos."
+                },
+                {
+                  "slug": "striped-polos",
+                  "title": "Striped Polos",
+                  "description": "Explore striped polos options within polos."
+                },
+                {
+                  "slug": "printed-polos",
+                  "title": "Printed Polos",
+                  "description": "Explore printed polos options within polos."
+                },
+                {
+                  "slug": "contrast-polos",
+                  "title": "Contrast Polos",
+                  "description": "Explore contrast polos options within polos."
+                }
+              ]
+            },
+            {
+              "slug": "shirts",
+              "title": "Shirts",
+              "description": "Browse the shirts range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "casual-shirts",
+                  "title": "Casual Shirts",
+                  "description": "Explore casual shirts options within shirts."
+                },
+                {
+                  "slug": "checked-shirts",
+                  "title": "Checked Shirts",
+                  "description": "Explore checked shirts options within shirts."
+                },
+                {
+                  "slug": "denim-shirts",
+                  "title": "Denim Shirts",
+                  "description": "Explore denim shirts options within shirts."
+                },
+                {
+                  "slug": "linen-shirts",
+                  "title": "Linen Shirts",
+                  "description": "Explore linen shirts options within shirts."
+                }
+              ]
+            },
+            {
+              "slug": "hoodies",
+              "title": "Hoodies",
+              "description": "Browse the hoodies range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "pullover-hoodies",
+                  "title": "Pullover Hoodies",
+                  "description": "Explore pullover hoodies options within hoodies."
+                },
+                {
+                  "slug": "zip-up-hoodies",
+                  "title": "Zip-Up Hoodies",
+                  "description": "Explore zip-up hoodies options within hoodies."
+                },
+                {
+                  "slug": "graphic-hoodies",
+                  "title": "Graphic Hoodies",
+                  "description": "Explore graphic hoodies options within hoodies."
+                },
+                {
+                  "slug": "fleece-hoodies",
+                  "title": "Fleece Hoodies",
+                  "description": "Explore fleece hoodies options within hoodies."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "teen-girls",
+          "title": "Teen Girls",
+          "description": "Explore the teen girls edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "tops",
+              "title": "Tops",
+              "description": "Browse the tops range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "casual-tops",
+                  "title": "Casual Tops",
+                  "description": "Explore casual tops options within tops."
+                },
+                {
+                  "slug": "crop-tops",
+                  "title": "Crop Tops",
+                  "description": "Explore crop tops options within tops."
+                },
+                {
+                  "slug": "tunic-tops",
+                  "title": "Tunic Tops",
+                  "description": "Explore tunic tops options within tops."
+                },
+                {
+                  "slug": "knit-tops",
+                  "title": "Knit Tops",
+                  "description": "Explore knit tops options within tops."
+                }
+              ]
+            },
+            {
+              "slug": "t-shirts",
+              "title": "T-Shirts",
+              "description": "Browse the t-shirts range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "basic-t-shirts",
+                  "title": "Basic T-Shirts",
+                  "description": "Explore basic t-shirts options within t-shirts."
+                },
+                {
+                  "slug": "printed-t-shirts",
+                  "title": "Printed T-Shirts",
+                  "description": "Explore printed t-shirts options within t-shirts."
+                },
+                {
+                  "slug": "oversized-t-shirts",
+                  "title": "Oversized T-Shirts",
+                  "description": "Explore oversized t-shirts options within t-shirts."
+                },
+                {
+                  "slug": "ribbed-t-shirts",
+                  "title": "Ribbed T-Shirts",
+                  "description": "Explore ribbed t-shirts options within t-shirts."
+                }
+              ]
+            },
+            {
+              "slug": "kurtis",
+              "title": "Kurtis",
+              "description": "Browse the kurtis range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "straight-kurtis",
+                  "title": "Straight Kurtis",
+                  "description": "Explore straight kurtis options within kurtis."
+                },
+                {
+                  "slug": "a-line-kurtis",
+                  "title": "A-Line Kurtis",
+                  "description": "Explore a-line kurtis options within kurtis."
+                },
+                {
+                  "slug": "long-kurtis",
+                  "title": "Long Kurtis",
+                  "description": "Explore long kurtis options within kurtis."
+                },
+                {
+                  "slug": "printed-kurtis",
+                  "title": "Printed Kurtis",
+                  "description": "Explore printed kurtis options within kurtis."
+                }
+              ]
+            },
+            {
+              "slug": "dresses",
+              "title": "Dresses",
+              "description": "Browse the dresses range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "casual-dresses",
+                  "title": "Casual Dresses",
+                  "description": "Explore casual dresses options within dresses."
+                },
+                {
+                  "slug": "party-dresses",
+                  "title": "Party Dresses",
+                  "description": "Explore party dresses options within dresses."
+                },
+                {
+                  "slug": "midi-dresses",
+                  "title": "Midi Dresses",
+                  "description": "Explore midi dresses options within dresses."
+                },
+                {
+                  "slug": "maxi-dresses",
+                  "title": "Maxi Dresses",
+                  "description": "Explore maxi dresses options within dresses."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "bottomwear",
+          "title": "Bottomwear",
+          "description": "Explore the bottomwear edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "jeans",
+              "title": "Jeans",
+              "description": "Browse the jeans range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "slim-jeans",
+                  "title": "Slim Jeans",
+                  "description": "Explore slim jeans options within jeans."
+                },
+                {
+                  "slug": "straight-jeans",
+                  "title": "Straight Jeans",
+                  "description": "Explore straight jeans options within jeans."
+                },
+                {
+                  "slug": "wide-leg-jeans",
+                  "title": "Wide-Leg Jeans",
+                  "description": "Explore wide-leg jeans options within jeans."
+                },
+                {
+                  "slug": "cargo-jeans",
+                  "title": "Cargo Jeans",
+                  "description": "Explore cargo jeans options within jeans."
+                }
+              ]
+            },
+            {
+              "slug": "trousers",
+              "title": "Trousers",
+              "description": "Browse the trousers range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "chino-trousers",
+                  "title": "Chino Trousers",
+                  "description": "Explore chino trousers options within trousers."
+                },
+                {
+                  "slug": "relaxed-trousers",
+                  "title": "Relaxed Trousers",
+                  "description": "Explore relaxed trousers options within trousers."
+                },
+                {
+                  "slug": "formal-trousers",
+                  "title": "Formal Trousers",
+                  "description": "Explore formal trousers options within trousers."
+                },
+                {
+                  "slug": "wide-leg-trousers",
+                  "title": "Wide-Leg Trousers",
+                  "description": "Explore wide-leg trousers options within trousers."
+                }
+              ]
+            },
+            {
+              "slug": "joggers",
+              "title": "Joggers",
+              "description": "Browse the joggers range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "basic-joggers",
+                  "title": "Basic Joggers",
+                  "description": "Explore basic joggers options within joggers."
+                },
+                {
+                  "slug": "fleece-joggers",
+                  "title": "Fleece Joggers",
+                  "description": "Explore fleece joggers options within joggers."
+                },
+                {
+                  "slug": "cuffed-joggers",
+                  "title": "Cuffed Joggers",
+                  "description": "Explore cuffed joggers options within joggers."
+                },
+                {
+                  "slug": "cargo-joggers",
+                  "title": "Cargo Joggers",
+                  "description": "Explore cargo joggers options within joggers."
+                }
+              ]
+            },
+            {
+              "slug": "shorts",
+              "title": "Shorts",
+              "description": "Browse the shorts range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "denim-shorts",
+                  "title": "Denim Shorts",
+                  "description": "Explore denim shorts options within shorts."
+                },
+                {
+                  "slug": "cotton-shorts",
+                  "title": "Cotton Shorts",
+                  "description": "Explore cotton shorts options within shorts."
+                },
+                {
+                  "slug": "sports-shorts",
+                  "title": "Sports Shorts",
+                  "description": "Explore sports shorts options within shorts."
+                },
+                {
+                  "slug": "cargo-shorts",
+                  "title": "Cargo Shorts",
+                  "description": "Explore cargo shorts options within shorts."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "unisex-and-essentials",
+          "title": "Unisex & Essentials",
+          "description": "Explore the unisex & essentials edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "sweatshirts",
+              "title": "Sweatshirts",
+              "description": "Browse the sweatshirts range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "crewneck-sweatshirts",
+                  "title": "Crewneck Sweatshirts",
+                  "description": "Explore crewneck sweatshirts options within sweatshirts."
+                },
+                {
+                  "slug": "printed-sweatshirts",
+                  "title": "Printed Sweatshirts",
+                  "description": "Explore printed sweatshirts options within sweatshirts."
+                },
+                {
+                  "slug": "oversized-sweatshirts",
+                  "title": "Oversized Sweatshirts",
+                  "description": "Explore oversized sweatshirts options within sweatshirts."
+                },
+                {
+                  "slug": "fleece-sweatshirts",
+                  "title": "Fleece Sweatshirts",
+                  "description": "Explore fleece sweatshirts options within sweatshirts."
+                }
+              ]
+            },
+            {
+              "slug": "jackets",
+              "title": "Jackets",
+              "description": "Browse the jackets range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "denim-jackets",
+                  "title": "Denim Jackets",
+                  "description": "Explore denim jackets options within jackets."
+                },
+                {
+                  "slug": "bomber-jackets",
+                  "title": "Bomber Jackets",
+                  "description": "Explore bomber jackets options within jackets."
+                },
+                {
+                  "slug": "windbreakers",
+                  "title": "Windbreakers",
+                  "description": "Explore windbreakers options within jackets."
+                },
+                {
+                  "slug": "puffer-jackets",
+                  "title": "Puffer Jackets",
+                  "description": "Explore puffer jackets options within jackets."
+                }
+              ]
+            },
+            {
+              "slug": "sets",
+              "title": "Sets",
+              "description": "Browse the sets range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "two-piece-sets",
+                  "title": "Two-Piece Sets",
+                  "description": "Explore two-piece sets options within sets."
+                },
+                {
+                  "slug": "lounge-sets",
+                  "title": "Lounge Sets",
+                  "description": "Explore lounge sets options within sets."
+                },
+                {
+                  "slug": "casual-sets",
+                  "title": "Casual Sets",
+                  "description": "Explore casual sets options within sets."
+                },
+                {
+                  "slug": "sports-sets",
+                  "title": "Sports Sets",
+                  "description": "Explore sports sets options within sets."
+                }
+              ]
+            },
+            {
+              "slug": "everyday-basics",
+              "title": "Everyday Basics",
+              "description": "Browse the everyday basics range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "vests",
+                  "title": "Vests",
+                  "description": "Explore vests options within everyday basics."
+                },
+                {
+                  "slug": "undershirts",
+                  "title": "Undershirts",
+                  "description": "Explore undershirts options within everyday basics."
+                },
+                {
+                  "slug": "everyday-socks",
+                  "title": "Everyday Socks",
+                  "description": "Explore everyday socks options within everyday basics."
+                },
+                {
+                  "slug": "innerwear",
+                  "title": "Innerwear",
+                  "description": "Explore innerwear options within everyday basics."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "school-and-college",
+          "title": "School & College",
+          "description": "Explore the school & college edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "shirts",
+              "title": "Shirts",
+              "description": "Browse the shirts range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "school-shirts",
+                  "title": "School Shirts",
+                  "description": "Explore school shirts options within shirts."
+                },
+                {
+                  "slug": "casual-shirts",
+                  "title": "Casual Shirts",
+                  "description": "Explore casual shirts options within shirts."
+                },
+                {
+                  "slug": "oxford-shirts",
+                  "title": "Oxford Shirts",
+                  "description": "Explore oxford shirts options within shirts."
+                },
+                {
+                  "slug": "checked-shirts",
+                  "title": "Checked Shirts",
+                  "description": "Explore checked shirts options within shirts."
+                }
+              ]
+            },
+            {
+              "slug": "trousers",
+              "title": "Trousers",
+              "description": "Browse the trousers range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "uniform-trousers",
+                  "title": "Uniform Trousers",
+                  "description": "Explore uniform trousers options within trousers."
+                },
+                {
+                  "slug": "chino-trousers",
+                  "title": "Chino Trousers",
+                  "description": "Explore chino trousers options within trousers."
+                },
+                {
+                  "slug": "straight-trousers",
+                  "title": "Straight Trousers",
+                  "description": "Explore straight trousers options within trousers."
+                },
+                {
+                  "slug": "relaxed-trousers",
+                  "title": "Relaxed Trousers",
+                  "description": "Explore relaxed trousers options within trousers."
+                }
+              ]
+            },
+            {
+              "slug": "backpacks",
+              "title": "Backpacks",
+              "description": "Browse the backpacks range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "classic-backpacks",
+                  "title": "Classic Backpacks",
+                  "description": "Explore classic backpacks options within backpacks."
+                },
+                {
+                  "slug": "laptop-backpacks",
+                  "title": "Laptop Backpacks",
+                  "description": "Explore laptop backpacks options within backpacks."
+                },
+                {
+                  "slug": "mini-backpacks",
+                  "title": "Mini Backpacks",
+                  "description": "Explore mini backpacks options within backpacks."
+                },
+                {
+                  "slug": "multi-pocket-backpacks",
+                  "title": "Multi-Pocket Backpacks",
+                  "description": "Explore multi-pocket backpacks options within backpacks."
+                }
+              ]
+            },
+            {
+              "slug": "socks",
+              "title": "Socks",
+              "description": "Browse the socks range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "ankle-socks",
+                  "title": "Ankle Socks",
+                  "description": "Explore ankle socks options within socks."
+                },
+                {
+                  "slug": "crew-socks",
+                  "title": "Crew Socks",
+                  "description": "Explore crew socks options within socks."
+                },
+                {
+                  "slug": "school-socks",
+                  "title": "School Socks",
+                  "description": "Explore school socks options within socks."
+                },
+                {
+                  "slug": "sports-socks",
+                  "title": "Sports Socks",
+                  "description": "Explore sports socks options within socks."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "kids",
+      "title": "Kids",
+      "description": "Comfort-led clothing for babies and children, with separate edits for boys, girls, toddler essentials and special occasions.",
+      "groups": [
+        {
+          "slug": "boys-clothing",
+          "title": "Boys' Clothing",
+          "description": "Explore the boys' clothing edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "t-shirts",
+              "title": "T-Shirts",
+              "description": "Browse the t-shirts range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "printed-t-shirts",
+                  "title": "Printed T-Shirts",
+                  "description": "Explore printed t-shirts options within t-shirts."
+                },
+                {
+                  "slug": "basic-t-shirts",
+                  "title": "Basic T-Shirts",
+                  "description": "Explore basic t-shirts options within t-shirts."
+                },
+                {
+                  "slug": "full-sleeve-t-shirts",
+                  "title": "Full-Sleeve T-Shirts",
+                  "description": "Explore full-sleeve t-shirts options within t-shirts."
+                },
+                {
+                  "slug": "character-t-shirts",
+                  "title": "Character T-Shirts",
+                  "description": "Explore character t-shirts options within t-shirts."
+                }
+              ]
+            },
+            {
+              "slug": "polos",
+              "title": "Polos",
+              "description": "Browse the polos range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "classic-polos",
+                  "title": "Classic Polos",
+                  "description": "Explore classic polos options within polos."
+                },
+                {
+                  "slug": "striped-polos",
+                  "title": "Striped Polos",
+                  "description": "Explore striped polos options within polos."
+                },
+                {
+                  "slug": "contrast-polos",
+                  "title": "Contrast Polos",
+                  "description": "Explore contrast polos options within polos."
+                },
+                {
+                  "slug": "printed-polos",
+                  "title": "Printed Polos",
+                  "description": "Explore printed polos options within polos."
+                }
+              ]
+            },
+            {
+              "slug": "shirts",
+              "title": "Shirts",
+              "description": "Browse the shirts range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "casual-shirts",
+                  "title": "Casual Shirts",
+                  "description": "Explore casual shirts options within shirts."
+                },
+                {
+                  "slug": "checked-shirts",
+                  "title": "Checked Shirts",
+                  "description": "Explore checked shirts options within shirts."
+                },
+                {
+                  "slug": "denim-shirts",
+                  "title": "Denim Shirts",
+                  "description": "Explore denim shirts options within shirts."
+                },
+                {
+                  "slug": "festive-shirts",
+                  "title": "Festive Shirts",
+                  "description": "Explore festive shirts options within shirts."
+                }
+              ]
+            },
+            {
+              "slug": "bottoms",
+              "title": "Bottoms",
+              "description": "Browse the bottoms range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "shorts",
+                  "title": "Shorts",
+                  "description": "Explore shorts options within bottoms."
+                },
+                {
+                  "slug": "joggers",
+                  "title": "Joggers",
+                  "description": "Explore joggers options within bottoms."
+                },
+                {
+                  "slug": "trousers",
+                  "title": "Trousers",
+                  "description": "Explore trousers options within bottoms."
+                },
+                {
+                  "slug": "jeans",
+                  "title": "Jeans",
+                  "description": "Explore jeans options within bottoms."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "girls-clothing",
+          "title": "Girls' Clothing",
+          "description": "Explore the girls' clothing edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "tops",
+              "title": "Tops",
+              "description": "Browse the tops range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "casual-tops",
+                  "title": "Casual Tops",
+                  "description": "Explore casual tops options within tops."
+                },
+                {
+                  "slug": "printed-tops",
+                  "title": "Printed Tops",
+                  "description": "Explore printed tops options within tops."
+                },
+                {
+                  "slug": "tunic-tops",
+                  "title": "Tunic Tops",
+                  "description": "Explore tunic tops options within tops."
+                },
+                {
+                  "slug": "party-tops",
+                  "title": "Party Tops",
+                  "description": "Explore party tops options within tops."
+                }
+              ]
+            },
+            {
+              "slug": "frocks",
+              "title": "Frocks",
+              "description": "Browse the frocks range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "casual-frocks",
+                  "title": "Casual Frocks",
+                  "description": "Explore casual frocks options within frocks."
+                },
+                {
+                  "slug": "party-frocks",
+                  "title": "Party Frocks",
+                  "description": "Explore party frocks options within frocks."
+                },
+                {
+                  "slug": "embroidered-frocks",
+                  "title": "Embroidered Frocks",
+                  "description": "Explore embroidered frocks options within frocks."
+                },
+                {
+                  "slug": "a-line-frocks",
+                  "title": "A-Line Frocks",
+                  "description": "Explore a-line frocks options within frocks."
+                }
+              ]
+            },
+            {
+              "slug": "dresses",
+              "title": "Dresses",
+              "description": "Browse the dresses range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "cotton-dresses",
+                  "title": "Cotton Dresses",
+                  "description": "Explore cotton dresses options within dresses."
+                },
+                {
+                  "slug": "occasion-dresses",
+                  "title": "Occasion Dresses",
+                  "description": "Explore occasion dresses options within dresses."
+                },
+                {
+                  "slug": "party-dresses",
+                  "title": "Party Dresses",
+                  "description": "Explore party dresses options within dresses."
+                },
+                {
+                  "slug": "denim-dresses",
+                  "title": "Denim Dresses",
+                  "description": "Explore denim dresses options within dresses."
+                }
+              ]
+            },
+            {
+              "slug": "bottoms",
+              "title": "Bottoms",
+              "description": "Browse the bottoms range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "leggings",
+                  "title": "Leggings",
+                  "description": "Explore leggings options within bottoms."
+                },
+                {
+                  "slug": "skirts",
+                  "title": "Skirts",
+                  "description": "Explore skirts options within bottoms."
+                },
+                {
+                  "slug": "shorts",
+                  "title": "Shorts",
+                  "description": "Explore shorts options within bottoms."
+                },
+                {
+                  "slug": "trousers",
+                  "title": "Trousers",
+                  "description": "Explore trousers options within bottoms."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "baby-and-toddler",
+          "title": "Baby & Toddler",
+          "description": "Explore the baby & toddler edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "bodysuits",
+              "title": "Bodysuits",
+              "description": "Browse the bodysuits range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "short-sleeve-bodysuits",
+                  "title": "Short-Sleeve Bodysuits",
+                  "description": "Explore short-sleeve bodysuits options within bodysuits."
+                },
+                {
+                  "slug": "long-sleeve-bodysuits",
+                  "title": "Long-Sleeve Bodysuits",
+                  "description": "Explore long-sleeve bodysuits options within bodysuits."
+                },
+                {
+                  "slug": "printed-bodysuits",
+                  "title": "Printed Bodysuits",
+                  "description": "Explore printed bodysuits options within bodysuits."
+                },
+                {
+                  "slug": "bodysuit-packs",
+                  "title": "Bodysuit Packs",
+                  "description": "Explore bodysuit packs options within bodysuits."
+                }
+              ]
+            },
+            {
+              "slug": "rompers",
+              "title": "Rompers",
+              "description": "Browse the rompers range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "sleeveless-rompers",
+                  "title": "Sleeveless Rompers",
+                  "description": "Explore sleeveless rompers options within rompers."
+                },
+                {
+                  "slug": "full-sleeve-rompers",
+                  "title": "Full-Sleeve Rompers",
+                  "description": "Explore full-sleeve rompers options within rompers."
+                },
+                {
+                  "slug": "sleep-rompers",
+                  "title": "Sleep Rompers",
+                  "description": "Explore sleep rompers options within rompers."
+                },
+                {
+                  "slug": "playwear-rompers",
+                  "title": "Playwear Rompers",
+                  "description": "Explore playwear rompers options within rompers."
+                }
+              ]
+            },
+            {
+              "slug": "baby-sets",
+              "title": "Baby Sets",
+              "description": "Browse the baby sets range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "2-piece-baby-sets",
+                  "title": "2-Piece Baby Sets",
+                  "description": "Explore 2-piece baby sets options within baby sets."
+                },
+                {
+                  "slug": "3-piece-baby-sets",
+                  "title": "3-Piece Baby Sets",
+                  "description": "Explore 3-piece baby sets options within baby sets."
+                },
+                {
+                  "slug": "cotton-baby-sets",
+                  "title": "Cotton Baby Sets",
+                  "description": "Explore cotton baby sets options within baby sets."
+                },
+                {
+                  "slug": "baby-gift-sets",
+                  "title": "Baby Gift Sets",
+                  "description": "Explore baby gift sets options within baby sets."
+                }
+              ]
+            },
+            {
+              "slug": "sleepwear",
+              "title": "Sleepwear",
+              "description": "Browse the sleepwear range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "baby-pajamas",
+                  "title": "Baby Pajamas",
+                  "description": "Explore baby pajamas options within sleepwear."
+                },
+                {
+                  "slug": "night-suits",
+                  "title": "Night Suits",
+                  "description": "Explore night suits options within sleepwear."
+                },
+                {
+                  "slug": "sleepsuits",
+                  "title": "Sleepsuits",
+                  "description": "Explore sleepsuits options within sleepwear."
+                },
+                {
+                  "slug": "soft-sleep-sets",
+                  "title": "Soft Sleep Sets",
+                  "description": "Explore soft sleep sets options within sleepwear."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "kids-sets-and-occasion",
+          "title": "Kids Sets & Occasion",
+          "description": "Explore the kids sets & occasion edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "co-ord-sets",
+              "title": "Co-ord Sets",
+              "description": "Browse the co-ord sets range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "t-shirt-and-shorts-sets",
+                  "title": "T-Shirt & Shorts Sets",
+                  "description": "Explore t-shirt & shorts sets options within co-ord sets."
+                },
+                {
+                  "slug": "shirt-and-shorts-sets",
+                  "title": "Shirt & Shorts Sets",
+                  "description": "Explore shirt & shorts sets options within co-ord sets."
+                },
+                {
+                  "slug": "top-and-skirt-sets",
+                  "title": "Top & Skirt Sets",
+                  "description": "Explore top & skirt sets options within co-ord sets."
+                },
+                {
+                  "slug": "lounge-sets",
+                  "title": "Lounge Sets",
+                  "description": "Explore lounge sets options within co-ord sets."
+                }
+              ]
+            },
+            {
+              "slug": "partywear",
+              "title": "Partywear",
+              "description": "Browse the partywear range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "birthday-outfits",
+                  "title": "Birthday Outfits",
+                  "description": "Explore birthday outfits options within partywear."
+                },
+                {
+                  "slug": "festive-outfits",
+                  "title": "Festive Outfits",
+                  "description": "Explore festive outfits options within partywear."
+                },
+                {
+                  "slug": "wedding-outfits",
+                  "title": "Wedding Outfits",
+                  "description": "Explore wedding outfits options within partywear."
+                },
+                {
+                  "slug": "smart-casual-outfits",
+                  "title": "Smart-Casual Outfits",
+                  "description": "Explore smart-casual outfits options within partywear."
+                }
+              ]
+            },
+            {
+              "slug": "ethnic-wear",
+              "title": "Ethnic Wear",
+              "description": "Browse the ethnic wear range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "kids-panjabi",
+                  "title": "Kids Panjabi",
+                  "description": "Explore kids panjabi options within ethnic wear."
+                },
+                {
+                  "slug": "kurta-sets",
+                  "title": "Kurta Sets",
+                  "description": "Explore kurta sets options within ethnic wear."
+                },
+                {
+                  "slug": "festive-sets",
+                  "title": "Festive Sets",
+                  "description": "Explore festive sets options within ethnic wear."
+                },
+                {
+                  "slug": "ethnic-dresses",
+                  "title": "Ethnic Dresses",
+                  "description": "Explore ethnic dresses options within ethnic wear."
+                }
+              ]
+            },
+            {
+              "slug": "outerwear",
+              "title": "Outerwear",
+              "description": "Browse the outerwear range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "kids-hoodies",
+                  "title": "Kids Hoodies",
+                  "description": "Explore kids hoodies options within outerwear."
+                },
+                {
+                  "slug": "kids-sweaters",
+                  "title": "Kids Sweaters",
+                  "description": "Explore kids sweaters options within outerwear."
+                },
+                {
+                  "slug": "kids-jackets",
+                  "title": "Kids Jackets",
+                  "description": "Explore kids jackets options within outerwear."
+                },
+                {
+                  "slug": "kids-sweatshirts",
+                  "title": "Kids Sweatshirts",
+                  "description": "Explore kids sweatshirts options within outerwear."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "kids-accessories",
+          "title": "Kids Accessories",
+          "description": "Explore the kids accessories edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "caps",
+              "title": "Caps",
+              "description": "Browse the caps range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "baseball-caps",
+                  "title": "Baseball Caps",
+                  "description": "Explore baseball caps options within caps."
+                },
+                {
+                  "slug": "bucket-hats",
+                  "title": "Bucket Hats",
+                  "description": "Explore bucket hats options within caps."
+                },
+                {
+                  "slug": "beanies",
+                  "title": "Beanies",
+                  "description": "Explore beanies options within caps."
+                },
+                {
+                  "slug": "sun-hats",
+                  "title": "Sun Hats",
+                  "description": "Explore sun hats options within caps."
+                }
+              ]
+            },
+            {
+              "slug": "socks",
+              "title": "Socks",
+              "description": "Browse the socks range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "ankle-socks",
+                  "title": "Ankle Socks",
+                  "description": "Explore ankle socks options within socks."
+                },
+                {
+                  "slug": "crew-socks",
+                  "title": "Crew Socks",
+                  "description": "Explore crew socks options within socks."
+                },
+                {
+                  "slug": "grip-socks",
+                  "title": "Grip Socks",
+                  "description": "Explore grip socks options within socks."
+                },
+                {
+                  "slug": "socks-multipacks",
+                  "title": "Socks Multipacks",
+                  "description": "Explore socks multipacks options within socks."
+                }
+              ]
+            },
+            {
+              "slug": "backpacks",
+              "title": "Backpacks",
+              "description": "Browse the backpacks range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "mini-backpacks",
+                  "title": "Mini Backpacks",
+                  "description": "Explore mini backpacks options within backpacks."
+                },
+                {
+                  "slug": "school-backpacks",
+                  "title": "School Backpacks",
+                  "description": "Explore school backpacks options within backpacks."
+                },
+                {
+                  "slug": "character-backpacks",
+                  "title": "Character Backpacks",
+                  "description": "Explore character backpacks options within backpacks."
+                },
+                {
+                  "slug": "drawstring-bags",
+                  "title": "Drawstring Bags",
+                  "description": "Explore drawstring bags options within backpacks."
+                }
+              ]
+            },
+            {
+              "slug": "hair-accessories",
+              "title": "Hair Accessories",
+              "description": "Browse the hair accessories range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "hair-clips",
+                  "title": "Hair Clips",
+                  "description": "Explore hair clips options within hair accessories."
+                },
+                {
+                  "slug": "hair-bands",
+                  "title": "Hair Bands",
+                  "description": "Explore hair bands options within hair accessories."
+                },
+                {
+                  "slug": "scrunchies",
+                  "title": "Scrunchies",
+                  "description": "Explore scrunchies options within hair accessories."
+                },
+                {
+                  "slug": "headbands",
+                  "title": "Headbands",
+                  "description": "Explore headbands options within hair accessories."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "sports",
+      "title": "Sports",
+      "description": "Performance-inspired apparel for training, team sports and movement, organised into dedicated men's, women's and kids' collections.",
+      "groups": [
+        {
+          "slug": "men-s-activewear",
+          "title": "Men's Activewear",
+          "description": "Explore the men's activewear edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "sports-t-shirts",
+              "title": "Sports T-Shirts",
+              "description": "Browse the sports t-shirts range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "dry-fit-t-shirts",
+                  "title": "Dry-Fit T-Shirts",
+                  "description": "Explore dry-fit t-shirts options within sports t-shirts."
+                },
+                {
+                  "slug": "mesh-t-shirts",
+                  "title": "Mesh T-Shirts",
+                  "description": "Explore mesh t-shirts options within sports t-shirts."
+                },
+                {
+                  "slug": "compression-t-shirts",
+                  "title": "Compression T-Shirts",
+                  "description": "Explore compression t-shirts options within sports t-shirts."
+                },
+                {
+                  "slug": "sleeveless-sports-t-shirts",
+                  "title": "Sleeveless Sports T-Shirts",
+                  "description": "Explore sleeveless sports t-shirts options within sports t-shirts."
+                }
+              ]
+            },
+            {
+              "slug": "jerseys",
+              "title": "Jerseys",
+              "description": "Browse the jerseys range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "football-jerseys",
+                  "title": "Football Jerseys",
+                  "description": "Explore football jerseys options within jerseys."
+                },
+                {
+                  "slug": "cricket-jerseys",
+                  "title": "Cricket Jerseys",
+                  "description": "Explore cricket jerseys options within jerseys."
+                },
+                {
+                  "slug": "basketball-jerseys",
+                  "title": "Basketball Jerseys",
+                  "description": "Explore basketball jerseys options within jerseys."
+                },
+                {
+                  "slug": "training-jerseys",
+                  "title": "Training Jerseys",
+                  "description": "Explore training jerseys options within jerseys."
+                }
+              ]
+            },
+            {
+              "slug": "shorts",
+              "title": "Shorts",
+              "description": "Browse the shorts range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "running-shorts",
+                  "title": "Running Shorts",
+                  "description": "Explore running shorts options within shorts."
+                },
+                {
+                  "slug": "training-shorts",
+                  "title": "Training Shorts",
+                  "description": "Explore training shorts options within shorts."
+                },
+                {
+                  "slug": "gym-shorts",
+                  "title": "Gym Shorts",
+                  "description": "Explore gym shorts options within shorts."
+                },
+                {
+                  "slug": "football-shorts",
+                  "title": "Football Shorts",
+                  "description": "Explore football shorts options within shorts."
+                }
+              ]
+            },
+            {
+              "slug": "track-pants",
+              "title": "Track Pants",
+              "description": "Browse the track pants range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "tapered-track-pants",
+                  "title": "Tapered Track Pants",
+                  "description": "Explore tapered track pants options within track pants."
+                },
+                {
+                  "slug": "open-hem-track-pants",
+                  "title": "Open-Hem Track Pants",
+                  "description": "Explore open-hem track pants options within track pants."
+                },
+                {
+                  "slug": "jogger-track-pants",
+                  "title": "Jogger Track Pants",
+                  "description": "Explore jogger track pants options within track pants."
+                },
+                {
+                  "slug": "lightweight-track-pants",
+                  "title": "Lightweight Track Pants",
+                  "description": "Explore lightweight track pants options within track pants."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "women-s-activewear",
+          "title": "Women's Activewear",
+          "description": "Explore the women's activewear edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "sports-tops",
+              "title": "Sports Tops",
+              "description": "Browse the sports tops range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "dry-fit-tops",
+                  "title": "Dry-Fit Tops",
+                  "description": "Explore dry-fit tops options within sports tops."
+                },
+                {
+                  "slug": "training-tanks",
+                  "title": "Training Tanks",
+                  "description": "Explore training tanks options within sports tops."
+                },
+                {
+                  "slug": "long-sleeve-sports-tops",
+                  "title": "Long-Sleeve Sports Tops",
+                  "description": "Explore long-sleeve sports tops options within sports tops."
+                },
+                {
+                  "slug": "compression-tops",
+                  "title": "Compression Tops",
+                  "description": "Explore compression tops options within sports tops."
+                }
+              ]
+            },
+            {
+              "slug": "sports-bras",
+              "title": "Sports Bras",
+              "description": "Browse the sports bras range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "light-support-bras",
+                  "title": "Light-Support Bras",
+                  "description": "Explore light-support bras options within sports bras."
+                },
+                {
+                  "slug": "medium-support-bras",
+                  "title": "Medium-Support Bras",
+                  "description": "Explore medium-support bras options within sports bras."
+                },
+                {
+                  "slug": "high-support-bras",
+                  "title": "High-Support Bras",
+                  "description": "Explore high-support bras options within sports bras."
+                },
+                {
+                  "slug": "racerback-bras",
+                  "title": "Racerback Bras",
+                  "description": "Explore racerback bras options within sports bras."
+                }
+              ]
+            },
+            {
+              "slug": "leggings",
+              "title": "Leggings",
+              "description": "Browse the leggings range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "high-waist-leggings",
+                  "title": "High-Waist Leggings",
+                  "description": "Explore high-waist leggings options within leggings."
+                },
+                {
+                  "slug": "7-8-length-leggings",
+                  "title": "7/8-Length Leggings",
+                  "description": "Explore 7/8-length leggings options within leggings."
+                },
+                {
+                  "slug": "compression-leggings",
+                  "title": "Compression Leggings",
+                  "description": "Explore compression leggings options within leggings."
+                },
+                {
+                  "slug": "seamless-leggings",
+                  "title": "Seamless Leggings",
+                  "description": "Explore seamless leggings options within leggings."
+                }
+              ]
+            },
+            {
+              "slug": "shorts",
+              "title": "Shorts",
+              "description": "Browse the shorts range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "running-shorts",
+                  "title": "Running Shorts",
+                  "description": "Explore running shorts options within shorts."
+                },
+                {
+                  "slug": "cycling-shorts",
+                  "title": "Cycling Shorts",
+                  "description": "Explore cycling shorts options within shorts."
+                },
+                {
+                  "slug": "training-shorts",
+                  "title": "Training Shorts",
+                  "description": "Explore training shorts options within shorts."
+                },
+                {
+                  "slug": "gym-shorts",
+                  "title": "Gym Shorts",
+                  "description": "Explore gym shorts options within shorts."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "kids-sportswear",
+          "title": "Kids Sportswear",
+          "description": "Explore the kids sportswear edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "kids-t-shirts",
+              "title": "Kids T-Shirts",
+              "description": "Browse the kids t-shirts range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "dry-fit-kids-t-shirts",
+                  "title": "Dry-Fit Kids T-Shirts",
+                  "description": "Explore dry-fit kids t-shirts options within kids t-shirts."
+                },
+                {
+                  "slug": "team-t-shirts",
+                  "title": "Team T-Shirts",
+                  "description": "Explore team t-shirts options within kids t-shirts."
+                },
+                {
+                  "slug": "training-t-shirts",
+                  "title": "Training T-Shirts",
+                  "description": "Explore training t-shirts options within kids t-shirts."
+                },
+                {
+                  "slug": "sleeveless-t-shirts",
+                  "title": "Sleeveless T-Shirts",
+                  "description": "Explore sleeveless t-shirts options within kids t-shirts."
+                }
+              ]
+            },
+            {
+              "slug": "kids-jerseys",
+              "title": "Kids Jerseys",
+              "description": "Browse the kids jerseys range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "football-jerseys",
+                  "title": "Football Jerseys",
+                  "description": "Explore football jerseys options within kids jerseys."
+                },
+                {
+                  "slug": "cricket-jerseys",
+                  "title": "Cricket Jerseys",
+                  "description": "Explore cricket jerseys options within kids jerseys."
+                },
+                {
+                  "slug": "basketball-jerseys",
+                  "title": "Basketball Jerseys",
+                  "description": "Explore basketball jerseys options within kids jerseys."
+                },
+                {
+                  "slug": "club-jerseys",
+                  "title": "Club Jerseys",
+                  "description": "Explore club jerseys options within kids jerseys."
+                }
+              ]
+            },
+            {
+              "slug": "track-sets",
+              "title": "Track Sets",
+              "description": "Browse the track sets range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "top-and-bottom-sets",
+                  "title": "Top & Bottom Sets",
+                  "description": "Explore top & bottom sets options within track sets."
+                },
+                {
+                  "slug": "hoodie-sets",
+                  "title": "Hoodie Sets",
+                  "description": "Explore hoodie sets options within track sets."
+                },
+                {
+                  "slug": "jogger-sets",
+                  "title": "Jogger Sets",
+                  "description": "Explore jogger sets options within track sets."
+                },
+                {
+                  "slug": "lightweight-track-sets",
+                  "title": "Lightweight Track Sets",
+                  "description": "Explore lightweight track sets options within track sets."
+                }
+              ]
+            },
+            {
+              "slug": "shorts",
+              "title": "Shorts",
+              "description": "Browse the shorts range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "running-shorts",
+                  "title": "Running Shorts",
+                  "description": "Explore running shorts options within shorts."
+                },
+                {
+                  "slug": "football-shorts",
+                  "title": "Football Shorts",
+                  "description": "Explore football shorts options within shorts."
+                },
+                {
+                  "slug": "training-shorts",
+                  "title": "Training Shorts",
+                  "description": "Explore training shorts options within shorts."
+                },
+                {
+                  "slug": "multi-sport-shorts",
+                  "title": "Multi-Sport Shorts",
+                  "description": "Explore multi-sport shorts options within shorts."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "training-and-fitness",
+          "title": "Training & Fitness",
+          "description": "Explore the training & fitness edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "gym-tanks",
+              "title": "Gym Tanks",
+              "description": "Browse the gym tanks range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "sleeveless-gym-tanks",
+                  "title": "Sleeveless Gym Tanks",
+                  "description": "Explore sleeveless gym tanks options within gym tanks."
+                },
+                {
+                  "slug": "racerback-tanks",
+                  "title": "Racerback Tanks",
+                  "description": "Explore racerback tanks options within gym tanks."
+                },
+                {
+                  "slug": "compression-tanks",
+                  "title": "Compression Tanks",
+                  "description": "Explore compression tanks options within gym tanks."
+                },
+                {
+                  "slug": "loose-fit-tanks",
+                  "title": "Loose-Fit Tanks",
+                  "description": "Explore loose-fit tanks options within gym tanks."
+                }
+              ]
+            },
+            {
+              "slug": "training-pants",
+              "title": "Training Pants",
+              "description": "Browse the training pants range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "training-joggers",
+                  "title": "Training Joggers",
+                  "description": "Explore training joggers options within training pants."
+                },
+                {
+                  "slug": "tapered-pants",
+                  "title": "Tapered Pants",
+                  "description": "Explore tapered pants options within training pants."
+                },
+                {
+                  "slug": "compression-pants",
+                  "title": "Compression Pants",
+                  "description": "Explore compression pants options within training pants."
+                },
+                {
+                  "slug": "lightweight-pants",
+                  "title": "Lightweight Pants",
+                  "description": "Explore lightweight pants options within training pants."
+                }
+              ]
+            },
+            {
+              "slug": "sweatshirts",
+              "title": "Sweatshirts",
+              "description": "Browse the sweatshirts range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "crewneck-sweatshirts",
+                  "title": "Crewneck Sweatshirts",
+                  "description": "Explore crewneck sweatshirts options within sweatshirts."
+                },
+                {
+                  "slug": "zip-up-sweatshirts",
+                  "title": "Zip-Up Sweatshirts",
+                  "description": "Explore zip-up sweatshirts options within sweatshirts."
+                },
+                {
+                  "slug": "fleece-sweatshirts",
+                  "title": "Fleece Sweatshirts",
+                  "description": "Explore fleece sweatshirts options within sweatshirts."
+                },
+                {
+                  "slug": "training-sweatshirts",
+                  "title": "Training Sweatshirts",
+                  "description": "Explore training sweatshirts options within sweatshirts."
+                }
+              ]
+            },
+            {
+              "slug": "jackets",
+              "title": "Jackets",
+              "description": "Browse the jackets range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "windbreakers",
+                  "title": "Windbreakers",
+                  "description": "Explore windbreakers options within jackets."
+                },
+                {
+                  "slug": "running-jackets",
+                  "title": "Running Jackets",
+                  "description": "Explore running jackets options within jackets."
+                },
+                {
+                  "slug": "lightweight-jackets",
+                  "title": "Lightweight Jackets",
+                  "description": "Explore lightweight jackets options within jackets."
+                },
+                {
+                  "slug": "track-jackets",
+                  "title": "Track Jackets",
+                  "description": "Explore track jackets options within jackets."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "team-sports-and-gear",
+          "title": "Team Sports & Gear",
+          "description": "Explore the team sports & gear edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "football-kits",
+              "title": "Football Kits",
+              "description": "Browse the football kits range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "home-kits",
+                  "title": "Home Kits",
+                  "description": "Explore home kits options within football kits."
+                },
+                {
+                  "slug": "away-kits",
+                  "title": "Away Kits",
+                  "description": "Explore away kits options within football kits."
+                },
+                {
+                  "slug": "third-kits",
+                  "title": "Third Kits",
+                  "description": "Explore third kits options within football kits."
+                },
+                {
+                  "slug": "training-kits",
+                  "title": "Training Kits",
+                  "description": "Explore training kits options within football kits."
+                }
+              ]
+            },
+            {
+              "slug": "cricket-kits",
+              "title": "Cricket Kits",
+              "description": "Browse the cricket kits range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "match-kits",
+                  "title": "Match Kits",
+                  "description": "Explore match kits options within cricket kits."
+                },
+                {
+                  "slug": "training-kits",
+                  "title": "Training Kits",
+                  "description": "Explore training kits options within cricket kits."
+                },
+                {
+                  "slug": "cricket-trousers",
+                  "title": "Cricket Trousers",
+                  "description": "Explore cricket trousers options within cricket kits."
+                },
+                {
+                  "slug": "cricket-jerseys",
+                  "title": "Cricket Jerseys",
+                  "description": "Explore cricket jerseys options within cricket kits."
+                }
+              ]
+            },
+            {
+              "slug": "basketball-wear",
+              "title": "Basketball Wear",
+              "description": "Browse the basketball wear range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "basketball-jerseys",
+                  "title": "Basketball Jerseys",
+                  "description": "Explore basketball jerseys options within basketball wear."
+                },
+                {
+                  "slug": "basketball-shorts",
+                  "title": "Basketball Shorts",
+                  "description": "Explore basketball shorts options within basketball wear."
+                },
+                {
+                  "slug": "compression-wear",
+                  "title": "Compression Wear",
+                  "description": "Explore compression wear options within basketball wear."
+                },
+                {
+                  "slug": "warm-up-wear",
+                  "title": "Warm-Up Wear",
+                  "description": "Explore warm-up wear options within basketball wear."
+                }
+              ]
+            },
+            {
+              "slug": "sports-accessories",
+              "title": "Sports Accessories",
+              "description": "Browse the sports accessories range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "sports-socks",
+                  "title": "Sports Socks",
+                  "description": "Explore sports socks options within sports accessories."
+                },
+                {
+                  "slug": "sports-caps",
+                  "title": "Sports Caps",
+                  "description": "Explore sports caps options within sports accessories."
+                },
+                {
+                  "slug": "gym-bags",
+                  "title": "Gym Bags",
+                  "description": "Explore gym bags options within sports accessories."
+                },
+                {
+                  "slug": "sweatbands",
+                  "title": "Sweatbands",
+                  "description": "Explore sweatbands options within sports accessories."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "accessories",
+      "title": "Accessories",
+      "description": "Complete the look with practical everyday accessories, bags, wallets, headwear, socks and finishing touches.",
+      "groups": [
+        {
+          "slug": "bags",
+          "title": "Bags",
+          "description": "Explore the bags edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "tote-bags",
+              "title": "Tote Bags",
+              "description": "Browse the tote bags range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "canvas-totes",
+                  "title": "Canvas Totes",
+                  "description": "Explore canvas totes options within tote bags."
+                },
+                {
+                  "slug": "shopper-totes",
+                  "title": "Shopper Totes",
+                  "description": "Explore shopper totes options within tote bags."
+                },
+                {
+                  "slug": "everyday-totes",
+                  "title": "Everyday Totes",
+                  "description": "Explore everyday totes options within tote bags."
+                },
+                {
+                  "slug": "printed-totes",
+                  "title": "Printed Totes",
+                  "description": "Explore printed totes options within tote bags."
+                }
+              ]
+            },
+            {
+              "slug": "shoulder-bags",
+              "title": "Shoulder Bags",
+              "description": "Browse the shoulder bags range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "classic-shoulder-bags",
+                  "title": "Classic Shoulder Bags",
+                  "description": "Explore classic shoulder bags options within shoulder bags."
+                },
+                {
+                  "slug": "mini-shoulder-bags",
+                  "title": "Mini Shoulder Bags",
+                  "description": "Explore mini shoulder bags options within shoulder bags."
+                },
+                {
+                  "slug": "structured-shoulder-bags",
+                  "title": "Structured Shoulder Bags",
+                  "description": "Explore structured shoulder bags options within shoulder bags."
+                },
+                {
+                  "slug": "casual-shoulder-bags",
+                  "title": "Casual Shoulder Bags",
+                  "description": "Explore casual shoulder bags options within shoulder bags."
+                }
+              ]
+            },
+            {
+              "slug": "crossbody-bags",
+              "title": "Crossbody Bags",
+              "description": "Browse the crossbody bags range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "compact-crossbody-bags",
+                  "title": "Compact Crossbody Bags",
+                  "description": "Explore compact crossbody bags options within crossbody bags."
+                },
+                {
+                  "slug": "utility-crossbody-bags",
+                  "title": "Utility Crossbody Bags",
+                  "description": "Explore utility crossbody bags options within crossbody bags."
+                },
+                {
+                  "slug": "flap-crossbody-bags",
+                  "title": "Flap Crossbody Bags",
+                  "description": "Explore flap crossbody bags options within crossbody bags."
+                },
+                {
+                  "slug": "travel-crossbody-bags",
+                  "title": "Travel Crossbody Bags",
+                  "description": "Explore travel crossbody bags options within crossbody bags."
+                }
+              ]
+            },
+            {
+              "slug": "backpacks",
+              "title": "Backpacks",
+              "description": "Browse the backpacks range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "everyday-backpacks",
+                  "title": "Everyday Backpacks",
+                  "description": "Explore everyday backpacks options within backpacks."
+                },
+                {
+                  "slug": "laptop-backpacks",
+                  "title": "Laptop Backpacks",
+                  "description": "Explore laptop backpacks options within backpacks."
+                },
+                {
+                  "slug": "mini-backpacks",
+                  "title": "Mini Backpacks",
+                  "description": "Explore mini backpacks options within backpacks."
+                },
+                {
+                  "slug": "multi-pocket-backpacks",
+                  "title": "Multi-Pocket Backpacks",
+                  "description": "Explore multi-pocket backpacks options within backpacks."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "wallets-and-card-holders",
+          "title": "Wallets & Card Holders",
+          "description": "Explore the wallets & card holders edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "wallets",
+              "title": "Wallets",
+              "description": "Browse the wallets range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "bi-fold-wallets",
+                  "title": "Bi-Fold Wallets",
+                  "description": "Explore bi-fold wallets options within wallets."
+                },
+                {
+                  "slug": "tri-fold-wallets",
+                  "title": "Tri-Fold Wallets",
+                  "description": "Explore tri-fold wallets options within wallets."
+                },
+                {
+                  "slug": "zip-wallets",
+                  "title": "Zip Wallets",
+                  "description": "Explore zip wallets options within wallets."
+                },
+                {
+                  "slug": "slim-wallets",
+                  "title": "Slim Wallets",
+                  "description": "Explore slim wallets options within wallets."
+                }
+              ]
+            },
+            {
+              "slug": "card-holders",
+              "title": "Card Holders",
+              "description": "Browse the card holders range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "minimal-card-holders",
+                  "title": "Minimal Card Holders",
+                  "description": "Explore minimal card holders options within card holders."
+                },
+                {
+                  "slug": "multi-slot-card-holders",
+                  "title": "Multi-Slot Card Holders",
+                  "description": "Explore multi-slot card holders options within card holders."
+                },
+                {
+                  "slug": "zip-card-holders",
+                  "title": "Zip Card Holders",
+                  "description": "Explore zip card holders options within card holders."
+                },
+                {
+                  "slug": "travel-card-holders",
+                  "title": "Travel Card Holders",
+                  "description": "Explore travel card holders options within card holders."
+                }
+              ]
+            },
+            {
+              "slug": "pouches",
+              "title": "Pouches",
+              "description": "Browse the pouches range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "coin-pouches",
+                  "title": "Coin Pouches",
+                  "description": "Explore coin pouches options within pouches."
+                },
+                {
+                  "slug": "utility-pouches",
+                  "title": "Utility Pouches",
+                  "description": "Explore utility pouches options within pouches."
+                },
+                {
+                  "slug": "travel-pouches",
+                  "title": "Travel Pouches",
+                  "description": "Explore travel pouches options within pouches."
+                },
+                {
+                  "slug": "tech-pouches",
+                  "title": "Tech Pouches",
+                  "description": "Explore tech pouches options within pouches."
+                }
+              ]
+            },
+            {
+              "slug": "key-accessories",
+              "title": "Key Accessories",
+              "description": "Browse the key accessories range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "keyrings",
+                  "title": "Keyrings",
+                  "description": "Explore keyrings options within key accessories."
+                },
+                {
+                  "slug": "key-cases",
+                  "title": "Key Cases",
+                  "description": "Explore key cases options within key accessories."
+                },
+                {
+                  "slug": "lanyards",
+                  "title": "Lanyards",
+                  "description": "Explore lanyards options within key accessories."
+                },
+                {
+                  "slug": "key-clips",
+                  "title": "Key Clips",
+                  "description": "Explore key clips options within key accessories."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "belts-and-headwear",
+          "title": "Belts & Headwear",
+          "description": "Explore the belts & headwear edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "belts",
+              "title": "Belts",
+              "description": "Browse the belts range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "leather-belts",
+                  "title": "Leather Belts",
+                  "description": "Explore leather belts options within belts."
+                },
+                {
+                  "slug": "casual-belts",
+                  "title": "Casual Belts",
+                  "description": "Explore casual belts options within belts."
+                },
+                {
+                  "slug": "woven-belts",
+                  "title": "Woven Belts",
+                  "description": "Explore woven belts options within belts."
+                },
+                {
+                  "slug": "reversible-belts",
+                  "title": "Reversible Belts",
+                  "description": "Explore reversible belts options within belts."
+                }
+              ]
+            },
+            {
+              "slug": "caps",
+              "title": "Caps",
+              "description": "Browse the caps range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "baseball-caps",
+                  "title": "Baseball Caps",
+                  "description": "Explore baseball caps options within caps."
+                },
+                {
+                  "slug": "adjustable-caps",
+                  "title": "Adjustable Caps",
+                  "description": "Explore adjustable caps options within caps."
+                },
+                {
+                  "slug": "logo-caps",
+                  "title": "Logo Caps",
+                  "description": "Explore logo caps options within caps."
+                },
+                {
+                  "slug": "sports-caps",
+                  "title": "Sports Caps",
+                  "description": "Explore sports caps options within caps."
+                }
+              ]
+            },
+            {
+              "slug": "hats",
+              "title": "Hats",
+              "description": "Browse the hats range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "bucket-hats",
+                  "title": "Bucket Hats",
+                  "description": "Explore bucket hats options within hats."
+                },
+                {
+                  "slug": "beanies",
+                  "title": "Beanies",
+                  "description": "Explore beanies options within hats."
+                },
+                {
+                  "slug": "sun-hats",
+                  "title": "Sun Hats",
+                  "description": "Explore sun hats options within hats."
+                },
+                {
+                  "slug": "classic-hats",
+                  "title": "Classic Hats",
+                  "description": "Explore classic hats options within hats."
+                }
+              ]
+            },
+            {
+              "slug": "hair-accessories",
+              "title": "Hair Accessories",
+              "description": "Browse the hair accessories range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "hair-clips",
+                  "title": "Hair Clips",
+                  "description": "Explore hair clips options within hair accessories."
+                },
+                {
+                  "slug": "hair-bands",
+                  "title": "Hair Bands",
+                  "description": "Explore hair bands options within hair accessories."
+                },
+                {
+                  "slug": "scrunchies",
+                  "title": "Scrunchies",
+                  "description": "Explore scrunchies options within hair accessories."
+                },
+                {
+                  "slug": "headbands",
+                  "title": "Headbands",
+                  "description": "Explore headbands options within hair accessories."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "socks-and-legwear",
+          "title": "Socks & Legwear",
+          "description": "Explore the socks & legwear edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "ankle-socks",
+              "title": "Ankle Socks",
+              "description": "Browse the ankle socks range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "no-show-socks",
+                  "title": "No-Show Socks",
+                  "description": "Explore no-show socks options within ankle socks."
+                },
+                {
+                  "slug": "low-cut-socks",
+                  "title": "Low-Cut Socks",
+                  "description": "Explore low-cut socks options within ankle socks."
+                },
+                {
+                  "slug": "cotton-ankle-socks",
+                  "title": "Cotton Ankle Socks",
+                  "description": "Explore cotton ankle socks options within ankle socks."
+                },
+                {
+                  "slug": "sports-ankle-socks",
+                  "title": "Sports Ankle Socks",
+                  "description": "Explore sports ankle socks options within ankle socks."
+                }
+              ]
+            },
+            {
+              "slug": "crew-socks",
+              "title": "Crew Socks",
+              "description": "Browse the crew socks range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "classic-crew-socks",
+                  "title": "Classic Crew Socks",
+                  "description": "Explore classic crew socks options within crew socks."
+                },
+                {
+                  "slug": "ribbed-crew-socks",
+                  "title": "Ribbed Crew Socks",
+                  "description": "Explore ribbed crew socks options within crew socks."
+                },
+                {
+                  "slug": "graphic-crew-socks",
+                  "title": "Graphic Crew Socks",
+                  "description": "Explore graphic crew socks options within crew socks."
+                },
+                {
+                  "slug": "formal-crew-socks",
+                  "title": "Formal Crew Socks",
+                  "description": "Explore formal crew socks options within crew socks."
+                }
+              ]
+            },
+            {
+              "slug": "sports-socks",
+              "title": "Sports Socks",
+              "description": "Browse the sports socks range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "training-socks",
+                  "title": "Training Socks",
+                  "description": "Explore training socks options within sports socks."
+                },
+                {
+                  "slug": "football-socks",
+                  "title": "Football Socks",
+                  "description": "Explore football socks options within sports socks."
+                },
+                {
+                  "slug": "running-socks",
+                  "title": "Running Socks",
+                  "description": "Explore running socks options within sports socks."
+                },
+                {
+                  "slug": "cushioned-socks",
+                  "title": "Cushioned Socks",
+                  "description": "Explore cushioned socks options within sports socks."
+                }
+              ]
+            },
+            {
+              "slug": "multipacks",
+              "title": "Multipacks",
+              "description": "Browse the multipacks range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "3-pair-packs",
+                  "title": "3-Pair Packs",
+                  "description": "Explore 3-pair packs options within multipacks."
+                },
+                {
+                  "slug": "5-pair-packs",
+                  "title": "5-Pair Packs",
+                  "description": "Explore 5-pair packs options within multipacks."
+                },
+                {
+                  "slug": "everyday-packs",
+                  "title": "Everyday Packs",
+                  "description": "Explore everyday packs options within multipacks."
+                },
+                {
+                  "slug": "sports-packs",
+                  "title": "Sports Packs",
+                  "description": "Explore sports packs options within multipacks."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "slug": "finishing-touches",
+          "title": "Finishing Touches",
+          "description": "Explore the finishing touches edit and browse its individual categories.",
+          "categories": [
+            {
+              "slug": "scarves",
+              "title": "Scarves",
+              "description": "Browse the scarves range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "cotton-scarves",
+                  "title": "Cotton Scarves",
+                  "description": "Explore cotton scarves options within scarves."
+                },
+                {
+                  "slug": "silk-scarves",
+                  "title": "Silk Scarves",
+                  "description": "Explore silk scarves options within scarves."
+                },
+                {
+                  "slug": "printed-scarves",
+                  "title": "Printed Scarves",
+                  "description": "Explore printed scarves options within scarves."
+                },
+                {
+                  "slug": "winter-scarves",
+                  "title": "Winter Scarves",
+                  "description": "Explore winter scarves options within scarves."
+                }
+              ]
+            },
+            {
+              "slug": "sunglasses",
+              "title": "Sunglasses",
+              "description": "Browse the sunglasses range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "classic-sunglasses",
+                  "title": "Classic Sunglasses",
+                  "description": "Explore classic sunglasses options within sunglasses."
+                },
+                {
+                  "slug": "square-sunglasses",
+                  "title": "Square Sunglasses",
+                  "description": "Explore square sunglasses options within sunglasses."
+                },
+                {
+                  "slug": "sports-sunglasses",
+                  "title": "Sports Sunglasses",
+                  "description": "Explore sports sunglasses options within sunglasses."
+                },
+                {
+                  "slug": "oversized-sunglasses",
+                  "title": "Oversized Sunglasses",
+                  "description": "Explore oversized sunglasses options within sunglasses."
+                }
+              ]
+            },
+            {
+              "slug": "watches",
+              "title": "Watches",
+              "description": "Browse the watches range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "minimal-watches",
+                  "title": "Minimal Watches",
+                  "description": "Explore minimal watches options within watches."
+                },
+                {
+                  "slug": "sports-watches",
+                  "title": "Sports Watches",
+                  "description": "Explore sports watches options within watches."
+                },
+                {
+                  "slug": "classic-watches",
+                  "title": "Classic Watches",
+                  "description": "Explore classic watches options within watches."
+                },
+                {
+                  "slug": "everyday-watches",
+                  "title": "Everyday Watches",
+                  "description": "Explore everyday watches options within watches."
+                }
+              ]
+            },
+            {
+              "slug": "jewellery",
+              "title": "Jewellery",
+              "description": "Browse the jewellery range, then narrow your choice by style and fit.",
+              "subcategories": [
+                {
+                  "slug": "earrings",
+                  "title": "Earrings",
+                  "description": "Explore earrings options within jewellery."
+                },
+                {
+                  "slug": "necklaces",
+                  "title": "Necklaces",
+                  "description": "Explore necklaces options within jewellery."
+                },
+                {
+                  "slug": "bracelets",
+                  "title": "Bracelets",
+                  "description": "Explore bracelets options within jewellery."
+                },
+                {
+                  "slug": "jewellery-sets",
+                  "title": "Jewellery Sets",
+                  "description": "Explore jewellery sets options within jewellery."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
