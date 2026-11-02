@@ -52,6 +52,9 @@ jobs:
           print(f"Verified 22 categories and {total} products.")
           PY
 
+      - name: Download real, licensed fashion photography
+        run: python3 scripts/download_fashion_photos.py
+
       - name: Generate Women, Teens, Kids, Sports and Accessories pages
         run: python3 scripts/build_collection_pages.py
       - name: Verify five-level category hierarchy pages
@@ -68,7 +71,15 @@ jobs:
           pages = image_count = 0
           groups = categories = subcategories = nested = 0
           seen_paths = set()
-          seen_images = set()
+          expected_kinds = ("top", "bottoms", "outerwear", "wallet", "cap", "socks", "belt", "dress", "bag", "jewelry", "shoes", "sports", "kids")
+          expected_assets = {f"{kind}-{index:02d}.jpg" for kind in expected_kinds for index in range(1, 7)}
+          asset_dir = Path("assets/fashion-photos")
+          actual_assets = {item.name for item in asset_dir.glob("*.jpg")}
+          assert expected_assets.issubset(actual_assets), f"Missing photos: {sorted(expected_assets - actual_assets)}"
+          for filename in expected_assets:
+              payload = (asset_dir / filename).read_bytes()
+              assert len(payload) > 8000, f"Photo is too small: {filename}"
+              assert payload.startswith(b"\xff\xd8\xff"), f"Photo is not JPEG: {filename}"
 
           def verify_page(path):
               global pages, image_count
@@ -78,14 +89,16 @@ jobs:
               seen_paths.add(key)
               body = path.read_text()
               sources = re.findall(r'<img class="gallery-image" src="([^"]+)"', body)
-              assert len(sources) == 6, f"Expected 6 gallery images in {key}; found {len(sources)}"
+              assert len(sources) == 6, f"Expected 6 gallery photos in {key}; found {len(sources)}"
+              assert len(set(sources)) == 6, f"Expected six different photos in {key}"
               for source in sources:
-                  assert source.startswith("data:image/svg+xml;base64,"), f"Non-local image in {key}"
-                  digest = hashlib.sha256(source.encode()).hexdigest()
-                  assert digest not in seen_images, f"Duplicate image across pages: {key}"
-                  seen_images.add(digest)
-                  image_count += 1
-              pages += 1
+                  prefix = "/fashionstore/assets/fashion-photos/"
+                  assert source.startswith(prefix), f"Unexpected image source in {key}: {source}"
+                  relative = source.split("/fashionstore/", 1)[1]
+                  photo_path = Path(relative)
+                  assert photo_path.is_file(), f"Photo missing from deployment bundle: {relative}"
+                  assert photo_path.stat().st_size > 8000, f"Empty photo file: {relative}"
+                  image_count += 1              pages += 1
 
           for department in departments:
               d = Path(department["slug"])
@@ -113,8 +126,7 @@ jobs:
           assert pages == 2215, pages
           assert len(seen_paths) == 2215
           assert image_count == 13290, image_count
-          assert len(seen_images) == 13290, len(seen_images)
-          print(f"Verified {pages} pages and {image_count} unique original visuals: 5 departments, {groups} groups, {categories} categories, {subcategories} sub-categories and {nested} nested sub-categories.")
+          print(f"Verified {pages} pages and {image_count} real-photo placements using 78 local photographs: 5 departments, {groups} groups, {categories} categories, {subcategories} sub-categories and {nested} nested sub-categories.")
           PY
 
       - name: Verify department dropdown navigation
@@ -140,6 +152,8 @@ jobs:
 
           print("Verified 6 department dropdowns on homepage, Men pages and all 5 collection landing pages.")
           PY
+      - name: Validate Python build scripts
+        run: python3 -m py_compile scripts/build_collection_pages.py scripts/build_men_catalog.py scripts/download_fashion_photos.py
       - name: Verify branded not-found page and image fallbacks
         run: |
           python3 - <<'PY'
@@ -149,14 +163,18 @@ jobs:
           assert "FORME COLLECTIONS" in not_found
           assert "renderDepartmentPage" in not_found
           assert "form-product-sheet" in not_found, "Men placeholder sheets are missing"
-          assert "Your colourful style sheets are ready" in not_found
+          assert "Real fashion photos are ready" in not_found
+          assert "assets/fashion-photos/" in not_found
           collection_script = Path("scripts/build_collection_pages.py").read_text()
           men_script = Path("scripts/build_men_catalog.py").read_text()
+          downloader = Path("scripts/download_fashion_photos.py").read_text()
+          assert "gallery_photo_path" in collection_script
           assert "visual-image-missing" in collection_script
+          assert "PHOTO_IDS" in downloader
           assert "f-photo-missing" in men_script
           assert "visual-image-missing" in Path("collections/collections.css").read_text()
           assert "f-photo-missing" in Path("men/men-pages.css").read_text()
-          print("Verified the branded 404 collection fallback and colourful image placeholders.")
+          print("Verified the branded 404 collection fallback and real-photo download pipeline.")
           PY
       - name: Upload static storefront
         uses: actions/upload-pages-artifact@v3

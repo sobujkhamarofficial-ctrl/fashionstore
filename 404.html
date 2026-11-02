@@ -44,6 +44,13 @@
     .form-product-copy span{color:var(--muted);font-size:10px;line-height:1.6}
     .form-product-copy em{padding:0;margin:0;color:#526257;font-size:11px;font-style:normal;font-weight:700}
 
+      .form-sheet img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+    .form-sheet:before,.form-sheet:after{display:none}
+    .sheet-top,.sheet-bottom,.sheet-index{color:#fff;text-shadow:0 2px 10px #000b}
+    .form-sheet.photo-missing{background:linear-gradient(145deg,#f1dfd2,#d8e4da)}
+    .form-product-sheet img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;z-index:0}
+    .form-product-sheet:before,.form-product-sheet:after{display:none}
+    .form-product-sheet span,.form-product-sheet em{position:relative;z-index:1;color:#fff;text-shadow:0 2px 10px #000b}
   </style>
 </head>
 <body>
@@ -82,8 +89,31 @@
     if (!list.length) return `<div class="form-ready"><span class="form-check">✓</span><div><b>Collection space ready</b><p>This section is prepared for verified product photos, names, stock and final prices. The colourful style sheets below keep the page visually complete until product photography is added.</p></div></div>`;
     return `<section class="form-section"><div class="form-section-head"><div><span class="form-kicker">Browse the structure</span><h2>Explore ${esc(node.title)}</h2></div><span class="form-count">${list.length} ${depth===1?'collections':depth===2?'categories':'options'}</span></div><div class="form-cards">${list.map(child => `<a class="form-card" href="${urlFor([...parts,child.slug])}"><small>${esc(kindFor(child,depth+1))}</small><strong>${esc(child.title)}</strong><span>${esc(child.description || 'Explore this FORME collection.')}</span><em>${countBelow(child)} further options</em><b class="form-arrow">↗</b></a>`).join('')}</div></section>`;
   }
-  function renderSheets(title) {
-    return `<section class="form-section"><div class="form-section-head"><div><span class="form-kicker">FORME visual edit</span><h2>Style sheets for ${esc(title)}</h2></div><span class="form-count">6 colourful placeholders</span></div><div class="form-sheets">${Array.from({length:6},(_,i)=>`<article class="form-sheet"><span class="sheet-top">FORME · STYLE EDIT</span><span class="sheet-index">${String(i+1).padStart(2,'0')}</span><span class="sheet-bottom"><span>${esc(title.toUpperCase())}</span><span>COLLECTION</span></span></article>`).join('')}</div></section>`;
+  function photoKind(department,title) {
+    const value = (String(department || '') + ' ' + String(title || '')).toLowerCase();
+    if (/(backpack|handbag|tote|crossbody|shoulder bag|pouch|bag)/.test(value)) return 'bag';
+    if (/(wallet|card holder|card-holder|key case)/.test(value)) return 'wallet';
+    if (/(cap|hat|beanie|headwear)/.test(value)) return 'cap';
+    if (/(sock|multipack)/.test(value)) return 'socks';
+    if (/(belt|waist belt)/.test(value)) return 'belt';
+    if (/(shoe|sneaker|trainer|boot|footwear|sandal)/.test(value)) return 'shoes';
+    if (/(jewellery|jewelry|earring|necklace|bracelet|watch|sunglasses|hair accessory|keyring)/.test(value)) return 'jewelry';
+    if (department === 'kids') return 'kids';
+    if (department === 'sports' || /(sports|activewear|athletic|jersey|football|cricket|basketball|gym wear)/.test(value)) return 'sports';
+    if (/(jeans|trouser|pants|jogger|legging|shorts|skirt)/.test(value)) return 'bottoms';
+    if (/(dress|frock|saree|salwar|kameez|kurti|dupatta|jumpsuit|romper)/.test(value)) return 'dress';
+    if (/(hoodie|jacket|sweater|cardigan|sweatshirt|windbreaker|outerwear|shrug|coat)/.test(value)) return 'outerwear';
+    if (/(shirt|t-shirt|tee|polo|blouse|top|tank|bodysuit)/.test(value)) return 'top';
+    return 'top';
+  }
+  function renderSheets(title,department) {
+    const kind = photoKind(department,title);
+    const photos = Array.from({length:6},(_,i) => {
+      const number = String(i+1).padStart(2,'0');
+      const source = BASE + 'assets/fashion-photos/' + kind + '-' + number + '.jpg';
+      return '<article class="form-sheet"><img src="' + source + '" alt="' + esc(title) + ' fashion photograph ' + (i+1) + '" loading="lazy" onerror="this.hidden=true;this.parentElement.classList.add(\'photo-missing\')"><span class="sheet-top">FORME · PHOTO EDIT</span><span class="sheet-index">' + number + '</span><span class="sheet-bottom"><span>' + esc(title.toUpperCase()) + '</span><span>COLLECTION</span></span></article>';
+    }).join('');
+    return '<section class="form-section"><div class="form-section-head"><div><span class="form-kicker">FORME photo edit</span><h2>Real photographs for ' + esc(title) + '</h2></div><span class="form-count">6 real photographs</span></div><div class="form-sheets">' + photos + '</div></section>';
   }
   function renderDepartmentPage(data, dept, parts) {
     let node = dept;
@@ -105,7 +135,7 @@
     const parentLabel = ancestors.length ? ancestors[ancestors.length-1].title : 'Home';
     const parentUrl = parentParts.length ? urlFor(parentParts) : BASE;
     const siblingLinks = siblings.filter(item => item.slug !== node.slug).map(item => `<a href="${urlFor([...parentParts,item.slug])}">${esc(item.title)} ↗</a>`).join('');
-    app.innerHTML = `${breadcrumb(ancestors,title)}<section class="form-hero"><span class="form-kicker">${esc(kindFor(node,depth))} · FORME DIRECTORY</span><h1>${esc(title)}</h1><p>${esc(node.description || `Explore the ${title} collection at FORME.`)}</p><div class="form-meta">${childrenOf(node).length} immediate options · ${countBelow(node)} further options</div></section>${renderCards(node,parts,depth)}${renderSheets(title)}${siblingLinks?`<section class="form-section"><div class="form-section-head"><div><span class="form-kicker">Continue exploring</span><h2>More in this section</h2></div></div><div class="form-cards">${siblingLinks}</div></section>`:''}<a class="form-back" href="${parentUrl}">← Back to ${esc(parentLabel)}</a>`;
+    app.innerHTML = `${breadcrumb(ancestors,title)}<section class="form-hero"><span class="form-kicker">${esc(kindFor(node,depth))} · FORME DIRECTORY</span><h1>${esc(title)}</h1><p>${esc(node.description || `Explore the ${title} collection at FORME.`)}</p><div class="form-meta">${childrenOf(node).length} immediate options · ${countBelow(node)} further options</div></section>${renderCards(node,parts,depth)}${renderSheets(title,dept.slug)}${siblingLinks?`<section class="form-section"><div class="form-section-head"><div><span class="form-kicker">Continue exploring</span><h2>More in this section</h2></div></div><div class="form-cards">${siblingLinks}</div></section>`:''}<a class="form-back" href="${parentUrl}">← Back to ${esc(parentLabel)}</a>`;
     document.title = `${title} | FORME`;
   }
   function renderMen(data, parts) {
@@ -116,7 +146,7 @@
     const desc = selected ? `Explore the FORME ${selected.title} collection.` : "Explore men's everyday essentials, considered fits and modern classics.";
     const crumb = selected ? `<nav class="form-crumb"><a href="${BASE}">Home</a><span>/</span><a href="${urlFor(['men'])}">Men</a><span>/</span><span>${esc(title)}</span></nav>` : `<nav class="form-crumb"><a href="${BASE}">Home</a><span>/</span><span>Men</span></nav>`;
     const entries = selected ? selected.products : cats.map(c=>c.products?.[0]).filter(Boolean).slice(0,12);
-    const productCards = entries.map((p,i)=>`<article class="form-card form-product-card"><div class="form-product-sheet sheet-${i%6}"><span>FORME · STYLE SHEET</span><em>${String(i+1).padStart(2,'0')}</em></div><div class="form-product-copy"><strong>${esc(p.name)}</strong><span>${esc(p.description || 'FORME collection style')}</span><em>৳${Number(p.price||0).toLocaleString('en-BD')}</em></div></article>`).join('');
+    const productCards = entries.map((p,i)=>'<article class="form-card form-product-card"><div class="form-product-sheet sheet-'+(i%6)+'"><img src="'+esc(p.image||'')+'" alt="'+esc(p.name)+'" loading="lazy" onerror="this.hidden=true"><span>FORME · PHOTO EDIT</span><em>'+String(i+1).padStart(2,'0')+'</em></div><div class="form-product-copy"><strong>'+esc(p.name)+'</strong><span>'+esc(p.description || 'FORME collection style')+'</span><em>৳'+Number(p.price||0).toLocaleString('en-BD')+'</em></div></article>').join('');
     const categoryCards = selected ? cats.map(c=>`<a class="form-card" href="${urlFor(['men',c.slug])}"><small>MEN'S CATEGORY</small><strong>${esc(c.title)}</strong><span>Explore this collection</span><em>6 sample styles</em></a>`).join('') : cats.map(c=>`<a class="form-card" href="${urlFor(['men',c.slug])}"><small>${esc(c.group)}</small><strong>${esc(c.title)}</strong><span>Explore six sample styles</span><em>View collection ↗</em></a>`).join('');
     app.innerHTML = `${crumb}<section class="form-hero"><span class="form-kicker">${selected?'MEN’S COLLECTION':'THE MEN’S WARDROBE'}</span><h1>${esc(title)}</h1><p>${esc(desc)}</p></section><section class="form-section"><div class="form-section-head"><div><span class="form-kicker">Browse categories</span><h2>${selected?'Other Men categories':'Explore Men'}</h2></div><span class="form-count">${cats.length} categories</span></div><div class="form-cards">${categoryCards}</div></section><section class="form-section"><div class="form-section-head"><div><span class="form-kicker">The collection</span><h2>${selected?'Selected styles':'Featured styles'}</h2></div><span class="form-count">${entries.length} sample styles</span></div><div class="form-cards">${productCards}</div></section><a class="form-back" href="${urlFor(['men'])}">← Back to Men</a>`;
     document.title = `${title} | FORME`;
@@ -138,7 +168,7 @@
       renderDepartmentPage(data,dept,routeParts);
     } catch (error) {
       renderNav([]);
-      app.innerHTML = `<nav class="form-crumb"><a href="${BASE}">Home</a><span>/</span><span>Collection</span></nav><section class="form-hero"><span class="form-kicker">FORME COLLECTIONS</span><h1>This collection is not available yet</h1><p>The selected address could not be matched to a published collection. Use the department links above to continue browsing.</p></section><div class="form-error"><h2>Your colourful style sheets are ready</h2><p>When a product photograph is unavailable, FORME keeps the collection page tidy with these warm, colourful placeholder panels rather than showing a broken-image icon.</p><div class="form-sheets" style="margin-top:20px">${renderSheets('FORME').replace(/^<section[^>]*>|<\/section>$/g,'')}</div></div><a class="form-back" href="${BASE}">← Back to FORME home</a>`;
+      app.innerHTML = `<nav class="form-crumb"><a href="${BASE}">Home</a><span>/</span><span>Collection</span></nav><section class="form-hero"><span class="form-kicker">FORME COLLECTIONS</span><h1>This collection is not available yet</h1><p>The selected address could not be matched to a published collection. Use the department links above to continue browsing.</p></section><div class="form-error"><h2>Real fashion photos are ready</h2><p>FORME collection pages use real fashion photographs downloaded and bundled locally. The colourful sheet design remains as a graceful fallback when a photo cannot load.</p><div class="form-sheets" style="margin-top:20px">${renderSheets('FORME','women').replace(/^<section[^>]*>|<\/section>$/g,'')}</div></div><a class="form-back" href="${BASE}">← Back to FORME home</a>`;
     }
   }
   load();
