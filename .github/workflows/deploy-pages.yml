@@ -57,25 +57,34 @@ jobs:
       - name: Verify five-level category hierarchy pages
         run: |
           python3 - <<'PY'
+          import hashlib
           import json
+          import re
           from pathlib import Path
 
           data = json.loads(Path("collections/catalog.json").read_text())
           departments = data["departments"]
           assert len(departments) == 5
-          pages = 0
+          pages = image_count = 0
           groups = categories = subcategories = nested = 0
           seen_paths = set()
+          seen_images = set()
 
           def verify_page(path):
-              global pages
+              global pages, image_count
               assert path.is_file() and path.stat().st_size > 1000, str(path)
               key = path.as_posix()
               assert key not in seen_paths, f"Duplicate page path: {key}"
               seen_paths.add(key)
               body = path.read_text()
-              assert "<img" not in body.lower(), f"Image markup found in {key}"
-              assert "unsplash.com" not in body.lower(), f"Image URL found in {key}"
+              sources = re.findall(r'<img class="gallery-image" src="([^"]+)"', body)
+              assert len(sources) == 6, f"Expected 6 gallery images in {key}; found {len(sources)}"
+              for source in sources:
+                  assert source.startswith("data:image/svg+xml;base64,"), f"Non-local image in {key}"
+                  digest = hashlib.sha256(source.encode()).hexdigest()
+                  assert digest not in seen_images, f"Duplicate image across pages: {key}"
+                  seen_images.add(digest)
+                  image_count += 1
               pages += 1
 
           for department in departments:
@@ -103,7 +112,9 @@ jobs:
           assert (groups, categories, subcategories, nested) == (26, 104, 416, 1664)
           assert pages == 2215, pages
           assert len(seen_paths) == 2215
-          print(f"Verified {pages} unique image-free pages: 5 departments, {groups} groups, {categories} categories, {subcategories} sub-categories and {nested} nested sub-categories.")
+          assert image_count == 13290, image_count
+          assert len(seen_images) == 13290, len(seen_images)
+          print(f"Verified {pages} pages and {image_count} unique original visuals: 5 departments, {groups} groups, {categories} categories, {subcategories} sub-categories and {nested} nested sub-categories.")
           PY
 
       - name: Verify department dropdown navigation
