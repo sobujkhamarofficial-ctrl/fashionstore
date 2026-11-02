@@ -96,7 +96,7 @@ def build_nav_html(departments, men_categories):
     return (
         '<div class="site-topline">FORME · EVERYDAY, REFINED</div>'
         '<header class="site-header"><div class="site-header-inner">'
-        f'<a class="site-logo" href="{BASE}">FORME<span>EVERYDAY, REFINED</span></a>'
+        f'<a class="site-logo" href="{BASE}">FORME<span>EVERYDAY, REFINED</span></a><a class="site-shop-link" href="{BASE}pages/shop.html">Shop all products ↗</a>'
         f'<nav class="primary-categories" aria-label="Main categories">{links}</nav>'
         '</div></header>'
     )
@@ -268,15 +268,16 @@ def build_page(node, department, parts, ancestors, siblings, is_department=False
 <p>{esc(description)}</p>
 <div class="structure-meta">{esc(hierarchy_note)}</div>
 </section>
-<div class="stage-note"><strong>Clickable style gallery.</strong> Tap a photograph to explore the next category level. At the deepest level, the photograph opens full size. These inspiration images are not sellable products; Add to Cart and Buy Now appear only on actual product listings with a product record and price.</div>
+<div class="stage-note"><strong>Clickable style gallery.</strong> Tap a photograph to explore the next category level. At the deepest level, the photograph opens full size. These are inspiration photographs, not product listings. To see registered catalogue items and submit a COD order request, visit <a href="{BASE}pages/shop.html">Shop all products</a>.</div>
 {child_section}
 {gallery}
 {sibling_links}
 {parent_label_html}
 </div>
 </main>
-<footer class="site-footer"><div class="page-container"><a class="site-logo" href="{BASE}">FORME<span>EVERYDAY, REFINED</span></a><p>Curated fashion photography · Explore the FORME catalogue.</p><a href="{BASE}blog/">Journal</a> · <a href="{BASE}pages/shipping-delivery.html">Shipping</a> · <a href="{BASE}pages/returns-refunds.html">Returns</a> · <a href="{BASE}pages/reviews.html">Reviews</a> · <a href="{BASE}pages/order-tracking.html">Track order</a> · <a href="{BASE}pages/privacy.html">Privacy</a> · <a href="{BASE}pages/terms.html">Terms</a> · <a href="{BASE}pages/contact.html">Contact</a><p><a href="{BASE}">Return to FORME home ↗</a></p></div></footer>
-<script src="{BASE}assets/customer-care.js?v=20261102-3" defer></script>
+<footer class="site-footer"><div class="page-container"><a class="site-logo" href="{BASE}">FORME<span>EVERYDAY, REFINED</span></a><p>Curated fashion photography · Explore the FORME catalogue.</p><p><a href="{BASE}pages/shop.html">Shop all registered products ↗</a></p><a href="{BASE}blog/">Journal</a> · <a href="{BASE}pages/shipping-delivery.html">Shipping</a> · <a href="{BASE}pages/returns-refunds.html">Returns</a> · <a href="{BASE}pages/reviews.html">Reviews</a> · <a href="{BASE}pages/order-tracking.html">Track order</a> · <a href="{BASE}pages/privacy.html">Privacy</a> · <a href="{BASE}pages/terms.html">Terms</a> · <a href="{BASE}pages/contact.html">Contact</a><p><a href="{BASE}">Return to FORME home ↗</a></p></div></footer>
+<script src="{BASE}assets/commerce-pages.js?v=20261103-5" defer></script>
+<script src="{BASE}assets/customer-care.js?v=20261103-5" defer></script>
 </body>
 </html>
 '''

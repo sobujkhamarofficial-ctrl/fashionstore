@@ -119,3 +119,8 @@ a{color:inherit;text-decoration:none}
 .visual-action:hover{background:#344d40;transform:translateY(-1px)}
 .visual-action:focus-visible{outline:2px solid var(--clay);outline-offset:3px}
 @media(max-width:760px){.visual-card figcaption{display:flex;flex-direction:column;align-items:flex-start;gap:6px}.visual-card figcaption span{text-align:left}.visual-action{width:100%;min-height:32px}}
+
+/* Shared Shop All link for the visual collection directory pages */
+.site-shop-link{display:inline-flex;align-items:center;gap:7px;margin-left:18px;padding:10px 13px;border:1px solid #263b32;background:#263b32;color:#fff!important;font-size:9px;font-weight:700;letter-spacing:.1em;text-decoration:none;text-transform:uppercase;white-space:nowrap}
+.site-shop-link:hover{background:#344d40;border-color:#344d40}
+@media(max-width:680px){.site-shop-link{margin:10px 0 0}}

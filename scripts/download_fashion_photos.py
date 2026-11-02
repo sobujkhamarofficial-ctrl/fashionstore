@@ -153,8 +153,31 @@ def main():
                 break
         if successful != 6:
             raise RuntimeError(f"Only {successful} valid photos for {kind}; six are required")
+
+    # Download unique product images used by the Men catalogue to stable local files.
+    data = json.loads(MEN_CATALOG.read_text(encoding="utf-8"))
+    product_sources = unique(
+        product.get("image", "")
+        for category in data.get("categories", [])
+        for product in category.get("products", [])
+    )
+    product_dir = OUTPUT / "products"
+    product_dir.mkdir(parents=True, exist_ok=True)
+    photo_map = {}
+    for index, source in enumerate(product_sources, start=1):
+        key = urlsplit(source).path.rsplit("/", 1)[-1]
+        if not key.startswith("photo-"):
+            raise RuntimeError(f"Unexpected catalogue image id: {source}")
+        filename = f"product-{index:03d}.jpg"
+        destination = product_dir / filename
+        final_url = download_photo(source, destination)
+        photo_map[key] = f"/fashionstore/assets/fashion-photos/products/{filename}"
+        manifest.append(f"- products/{filename} — {final_url}")
+        total += 1
+        print(f"Downloaded catalogue photo {filename} ({destination.stat().st_size:,} bytes)")
+    (OUTPUT / "product-image-map.json").write_text(json.dumps(photo_map, indent=2) + "\n", encoding="utf-8")
     (OUTPUT / "README.md").write_text("\n".join(manifest) + "\n", encoding="utf-8")
-    print(f"Downloaded and verified {total} local fashion photographs.")
+    print(f"Downloaded and verified {total} local fashion photographs, including {len(photo_map)} product catalogue images.")
 
 if __name__ == "__main__":
     main()

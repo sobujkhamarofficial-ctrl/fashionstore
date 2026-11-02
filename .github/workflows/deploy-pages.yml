@@ -57,11 +57,15 @@ jobs:
 
       - name: Download real, licensed fashion photography
         run: python3 scripts/download_fashion_photos.py
+      - name: Localise homepage images and refresh Men product pages
+        run: |
+          python3 scripts/localize_home_images.py
+          python3 scripts/build_men_catalog.py
 
       - name: Generate Women, Teens, Kids, Sports and Accessories pages
         run: python3 scripts/build_collection_pages.py
       - name: Build FORME policy, information and journal pages
-        run: python3 scripts/build_store_content.py
+        run: python3 scripts/build_store_content.py scripts/localize_home_images.py scripts/verify_site_links.py
       - name: Verify five-level category hierarchy pages
         run: |
           python3 - <<'PY'
@@ -80,6 +84,13 @@ jobs:
           expected_assets = {f"{kind}-{index:02d}.jpg" for kind in expected_kinds for index in range(1, 7)}
           asset_dir = Path("assets/fashion-photos")
           actual_assets = {item.name for item in asset_dir.glob("*.jpg")}
+          product_map = json.loads((asset_dir / "product-image-map.json").read_text())
+          assert len(product_map) >= 40, "Expected local images for all unique Men catalogue photo sources"
+          product_files = list((asset_dir / "products").glob("*.jpg"))
+          assert len(product_files) == len(product_map), "Product photo map and local files differ"
+          for product_file in product_files:
+              payload = product_file.read_bytes()
+              assert payload.startswith(bytes([255, 216, 255])) and len(payload) > 8000, str(product_file)
           assert expected_assets.issubset(actual_assets), f"Missing photos: {sorted(expected_assets - actual_assets)}"
           for filename in expected_assets:
               payload = (asset_dir / filename).read_bytes()
@@ -168,6 +179,7 @@ jobs:
       - name: Verify ecommerce, policies and journal integration
         run: |
           node --check assets/admin.js
+          node --check assets/shop.js
           node --check assets/checkout.js
           node --check assets/order-tracking.js
           node --check assets/reviews.js
@@ -178,6 +190,9 @@ jobs:
           from pathlib import Path
 
           required = [
+              "pages/shop.html",
+              "assets/shop.js",
+              "assets/shop.css",
               "pages/checkout.html",
               "pages/order-tracking.html",
               "assets/order-tracking.js",
@@ -216,6 +231,7 @@ jobs:
           home = Path("index.html").read_text()
           assert 'pages/checkout.html' in home, "Home cart does not lead to checkout"
           assert 'assets/site-forms.js' in home, "Home newsletter is not connected"
+          assert 'pages/shop.html' in home, "Homepage does not link to Shop all products"
           assert 'blog/build-a-versatile-capsule-wardrobe.html' in home, "Home Journal preview is missing"
           assert 'assets/customer-care.js' in home, "AI chat bundle must load on the homepage"
           assert 'data-f-buy-now="f1"' in home and 'data-f-add="f1"' in home, "Featured product purchase controls are missing"
@@ -231,6 +247,8 @@ jobs:
           assert "publication_consent" in reviews and "delivered" in reviews.lower()
           assert "assets/reviews.js" in reviews
           assert "No payment is collected" in checkout
+          shop = Path("assets/shop.js").read_text()
+          assert "?action=products" in shop and "data-f-buy-now" in shop, "Shop catalogue API or order buttons are missing"
           commerce = Path("assets/checkout.js").read_text()
           assert "storefront-commerce-api" in commerce and "AQ." not in commerce
           forms = Path("assets/site-forms.js").read_text()
@@ -268,6 +286,14 @@ jobs:
           with urlopen(endpoint, timeout=25) as response:
               health = json.loads(response.read().decode("utf-8"))
               assert response.status == 200 and health.get("status") == "ready", health
+
+          catalogue_request = Request(endpoint + "?action=products", headers={"apikey": "sb_publishable_EWY6B3OF8lOQB7uB7jBZRA_3MwimKRy"})
+          with urlopen(catalogue_request, timeout=30) as response:
+              catalogue = json.loads(response.read().decode("utf-8"))
+              assert response.status == 200 and catalogue.get("ok") is True, catalogue
+              assert len(catalogue.get("products", [])) >= 200, catalogue
+              assert all(p.get("id") and int(p.get("price_bdt", 0)) > 0 for p in catalogue["products"]), "Catalogue has a missing ID or non-positive price"
+          print("Verified public product catalogue endpoint:", catalogue.get("count"), "products.")
 
           # Give each workflow run a distinct test contact so persistent rate limits
           # from previous successful runs cannot make this smoke test fail.
@@ -332,6 +358,8 @@ jobs:
           assert "could not find" in track_body.get("error", "").lower(), track_body
           print("Order tracking API reached the database and safely rejected an unknown order.")
           PY
+      - name: Verify generated local links and assets
+        run: python3 scripts/verify_site_links.py
       - name: Validate Python build scripts
         run: python3 -m py_compile scripts/build_collection_pages.py scripts/build_men_catalog.py scripts/download_fashion_photos.py scripts/build_store_content.py
       - name: Verify branded not-found page and image fallbacks

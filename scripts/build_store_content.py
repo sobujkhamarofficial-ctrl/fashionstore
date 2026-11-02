@@ -15,7 +15,7 @@ def header():
 <header class="fc-header"><div class="fc-head-inner">
 <a class="fc-logo" href="{BASE}">FORME<small>EVERYDAY, REFINED</small></a>
 <nav class="fc-nav" aria-label="Site navigation">
-<a href="{BASE}">Shop</a><a href="{BASE}men/">Men</a><a href="{BASE}women/">Women</a>
+<a href="{BASE}pages/shop.html">Shop all</a><a href="{BASE}men/">Men</a><a href="{BASE}women/">Women</a>
 <a href="{BASE}blog/">Journal</a><a href="{BASE}pages/about.html">About</a>
 <a href="{BASE}pages/contact.html">Contact</a>
 </nav></div></header>'''
@@ -25,7 +25,7 @@ def footer():
 <div class="fc-foot-grid">
 <div><a class="fc-logo" style="color:#fff" href="{BASE}">FORME<small style="color:#d8ded8">EVERYDAY, REFINED</small></a>
 <p>Considered clothing and modern everyday essentials. A Bangladesh-focused fashion storefront.</p></div>
-<div><h3>Explore</h3><a href="{BASE}">Shop all</a><a href="{BASE}men/">Men</a><a href="{BASE}women/">Women</a><a href="{BASE}blog/">Journal</a></div>
+<div><h3>Explore</h3><a href="{BASE}pages/shop.html">Shop all products</a><a href="{BASE}">Home</a><a href="{BASE}men/">Men</a><a href="{BASE}women/">Women</a><a href="{BASE}blog/">Journal</a></div>
 <div><h3>Customer care</h3><a href="{BASE}pages/shipping-delivery.html">Shipping & delivery</a><a href="{BASE}pages/returns-refunds.html">Returns & refunds</a><a href="{BASE}pages/cancellations.html">Cancellations</a><a href="{BASE}pages/size-guide.html">Size guide</a><a href="{BASE}pages/reviews.html">Customer reviews</a><a href="{BASE}pages/faq.html">FAQs</a><a href="{BASE}pages/order-tracking.html">Track an order</a></div>
 <div><h3>Information</h3><a href="{BASE}pages/about.html">About FORME</a><a href="{BASE}pages/contact.html">Contact</a><a href="{BASE}pages/payment.html">Payment policy</a><a href="{BASE}pages/privacy.html">Privacy policy</a><a href="{BASE}pages/terms.html">Terms & conditions</a></div>
 </div><div class="fc-footer-bottom"><span>© 2026 FORME. All rights reserved.</span><span>Bangladesh · Pilot storefront</span></div>
@@ -37,14 +37,14 @@ def page(title, kicker, lede, body, description=None, canonical=None):
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#F7F5F0"><meta name="description" content="{e(desc)}">
-<link rel="stylesheet" href="{ASSET}"><link rel="stylesheet" href="{BASE}assets/customer-care.css?v=20261102-3"><title>{e(title)} | FORME</title>
+<link rel="stylesheet" href="{ASSET}"><link rel="stylesheet" href="{BASE}assets/shop.css"><link rel="stylesheet" href="{BASE}assets/customer-care.css?v=20261103-5"><title>{e(title)} | FORME</title>
 {f'<link rel="canonical" href="{url}">' if url else ''}
 </head><body>{header()}<main class="fc-main">
 <div class="fc-breadcrumb"><a href="{BASE}">Home</a> / {e(title)}</div>
 <span class="fc-kicker">{e(kicker)}</span><h1>{e(title)}</h1><p class="fc-lede">{e(lede)}</p>
 <p class="fc-meta">Updated 2 November 2026 · FORME Bangladesh</p>
 <div class="fc-content">{body}</div>
-</main>{footer()}<script src="{BASE}assets/customer-care.js?v=20261102-3" defer></script></body></html>'''
+</main>{footer()}<script src="{BASE}assets/commerce-pages.js?v=20261103-5" defer></script><script src="{BASE}assets/customer-care.js?v=20261103-5" defer></script></body></html>'''
 
 pages = {
 "about.html": (
@@ -166,6 +166,22 @@ for filename, (title, kicker, lede, body) in pages.items():
     out.parent.mkdir(parents=True, exist_ok=True)
     bilingual_body = body + bangla_policy.get(filename, "")
     out.write_text(page(title, kicker, lede, bilingual_body, canonical="https://sobujkhamarofficial-ctrl.github.io/fashionstore/pages/" + filename), encoding="utf-8")
+
+shop_body = """<section class="fc-shop-intro">
+  <p>Browse the product records currently registered in the FORME catalogue. Every item is shown with its listed BDT price; the store team must confirm stock, exact variant and final amount before dispatch.</p>
+  <div class="fc-note"><strong>Pilot catalogue notice:</strong> Product details and availability have not yet been verified for every item. Buy Now submits a cash-on-delivery order request for store review; it is not an instant purchase or payment. Pay nothing in advance.</div>
+</section>
+<div class="fc-shop-tools">
+  <label>Search products<input id="fc-shop-search" type="search" placeholder="Search by product name or category"></label>
+  <label>Category<select id="fc-shop-category"><option value="">All categories</option></select></label>
+  <label>Sort<select id="fc-shop-sort"><option value="featured">Recommended</option><option value="price-low">Price: low to high</option><option value="price-high">Price: high to low</option><option value="name">Name A–Z</option></select></label>
+</div>
+<p class="fc-shop-status" id="fc-shop-status" role="status" aria-live="polite">Loading the registered catalogue…</p>
+<div class="fc-shop-grid" id="fc-shop-grid"></div>
+<div class="fc-note fc-shop-note">A submitted request stays pending review until FORME confirms the product, variant, final price and delivery charge. Cash on delivery only; no online payment gateway is connected.</div>
+<script src="/fashionstore/assets/shop.js?v=20261103-5" defer></script>"""
+shop_page = page("Shop all products","FORME PRODUCT CATALOGUE","Browse registered product listings, compare listed prices and submit a cash-on-delivery order request.",shop_body,canonical="https://sobujkhamarofficial-ctrl.github.io/fashionstore/pages/shop.html")
+(ROOT/"pages"/"shop.html").write_text(shop_page,encoding="utf-8")
 
 contact_body = '''<p>Send a question about a product, order request, delivery, return, cancellation or privacy issue. This form stores your message in the FORME support queue; it does not send an instant email confirmation.</p>
 <div class="fc-note">Please do not include card details, PINs, passwords, OTPs or identity documents. For order questions, include your request reference.</div>

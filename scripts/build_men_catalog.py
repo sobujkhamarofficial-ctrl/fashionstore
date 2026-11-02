@@ -5,6 +5,16 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "/fashionstore/"
 OUT = ROOT / "men"
+PHOTO_MAP_PATH = ROOT / "assets" / "fashion-photos" / "product-image-map.json"
+def image_src(value):
+    source = str(value or "")
+    key = source.split("?", 1)[0].rsplit("/", 1)[-1]
+    if PHOTO_MAP_PATH.is_file():
+        try:
+            return json.loads(PHOTO_MAP_PATH.read_text(encoding="utf-8")).get(key, source)
+        except (OSError, ValueError):
+            return source
+    return source
 def esc(v): return html.escape(str(v), quote=True)
 def href(slug): return f'{BASE}men/{slug + "/" if slug != "men" else ""}'
 def header(cats):
@@ -56,10 +66,11 @@ def card(p,priority=False):
     loading="eager" if priority else "lazy"
     high=' fetchpriority="high"' if priority else ""
     product_id=f'men-{p["id"]}'
+    photo=esc(image_src(p["image"]))
     return ('<article class="f-product f-static-product"'
-      f' data-id="{esc(product_id)}" data-name="{esc(p["name"])}" data-price="{int(p["price"])}" data-image="{esc(p["image"])}">'
+      f' data-id="{esc(product_id)}" data-name="{esc(p["name"])}" data-price="{int(p["price"])}" data-image="{photo}">'
       '<div class="f-product-photo">'
-      f'<img src="{esc(p["image"])}" alt="{esc(p["name"])}" loading="{loading}"{high} data-fallback="f-photo-missing" onerror="this.hidden=true;this.parentElement.classList.add(this.dataset.fallback)">{badge}'
+      f'<img src="{photo}" alt="{esc(p["name"])}" loading="{loading}"{high} data-fallback="f-photo-missing" onerror="this.hidden=true;this.parentElement.classList.add(this.dataset.fallback)">{badge}'
       f'<div class="f-product-actions"><button class="f-add" type="button" data-f-add="{esc(product_id)}">Add to Cart</button><button class="f-buy-now" type="button" data-f-buy-now="{esc(product_id)}">Buy Now</button></div></div>'
       '<div class="f-product-info">'
       f'<span class="f-product-name">{esc(p["name"])}</span><span class="f-men-savings">{esc(p["description"])}</span>'
@@ -87,7 +98,7 @@ def make_page(title,desc,cats,selected=None):
     else:
         featured=selected["products"]; products_label="6 products"; section_title=f'{esc(title)} collection'
     cards="".join(card(p,i==0) for i,p in enumerate(featured))
-    warning='<p class="f-catalog-note">Product showcase · sample names, illustrative prices and Unsplash imagery. Replace with verified stock, final prices and details before accepting orders.</p>'
+    warning='<p class="f-catalog-note">Pilot catalogue · listed prices and editorial fashion photographs are illustrative until the store confirms each item, final price, size and availability.</p>'
     page_title="Men's Collection" if main else title
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -99,7 +110,7 @@ def make_page(title,desc,cats,selected=None):
 {listing}<section class="f-static-products"><div class="f-section-head"><div><span class="f-kicker">The collection</span><h2>{section_title}</h2></div><span class="f-men-total">{products_label}</span></div>
 {warning}<div class="f-static-product-grid">{cards}</div></section>
 <a class="f-static-back" href="{href("men")}">← Back to Men's Collection</a></div></main>
-<footer class="f-static-footer"><div class="f-container"><strong class="f-logo">FORME<small>EVERYDAY, REFINED</small></strong><small>Sample catalogue · Product details, final prices and availability require confirmation</small><nav class="f-static-legal"><a href="{BASE}blog/">Journal</a><a href="{BASE}pages/shipping-delivery.html">Shipping</a><a href="{BASE}pages/returns-refunds.html">Returns</a><a href="{BASE}pages/reviews.html">Reviews</a><a href="{BASE}pages/order-tracking.html">Track order</a><a href="{BASE}pages/privacy.html">Privacy</a><a href="{BASE}pages/terms.html">Terms</a><a href="{BASE}pages/contact.html">Contact</a></nav><a href="{BASE}" style="font-size:10px;color:#fff">Home ↗</a></div></footer></div><script src="{BASE}assets/commerce-pages.js?v=20261103-1" defer></script><script src="{BASE}assets/customer-care.js?v=20261102-3" defer></script></body></html>'''
+<footer class="f-static-footer"><div class="f-container"><strong class="f-logo">FORME<small>EVERYDAY, REFINED</small></strong><small>Pilot catalogue · product details, final prices and availability require store confirmation</small><nav class="f-static-legal"><a href="{BASE}pages/shop.html">Shop all products</a><a href="{BASE}blog/">Journal</a><a href="{BASE}pages/shipping-delivery.html">Shipping</a><a href="{BASE}pages/returns-refunds.html">Returns</a><a href="{BASE}pages/reviews.html">Reviews</a><a href="{BASE}pages/order-tracking.html">Track order</a><a href="{BASE}pages/privacy.html">Privacy</a><a href="{BASE}pages/terms.html">Terms</a><a href="{BASE}pages/contact.html">Contact</a></nav><a href="{BASE}" style="font-size:10px;color:#fff">Home ↗</a></div></footer></div><script src="{BASE}assets/commerce-pages.js?v=20261103-1" defer></script><script src="{BASE}assets/customer-care.js?v=20261102-3" defer></script></body></html>'''
 def main():
     data=json.loads((OUT/"catalog.json").read_text(encoding="utf-8"))
     cats=data["categories"]
