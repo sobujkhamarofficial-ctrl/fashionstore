@@ -645,7 +645,19 @@
       updateCart();
     });
   </script>
-<style id="forme-home-menu-fallback">#forme-storefront .f-native-mega{position:static;display:flex;align-items:center}#forme-storefront .f-native-mega>summary{list-style:none}#forme-storefront .f-native-mega>summary::-webkit-details-marker{display:none}#forme-storefront .f-native-mega[open] #f-men-mega-menu{visibility:visible;opacity:1;pointer-events:auto;transform:translateY(0)}#forme-storefront .f-native-mega[open] .f-nav-men-toggle span{transform:rotate(180deg)}#forme-storefront .f-mega-menu{z-index:130}#forme-storefront .f-native-mega[open] .f-mega-menu{visibility:visible;opacity:1;pointer-events:auto;transform:translateY(0)}#forme-storefront .f-native-mega[open] .f-nav-men-toggle span{transform:rotate(180deg)}#forme-storefront .f-mega-group b a{color:var(--f-clay);font:inherit;letter-spacing:inherit;text-transform:inherit}#forme-storefront .f-mega-group b a:hover{color:var(--f-green);text-decoration:underline}#forme-storefront .f-mobile-menu .f-mobile-categories{width:100%}#forme-storefront .f-mobile-menu .f-mobile-categories summary{font-size:10px}#forme-storefront .f-mobile-menu .f-mobile-categories[open] .f-mobile-category-links{max-height:48vh;overflow-y:auto}</style><link rel="stylesheet" href="/fashionstore/assets/customer-care.css?v=20261102-3"></head>
+<style id="forme-home-menu-fallback">#forme-storefront .f-native-mega{position:static;display:flex;align-items:center}#forme-storefront .f-native-mega>summary{list-style:none}#forme-storefront .f-native-mega>summary::-webkit-details-marker{display:none}#forme-storefront .f-native-mega[open] #f-men-mega-menu{visibility:visible;opacity:1;pointer-events:auto;transform:translateY(0)}#forme-storefront .f-native-mega[open] .f-nav-men-toggle span{transform:rotate(180deg)}#forme-storefront .f-mega-menu{z-index:130}#forme-storefront .f-native-mega[open] .f-mega-menu{visibility:visible;opacity:1;pointer-events:auto;transform:translateY(0)}#forme-storefront .f-native-mega[open] .f-nav-men-toggle span{transform:rotate(180deg)}#forme-storefront .f-mega-group b a{color:var(--f-clay);font:inherit;letter-spacing:inherit;text-transform:inherit}#forme-storefront .f-mega-group b a:hover{color:var(--f-green);text-decoration:underline}#forme-storefront .f-mobile-menu .f-mobile-categories{width:100%}#forme-storefront .f-mobile-menu .f-mobile-categories summary{font-size:10px}#forme-storefront .f-mobile-menu .f-mobile-categories[open] .f-mobile-category-links{max-height:48vh;overflow-y:auto}
+    /* Buy Now stays visibly over the product photograph; Add to Cart remains at the image base. */
+    #forme-storefront .f-product-actions { inset:0; left:0; right:0; bottom:0; display:block; pointer-events:none; }
+    #forme-storefront .f-product-actions .f-add,
+    #forme-storefront .f-product-actions .f-buy-now { position:absolute; width:auto; pointer-events:auto; }
+    #forme-storefront .f-product-actions .f-add { left:10px; right:10px; bottom:10px; top:auto; }
+    #forme-storefront .f-product-actions .f-buy-now { left:auto; right:10px; top:10px; bottom:auto; min-width:104px; min-height:36px; padding:0 13px; border-radius:2px; box-shadow:0 3px 12px rgba(0,0,0,.18); }
+    @media(max-width:640px) {
+      #forme-storefront .f-product-actions .f-buy-now { right:7px; top:7px; min-width:90px; min-height:34px; padding:0 9px; font-size:7px; }
+      #forme-storefront .f-product-actions .f-add { left:7px; right:7px; bottom:7px; }
+    }
+
+  </style><link rel="stylesheet" href="/fashionstore/assets/customer-care.css?v=20261102-3"></head>
 <body>
 <div id="forme-storefront">
   <div class="f-announcement">Discover the new season edit <strong>·</strong> Everyday pieces, thoughtfully chosen</div>
