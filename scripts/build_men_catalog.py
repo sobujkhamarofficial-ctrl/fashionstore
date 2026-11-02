@@ -55,8 +55,12 @@ def card(p,priority=False):
     badge=f'<span class="f-product-tag">{esc(p["badge"])}</span>' if p.get("badge") else ""
     loading="eager" if priority else "lazy"
     high=' fetchpriority="high"' if priority else ""
-    return ('<article class="f-product f-static-product"><div class="f-product-photo">'
-      f'<img src="{esc(p["image"])}" alt="{esc(p["name"])}" loading="{loading}"{high} data-fallback="f-photo-missing" onerror="this.hidden=true;this.parentElement.classList.add(this.dataset.fallback)">{badge}</div>'
+    product_id=f'men-{p["id"]}'
+    return ('<article class="f-product f-static-product"'
+      f' data-id="{esc(product_id)}" data-name="{esc(p["name"])}" data-price="{int(p["price"])}" data-image="{esc(p["image"])}">'
+      '<div class="f-product-photo">'
+      f'<img src="{esc(p["image"])}" alt="{esc(p["name"])}" loading="{loading}"{high} data-fallback="f-photo-missing" onerror="this.hidden=true;this.parentElement.classList.add(this.dataset.fallback)">{badge}'
+      f'<button class="f-add" type="button" data-f-add="{esc(product_id)}">Add to bag +</button></div>'
       '<div class="f-product-info">'
       f'<span class="f-product-name">{esc(p["name"])}</span><span class="f-men-savings">{esc(p["description"])}</span>'
       f'<div class="f-men-price-row"><strong>৳{int(p["price"]):,}</strong><del>৳{int(p["compareAt"]):,}</del></div>'
@@ -95,7 +99,7 @@ def make_page(title,desc,cats,selected=None):
 {listing}<section class="f-static-products"><div class="f-section-head"><div><span class="f-kicker">The collection</span><h2>{section_title}</h2></div><span class="f-men-total">{products_label}</span></div>
 {warning}<div class="f-static-product-grid">{cards}</div></section>
 <a class="f-static-back" href="{href("men")}">← Back to Men's Collection</a></div></main>
-<footer class="f-static-footer"><div class="f-container"><strong class="f-logo">FORME<small>EVERYDAY, REFINED</small></strong><small>Photos via Unsplash · Unsplash License · © 2026 FORME</small><a href="{BASE}" style="font-size:10px;color:#fff">Home ↗</a></div></footer></div><script src="{BASE}assets/customer-care.js" defer></script></body></html>'''
+<footer class="f-static-footer"><div class="f-container"><strong class="f-logo">FORME<small>EVERYDAY, REFINED</small></strong><small>Photos via Unsplash · Unsplash License · © 2026 FORME</small><a href="{BASE}" style="font-size:10px;color:#fff">Home ↗</a></div></footer></div><script src="{BASE}assets/commerce-pages.js" defer></script></body></html>'''
 def main():
     data=json.loads((OUT/"catalog.json").read_text(encoding="utf-8"))
     cats=data["categories"]
