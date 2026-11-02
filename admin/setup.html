@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#F7F5F0">
+<title>FORME · One-time Owner Setup</title>
+<link rel="stylesheet" href="/fashionstore/assets/admin.css?v=20261102-3">
+</head>
+<body class="fa-body">
+<div class="fa-shell">
+  <header class="fa-top"><a class="fa-brand" href="/fashionstore/">FORME<span>OWNER ACCOUNT SETUP</span></a><span class="fa-private"><i></i> ONE-TIME SETUP</span></header>
+  <main>
+    <section class="fa-auth-layout">
+      <div class="fa-auth-intro">
+        <span class="fa-eyebrow">FORME · PRIVATE ACCESS</span>
+        <h1>Set up your<br><em>owner account.</em></h1>
+        <p>This one-time step creates the single authorised owner account for the FORME admin workspace.</p>
+        <div class="fa-auth-points"><span>01 · Fixed owner email</span><span>02 · Password stored by Supabase Auth</span><span>03 · Setup code works once only</span></div>
+      </div>
+      <section class="fa-auth-card">
+        <form id="fa-setup-form" class="fa-form">
+          <span class="fa-eyebrow">OWNER ACCOUNT INITIALISATION</span>
+          <h2>Create owner access</h2>
+          <label>Authorised admin email<input type="email" value="sobujkhamar.official@gmail.com" readonly aria-readonly="true"></label>
+          <label>One-time setup code<input name="bootstrap_token" type="password" inputmode="text" autocomplete="off" maxlength="64" pattern="[a-fA-F0-9]{64}" placeholder="Paste the 64-character setup code" required></label>
+          <label>Admin password<input name="password" type="password" autocomplete="new-password" minlength="12" maxlength="200" placeholder="Enter the new admin password" required></label>
+          <button class="fa-primary" type="submit">Create owner account <span>↗</span></button>
+          <p id="fa-setup-message" class="fa-message" role="status" aria-live="polite"></p>
+          <p class="fa-login-note">The setup code expires and can be used once. After success, return to the normal admin sign-in page.</p>
+        </form>
+      </section>
+    </section>
+  </main>
+  <footer class="fa-footer"><span>FORME · PRIVATE ADMIN SETUP</span><a href="/fashionstore/admin/">Return to admin sign in ↗</a></footer>
+</div>
+<script>
+(function(){
+  "use strict";
+  const API="https://zfgcovvfczjiqagrnfjr.supabase.co/functions/v1/storefront-commerce-api";
+  const KEY="sb_publishable_EWY6B3OF8lOQB7uB7jBZRA_3MwimKRy";
+  const ADMIN_EMAIL="sobujkhamar.official@gmail.com";
+  const form=document.getElementById("fa-setup-form");
+  const message=document.getElementById("fa-setup-message");
+  form.addEventListener("submit",async function(event){
+    event.preventDefault();
+    const button=form.querySelector('button[type="submit"]');
+    const data=new FormData(form);
+    const bootstrapToken=String(data.get("bootstrap_token")||"").trim();
+    const password=String(data.get("password")||"");
+    if(!/^[a-f0-9]{64}$/i.test(bootstrapToken)){
+      message.textContent="Enter the complete one-time setup code.";
+      return;
+    }
+    if(password.length<12){
+      message.textContent="Use a password of at least 12 characters.";
+      return;
+    }
+    button.disabled=true;
+    message.textContent="Creating the owner account securely…";
+    try{
+      const response=await fetch(API,{
+        method:"POST",
+        headers:{"Content-Type":"application/json","apikey":KEY},
+        body:JSON.stringify({
+          action:"admin",
+          operation:"bootstrap",
+          email:ADMIN_EMAIL,
+          password:password,
+          full_name:"FORME Store Owner",
+          bootstrap_token:bootstrapToken
+        })
+      });
+      const result=await response.json().catch(function(){return {};});
+      if(!response.ok||!result.ok)throw new Error(result.error||"The owner account could not be created.");
+      form.reset();
+      form.hidden=true;
+      message.textContent="Owner account created successfully for "+ADMIN_EMAIL+". Open the normal admin sign-in page and use your new password.";
+      message.classList.add("ok");
+    }catch(error){
+      message.textContent=error&&error.message?error.message:"Setup failed. Please try again.";
+      message.classList.remove("ok");
+    }finally{
+      button.disabled=false;
+    }
+  });
+})();
+</script>
+</body>
+</html>
