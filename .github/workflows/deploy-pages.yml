@@ -165,6 +165,9 @@ jobs:
 
           required = [
               "pages/checkout.html",
+              "pages/order-tracking.html",
+              "assets/order-tracking.js",
+              "assets/reviews.js",
               "pages/about.html",
               "pages/shipping-delivery.html",
               "pages/returns-refunds.html",
@@ -199,11 +202,20 @@ jobs:
 
           checkout = Path("pages/checkout.html").read_text()
           assert "privacy_consent" in checkout and "terms_accepted" in checkout
+          tracking = Path("pages/order-tracking.html").read_text()
+          assert "order_number" in tracking and "customer_phone" in tracking
+          assert "assets/order-tracking.js" in tracking
+          assert "lookup_store_order" in Path("assets/order-tracking.js").read_text() or "action:\"track\"" in Path("assets/order-tracking.js").read_text()
+          reviews = Path("pages/reviews.html").read_text()
+          assert "publication_consent" in reviews and "delivered" in reviews.lower()
+          assert "assets/reviews.js" in reviews
           assert "No payment is collected" in checkout
           commerce = Path("assets/checkout.js").read_text()
           assert "storefront-commerce-api" in commerce and "AQ." not in commerce
           forms = Path("assets/site-forms.js").read_text()
           assert 'action: "contact"' in forms and 'action: "newsletter"' in forms
+          assert "order-tracking" in Path("scripts/build_store_content.py").read_text()
+          assert "p_fingerprint" in Path("assets/checkout.js").read_text() or "storefront-commerce-api" in Path("assets/checkout.js").read_text()
           assert 'marketing_consent' in forms, "Newsletter consent must be checked before subscription"
           assert 'p_consent' in Path("assets/checkout.js").read_text() or 'marketing_consent' in forms
           for policy in ["pages/shipping-delivery.html","pages/returns-refunds.html","pages/privacy.html","pages/terms.html","pages/payment.html","pages/cancellations.html"]:
