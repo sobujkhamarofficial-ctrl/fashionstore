@@ -46,25 +46,64 @@ def count_descendants(node):
     return len(children) + sum(count_descendants(child) for child in children)
 
 
-def nav_html():
-    items = [
-        ("Men", "men"),
-        ("Women", "women"),
-        ("Teens", "teens"),
-        ("Kids", "kids"),
-        ("Sports", "sports"),
-        ("Accessories", "accessories"),
-    ]
-    links = "".join(
-        f'<a href="{BASE}{slug}/">{esc(label)}</a>' for label, slug in items
-    )
+NAVIGATION_HTML = ""
+
+
+def build_nav_html(departments, men_categories):
+    menu_items = []
+    for group in ("Topwear", "Bottomwear", "Accessories"):
+        cats = [c for c in men_categories if c["group"] == group]
+        menu_items.append({
+            "slug": "men",
+            "title": "Men",
+            "group": group,
+            "categories": cats,
+        })
+    items = [{"slug": "men", "title": "Men", "groups": []}]
+    for group in ("Topwear", "Bottomwear", "Accessories"):
+        cats = [c for c in men_categories if c["group"] == group]
+        items[0]["groups"].append({"slug": "", "title": group, "categories": cats})
+    items.extend(departments)
+
+    nav = []
+    for department in items:
+        slug = department["slug"]
+        title = department["title"]
+        groups = []
+        for group in department["groups"]:
+            group_url = f'{BASE}{slug}/{group["slug"]}/' if group["slug"] else ""
+            links = "".join(
+                f'<a href="{BASE}{slug}/{group["slug"] + "/" if group["slug"] else ""}{category["slug"]}/">{esc(category["title"])}</a>'
+                for category in group["categories"]
+            )
+            heading = (
+                f'<b><a href="{group_url}">{esc(group["title"])}</a></b>'
+                if group_url else f'<b>{esc(group["title"])}</b>'
+            )
+            groups.append(
+                f'<div class="nav-mega-group">{heading}<div class="nav-mega-links">{links}</div></div>'
+            )
+        menu = (
+            f'<div class="nav-mega"><div class="nav-mega-inner">{"".join(groups)}'
+            f'<a class="nav-mega-all" href="{BASE}{slug}/">View all {esc(title)} ↗</a>'
+            '</div></div>'
+        )
+        nav.append(
+            f'<div class="nav-department"><a href="{BASE}{slug}/">{esc(title)}</a>'
+            f'<details class="nav-dropdown"><summary aria-label="Show {esc(title)} categories"><span>⌄</span></summary>{menu}</details></div>'
+        )
+    links = "".join(nav)
     return (
         '<div class="site-topline">FORME · EVERYDAY, REFINED</div>'
         '<header class="site-header"><div class="site-header-inner">'
         f'<a class="site-logo" href="{BASE}">FORME<span>EVERYDAY, REFINED</span></a>'
-        f'<nav aria-label="Main categories">{links}</nav>'
+        f'<nav class="primary-categories" aria-label="Main categories">{links}</nav>'
         '</div></header>'
     )
+
+
+def nav_html():
+    return NAVIGATION_HTML
 
 
 def card_html(child, department, parts):
@@ -208,6 +247,9 @@ def build_tree(node, department, parts=(), ancestors=None, siblings=None, is_dep
 def main():
     data = json.loads(CATALOG.read_text(encoding="utf-8"))
     departments = data["departments"]
+    men_data = json.loads((ROOT / "men" / "catalog.json").read_text(encoding="utf-8"))
+    global NAVIGATION_HTML
+    NAVIGATION_HTML = build_nav_html(departments, men_data["categories"])
     if len(departments) != 5:
         raise AssertionError(f"Expected 5 departments, found {len(departments)}")
 
