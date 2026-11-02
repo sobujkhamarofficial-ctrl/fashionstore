@@ -158,6 +158,8 @@ jobs:
       - name: Verify ecommerce, policies and journal integration
         run: |
           node --check assets/checkout.js
+          node --check assets/order-tracking.js
+          node --check assets/reviews.js
           node --check assets/site-forms.js
           node --check assets/commerce-pages.js
           python3 - <<'PY'
@@ -182,6 +184,9 @@ jobs:
               "blog/build-a-versatile-capsule-wardrobe.html",
               "blog/how-to-choose-the-right-shirt-fit.html",
               "blog/care-for-your-clothes.html",
+              "blog/bangladesh-capsule-wardrobe-bangla.html",
+              "blog/shirt-fit-measurement-guide-bangla.html",
+              "blog/clothing-care-guide-bangla.html",
               "assets/content-pages.css",
               "assets/checkout.js",
               "assets/site-forms.js",
@@ -276,6 +281,32 @@ jobs:
           assert status == 400, {"status": status, "body": body}
           assert "not available" in body.get("error", "").lower(), body
           print("Supabase commerce API reached the database; invalid test product was safely rejected.")
+
+          import os
+          run_id = os.environ.get("GITHUB_RUN_ID", "00000000")
+          phone = "019" + run_id[-8:].zfill(8)
+          track_payload = {
+              "action": "track",
+              "order_number": "FRM-CI-" + run_id,
+              "customer_phone": phone,
+          }
+          track_request = Request(
+              endpoint,
+              data=json.dumps(track_payload).encode("utf-8"),
+              headers={"Content-Type": "application/json"},
+              method="POST",
+          )
+          try:
+              with urlopen(track_request, timeout=30) as response:
+                  track_status = response.status
+                  track_body = json.loads(response.read().decode("utf-8"))
+          except HTTPError as error:
+              track_status = error.code
+              track_body = json.loads(error.read().decode("utf-8"))
+
+          assert track_status == 400, {"status": track_status, "body": track_body}
+          assert "could not find" in track_body.get("error", "").lower(), track_body
+          print("Order tracking API reached the database and safely rejected an unknown order.")
           PY
       - name: Validate Python build scripts
         run: python3 -m py_compile scripts/build_collection_pages.py scripts/build_men_catalog.py scripts/download_fashion_photos.py scripts/build_store_content.py
