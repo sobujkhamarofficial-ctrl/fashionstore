@@ -5,7 +5,7 @@
 <meta name="theme-color" content="#F7F5F0">
 <meta name="description" content="Review your FORME item request and submit your delivery details.">
 <link rel="stylesheet" href="/fashionstore/assets/content-pages.css">
-<title>Checkout request | FORME</title>
+<title>Cash on delivery checkout | FORME</title>
 </head>
 <body>
 <div class="fc-topbar">FORME · EVERYDAY, REFINED · BANGLADESH</div>
@@ -14,18 +14,18 @@
 <nav class="fc-nav" aria-label="Site navigation"><a href="/fashionstore/">Shop</a><a href="/fashionstore/men/">Men</a><a href="/fashionstore/women/">Women</a><a href="/fashionstore/blog/">Journal</a><a href="/fashionstore/pages/contact.html">Contact</a></nav>
 </div></header>
 <main class="fc-main">
-<div class="fc-breadcrumb"><a href="/fashionstore/">Home</a> / Your bag / Order request</div>
-<span class="fc-kicker">ORDER REQUEST</span>
-<h1>Review your request</h1>
-<p class="fc-lede">Send your item and delivery details. Our team will verify product availability, final prices and delivery charges before confirming the order.</p>
-<div class="fc-note"><strong>Pilot checkout:</strong> The catalogue currently contains sample prices and unverified stock information. This form sends an order request only. No payment is collected, and the order is not confirmed until our team contacts you with the final amount and delivery estimate and you agree.</div>
+<div class="fc-breadcrumb"><a href="/fashionstore/">Home</a> / Your bag / Cash on delivery</div>
+<span class="fc-kicker">CASH ON DELIVERY</span>
+<h1>Complete your order</h1>
+<p class="fc-lede">Add your delivery details and place your order without paying online. Your order will be saved for the FORME team to review and confirm with you.</p>
+<div class="fc-note"><strong>Important catalogue notice:</strong> Some product details and prices are still sample information and current stock is not yet verified. FORME will check each item, requested size or variant, final price and delivery charge before confirming dispatch. No payment is collected when you place the order; pay the agreed amount only when the parcel is delivered.</div>
 
 <div id="fc-checkout-empty" class="fc-empty" hidden>Your bag is empty. <a href="/fashionstore/">Return to the store</a> to choose an item.</div>
 <div id="fc-checkout-shell">
 <section class="fc-content">
-<h2>Your items</h2>
+<h2>Your order</h2>
 <div id="fc-checkout-items"></div>
-<div class="fc-total-row" style="display:flex;justify-content:space-between;border-top:1px solid var(--fc-line);padding:16px 0;font-weight:700"><span>Estimated item subtotal</span><strong id="fc-subtotal">৳0</strong></div>
+<div class="fc-total-row" style="display:flex;justify-content:space-between;border-top:1px solid var(--fc-line);padding:16px 0;font-weight:700"><span>Item subtotal</span><strong id="fc-subtotal">৳0</strong></div>
 <p class="fc-meta">Delivery charge and final total are not included here. They will be confirmed before the order is accepted.</p>
 </section>
 
@@ -39,11 +39,11 @@
 <div class="fc-field"><label for="fc-order-address">Full delivery address *</label><textarea id="fc-order-address" name="delivery_address" minlength="8" maxlength="500" autocomplete="street-address" required placeholder="House, road, village/area and nearby landmark"></textarea></div>
 <div class="fc-field"><label for="fc-order-postal">Postal code (optional)</label><input id="fc-order-postal" name="postal_code" maxlength="20" autocomplete="postal-code"></div>
 <div class="fc-field"><label for="fc-order-note">Order note (optional)</label><textarea id="fc-order-note" name="customer_note" maxlength="500" placeholder="Any delivery instructions or product/size details"></textarea></div>
-<div class="fc-note"><strong>Payment:</strong> Online payment is not enabled. No advance payment is requested in this pilot. Our team will confirm whether a payment-on-delivery arrangement is available for your location before accepting the order.</div>
+<div class="fc-note"><strong>Payment method: Cash on delivery.</strong> Online card, bKash, Nagad, Rocket and bank-gateway payments are not enabled. After the team confirms the final amount and delivery details, pay the agreed amount in cash only when the parcel reaches you. Never send an advance payment to an unverified number or account.</div>
 <label class="fc-check"><input type="checkbox" name="privacy_consent" required> I have read the <a href="/fashionstore/pages/privacy.html">Privacy Policy</a> and agree that my order details may be processed to review and respond to this request. I understand the order data is stored using cloud infrastructure currently located in Singapore.</label>
-<label class="fc-check"><input type="checkbox" name="terms_accepted" required> I have read the <a href="/fashionstore/pages/terms.html">Terms &amp; Conditions</a>, understand this is an order request and agree that the final price, delivery charge, availability and timing must be confirmed before the order is accepted.</label>
+<label class="fc-check"><input type="checkbox" name="terms_accepted" required> I have read the <a href="/fashionstore/pages/terms.html">Terms &amp; Conditions</a>, understand that this COD order remains pending review until the team confirms product availability, final price and delivery details, and agree to pay the confirmed amount only on delivery.</label>
 <input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px">
-<button class="fc-button" id="fc-place-order" type="submit">Submit order request</button>
+<button class="fc-button" id="fc-place-order" type="submit">Place COD order</button>
 <p class="fc-status" id="fc-order-status" role="status" aria-live="polite"></p>
 </form>
 </div>
@@ -58,5 +58,5 @@
 <div><h3>Information</h3><a href="/fashionstore/pages/privacy.html">Privacy</a><a href="/fashionstore/pages/terms.html">Terms</a><a href="/fashionstore/pages/contact.html">Contact</a></div>
 </div><div class="fc-footer-bottom"><span>© 2026 FORME. All rights reserved.</span><span>Bangladesh · Pilot storefront</span></div>
 </div></footer>
-<script src="/fashionstore/assets/checkout.js" defer></script>
+<script src="/fashionstore/assets/checkout.js?v=20261103-1" defer></script>
 </body></html>
