@@ -153,6 +153,34 @@ jobs:
 
           print("Verified 6 department dropdowns on homepage, Men pages and all 5 collection landing pages.")
           PY
+      - name: Verify AI Customer Care integration
+        run: |
+          node --check assets/customer-care.js
+          python3 - <<'PY'
+          from pathlib import Path
+
+          required = [
+              Path("index.html"),
+              Path("men/index.html"),
+              Path("men/shirt/index.html"),
+              Path("women/index.html"),
+              Path("404.html"),
+              Path("assets/customer-care.js"),
+              Path("assets/customer-care.css"),
+          ]
+          for path in required:
+              assert path.is_file(), f"Missing AI customer-care asset/page: {path}"
+
+          for path in required[:5]:
+              page = path.read_text()
+              assert "assets/customer-care.js" in page, f"Customer-care widget is missing from {path}"
+
+          client = Path("assets/customer-care.js").read_text()
+          assert "fashion-customer-care" in client
+          assert "apikey" in client
+          assert "AQ." not in client, "A Google Gemini secret key must never be committed to the website"
+          print("Verified chat widget assets, homepage, Men pages, Women landing page and fallback page.")
+          PY
       - name: Validate Python build scripts
         run: python3 -m py_compile scripts/build_collection_pages.py scripts/build_men_catalog.py scripts/download_fashion_photos.py
       - name: Verify branded not-found page and image fallbacks
