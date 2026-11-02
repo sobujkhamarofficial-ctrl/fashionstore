@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#F7F5F0">
+<title>FORME Admin · Order Management</title>
+<link rel="stylesheet" href="/fashionstore/assets/admin.css?v=20261102-1">
+</head>
+<body class="fa-body">
+<div class="fa-shell">
+  <header class="fa-top"><a class="fa-brand" href="/fashionstore/">FORME<span>ADMIN CONSOLE</span></a><span class="fa-private"><i></i> PRIVATE WORKSPACE</span></header>
+  <main>
+    <section id="fa-auth" class="fa-auth-layout">
+      <div class="fa-auth-intro">
+        <span class="fa-eyebrow">FORME · OPERATIONS</span>
+        <h1>Orders, handled<br><em>with intention.</em></h1>
+        <p>A private workspace for reviewing customer requests, confirming pricing and managing delivery.</p>
+        <div class="fa-auth-points"><span>01 · Protected admin access</span><span>02 · Centralised order records</span><span>03 · Clear fulfilment tracking</span></div>
+      </div>
+      <section class="fa-auth-card">
+        <div class="fa-auth-tabs"><button type="button" class="active" data-auth-tab="login">Sign in</button><button type="button" data-auth-tab="setup">First-time setup</button></div>
+        <form id="fa-login-form" class="fa-form">
+          <span class="fa-eyebrow">WELCOME BACK</span><h2>Admin sign in</h2>
+          <label>Email address<input name="email" type="email" autocomplete="username" maxlength="254" required></label>
+          <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
+          <button class="fa-primary" type="submit">Sign in securely <span>↗</span></button>
+          <p id="fa-login-message" class="fa-message" role="status" aria-live="polite"></p>
+        </form>
+        <form id="fa-setup-form" class="fa-form" hidden>
+          <span class="fa-eyebrow">ONE-TIME OWNER SETUP</span><h2>Create the first admin</h2>
+          <p class="fa-help">This one-time setup code can create only the first store administrator. Keep it private.</p>
+          <label>One-time setup code<input name="bootstrap_token" type="password" autocomplete="off" minlength="64" maxlength="64" required></label>
+          <label>Full name<input name="full_name" maxlength="100" autocomplete="name" required></label>
+          <label>Admin email<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
+          <label>Create a strong password<input name="password" type="password" minlength="12" maxlength="200" autocomplete="new-password" required><small>Use at least 12 characters. Do not reuse your website or email password.</small></label>
+          <button class="fa-primary" type="submit">Create admin account <span>↗</span></button>
+          <p id="fa-setup-message" class="fa-message" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </section>
+    <section id="fa-dashboard" hidden>
+      <div class="fa-dash-head">
+        <div><span class="fa-eyebrow">STORE OPERATIONS</span><h1>Order overview</h1><p id="fa-welcome">Your private FORME workspace.</p></div>
+        <div class="fa-dash-actions"><button id="fa-refresh" class="fa-secondary" type="button">↻ Refresh</button><button id="fa-logout" class="fa-logout" type="button">Sign out</button></div>
+      </div>
+      <div id="fa-alert" class="fa-alert" hidden role="status"></div>
+      <div class="fa-stats">
+        <article><span>Total orders</span><strong id="fa-stat-total">—</strong><small>Latest 1,000 records</small></article>
+        <article><span>Need attention</span><strong id="fa-stat-awaiting">—</strong><small>Review or contact customer</small></article>
+        <article><span>In progress</span><strong id="fa-stat-active">—</strong><small>Confirmed through dispatch</small></article>
+        <article><span>Delivered</span><strong id="fa-stat-delivered">—</strong><small>Completed deliveries</small></article>
+        <article><span>Payments received</span><strong id="fa-stat-paid">—</strong><small>Recorded as paid</small></article>
+      </div>
+      <section class="fa-orders-panel">
+        <div class="fa-panel-head"><div><span class="fa-eyebrow">CUSTOMER REQUESTS</span><h2>Orders</h2></div><span id="fa-order-count" class="fa-count">0 records</span></div>
+        <div class="fa-toolbar"><label class="fa-search">⌕ <input id="fa-search" type="search" placeholder="Search reference, name or phone"></label><select id="fa-filter" aria-label="Filter orders"><option value="all">All statuses</option><option value="pending_review">Pending review</option><option value="contacted">Contacted</option><option value="confirmed">Confirmed</option><option value="processing">Processing</option><option value="shipped">Shipped</option><option value="delivered">Delivered</option><option value="cancelled">Cancelled</option><option value="rejected">Rejected</option></select></div>
+        <div class="fa-table-wrap"><table><thead><tr><th>Order</th><th>Customer</th><th>Placed</th><th>Items</th><th>Subtotal</th><th>Status</th><th></th></tr></thead><tbody id="fa-order-rows"><tr><td colspan="7" class="fa-empty-cell">Loading orders…</td></tr></tbody></table></div>
+        <div id="fa-empty" class="fa-empty" hidden>No orders match this view.</div>
+      </section>
+      <p class="fa-footnote">Customer requests are not automatically accepted. Verify product availability and final pricing before confirming an order. Payment is recorded only after it has actually been received.</p>
+    </section>
+  </main>
+  <footer class="fa-footer"><span>FORME · PRIVATE ADMIN</span><a href="/fashionstore/">Return to storefront ↗</a></footer>
+</div>
+<div id="fa-modal" class="fa-modal" hidden>
+  <button class="fa-modal-backdrop" data-close-modal aria-label="Close order details"></button>
+  <section class="fa-drawer" role="dialog" aria-modal="true" aria-labelledby="fa-detail-title">
+    <div class="fa-drawer-head"><div><span class="fa-eyebrow">ORDER DETAIL</span><h2 id="fa-detail-title">Order</h2></div><button type="button" class="fa-close" data-close-modal aria-label="Close">×</button></div>
+    <div id="fa-detail-content"></div>
+  </section>
+</div>
+<script src="/fashionstore/assets/admin.js?v=20261102-1" defer></script>
+</body></html>
