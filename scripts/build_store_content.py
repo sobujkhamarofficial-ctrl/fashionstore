@@ -239,13 +239,13 @@ for html_file in ROOT.rglob("*.html"):
         urls.add(BASE_URL)
     else:
         urls.add(BASE_URL + rel)
-sitemap = '<?xml version="1.0" encoding="UTF-8"?>\\n'
-sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\\n'
+sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n'
+sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
 for url in sorted(urls):
-    sitemap += f'<url><loc>{e(url)}</loc></url>\\n'
-sitemap += '</urlset>\\n'
+    sitemap += f'<url><loc>{e(url)}</loc></url>\n'
+sitemap += '</urlset>\n'
 (ROOT / "sitemap.xml").write_text(sitemap, encoding="utf-8")
-(ROOT / "robots.txt").write_text("User-agent: *\\nAllow: /\\nSitemap: " + BASE_URL + "sitemap.xml\\n", encoding="utf-8")
+(ROOT / "robots.txt").write_text("User-agent: *\nAllow: /\nSitemap: " + BASE_URL + "sitemap.xml\n", encoding="utf-8")
 
 # A single build entry point keeps all content pages reproducible on every Pages deployment.
 print(f"Generated {len(pages)+1} policy/information pages, 1 journal index and {len(blog_posts)} published articles.")
