@@ -313,7 +313,7 @@ def gallery_html(node, department, parts, ancestors):
         alt = f"{title} original fashion illustration {index + 1}"
         images.append(
             f'<figure class="visual-card"><div class="visual-image-wrap">'
-            f'<img class="gallery-image" src="{src}" alt="{esc(alt)}" loading="lazy" decoding="async">'
+            f'<img class="gallery-image" src="{src}" alt="{esc(alt)}" loading="lazy" decoding="async" data-fallback="visual-image-missing" onerror="this.hidden=true;this.parentElement.classList.add(this.dataset.fallback)">'
             f'<span class="visual-number">{index + 1:02d}</span></div>'
             f'<figcaption><strong>{esc(title)} · Style {index + 1:02d}</strong>'
             f'<span>Original visual concept</span></figcaption></figure>'

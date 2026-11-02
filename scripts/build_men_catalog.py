@@ -56,7 +56,7 @@ def card(p,priority=False):
     loading="eager" if priority else "lazy"
     high=' fetchpriority="high"' if priority else ""
     return ('<article class="f-product f-static-product"><div class="f-product-photo">'
-      f'<img src="{esc(p["image"])}" alt="{esc(p["name"])}" loading="{loading}"{high}>{badge}</div>'
+      f'<img src="{esc(p["image"])}" alt="{esc(p["name"])}" loading="{loading}"{high} data-fallback="f-photo-missing" onerror="this.hidden=true;this.parentElement.classList.add(this.dataset.fallback)">{badge}</div>'
       '<div class="f-product-info">'
       f'<span class="f-product-name">{esc(p["name"])}</span><span class="f-men-savings">{esc(p["description"])}</span>'
       f'<div class="f-men-price-row"><strong>৳{int(p["price"]):,}</strong><del>৳{int(p["compareAt"]):,}</del></div>'

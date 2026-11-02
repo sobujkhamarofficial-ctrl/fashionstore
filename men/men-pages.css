@@ -406,3 +406,16 @@
 @media(max-width:680px){#forme-storefront .f-static-product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 10px}#forme-storefront .f-static-product .f-product-name{font-size:11px;min-height:42px}#forme-storefront .f-static-product .f-product-info{padding-top:8px}}
 
 #forme-storefront .f-native-mega[open] .f-mega-menu{visibility:visible;opacity:1;pointer-events:auto;transform:translateY(0)}#forme-storefront .f-native-mega[open] .f-nav-men-toggle span{transform:rotate(180deg)}#forme-storefront .f-mega-group b a{color:var(--f-clay);font:inherit;letter-spacing:inherit;text-transform:inherit}#forme-storefront .f-mega-group b a:hover{color:var(--f-green);text-decoration:underline}
+
+
+/* Graceful colourful style sheet when a Men product photo is unavailable */
+#forme-storefront .f-static-product .f-product-photo{isolation:isolate}
+#forme-storefront .f-static-product .f-product-photo.f-photo-missing{display:grid;place-items:center;background:linear-gradient(145deg,#f1dfd2,#d8e4da)}
+#forme-storefront .f-static-product .f-product-photo.f-photo-missing:before{content:"";position:absolute;width:62%;aspect-ratio:1;border:1px solid #ffffffd0;border-radius:50%;box-shadow:0 0 0 15px #ffffff28,0 0 0 36px #ffffff16}
+#forme-storefront .f-static-product .f-product-photo.f-photo-missing:after{content:"FORME  ·  STYLE SHEET";position:absolute;left:8%;right:8%;bottom:9%;padding-top:10px;border-top:1px solid #263b3240;color:#263b3299;text-align:center;font-size:8px;font-weight:700;letter-spacing:.18em}
+#forme-storefront .f-static-product .f-product-photo.f-photo-missing .f-product-tag{z-index:2}
+#forme-storefront .f-static-product:nth-child(6n+2) .f-product-photo.f-photo-missing{background:linear-gradient(145deg,#e2e9df,#becdc1)}
+#forme-storefront .f-static-product:nth-child(6n+3) .f-product-photo.f-photo-missing{background:linear-gradient(145deg,#e5e4ef,#c6c9dc)}
+#forme-storefront .f-static-product:nth-child(6n+4) .f-product-photo.f-photo-missing{background:linear-gradient(145deg,#f0e8d1,#ddcfaa)}
+#forme-storefront .f-static-product:nth-child(6n+5) .f-product-photo.f-photo-missing{background:linear-gradient(145deg,#efdfdf,#d6bec9)}
+#forme-storefront .f-static-product:nth-child(6n) .f-product-photo.f-photo-missing{background:linear-gradient(145deg,#dce9e9,#b8d0cc)}

@@ -96,3 +96,15 @@ a{color:inherit;text-decoration:none}
 .visual-card figcaption span{flex:0 0 auto;padding-top:2px;color:var(--muted);font-size:8px;text-align:right}
 @media(max-width:760px){.visual-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.visual-gallery{padding:38px 0 12px}.visual-card figcaption{flex-direction:column;gap:4px;padding:10px}.visual-card figcaption span{text-align:left}}
 @media(max-width:380px){.visual-grid{grid-template-columns:1fr 1fr;gap:7px}.visual-card figcaption strong{font-size:12px}}
+
+
+/* Graceful colourful sheet when a collection illustration cannot load */
+.visual-image-wrap.visual-image-missing{position:relative;isolation:isolate;display:grid;place-items:center;background:linear-gradient(145deg,#f1dfd2,#d8e4da)}
+.visual-image-wrap.visual-image-missing:before{content:"";position:absolute;width:62%;aspect-ratio:1;border:1px solid #ffffffce;border-radius:50%;box-shadow:0 0 0 16px #ffffff2a,0 0 0 39px #ffffff18}
+.visual-image-wrap.visual-image-missing:after{content:"FORME  ·  STYLE SHEET";position:absolute;left:10%;right:10%;bottom:10%;padding-top:12px;border-top:1px solid #263b3240;color:#263b3299;text-align:center;font-size:9px;font-weight:700;letter-spacing:.2em}
+.visual-image-missing .visual-number{z-index:1}
+.visual-card:nth-child(6n+2) .visual-image-wrap.visual-image-missing{background:linear-gradient(145deg,#e2e9df,#becdc1)}
+.visual-card:nth-child(6n+3) .visual-image-wrap.visual-image-missing{background:linear-gradient(145deg,#e5e4ef,#c6c9dc)}
+.visual-card:nth-child(6n+4) .visual-image-wrap.visual-image-missing{background:linear-gradient(145deg,#f0e8d1,#ddcfaa)}
+.visual-card:nth-child(6n+5) .visual-image-wrap.visual-image-missing{background:linear-gradient(145deg,#efdfdf,#d6bec9)}
+.visual-card:nth-child(6n) .visual-image-wrap.visual-image-missing{background:linear-gradient(145deg,#dce9e9,#b8d0cc)}

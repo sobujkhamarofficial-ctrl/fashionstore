@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f5f0">
+  <title>FORME · Collection</title>
+  <link rel="stylesheet" href="/fashionstore/collections/collections.css">
+  <style>
+    :root{--paper:#f7f5f0;--white:#fffefa;--ink:#202621;--muted:#70766e;--green:#263b32;--clay:#b76f50;--line:#e5e0d7;--serif:Georgia,"Times New Roman",serif}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,"Helvetica Neue",sans-serif}
+    a{color:inherit;text-decoration:none}.form-top{height:34px;display:flex;align-items:center;justify-content:center;background:var(--green);color:#f7f4ed;font-size:9px;letter-spacing:.2em}
+    .form-header{position:sticky;top:0;z-index:10;background:rgba(255,254,250,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+    .form-head{width:min(1200px,calc(100% - 40px));min-height:76px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:25px}
+    .form-logo{font:700 29px/1 var(--serif);letter-spacing:.16em;white-space:nowrap}.form-logo small{display:block;margin-top:7px;color:var(--muted);font:8px Arial,sans-serif;letter-spacing:.27em}
+    .form-nav{display:flex;align-items:center;gap:clamp(11px,2vw,24px);overflow:auto}.form-nav a{padding:12px 0;color:#414840;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}.form-nav a:hover,.form-nav a.active{color:var(--clay)}
+    .form-main{width:min(1160px,calc(100% - 40px));min-height:68vh;margin:auto;padding:25px 0 76px}.form-crumb{display:flex;flex-wrap:wrap;gap:8px;color:#81847c;font-size:10px}.form-crumb a:hover{color:var(--clay);text-decoration:underline}
+    .form-hero{max-width:780px;padding:54px 0 30px}.form-kicker{color:var(--clay);font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase}.form-hero h1{margin:14px 0 12px;font:400 clamp(42px,6vw,68px)/.98 var(--serif);letter-spacing:-.045em}.form-hero p{max-width:680px;margin:0;color:var(--muted);font-size:13px;line-height:1.9}.form-meta{margin-top:15px;color:#58645a;font-size:10px}
+    .form-section{padding:34px 0 10px}.form-section-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:16px}.form-section-head h2{margin:8px 0 0;font:400 clamp(27px,4vw,38px)/1.08 var(--serif);letter-spacing:-.03em}.form-count{color:var(--muted);font-size:10px}
+    .form-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.form-card{position:relative;min-height:160px;padding:20px;border:1px solid var(--line);background:var(--white);display:flex;flex-direction:column;transition:transform .18s,border-color .18s,box-shadow .18s}.form-card:hover{transform:translateY(-3px);border-color:#c8ad98;box-shadow:0 12px 25px #222b240d}.form-card small{color:var(--clay);font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}.form-card strong{margin:13px 25px 8px 0;font:400 22px/1.15 var(--serif)}.form-card span{color:var(--muted);font-size:10px;line-height:1.7}.form-card em{margin-top:auto;padding-top:13px;color:#59665c;font-size:9px;font-style:normal}.form-arrow{position:absolute;right:17px;top:15px;color:var(--clay);font-size:17px}
+    .form-sheets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.form-sheet{position:relative;min-width:0;aspect-ratio:4/5;overflow:hidden;border:1px solid #ffffff80;background:linear-gradient(145deg,#f5dfca,#d9c6ba);box-shadow:0 9px 22px #263b320c}.form-sheet:nth-child(2){background:linear-gradient(145deg,#e2e9df,#becdc1)}.form-sheet:nth-child(3){background:linear-gradient(145deg,#e5e4ef,#c6c9dc)}.form-sheet:nth-child(4){background:linear-gradient(145deg,#f0e8d1,#ddcfaa)}.form-sheet:nth-child(5){background:linear-gradient(145deg,#efdfdf,#d6bec9)}.form-sheet:nth-child(6){background:linear-gradient(145deg,#dce9e9,#b8d0cc)}
+    .form-sheet:before{content:"";position:absolute;width:68%;aspect-ratio:1;border:1px solid #fff9;border-radius:50%;left:16%;top:19%;box-shadow:0 0 0 18px #ffffff20,0 0 0 42px #ffffff14}
+    .form-sheet:after{content:"";position:absolute;width:42%;height:55%;left:29%;top:24%;border:1px solid #fff9;border-radius:48% 48% 14% 14%;transform:rotate(-8deg);background:linear-gradient(140deg,#ffffff28,#263b3210)}
+    .sheet-top,.sheet-bottom{position:absolute;left:8%;right:8%;z-index:1;color:#27332e90;font-size:8px;font-weight:700;letter-spacing:.19em}.sheet-top{top:7%}.sheet-bottom{bottom:7%;display:flex;justify-content:space-between;gap:8px}.sheet-index{position:absolute;z-index:1;right:8%;top:7%;color:#27332e9c;font:italic 19px var(--serif)}
+    .form-ready{display:flex;align-items:flex-start;gap:14px;margin-top:32px;padding:22px;border:1px solid var(--line);background:var(--white)}.form-ready b{display:block;margin-bottom:6px;font:400 23px var(--serif)}.form-ready p{margin:0;color:var(--muted);font-size:11px;line-height:1.8}.form-check{width:30px;height:30px;flex:0 0 30px;display:grid;place-items:center;border-radius:50%;background:#e8eee7;color:var(--green)}
+    .form-back{display:inline-block;margin-top:32px;padding-bottom:6px;border-bottom:1px solid var(--green);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.form-footer{padding:28px 0;background:var(--green);color:#f7f4ed}.form-footer-inner{width:min(1160px,calc(100% - 40px));margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}.form-footer p{color:#ffffff9c;font-size:9px}.form-footer a:last-child{color:#e8d5c3;font-size:9px}
+    .form-error{margin-top:35px;padding:34px;border:1px solid var(--line);background:var(--white)}.form-error h2{font:400 29px var(--serif);margin:0 0 9px}.form-error p{color:var(--muted);font-size:12px;line-height:1.8}
+    @media(max-width:760px){.form-head{width:calc(100% - 30px);min-height:68px;align-items:flex-start;flex-direction:column;justify-content:center;gap:10px;padding:12px 0}.form-logo{font-size:25px}.form-nav{width:100%;gap:17px;padding-bottom:3px}.form-nav a{font-size:8px}.form-main{width:calc(100% - 30px);padding-top:18px}.form-hero{padding-top:37px}.form-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.form-sheets{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.form-section-head{align-items:flex-start;flex-direction:column;gap:7px}.form-card{min-height:145px;padding:15px}.form-card strong{font-size:19px}.form-footer-inner{width:calc(100% - 30px);align-items:flex-start;flex-direction:column;gap:10px}}
+    @media(max-width:420px){.form-card{min-height:155px;padding:13px}.form-card strong{font-size:17px}.form-sheet .sheet-bottom{font-size:6px}}
+
+    .form-product-card{padding:0;overflow:hidden;gap:0}
+    .form-product-sheet{position:relative;isolation:isolate;aspect-ratio:4/3;overflow:hidden;display:flex;align-items:flex-end;padding:13px 14px;color:#263b32;background:linear-gradient(145deg,#f1dfd2,#d8e4da)}
+    .form-product-sheet:before{content:"";position:absolute;z-index:-1;width:60%;aspect-ratio:1;left:19%;top:9%;border:1px solid #ffffffc9;border-radius:50%;box-shadow:0 0 0 14px #ffffff28,0 0 0 32px #ffffff16}
+    .form-product-sheet:after{content:"";position:absolute;z-index:-1;width:36%;height:65%;left:32%;top:21%;border:1px solid #ffffffd9;border-radius:48% 48% 12% 12%;transform:rotate(-9deg);background:linear-gradient(140deg,#ffffff55,#263b3210)}
+    .form-product-sheet span{font-size:8px;font-weight:700;letter-spacing:.17em}
+    .form-product-sheet em{position:absolute;right:12px;top:12px;font:italic 18px var(--serif);color:#263b3299}
+    .form-product-sheet.sheet-1{background:linear-gradient(145deg,#e2e9df,#becdc1)}
+    .form-product-sheet.sheet-2{background:linear-gradient(145deg,#e5e4ef,#c6c9dc)}
+    .form-product-sheet.sheet-3{background:linear-gradient(145deg,#f0e8d1,#ddcfaa)}
+    .form-product-sheet.sheet-4{background:linear-gradient(145deg,#efdfdf,#d6bec9)}
+    .form-product-sheet.sheet-5{background:linear-gradient(145deg,#dce9e9,#b8d0cc)}
+    .form-product-copy{padding:14px 15px 16px;display:flex;flex-direction:column;gap:7px}
+    .form-product-copy strong{margin:0;font:400 18px/1.2 var(--serif)}
+    .form-product-copy span{color:var(--muted);font-size:10px;line-height:1.6}
+    .form-product-copy em{padding:0;margin:0;color:#526257;font-size:11px;font-style:normal;font-weight:700}
+
+  </style>
+</head>
+<body>
+  <div class="form-top">FORME · EVERYDAY, REFINED</div>
+  <header class="form-header"><div class="form-head">
+    <a class="form-logo" href="/fashionstore/">FORME<small>EVERYDAY, REFINED</small></a>
+    <nav class="form-nav" id="form-nav" aria-label="Departments"></nav>
+  </div></header>
+  <main class="form-main" id="form-app" aria-live="polite">
+    <div class="form-hero"><span class="form-kicker">FORME COLLECTIONS</span><h1>Preparing your collection</h1><p>Your selected section is being arranged into a clean collection view.</p></div>
+  </main>
+  <footer class="form-footer"><div class="form-footer-inner"><a class="form-logo" href="/fashionstore/">FORME<small>EVERYDAY, REFINED</small></a><p>Thoughtfully arranged collections · © 2026 FORME</p><a href="/fashionstore/">Return to homepage ↗</a></div></footer>
+<script>
+(() => {
+  'use strict';
+  const BASE = '/fashionstore/';
+  const app = document.getElementById('form-app');
+  const nav = document.getElementById('form-nav');
+  const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  const urlFor = parts => BASE + parts.join('/') + '/';
+  const childrenOf = node => node?.groups || node?.categories || node?.subcategories || [];
+  const countBelow = node => childrenOf(node).reduce((total, child) => total + 1 + countBelow(child), 0);
+  const kindFor = (node, depth) => depth === 1 ? 'Department' : depth === 2 ? 'Collection' : depth === 3 ? 'Category' : depth === 4 ? 'Sub-category' : 'Sub-sub-category';
+  const routeParts = decodeURIComponent(location.pathname).replace(/^\/fashionstore\/?/, '').split('/').filter(Boolean);
+
+  function renderNav(departments) {
+    const all = [{slug:'men',title:'Men'}, ...departments];
+    nav.innerHTML = all.map(dept => `<a href="${urlFor([dept.slug])}"${routeParts[0]===dept.slug?' class="active"':''}>${esc(dept.title)}</a>`).join('');
+  }
+  function breadcrumb(ancestors, title) {
+    const links = [`<a href="${BASE}">Home</a>`, ...ancestors.map(a => `<a href="${urlFor(a.parts)}">${esc(a.title)}</a>`), `<span aria-current="page">${esc(title)}</span>`];
+    return `<nav class="form-crumb" aria-label="Breadcrumb">${links.join('<span>/</span>')}</nav>`;
+  }
+  function renderCards(node, parts, depth) {
+    const list = childrenOf(node);
+    if (!list.length) return `<div class="form-ready"><span class="form-check">✓</span><div><b>Collection space ready</b><p>This section is prepared for verified product photos, names, stock and final prices. The colourful style sheets below keep the page visually complete until product photography is added.</p></div></div>`;
+    return `<section class="form-section"><div class="form-section-head"><div><span class="form-kicker">Browse the structure</span><h2>Explore ${esc(node.title)}</h2></div><span class="form-count">${list.length} ${depth===1?'collections':depth===2?'categories':'options'}</span></div><div class="form-cards">${list.map(child => `<a class="form-card" href="${urlFor([...parts,child.slug])}"><small>${esc(kindFor(child,depth+1))}</small><strong>${esc(child.title)}</strong><span>${esc(child.description || 'Explore this FORME collection.')}</span><em>${countBelow(child)} further options</em><b class="form-arrow">↗</b></a>`).join('')}</div></section>`;
+  }
+  function renderSheets(title) {
+    return `<section class="form-section"><div class="form-section-head"><div><span class="form-kicker">FORME visual edit</span><h2>Style sheets for ${esc(title)}</h2></div><span class="form-count">6 colourful placeholders</span></div><div class="form-sheets">${Array.from({length:6},(_,i)=>`<article class="form-sheet"><span class="sheet-top">FORME · STYLE EDIT</span><span class="sheet-index">${String(i+1).padStart(2,'0')}</span><span class="sheet-bottom"><span>${esc(title.toUpperCase())}</span><span>COLLECTION</span></span></article>`).join('')}</div></section>`;
+  }
+  function renderDepartmentPage(data, dept, parts) {
+    let node = dept;
+    let ancestors = [];
+    let siblings = data.departments;
+    const traversed = [];
+    for (const slug of parts.slice(1)) {
+      const list = childrenOf(node);
+      const next = list.find(item => item.slug === slug);
+      if (!next) throw new Error('Unknown collection path');
+      ancestors.push({title:node.title,parts:traversed.slice()});
+      siblings = list;
+      node = next;
+      traversed.push(slug);
+    }
+    const depth = parts.length;
+    const title = node.title;
+    const parentParts = parts.slice(0,-1);
+    const parentLabel = ancestors.length ? ancestors[ancestors.length-1].title : 'Home';
+    const parentUrl = parentParts.length ? urlFor(parentParts) : BASE;
+    const siblingLinks = siblings.filter(item => item.slug !== node.slug).map(item => `<a href="${urlFor([...parentParts,item.slug])}">${esc(item.title)} ↗</a>`).join('');
+    app.innerHTML = `${breadcrumb(ancestors,title)}<section class="form-hero"><span class="form-kicker">${esc(kindFor(node,depth))} · FORME DIRECTORY</span><h1>${esc(title)}</h1><p>${esc(node.description || `Explore the ${title} collection at FORME.`)}</p><div class="form-meta">${childrenOf(node).length} immediate options · ${countBelow(node)} further options</div></section>${renderCards(node,parts,depth)}${renderSheets(title)}${siblingLinks?`<section class="form-section"><div class="form-section-head"><div><span class="form-kicker">Continue exploring</span><h2>More in this section</h2></div></div><div class="form-cards">${siblingLinks}</div></section>`:''}<a class="form-back" href="${parentUrl}">← Back to ${esc(parentLabel)}</a>`;
+    document.title = `${title} | FORME`;
+  }
+  function renderMen(data, parts) {
+    const cats = data.categories || [];
+    const selected = parts[1] ? cats.find(c => c.slug === parts[1]) : null;
+    if (parts.length > 1 && !selected) throw new Error('Unknown Men collection');
+    const title = selected ? selected.title : "Men's Collection";
+    const desc = selected ? `Explore the FORME ${selected.title} collection.` : "Explore men's everyday essentials, considered fits and modern classics.";
+    const crumb = selected ? `<nav class="form-crumb"><a href="${BASE}">Home</a><span>/</span><a href="${urlFor(['men'])}">Men</a><span>/</span><span>${esc(title)}</span></nav>` : `<nav class="form-crumb"><a href="${BASE}">Home</a><span>/</span><span>Men</span></nav>`;
+    const entries = selected ? selected.products : cats.map(c=>c.products?.[0]).filter(Boolean).slice(0,12);
+    const productCards = entries.map((p,i)=>`<article class="form-card form-product-card"><div class="form-product-sheet sheet-${i%6}"><span>FORME · STYLE SHEET</span><em>${String(i+1).padStart(2,'0')}</em></div><div class="form-product-copy"><strong>${esc(p.name)}</strong><span>${esc(p.description || 'FORME collection style')}</span><em>৳${Number(p.price||0).toLocaleString('en-BD')}</em></div></article>`).join('');
+    const categoryCards = selected ? cats.map(c=>`<a class="form-card" href="${urlFor(['men',c.slug])}"><small>MEN'S CATEGORY</small><strong>${esc(c.title)}</strong><span>Explore this collection</span><em>6 sample styles</em></a>`).join('') : cats.map(c=>`<a class="form-card" href="${urlFor(['men',c.slug])}"><small>${esc(c.group)}</small><strong>${esc(c.title)}</strong><span>Explore six sample styles</span><em>View collection ↗</em></a>`).join('');
+    app.innerHTML = `${crumb}<section class="form-hero"><span class="form-kicker">${selected?'MEN’S COLLECTION':'THE MEN’S WARDROBE'}</span><h1>${esc(title)}</h1><p>${esc(desc)}</p></section><section class="form-section"><div class="form-section-head"><div><span class="form-kicker">Browse categories</span><h2>${selected?'Other Men categories':'Explore Men'}</h2></div><span class="form-count">${cats.length} categories</span></div><div class="form-cards">${categoryCards}</div></section><section class="form-section"><div class="form-section-head"><div><span class="form-kicker">The collection</span><h2>${selected?'Selected styles':'Featured styles'}</h2></div><span class="form-count">${entries.length} sample styles</span></div><div class="form-cards">${productCards}</div></section><a class="form-back" href="${urlFor(['men'])}">← Back to Men</a>`;
+    document.title = `${title} | FORME`;
+  }
+  async function load() {
+    try {
+      const response = await fetch(BASE + 'collections/catalog.json', {cache:'no-store'});
+      if (!response.ok) throw new Error('Catalogue unavailable');
+      const data = await response.json();
+      renderNav(data.departments || []);
+      if (routeParts[0] === 'men') {
+        const menResponse = await fetch(BASE + 'men/catalog.json', {cache:'no-store'});
+        if (!menResponse.ok) throw new Error('Men catalogue unavailable');
+        renderMen(await menResponse.json(), routeParts);
+        return;
+      }
+      const dept = (data.departments || []).find(item => item.slug === routeParts[0]);
+      if (!dept || !routeParts.length) throw new Error('Collection not found');
+      renderDepartmentPage(data,dept,routeParts);
+    } catch (error) {
+      renderNav([]);
+      app.innerHTML = `<nav class="form-crumb"><a href="${BASE}">Home</a><span>/</span><span>Collection</span></nav><section class="form-hero"><span class="form-kicker">FORME COLLECTIONS</span><h1>This collection is not available yet</h1><p>The selected address could not be matched to a published collection. Use the department links above to continue browsing.</p></section><div class="form-error"><h2>Your colourful style sheets are ready</h2><p>When a product photograph is unavailable, FORME keeps the collection page tidy with these warm, colourful placeholder panels rather than showing a broken-image icon.</p><div class="form-sheets" style="margin-top:20px">${renderSheets('FORME').replace(/^<section[^>]*>|<\/section>$/g,'')}</div></div><a class="form-back" href="${BASE}">← Back to FORME home</a>`;
+    }
+  }
+  load();
+})();
+</script>
+</body>
+</html>

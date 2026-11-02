@@ -140,6 +140,24 @@ jobs:
 
           print("Verified 6 department dropdowns on homepage, Men pages and all 5 collection landing pages.")
           PY
+      - name: Verify branded not-found page and image fallbacks
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          not_found = Path("404.html").read_text()
+          assert "FORME COLLECTIONS" in not_found
+          assert "renderDepartmentPage" in not_found
+          assert "form-product-sheet" in not_found, "Men placeholder sheets are missing"
+          assert "Your colourful style sheets are ready" in not_found
+          collection_script = Path("scripts/build_collection_pages.py").read_text()
+          men_script = Path("scripts/build_men_catalog.py").read_text()
+          assert "visual-image-missing" in collection_script
+          assert "f-photo-missing" in men_script
+          assert "visual-image-missing" in Path("collections/collections.css").read_text()
+          assert "f-photo-missing" in Path("men/men-pages.css").read_text()
+          print("Verified the branded 404 collection fallback and colourful image placeholders.")
+          PY
       - name: Upload static storefront
         uses: actions/upload-pages-artifact@v3
         with:
