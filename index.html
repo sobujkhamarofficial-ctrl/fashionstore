@@ -14,8 +14,7 @@
     a { color: inherit; text-decoration: none; }
     [hidden] { display: none !important; }
   </style>
-  <style id="forme-storefront-redesign">
-#forme-storefront { --f-ink:#202621; --f-muted:#777b73; --f-paper:#f7f5f0; --f-white:#fffefa; --f-green:#263b32; --f-green2:#344d40; --f-clay:#b76f50; --f-line:#e5e0d7; --f-serif:Georgia,'Times New Roman',serif; color:var(--f-ink); background:var(--f-paper); font-family:'DM Sans','Helvetica Neue',Arial,sans-serif; overflow:hidden; }
+  <style id="forme-storefront-redesign">#forme-storefront { --f-ink:#202621; --f-muted:#777b73; --f-paper:#f7f5f0; --f-white:#fffefa; --f-green:#263b32; --f-green2:#344d40; --f-clay:#b76f50; --f-line:#e5e0d7; --f-serif:Georgia,'Times New Roman',serif; color:var(--f-ink); background:var(--f-paper); font-family:'DM Sans','Helvetica Neue',Arial,sans-serif; overflow:hidden; }
     #forme-storefront * { box-sizing:border-box; }
     #forme-storefront a { color:inherit; text-decoration:none; }
     #forme-storefront button,#forme-storefront input { font:inherit; }
@@ -73,6 +72,24 @@
     #forme-storefront .f-category-label { position:absolute; z-index:1; left:22px; right:18px; bottom:20px; color:#fff; }
     #forme-storefront .f-category-label b { display:block; font:400 29px var(--f-serif); }
     #forme-storefront .f-category-label span { display:block; margin-top:5px; font-size:8px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; }
+    #forme-storefront .f-type-section { padding-top:18px; background:var(--f-white); }
+    #forme-storefront .f-type-tabs { display:flex; gap:8px; overflow:auto; padding:2px 0 12px; scrollbar-width:thin; }
+    #forme-storefront .f-type-tab { flex:0 0 auto; padding:11px 16px; border:1px solid var(--f-line); background:transparent; color:#687168; font-size:9px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+    #forme-storefront .f-type-tab.active,#forme-storefront .f-type-tab:hover { border-color:var(--f-green); background:var(--f-green); color:#fff; }
+    #forme-storefront .f-type-panel { display:none; }
+    #forme-storefront .f-type-panel.active { display:block; }
+    #forme-storefront .f-type-intro { margin:8px 0 18px; color:var(--f-muted); font-size:10px; line-height:1.8; }
+    #forme-storefront .f-type-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+    #forme-storefront .f-type-card { min-width:0; display:flex; align-items:center; gap:12px; padding:10px; border:1px solid var(--f-line); background:#fffefa; transition:border-color .2s,transform .2s,background .2s; }
+    #forme-storefront .f-type-card:hover { transform:translateY(-2px); border-color:#c7b6a3; background:#fbf8f2; }
+    #forme-storefront .f-type-thumb { width:66px; height:78px; flex:0 0 66px; overflow:hidden; background:#e7e2d9; }
+    #forme-storefront .f-type-thumb img { width:100%; height:100%; display:block; object-fit:cover; transition:transform .45s; }
+    #forme-storefront .f-type-card:hover .f-type-thumb img { transform:scale(1.07); }
+    #forme-storefront .f-type-copy { min-width:0; flex:1; }
+    #forme-storefront .f-type-copy b { display:block; font:17px/1.1 var(--f-serif); }
+    #forme-storefront .f-type-copy small { display:block; margin-top:6px; color:var(--f-muted); font-size:8px; line-height:1.5; }
+    #forme-storefront .f-type-arrow { flex:0 0 auto; color:var(--f-clay); font-size:16px; }
+    #forme-storefront .f-type-foot { margin-top:17px; color:var(--f-muted); font-size:9px; line-height:1.7; }
     #forme-storefront .f-campaign { display:grid; grid-template-columns:1.08fr .92fr; min-height:370px; background:#e6dfd3; }
     #forme-storefront .f-campaign-image { min-height:370px; overflow:hidden; }
     #forme-storefront .f-campaign-image img { width:100%; height:100%; display:block; object-fit:cover; }
@@ -155,6 +172,10 @@
       #forme-storefront .f-nav a { font-size:9px; }
       #forme-storefront .f-category-grid { grid-template-columns:repeat(2,1fr); }
       #forme-storefront .f-category { min-height:300px; }
+      #forme-storefront .f-type-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; }
+      #forme-storefront .f-type-card { gap:9px; padding:8px; }
+      #forme-storefront .f-type-thumb { width:54px; height:66px; flex-basis:54px; }
+      #forme-storefront .f-type-copy b { font-size:15px; }
       #forme-storefront .f-product-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px 13px; }
       #forme-storefront .f-add { opacity:1; transform:none; }
       #forme-storefront .f-footer-grid { grid-template-columns:1.3fr 1fr 1fr; }
@@ -191,6 +212,15 @@
       #forme-storefront .f-category-label { left:13px; bottom:13px; }
       #forme-storefront .f-category-label b { font-size:24px; }
       #forme-storefront .f-category-label span { font-size:7px; }
+      #forme-storefront .f-type-section { padding-top:0; }
+      #forme-storefront .f-type-tabs { margin-right:-15px; }
+      #forme-storefront .f-type-tab { padding:10px 12px; font-size:8px; }
+      #forme-storefront .f-type-grid { grid-template-columns:1fr 1fr; gap:8px; }
+      #forme-storefront .f-type-card { align-items:flex-start; gap:8px; padding:7px; }
+      #forme-storefront .f-type-thumb { width:49px; height:62px; flex-basis:49px; }
+      #forme-storefront .f-type-copy b { font-size:14px; }
+      #forme-storefront .f-type-copy small { font-size:7px; }
+      #forme-storefront .f-type-arrow { font-size:13px; }
       #forme-storefront .f-campaign { grid-template-columns:1fr; }
       #forme-storefront .f-campaign-image { min-height:280px; max-height:310px; }
       #forme-storefront .f-campaign-copy { padding:35px 25px 40px; }
@@ -246,6 +276,7 @@
         if(e.target.closest('#f-checkout')){toast('Checkout preview — connect order and payment services before launch.');return;}
       });
       const search=root.querySelector('#f-search-input');
+      root.querySelectorAll('[data-f-type-tab]').forEach(tab=>tab.addEventListener('click',()=>{const selected=tab.dataset.fTypeTab;root.querySelectorAll('[data-f-type-tab]').forEach(item=>{const active=item===tab;item.classList.toggle('active',active);item.setAttribute('aria-selected',String(active));});root.querySelectorAll('[data-f-type-panel]').forEach(panel=>panel.classList.toggle('active',panel.dataset.fTypePanel===selected));}));
       search.addEventListener('input',()=>{const q=search.value.trim().toLowerCase();if(q)root.querySelector('#f-new-in').scrollIntoView({behavior:'smooth',block:'start'});let visible=0;root.querySelectorAll('#f-new-in .f-product').forEach(card=>{const show=(card.dataset.name+' '+card.dataset.category).toLowerCase().includes(q);card.hidden=!show;if(show)visible++;});root.querySelector('#f-no-results').hidden=visible!==0;});
       root.querySelector('#f-news-form').addEventListener('submit',e=>{e.preventDefault();root.querySelector('#f-news-note').textContent='Thanks for joining the FORME list.';e.target.reset();});
       menu.addEventListener('click',e=>{if(e.target.closest('a'))closePanels();});
@@ -274,6 +305,50 @@
       <a class="f-category" href="#f-new-in"><img src="https://images.unsplash.com/photo-1503919005314-30d93d07d823?auto=format&fit=crop&w=800&q=82" alt="Kids fashion" loading="lazy"><div class="f-category-label"><b>Kids</b><span>Discover the edit ↗</span></div></a>
       <a class="f-category" href="#f-new-in"><img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=800&q=82" alt="Fashion accessories and styling" loading="lazy"><div class="f-category-label"><b>Accessories</b><span>Discover the edit ↗</span></div></a>
     </div></div></section>
+    <section class="f-section f-type-section" id="f-product-types"><div class="f-container"><div class="f-section-head"><div><span class="f-kicker">Find your fit</span><h2>Shop every category</h2></div><p>From everyday T-shirts and polos to hoodies, trousers and the finishing touches. Explore every product type in one place.</p></div>
+      <div class="f-type-tabs" role="tablist" aria-label="Product categories"><button class="f-type-tab active" role="tab" aria-selected="true" data-f-type-tab="men">Men's collection</button><button class="f-type-tab" role="tab" aria-selected="false" data-f-type-tab="women">Women's collection</button><button class="f-type-tab" role="tab" aria-selected="false" data-f-type-tab="kids">Kids & teens</button><button class="f-type-tab" role="tab" aria-selected="false" data-f-type-tab="sports">Sports & accessories</button></div>
+      <div class="f-type-panel active" role="tabpanel" data-f-type-panel="men"><p class="f-type-intro">Men's everyday wear — choose a style to explore its collection.</p><div class="f-type-grid">
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=240&q=78" alt="T-shirts" loading="lazy"></span><span class="f-type-copy"><b>T-Shirts</b><small>Half sleeve · Blank · Printed</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1625910513413-5efba2c5e9a2?auto=format&fit=crop&w=240&q=78" alt="Polo shirts" loading="lazy"></span><span class="f-type-copy"><b>Polo T-Shirts</b><small>Classic · Printed · Cut & stitch</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=240&q=78" alt="Full sleeve shirts" loading="lazy"></span><span class="f-type-copy"><b>Full Sleeve</b><small>Basic · Designer · Layering</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=240&q=78" alt="Hoodies" loading="lazy"></span><span class="f-type-copy"><b>Hoodies</b><small>Pullover · Zip-up · Graphic</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1578681994506-b8f463449011?auto=format&fit=crop&w=240&q=78" alt="Sweatshirts" loading="lazy"></span><span class="f-type-copy"><b>Sweatshirts</b><small>Crewneck · Printed · Fleece</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=240&q=78" alt="Jackets" loading="lazy"></span><span class="f-type-copy"><b>Jackets</b><small>Casual · Winter · Lightweight</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=240&q=78" alt="Shirts" loading="lazy"></span><span class="f-type-copy"><b>Shirts</b><small>Casual · Formal · Overshirts</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=240&q=78" alt="Jeans" loading="lazy"></span><span class="f-type-copy"><b>Jeans</b><small>Slim · Straight · Relaxed</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=240&q=78" alt="Trousers" loading="lazy"></span><span class="f-type-copy"><b>Trousers</b><small>Comfy · Chino · Cargo · Formal</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1506629905607-d9bd6c54b6f0?auto=format&fit=crop&w=240&q=78" alt="Joggers" loading="lazy"></span><span class="f-type-copy"><b>Joggers</b><small>Everyday · Sports · Relaxed fit</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=240&q=78" alt="Shorts" loading="lazy"></span><span class="f-type-copy"><b>Shorts</b><small>Casual · Chino · Sports</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1618354691438-25bc04584c23?auto=format&fit=crop&w=240&q=78" alt="Panjabi" loading="lazy"></span><span class="f-type-copy"><b>Panjabi</b><small>Traditional · Casual · Festive</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?auto=format&fit=crop&w=240&q=78" alt="Socks" loading="lazy"></span><span class="f-type-copy"><b>Socks</b><small>Ankle · Crew · Everyday</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1622560480654-d96214fdc887?auto=format&fit=crop&w=240&q=78" alt="Accessories" loading="lazy"></span><span class="f-type-copy"><b>Accessories</b><small>Caps · Belts · Wallets</small></span><span class="f-type-arrow">↗</span></a>
+      </div></div>
+      <div class="f-type-panel" role="tabpanel" data-f-type-panel="women"><p class="f-type-intro">Everyday and occasion styles for the women's wardrobe.</p><div class="f-type-grid">
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1551163943-3f6a855d1153?auto=format&fit=crop&w=240&q=78" alt="Women's T-shirts" loading="lazy"></span><span class="f-type-copy"><b>T-Shirts</b><small>Basic · Printed · Polo</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1583391733981-8498407bf9f7?auto=format&fit=crop&w=240&q=78" alt="Kurti and tops" loading="lazy"></span><span class="f-type-copy"><b>Kurti & Tops</b><small>Kurti · Tunic · Everyday tops</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=240&q=78" alt="Co-ord sets" loading="lazy"></span><span class="f-type-copy"><b>Co-ords</b><small>Matching sets · Two-piece</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=240&q=78" alt="Women's trousers" loading="lazy"></span><span class="f-type-copy"><b>Trousers</b><small>Comfy · Palazzo · Leggings</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=240&q=78" alt="Women's dresses" loading="lazy"></span><span class="f-type-copy"><b>Salwar Kameez</b><small>2-piece · 3-piece · Festive</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=240&q=78" alt="Shrugs and sweatshirts" loading="lazy"></span><span class="f-type-copy"><b>Layers</b><small>Shrug · Sweatshirt</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=240&q=78" alt="Women's dresses" loading="lazy"></span><span class="f-type-copy"><b>Dresses</b><small>Midi · Casual · Occasion</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=240&q=78" alt="Women's accessories" loading="lazy"></span><span class="f-type-copy"><b>Accessories</b><small>Bags · Scarves · More</small></span><span class="f-type-arrow">↗</span></a>
+      </div></div>
+      <div class="f-type-panel" role="tabpanel" data-f-type-panel="kids"><p class="f-type-intro">Comfortable, easy-to-wear styles for kids and teens.</p><div class="f-type-grid">
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=240&q=78" alt="Kids clothing" loading="lazy"></span><span class="f-type-copy"><b>Kids T-Shirts</b><small>Printed · Basic · Full sleeve</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1503919005314-30d93d07d823?auto=format&fit=crop&w=240&q=78" alt="Kids dresses" loading="lazy"></span><span class="f-type-copy"><b>Frocks & Dresses</b><small>Girls · Everyday · Occasion</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=240&q=78" alt="Kids polo shirts" loading="lazy"></span><span class="f-type-copy"><b>Kids Polo</b><small>Boys · Girls · Classic</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=240&q=78" alt="Kids shorts" loading="lazy"></span><span class="f-type-copy"><b>Shorts & Sets</b><small>Shorts · Combo sets</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=240&q=78" alt="Teen boys clothing" loading="lazy"></span><span class="f-type-copy"><b>Teen Boys</b><small>T-shirt · Panjabi · Hoodie</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=240&q=78" alt="Teen girls clothing" loading="lazy"></span><span class="f-type-copy"><b>Teen Girls</b><small>Kurti · Tunic · Tops</small></span><span class="f-type-arrow">↗</span></a>
+      </div></div>
+      <div class="f-type-panel" role="tabpanel" data-f-type-panel="sports"><p class="f-type-intro">Performance-inspired pieces and useful finishing touches.</p><div class="f-type-grid">
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=240&q=78" alt="Sports T-shirt" loading="lazy"></span><span class="f-type-copy"><b>Sports T-Shirts</b><small>Activewear · Performance</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=240&q=78" alt="Football jerseys" loading="lazy"></span><span class="f-type-copy"><b>Football Jerseys</b><small>Club · National · Fan edition</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?auto=format&fit=crop&w=240&q=78" alt="Socks" loading="lazy"></span><span class="f-type-copy"><b>Socks</b><small>Everyday · Sports · Ankle</small></span><span class="f-type-arrow">↗</span></a>
+        <a class="f-type-card" href="#f-new-in"><span class="f-type-thumb"><img src="https://images.unsplash.com/photo-1622560480654-d96214fdc887?auto=format&fit=crop&w=240&q=78" alt="Accessories" loading="lazy"></span><span class="f-type-copy"><b>Accessories</b><small>Caps · Belts · Wallets</small></span><span class="f-type-arrow">↗</span></a>
+      </div></div>
+      <p class="f-type-foot">Choose a category to continue to the product collection. Individual category and product pages will be built in the next steps.</p>
+    </div></section>
     <section class="f-featured"><div class="f-container f-campaign"><div class="f-campaign-image"><img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=85" alt="Fresh seasonal fashion collection" loading="lazy"></div><div class="f-campaign-copy"><span class="f-kicker">A little more you</span><h2>New season. New favourites.</h2><p>Refresh your wardrobe with easy layers, timeless tones and the little details that make every look your own.</p><a class="f-button" href="#f-new-in">Explore the collection <svg viewBox="0 0 24 24"><path d="M4 12h15M13 5l7 7-7 7"/></svg></a></div></div></section>
     <section class="f-section f-products-section" id="f-new-in"><div class="f-container"><div class="f-section-head"><div><span class="f-kicker">Just landed</span><h2>New arrivals</h2></div><a class="f-link" href="#f-new-in">View all pieces ↗</a></div><div class="f-product-tabs"><button class="f-tab active" data-f-filter="All">All pieces</button><button class="f-tab" data-f-filter="Women">Women</button><button class="f-tab" data-f-filter="Men">Men</button><button class="f-tab" data-f-filter="Accessories">Accessories</button></div><div class="f-product-grid" style="margin-top:22px">
       <article class="f-product" data-name="The Column Dress" data-category="Women" data-id="f1" data-price="2890" data-image="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=700&q=82"><div class="f-product-photo"><img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=700&q=82" alt="The Column Dress" loading="lazy"><span class="f-product-tag">Bestseller</span><button class="f-wish" data-f-wish="f1" aria-label="Save The Column Dress"><svg viewBox="0 0 24 24"><path d="M20.8 8.8c0 5.2-8.8 11-8.8 11S3.2 14 3.2 8.8A4.5 4.5 0 0 1 12 6.5a4.5 4.5 0 0 1 8.8 2.3Z"/></svg></button><button class="f-add" data-f-add="f1">Add to bag +</button></div><div class="f-product-info"><div class="f-product-line"><span class="f-product-name">The Column Dress</span><span class="f-price">৳2,890</span></div><div class="f-product-meta">Soft cotton · Sand</div></div></article>
