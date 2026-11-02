@@ -419,3 +419,12 @@
 #forme-storefront .f-static-product:nth-child(6n+4) .f-product-photo.f-photo-missing{background:linear-gradient(145deg,#f0e8d1,#ddcfaa)}
 #forme-storefront .f-static-product:nth-child(6n+5) .f-product-photo.f-photo-missing{background:linear-gradient(145deg,#efdfdf,#d6bec9)}
 #forme-storefront .f-static-product:nth-child(6n) .f-product-photo.f-photo-missing{background:linear-gradient(145deg,#dce9e9,#b8d0cc)}
+
+/* Static Men page order-request basket */
+.fc-static-cart{position:fixed;right:20px;bottom:20px;z-index:99980;display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 18px;border-radius:999px;background:#263b32;color:#fffefa!important;box-shadow:0 8px 28px rgba(18,28,22,.25);font:700 11px/1.2 Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.fc-static-cart.has-items{background:#b76f50}
+.fc-static-toast{position:fixed;left:50%;bottom:82px;z-index:99981;max-width:calc(100% - 30px);padding:12px 17px;background:#263b32;color:#fffefa;font:12px/1.5 Arial,sans-serif;opacity:0;transform:translate(-50%,12px);pointer-events:none;transition:.2s}
+.fc-static-toast.visible{opacity:1;transform:translate(-50%,0)}
+.f-static-legal{display:flex;flex-wrap:wrap;gap:10px 16px}
+.f-static-legal a{font-size:10px;color:rgba(255,255,255,.82)}
+@media(max-width:600px){.fc-static-cart{right:12px;bottom:12px;min-height:46px;font-size:10px;padding:0 14px}}
