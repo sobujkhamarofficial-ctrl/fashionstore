@@ -47,7 +47,13 @@
       const input = newsletter.querySelector('input[type="email"]');
       const button = newsletter.querySelector('button[type="submit"]');
       const email = input ? input.value.trim() : "";
+      const consent = newsletter.querySelector('input[name="marketing_consent"]');
       if (!email) return;
+      if (!consent || !consent.checked) {
+        const note = document.getElementById("f-news-note");
+        if (note) note.textContent = "Please tick the optional newsletter consent box before joining.";
+        return;
+      }
       button.disabled = true;
       const original = button.textContent;
       button.textContent = "Joining…";
@@ -55,11 +61,13 @@
         const response = await fetch(API, {
           method: "POST",
           headers: { "Content-Type": "application/json", "apikey": PUBLISHABLE_KEY },
-          body: JSON.stringify({ action: "newsletter", email: email }),
+          body: JSON.stringify({ action: "newsletter", email: email, marketing_consent: true }),
         });
         const result = await response.json().catch(() => ({}));
         if (!response.ok || !result.ok) throw new Error(result.error || "Could not subscribe.");
         newsletter.reset();
+        const note = document.getElementById("f-news-note");
+        if (note) note.textContent = "Thank you. You are subscribed to FORME updates. You can ask us to unsubscribe at any time.";
         button.textContent = "You're on the list";
       } catch (error) {
         button.textContent = "Try again";
