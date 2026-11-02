@@ -51,6 +51,49 @@ jobs:
           assert Path("men/index.html").read_text().count('class="f-men-category-link"') == 22
           print(f"Verified 22 categories and {total} products.")
           PY
+
+      - name: Generate Women, Teens, Kids, Sports and Accessories pages
+        run: python3 scripts/build_collection_pages.py
+      - name: Verify category hierarchy pages
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path("collections/catalog.json").read_text())
+          departments = data["departments"]
+          assert len(departments) == 5
+          pages = 0
+          groups = categories = subcategories = 0
+
+          for department in departments:
+              root = Path(department["slug"]) / "index.html"
+              assert root.is_file(), str(root)
+              pages += 1
+              for group in department["groups"]:
+                  group_path = Path(department["slug"]) / group["slug"] / "index.html"
+                  assert group_path.is_file(), str(group_path)
+                  pages += 1
+                  groups += 1
+                  for category in group["categories"]:
+                      category_path = Path(department["slug"]) / group["slug"] / category["slug"] / "index.html"
+                      assert category_path.is_file(), str(category_path)
+                      pages += 1
+                      categories += 1
+                      assert category["subcategories"], category["title"]
+                      for subcategory in category["subcategories"]:
+                          leaf_path = Path(department["slug"]) / group["slug"] / category["slug"] / subcategory["slug"] / "index.html"
+                          assert leaf_path.is_file(), str(leaf_path)
+                          content = leaf_path.read_text()
+                          assert "<img" not in content.lower(), str(leaf_path)
+                          assert "unsplash.com" not in content.lower(), str(leaf_path)
+                          pages += 1
+                          subcategories += 1
+
+          assert (groups, categories, subcategories) == (26, 104, 416)
+          assert pages == 551, pages
+          print(f"Verified {pages} unique image-free pages: 5 departments, {groups} groups, {categories} categories, {subcategories} sub-categories.")
+          PY
       - name: Upload static storefront
         uses: actions/upload-pages-artifact@v3
         with:
