@@ -237,7 +237,7 @@ def build_page(node, department, parts, ancestors, siblings, is_department=False
 <meta name="description" content="{esc(description)}">
 <link rel="canonical" href="https://sobujkhamarofficial-ctrl.github.io{current_url}">
 <link rel="stylesheet" href="{BASE}collections/collections.css">
-<link rel="stylesheet" href="{BASE}assets/customer-care.css">
+<link rel="stylesheet" href="{BASE}assets/customer-care.css?v=20261102-3">
 <title>{esc(unique_title)} | FORME</title>
 </head>
 <body>
@@ -259,7 +259,7 @@ def build_page(node, department, parts, ancestors, siblings, is_department=False
 </div>
 </main>
 <footer class="site-footer"><div class="page-container"><a class="site-logo" href="{BASE}">FORME<span>EVERYDAY, REFINED</span></a><p>Curated fashion photography · Explore the FORME catalogue.</p><a href="{BASE}blog/">Journal</a> · <a href="{BASE}pages/shipping-delivery.html">Shipping</a> · <a href="{BASE}pages/returns-refunds.html">Returns</a> · <a href="{BASE}pages/reviews.html">Reviews</a> · <a href="{BASE}pages/order-tracking.html">Track order</a> · <a href="{BASE}pages/privacy.html">Privacy</a> · <a href="{BASE}pages/terms.html">Terms</a> · <a href="{BASE}pages/contact.html">Contact</a><p><a href="{BASE}">Return to FORME home ↗</a></p></div></footer>
-<script src="{BASE}assets/customer-care.js" defer></script>
+<script src="{BASE}assets/customer-care.js?v=20261102-3" defer></script>
 </body>
 </html>
 '''

@@ -21,15 +21,23 @@
     ready = Boolean(isReady);
     statusLine.classList.toggle("ready", ready);
     statusLine.querySelector(".fa-status-label").textContent = label || (ready ? "Assistant is ready" : "Assistant is temporarily unavailable");
-    input.disabled = !ready || busy;
-    sendButton.disabled = !ready || busy;
+    // Keep the message composer available even when the AI service is offline.
+    input.disabled = busy;
+    sendButton.disabled = busy;
     promptButtons.forEach(function (button) { button.disabled = !ready || busy; });
   }
   function toggle(open) {
     const next = typeof open === "boolean" ? open : !panel.classList.contains("is-open");
     panel.classList.toggle("is-open", next);
+    panel.setAttribute("aria-hidden", String(!next));
     launch.setAttribute("aria-expanded", String(next));
-    if (next && ready) window.setTimeout(function () { input.focus(); }, 100);
+    // Inline visibility is a fail-safe if an older cached stylesheet is still present.
+    panel.style.opacity = next ? "1" : "0";
+    panel.style.visibility = next ? "visible" : "hidden";
+    panel.style.pointerEvents = next ? "auto" : "none";
+    panel.style.transform = next ? "translateY(0)" : "translateY(10px)";
+    panel.style.zIndex = "2";
+    if (next) window.setTimeout(function () { input.focus(); }, 100);
   }
   function showTyping() {
     const node = document.createElement("div");
@@ -58,7 +66,7 @@
   }
   async function sendMessage(value) {
     const message = String(value || "").trim();
-    if (!message || busy || !ready) return;
+    if (!message || busy) return;
     input.value = "";
     addMessage(message, "user");
     const typing = showTyping();
@@ -99,13 +107,13 @@
     const root = document.createElement("div");
     root.id = "forme-ai-widget";
     root.innerHTML =
-      '<section class="fa-panel" role="dialog" aria-modal="false" aria-label="FORME virtual assistant">' +
+      '<section class="fa-panel" role="dialog" aria-modal="false" aria-hidden="true" aria-label="FORME virtual assistant">' +
         '<header class="fa-head"><div class="fa-brand"><span class="fa-mark" aria-hidden="true">F.</span><div><div class="fa-title">FORME Concierge</div><div class="fa-subtitle">STYLE · FIT · EVERYDAY CARE</div></div></div><button type="button" class="fa-close" data-fa-close aria-label="Close assistant">×</button></header>' +
         '<div class="fa-status" role="status" aria-live="polite"><span class="fa-status-dot"></span><span class="fa-status-label">Checking secure connection…</span></div>' +
         '<div class="fa-chat" aria-live="polite" aria-label="Conversation"></div>' +
         '<div class="fa-prompts"><button class="fa-prompt" type="button" data-fa-prompt="Help me choose an everyday outfit.">Everyday style</button><button class="fa-prompt" type="button" data-fa-prompt="How should I choose the right clothing size and fit?">Size &amp; fit</button><button class="fa-prompt" type="button" data-fa-prompt="Please explain FORME delivery and return policies.">Delivery &amp; returns</button></div>' +
         '<div class="fa-warning">Please do not share phone numbers, order references, addresses, payment details, PINs or OTPs. <a href="' + BASE + 'pages/order-tracking.html">Track an order</a>.</div>' +
-        '<form class="fa-form"><textarea class="fa-input" rows="1" maxlength="1200" placeholder="Ask FORME a question…" aria-label="Your message" disabled></textarea><button class="fa-send" type="submit" aria-label="Send message" disabled><svg viewBox="0 0 24 24"><path d="m21 3-7.5 18-3.7-7.8L2 9.5 21 3Z"/><path d="M9.8 13.2 14 9"/></svg></button></form>' +
+        '<form class="fa-form"><textarea class="fa-input" rows="1" maxlength="1200" placeholder="Write a message to FORME…" aria-label="Your message"></textarea><button class="fa-send" type="submit" aria-label="Send message"><svg viewBox="0 0 24 24"><path d="m21 3-7.5 18-3.7-7.8L2 9.5 21 3Z"/><path d="M9.8 13.2 14 9"/></svg></button></form>' +
         '<div class="fa-foot">AI responses are guidance only · Store availability is confirmed by our team</div>' +
       '</section>' +
       '<button type="button" class="fa-launch" aria-expanded="false" aria-label="Open FORME chat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H5l1.7-3A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8 10h8M8 13.5h5"/></svg><span>ASK MORE</span><i class="fa-launch-dot" aria-hidden="true"></i></button>';
