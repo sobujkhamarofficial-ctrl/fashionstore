@@ -1,42 +1,60 @@
 # FORME — Fashion Store
 
-A responsive, editorial-style storefront starter for GitHub Pages.
+FORME is an editorial-style fashion storefront for Bangladesh. The site is published through GitHub Pages and uses a separate Supabase backend for pilot order requests, customer messages and newsletter subscriptions.
 
-## Storefront features
+## Live storefront
 
-- Women, Men and Accessories collections
-- Product browsing, category filters, search and price sorting
-- Interactive wishlist and shopping bag
-- Quantity controls and subtotal calculation in Bangladeshi taka (BDT)
-- Checkout form preview
-- Responsive desktop and mobile navigation
-- Self-contained static site: no build tool or package installation required
+- https://sobujkhamarofficial-ctrl.github.io/fashionstore/
+- Men catalogue: https://sobujkhamarofficial-ctrl.github.io/fashionstore/men/
+- Journal: https://sobujkhamarofficial-ctrl.github.io/fashionstore/blog/
 
-## Deploy with GitHub Pages
+## What is implemented
 
-1. Open **Settings → Pages** in this repository.
-2. Under **Build and deployment**, choose **GitHub Actions** as the source.
-3. The workflow at `.github/workflows/deploy-pages.yml` deploys automatically on pushes to `main`.
-4. When the workflow succeeds, the site will be available at:
+- Responsive home page and Men, Women, Teens, Kids, Sports and Accessories collection navigation.
+- Locally bundled fashion photography for collection gallery pages.
+- Men catalogue cards connected to a shared local shopping bag.
+- Checkout order-request form connected to Supabase Edge Functions.
+- Server-side product ID and price validation; the server calculates the item subtotal from the database rather than trusting browser-supplied prices.
+- Order requests and item snapshots stored in Supabase tables with Row Level Security enabled.
+- Contact messages and optional newsletter subscriptions stored in the backend.
+- Public information and customer policies: About, Shipping & Delivery, Returns & Refunds, Cancellations, Size Guide, FAQs, Payment Policy, Privacy Policy and Terms & Conditions.
+- FORME Journal with three published style and care articles.
+- Sitemap and robots.txt generated during deployment.
 
-   https://sobujkhamarofficial-ctrl.github.io/fashionstore/
+## Current pilot limitations
 
-## Important before taking real orders
+The public catalogue contains sample product records. Names, images, listed prices, variants and stock are not yet verified as a final sellable inventory. All seeded products are marked as requiring store confirmation. An online checkout submission creates an **order request** only, not a confirmed order or payment transaction.
 
-This repository currently contains a front-end demo, not a production ecommerce system.
+The store team must contact the customer to confirm:
+1. The exact product, size/variant and availability.
+2. The final product price and any applicable promotion.
+3. The delivery area, courier availability, delivery charge and realistic delivery estimate.
+4. The accepted payment method and final total.
 
-- Demo products, product artwork and prices are placeholders.
-- Checkout does not create or save an order.
-- No payment is collected.
-- Newsletter signup is a local preview only.
+No online payment gateway or live courier booking/tracking integration is connected. Do not request or collect card numbers, PINs, passwords or OTPs through this site. The experimental AI Customer Care widget remains disabled while the order and policy workflows are verified.
 
-Before accepting customer orders, connect a secure backend and database, server-side stock/order validation, a Bangladesh-supported payment gateway, verified payment webhooks, delivery rules, exchange/return policies and real customer-support details.
+Before accepting confirmed commercial orders, complete the product catalogue with real SKU data and stock, add verified merchant legal identity and official contact details, publish agreed delivery rates and service levels, integrate a Bangladesh-supported payment gateway and courier workflow, and obtain legal review of the policies.
 
-Never commit payment secrets, private API keys or database service-role keys to this public repository.
+## Backend
 
-## Customization
+Supabase project: `forme-fashion-backend`
 
-- Update the product list and prices in the inline script at the bottom of `index.html`.
-- Replace the illustrative SVG product artwork with real product photography.
-- Update contact and social links in the footer.
-- Update the FORME brand name, colors and copy in `index.html` when your brand identity is finalized.
+- `store_products`: current pilot catalogue and verification/availability flags.
+- `store_orders`: order request and customer delivery details.
+- `store_order_items`: product snapshots requested by customers.
+- `store_contact_messages`: customer support queue.
+- `store_newsletter_subscribers`: opt-in email list.
+
+Public browser code uses only the Supabase publishable key. The Gemini and Supabase server secrets remain in Supabase Edge Function secrets and are not stored in this repository.
+
+## Deployment
+
+GitHub Actions runs these build steps on pushes to `main`:
+1. Generate the Men catalogue pages.
+2. Download and verify local fashion photography.
+3. Generate the collection gallery hierarchy.
+4. Build policies, contact page, Journal articles, sitemap and robots rules.
+5. Run page, code and integration checks.
+6. Publish the static site to GitHub Pages.
+
+Never commit API secrets, service-role keys, payment credentials or private customer data to this public repository.
