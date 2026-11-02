@@ -4,11 +4,7 @@
   const BASE = "/fashionstore/";
   const conversation = [];
   let ready = false, busy = false, panel, launch, input, sendButton, chat, statusLine, promptButtons = [];
-  function makeClientId() {
-    try { if (window.crypto && typeof window.crypto.randomUUID === "function") return window.crypto.randomUUID(); } catch (_) {}
-    return "forme-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 14);
-  }
-  const clientId = makeClientId();
+
   function addMessage(value, type) {
     const node = document.createElement("div");
     node.className = "fa-message" + (type ? " " + type : "");
@@ -17,15 +13,17 @@
     chat.scrollTop = chat.scrollHeight;
     return node;
   }
+
   function setAvailability(isReady, label) {
     ready = Boolean(isReady);
     statusLine.classList.toggle("ready", ready);
-    statusLine.querySelector(".fa-status-label").textContent = label || (ready ? "Assistant is ready" : "Assistant is temporarily unavailable");
-    // Keep the message composer available even when the AI service is offline.
+    statusLine.querySelector(".fa-status-label").textContent = label || (ready ? "Configured · first reply test pending" : "Assistant is temporarily unavailable");
+    // The message composer stays available so visitors can retry or use contact links.
     input.disabled = busy;
     sendButton.disabled = busy;
     promptButtons.forEach(function (button) { button.disabled = !ready || busy; });
   }
+
   function toggle(open) {
     const next = typeof open === "boolean" ? open : !panel.classList.contains("is-open");
     panel.classList.toggle("is-open", next);
@@ -39,6 +37,7 @@
     panel.style.zIndex = "2";
     if (next) window.setTimeout(function () { input.focus(); }, 100);
   }
+
   function showTyping() {
     const node = document.createElement("div");
     node.className = "fa-message";
@@ -48,22 +47,24 @@
     chat.scrollTop = chat.scrollHeight;
     return node;
   }
+
   async function refreshStatus() {
     try {
       const response = await fetch(API, { method: "GET", cache: "no-store", headers: { "Accept": "application/json" } });
       const data = await response.json().catch(function () { return {}; });
-      if (response.ok && data.status === "ready") {
-        setAvailability(true, "Online · Gemini-powered");
+      if (response.ok && data.status === "configured") {
+        setAvailability(true, "Configured · live Gemini check on first message");
         addMessage("হ্যালো! আমি FORME-এর ভার্চুয়াল সহকারী। পোশাকের স্টাইল, ফিট, সাইজ-গাইড, কেয়ার এবং ওয়েবসাইটের নীতিমালা সম্পর্কে প্রশ্ন করতে পারেন।", "");
       } else {
-        setAvailability(false, "Security update required");
-        addMessage("FORME AI সহকারীটি নিরাপত্তা আপডেটের জন্য আপাতত বন্ধ আছে। শিগগিরই চালু হবে। এর মধ্যে অর্ডার সংক্রান্ত তথ্যের জন্য Order Tracking বা Contact পেজ ব্যবহার করুন।", "");
+        setAvailability(false, "Temporarily paused");
+        addMessage("FORME AI সহকারীটি আপাতত চালু করা যাচ্ছে না। অর্ডার সংক্রান্ত তথ্যের জন্য Order Tracking বা Contact পেজ ব্যবহার করুন।", "");
       }
     } catch (_) {
       setAvailability(false, "Connection unavailable");
       addMessage("সহকারীর সঙ্গে সংযোগ করা যাচ্ছে না। অনুগ্রহ করে কিছুক্ষণ পর আবার চেষ্টা করুন অথবা Contact পেজ ব্যবহার করুন।", "");
     }
   }
+
   async function sendMessage(value) {
     const message = String(value || "").trim();
     if (!message || busy) return;
@@ -71,18 +72,37 @@
     addMessage(message, "user");
     const typing = showTyping();
     busy = true;
-    setAvailability(true, "Preparing your answer…");
-    const priorHistory = conversation.slice(-8).map(function (item) { return { role: item.role, text: item.text }; });
+    setAvailability(ready, "Connecting to AI service…");
+    const priorHistory = conversation.slice(-8).map(function (item) {
+      return { role: item.role, text: item.text };
+    });
+    const controller = new AbortController();
+    const timeout = window.setTimeout(function () { controller.abort(); }, 40_000);
+
     try {
       const response = await fetch(API, {
         method: "POST",
         headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify({ message: message, history: priorHistory, client_id: clientId })
+        body: JSON.stringify({ message: message, history: priorHistory }),
+        signal: controller.signal
       });
       const data = await response.json().catch(function () { return {}; });
       typing.remove();
+
       if (!response.ok || !data.ok || !data.reply) {
-        if (response.status === 503 && data.status === "paused") {
+        if (response.status === 429 || data.status === "rate_limited") {
+          setAvailability(true, "Message limit reached");
+          addMessage("এই সংযোগ থেকে আপাতত নির্ধারিত মেসেজ সীমা পূর্ণ হয়েছে। কিছুক্ষণ পরে আবার চেষ্টা করুন।", "system");
+        } else if (response.status === 504 || data.status === "upstream_timeout") {
+          ready = false;
+          setAvailability(false, "Gemini connection timed out");
+          addMessage("Google AI সার্ভার থেকে নির্ধারিত সময়ের মধ্যে উত্তর পাওয়া যায়নি। এটি IP বা সার্ভার-সংযোগের সমস্যাও হতে পারে। অনুগ্রহ করে পরে আবার চেষ্টা করুন।", "system");
+        } else if (response.status >= 500) {
+          ready = false;
+          setAvailability(false, "AI service connection issue");
+          addMessage(data.error || "দুঃখিত, AI সার্ভার থেকে এখন উত্তর পাওয়া যাচ্ছে না। পরে আবার চেষ্টা করুন।", "system");
+        } else if (response.status === 503 && data.status === "paused") {
+          ready = false;
           setAvailability(false, "Temporarily paused");
           addMessage("AI সহকারীটি আপাতত বন্ধ আছে। অর্ডার ট্র্যাক করতে Order Tracking পেজে যান, অথবা Contact পেজে বার্তা পাঠান।", "system");
         } else {
@@ -90,18 +110,31 @@
         }
         return;
       }
+
+      ready = true;
+      setAvailability(true, "Online · reply received");
       conversation.push({ role: "user", text: message }, { role: "model", text: String(data.reply) });
       while (conversation.length > 8) conversation.shift();
       addMessage(data.reply, "");
-    } catch (_) {
+    } catch (error) {
       typing.remove();
-      addMessage("নেটওয়ার্ক সমস্যার কারণে উত্তর পাওয়া যায়নি। আবার চেষ্টা করুন।", "system");
+      ready = false;
+      const timedOut = error && (error.name === "AbortError" || error.name === "TimeoutError");
+      setAvailability(false, timedOut ? "Connection timed out" : "Connection unavailable");
+      addMessage(
+        timedOut
+          ? "উত্তর পেতে বেশি সময় লাগছে। Google AI সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।"
+          : "নেটওয়ার্ক সমস্যার কারণে উত্তর পাওয়া যায়নি। আবার চেষ্টা করুন।",
+        "system"
+      );
     } finally {
+      window.clearTimeout(timeout);
       busy = false;
-      setAvailability(ready, ready ? "Online · Gemini-powered" : "Temporarily unavailable");
+      setAvailability(ready, ready ? "Configured · Gemini replied successfully" : "Connection issue · you can retry");
       input.focus();
     }
   }
+
   function mount() {
     if (document.getElementById("forme-ai-widget")) return;
     const root = document.createElement("div");
