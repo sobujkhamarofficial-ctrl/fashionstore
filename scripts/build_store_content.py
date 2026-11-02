@@ -26,7 +26,7 @@ def footer():
 <div><a class="fc-logo" style="color:#fff" href="{BASE}">FORME<small style="color:#d8ded8">EVERYDAY, REFINED</small></a>
 <p>Considered clothing and modern everyday essentials. A Bangladesh-focused fashion storefront.</p></div>
 <div><h3>Explore</h3><a href="{BASE}">Shop all</a><a href="{BASE}men/">Men</a><a href="{BASE}women/">Women</a><a href="{BASE}blog/">Journal</a></div>
-<div><h3>Customer care</h3><a href="{BASE}pages/shipping-delivery.html">Shipping & delivery</a><a href="{BASE}pages/returns-refunds.html">Returns & refunds</a><a href="{BASE}pages/cancellations.html">Cancellations</a><a href="{BASE}pages/size-guide.html">Size guide</a><a href="{BASE}pages/faq.html">FAQs</a></div>
+<div><h3>Customer care</h3><a href="{BASE}pages/shipping-delivery.html">Shipping & delivery</a><a href="{BASE}pages/returns-refunds.html">Returns & refunds</a><a href="{BASE}pages/cancellations.html">Cancellations</a><a href="{BASE}pages/size-guide.html">Size guide</a><a href="{BASE}pages/reviews.html">Customer reviews</a><a href="{BASE}pages/faq.html">FAQs</a></div>
 <div><h3>Information</h3><a href="{BASE}pages/about.html">About FORME</a><a href="{BASE}pages/contact.html">Contact</a><a href="{BASE}pages/payment.html">Payment policy</a><a href="{BASE}pages/privacy.html">Privacy policy</a><a href="{BASE}pages/terms.html">Terms & conditions</a></div>
 </div><div class="fc-footer-bottom"><span>© 2026 FORME. All rights reserved.</span><span>Bangladesh · Pilot storefront</span></div>
 </div></footer>'''
@@ -178,6 +178,25 @@ contact_body = '''<p>Send a question about a product, order request, delivery, r
 <script src="/fashionstore/assets/site-forms.js" defer></script>'''
 contact = page("Contact FORME","CUSTOMER CARE","Send a message and the FORME team can review your request.",contact_body,canonical="https://sobujkhamarofficial-ctrl.github.io/fashionstore/pages/contact.html")
 (ROOT/"pages"/"contact.html").write_text(contact,encoding="utf-8")
+
+review_body = """<p>FORME publishes reviews from customers whose delivered order and product can be verified. Reviews are not automatically published as soon as they are submitted; the store team checks the order and reviews submissions for personal information, spam or unlawful content. Negative opinions about a genuine customer experience will not be removed merely because they are negative. Review records are retained rather than silently deleted.</p>
+<div class="fc-note">To submit a review, your order must already be marked as delivered in FORME's order records. Use the same mobile number supplied at checkout and enter the product name as it appears on your order. Your order reference and phone number are used for verification only and will not appear publicly.</div>
+<div id="fc-review-list" class="fc-article-list"><p class="fc-empty">Loading published reviews…</p></div>
+<h2>Submit a verified customer review</h2>
+<form class="fc-form" id="fc-review-form">
+<div class="fc-field"><label for="fc-review-order">Delivered order reference *</label><input id="fc-review-order" name="order_number" maxlength="40" required></div>
+<div class="fc-field"><label for="fc-review-phone">Mobile number used for that order *</label><input id="fc-review-phone" name="customer_phone" type="tel" maxlength="20" placeholder="01XXXXXXXXX" required></div>
+<div class="fc-field"><label for="fc-review-product">Product name as shown on the order *</label><input id="fc-review-product" name="product_name" maxlength="180" required></div>
+<div class="fc-field"><label for="fc-review-name">Display name *</label><input id="fc-review-name" name="reviewer_name" maxlength="100" required></div>
+<div class="fc-field"><label for="fc-review-rating">Your rating *</label><select id="fc-review-rating" name="rating" required><option value="">Choose a rating</option><option value="5">5 — Excellent</option><option value="4">4 — Good</option><option value="3">3 — Average</option><option value="2">2 — Below expectations</option><option value="1">1 — Poor</option></select></div>
+<div class="fc-field"><label for="fc-review-text">Your experience *</label><textarea id="fc-review-text" name="review_text" minlength="10" maxlength="1200" required placeholder="Please describe your genuine experience with the item."></textarea></div>
+<label class="fc-check"><input type="checkbox" name="publication_consent" required> I agree that my display name, product name, rating and review text may be shown publicly if the review is verified and published. My order reference and phone number will not be published.</label>
+<input name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px">
+<button class="fc-button" type="submit">Submit review</button><p class="fc-status" id="fc-review-status" role="status" aria-live="polite"></p>
+</form>
+<script src="/fashionstore/assets/reviews.js" defer></script>"""
+review_page = page("Customer reviews","REAL CUSTOMER EXPERIENCES","Reviews are accepted only from customers whose delivered order can be verified.",review_body,canonical="https://sobujkhamarofficial-ctrl.github.io/fashionstore/pages/reviews.html")
+(ROOT/"pages"/"reviews.html").write_text(review_page,encoding="utf-8")
 
 blog_posts = [
 {
