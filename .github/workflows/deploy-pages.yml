@@ -57,6 +57,8 @@ jobs:
 
       - name: Generate Women, Teens, Kids, Sports and Accessories pages
         run: python3 scripts/build_collection_pages.py
+      - name: Build FORME policy, information and journal pages
+        run: python3 scripts/build_store_content.py
       - name: Verify five-level category hierarchy pages
         run: |
           python3 - <<'PY'
@@ -153,33 +155,64 @@ jobs:
 
           print("Verified 6 department dropdowns on homepage, Men pages and all 5 collection landing pages.")
           PY
-      - name: Verify AI Customer Care integration
+      - name: Verify ecommerce, policies and journal integration
         run: |
-          node --check assets/customer-care.js
+          node --check assets/checkout.js
+          node --check assets/site-forms.js
+          node --check assets/commerce-pages.js
           python3 - <<'PY'
           from pathlib import Path
 
           required = [
-              Path("index.html"),
-              Path("men/index.html"),
-              Path("men/shirt/index.html"),
-              Path("women/index.html"),
-              Path("404.html"),
-              Path("assets/customer-care.js"),
-              Path("assets/customer-care.css"),
+              "pages/checkout.html",
+              "pages/about.html",
+              "pages/shipping-delivery.html",
+              "pages/returns-refunds.html",
+              "pages/privacy.html",
+              "pages/terms.html",
+              "pages/payment.html",
+              "pages/cancellations.html",
+              "pages/size-guide.html",
+              "pages/faq.html",
+              "pages/contact.html",
+              "blog/index.html",
+              "blog/build-a-versatile-capsule-wardrobe.html",
+              "blog/how-to-choose-the-right-shirt-fit.html",
+              "blog/care-for-your-clothes.html",
+              "assets/content-pages.css",
+              "assets/checkout.js",
+              "assets/site-forms.js",
+              "assets/commerce-pages.js",
+              "sitemap.xml",
+              "robots.txt",
           ]
-          for path in required:
-              assert path.is_file(), f"Missing AI customer-care asset/page: {path}"
+          for item in required:
+              path = Path(item)
+              assert path.is_file() and path.stat().st_size > 500, f"Missing/empty ecommerce asset: {item}"
 
-          for path in required[:5]:
-              page = path.read_text()
-              assert "assets/customer-care.js" in page, f"Customer-care widget is missing from {path}"
+          home = Path("index.html").read_text()
+          assert 'pages/checkout.html' in home, "Home cart does not lead to checkout"
+          assert 'assets/site-forms.js' in home, "Home newsletter is not connected"
+          assert 'blog/build-a-versatile-capsule-wardrobe.html' in home, "Home Journal preview is missing"
+          assert 'assets/customer-care.js' not in home, "AI chat should remain disabled until policy/order testing"
 
-          client = Path("assets/customer-care.js").read_text()
-          assert "fashion-customer-care" in client
-          assert "apikey" in client
-          assert "AQ." not in client, "A Google Gemini secret key must never be committed to the website"
-          print("Verified chat widget assets, homepage, Men pages, Women landing page and fallback page.")
+          checkout = Path("pages/checkout.html").read_text()
+          assert "privacy_consent" in checkout and "terms_accepted" in checkout
+          assert "No payment is collected" in checkout
+          commerce = Path("assets/checkout.js").read_text()
+          assert "storefront-commerce-api" in commerce and "AQ." not in commerce
+          forms = Path("assets/site-forms.js").read_text()
+          assert 'action: "contact"' in forms and 'action: "newsletter"' in forms
+
+          men_builder = Path("scripts/build_men_catalog.py").read_text()
+          collection_builder = Path("scripts/build_collection_pages.py").read_text()
+          assert "data-f-add" in men_builder and "commerce-pages.js" in men_builder
+          assert "customer-care.js" not in men_builder
+          assert "customer-care.js" not in collection_builder
+
+          for page in ["pages/shipping-delivery.html","pages/returns-refunds.html","pages/privacy.html","pages/terms.html","blog/index.html"]:
+              assert "FORME" in Path(page).read_text()
+          print(f"Verified {len(required)} ecommerce assets/pages, checkout controls, newsletter/contact API and Journal links.")
           PY
       - name: Validate Python build scripts
         run: python3 -m py_compile scripts/build_collection_pages.py scripts/build_men_catalog.py scripts/download_fashion_photos.py
