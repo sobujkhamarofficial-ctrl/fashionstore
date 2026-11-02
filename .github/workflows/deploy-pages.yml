@@ -46,6 +46,9 @@ jobs:
               text = p.read_text()
               assert len(c["products"]) == 6
               assert text.count('class="f-product f-static-product"') == 6, c["slug"]
+              assert text.count('data-f-add="men-') == 6, f"Missing Add to Cart controls: {c['slug']}"
+              assert text.count('data-f-buy-now="men-') == 6, f"Missing Buy Now controls: {c['slug']}"
+              assert 'assets/commerce-pages.js' in text, f"Missing commerce runtime: {c['slug']}"
               total += len(c["products"])
           assert total == 132, total
           assert Path("men/index.html").read_text().count('class="f-men-category-link"') == 22
@@ -207,6 +210,8 @@ jobs:
           assert 'assets/site-forms.js' in home, "Home newsletter is not connected"
           assert 'blog/build-a-versatile-capsule-wardrobe.html' in home, "Home Journal preview is missing"
           assert 'assets/customer-care.js' in home, "AI chat bundle must load on the homepage"
+          assert 'data-f-buy-now="f1"' in home and 'data-f-add="f1"' in home, "Featured product purchase controls are missing"
+          assert 'data-f-buy-now="' in home, "Men product Buy Now template is missing"
 
           checkout = Path("pages/checkout.html").read_text()
           assert "privacy_consent" in checkout and "terms_accepted" in checkout
@@ -231,7 +236,7 @@ jobs:
 
           men_builder = Path("scripts/build_men_catalog.py").read_text()
           collection_builder = Path("scripts/build_collection_pages.py").read_text()
-          assert "data-f-add" in men_builder and "commerce-pages.js" in men_builder
+          assert "data-f-add" in men_builder and "data-f-buy-now" in men_builder and "commerce-pages.js" in men_builder
           assert "customer-care.js" in men_builder
           assert "customer-care.js" in collection_builder
 
