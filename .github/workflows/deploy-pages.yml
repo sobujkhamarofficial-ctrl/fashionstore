@@ -54,7 +54,7 @@ jobs:
 
       - name: Generate Women, Teens, Kids, Sports and Accessories pages
         run: python3 scripts/build_collection_pages.py
-      - name: Verify category hierarchy pages
+      - name: Verify five-level category hierarchy pages
         run: |
           python3 - <<'PY'
           import json
@@ -64,35 +64,46 @@ jobs:
           departments = data["departments"]
           assert len(departments) == 5
           pages = 0
-          groups = categories = subcategories = 0
+          groups = categories = subcategories = nested = 0
+          seen_paths = set()
+
+          def verify_page(path):
+              global pages
+              assert path.is_file() and path.stat().st_size > 1000, str(path)
+              key = path.as_posix()
+              assert key not in seen_paths, f"Duplicate page path: {key}"
+              seen_paths.add(key)
+              body = path.read_text()
+              assert "<img" not in body.lower(), f"Image markup found in {key}"
+              assert "unsplash.com" not in body.lower(), f"Image URL found in {key}"
+              pages += 1
 
           for department in departments:
-              root = Path(department["slug"]) / "index.html"
-              assert root.is_file(), str(root)
-              pages += 1
+              d = Path(department["slug"])
+              verify_page(d / "index.html")
               for group in department["groups"]:
-                  group_path = Path(department["slug"]) / group["slug"] / "index.html"
-                  assert group_path.is_file(), str(group_path)
-                  pages += 1
+                  g = d / group["slug"]
+                  verify_page(g / "index.html")
                   groups += 1
                   for category in group["categories"]:
-                      category_path = Path(department["slug"]) / group["slug"] / category["slug"] / "index.html"
-                      assert category_path.is_file(), str(category_path)
-                      pages += 1
+                      c = g / category["slug"]
+                      verify_page(c / "index.html")
                       categories += 1
                       assert category["subcategories"], category["title"]
                       for subcategory in category["subcategories"]:
-                          leaf_path = Path(department["slug"]) / group["slug"] / category["slug"] / subcategory["slug"] / "index.html"
-                          assert leaf_path.is_file(), str(leaf_path)
-                          content = leaf_path.read_text()
-                          assert "<img" not in content.lower(), str(leaf_path)
-                          assert "unsplash.com" not in content.lower(), str(leaf_path)
-                          pages += 1
+                          s = c / subcategory["slug"]
+                          verify_page(s / "index.html")
                           subcategories += 1
+                          assert len(subcategory["subcategories"]) == 4, subcategory["title"]
+                          for nested_category in subcategory["subcategories"]:
+                              n = s / nested_category["slug"]
+                              verify_page(n / "index.html")
+                              nested += 1
 
-          assert (groups, categories, subcategories) == (26, 104, 416)
-          assert pages == 551, pages
-          print(f"Verified {pages} unique image-free pages: 5 departments, {groups} groups, {categories} categories, {subcategories} sub-categories.")
+          assert (groups, categories, subcategories, nested) == (26, 104, 416, 1664)
+          assert pages == 2215, pages
+          assert len(seen_paths) == 2215
+          print(f"Verified {pages} unique image-free pages: 5 departments, {groups} groups, {categories} categories, {subcategories} sub-categories and {nested} nested sub-categories.")
           PY
       - name: Upload static storefront
         uses: actions/upload-pages-artifact@v3
