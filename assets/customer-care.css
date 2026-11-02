@@ -1,0 +1,118 @@
+#forme-ai-customer-care {
+  --fcw-ink: #202b25;
+  --fcw-muted: #727a72;
+  --fcw-paper: #f8f6f1;
+  --fcw-white: #fffefa;
+  --fcw-green: #263b32;
+  --fcw-clay: #b76f50;
+  --fcw-line: #e7e1d8;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--fcw-ink);
+  position: relative;
+  z-index: 99990;
+}
+#forme-ai-customer-care * { box-sizing: border-box; }
+#forme-ai-customer-care [hidden] { display: none !important; }
+#forme-ai-customer-care .fcw-launcher {
+  position: fixed; right: 24px; bottom: 24px; z-index: 99992;
+  display: inline-flex; align-items: center; gap: 10px;
+  min-height: 56px; padding: 0 18px 0 13px;
+  border: 0; border-radius: 999px; color: #fffefa; background: var(--fcw-green);
+  box-shadow: 0 10px 32px rgba(24, 38, 30, .24);
+  font: 600 13px/1 inherit; cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+#forme-ai-customer-care .fcw-launcher:hover { transform: translateY(-2px); box-shadow: 0 13px 36px rgba(24, 38, 30, .28); }
+#forme-ai-customer-care .fcw-launcher-icon {
+  width: 31px; height: 31px; display: grid; place-items: center; border-radius: 50%;
+  color: var(--fcw-green); background: #f2e8dc; font-size: 18px;
+}
+#forme-ai-customer-care .fcw-launcher-dot { width: 7px; height: 7px; margin-left: 1px; border-radius: 50%; background: #9cbd91; }
+#forme-ai-customer-care .fcw-panel {
+  position: fixed; right: 24px; bottom: 92px; z-index: 99991;
+  width: min(378px, calc(100vw - 28px)); height: min(590px, calc(100dvh - 116px));
+  min-height: 390px; display: flex; flex-direction: column; overflow: hidden;
+  border: 1px solid rgba(38, 59, 50, .12); border-radius: 20px;
+  background: var(--fcw-white); box-shadow: 0 22px 70px rgba(20, 32, 25, .22);
+}
+#forme-ai-customer-care .fcw-header {
+  display: flex; align-items: center; gap: 11px; padding: 16px 16px 14px;
+  color: #fffefa; background: var(--fcw-green);
+}
+#forme-ai-customer-care .fcw-brand-mark {
+  width: 39px; height: 39px; flex: 0 0 39px; display: grid; place-items: center;
+  border: 1px solid rgba(255,255,255,.34); border-radius: 50%;
+  font: 600 20px/1 Georgia, serif;
+}
+#forme-ai-customer-care .fcw-heading { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+#forme-ai-customer-care .fcw-heading strong { font-size: 14px; font-weight: 650; letter-spacing: .01em; }
+#forme-ai-customer-care .fcw-heading span { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,.72); font-size: 11px; }
+#forme-ai-customer-care .fcw-heading i { width: 6px; height: 6px; display: inline-block; border-radius: 50%; background: #a8c99c; }
+#forme-ai-customer-care .fcw-close {
+  width: 32px; height: 32px; margin-left: auto; border: 0; border-radius: 50%;
+  color: #fff; background: rgba(255,255,255,.12); font-size: 24px; line-height: 1; cursor: pointer;
+}
+#forme-ai-customer-care .fcw-intro { display: flex; flex-direction: column; gap: 4px; padding: 15px 17px 8px; background: var(--fcw-paper); }
+#forme-ai-customer-care .fcw-intro strong { font: 600 18px/1.2 Georgia, serif; }
+#forme-ai-customer-care .fcw-intro span { color: var(--fcw-muted); font-size: 11px; line-height: 1.45; }
+#forme-ai-customer-care .fcw-messages {
+  flex: 1 1 auto; min-height: 70px; overflow-y: auto; overscroll-behavior: contain;
+  display: flex; flex-direction: column; gap: 10px; padding: 14px 15px;
+  background: var(--fcw-paper);
+}
+#forme-ai-customer-care .fcw-message {
+  max-width: 88%; width: fit-content; padding: 10px 12px; border-radius: 14px;
+  font-size: 13px; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere;
+}
+#forme-ai-customer-care .fcw-message-assistant {
+  align-self: flex-start; color: var(--fcw-ink); background: #fffefa;
+  border: 1px solid var(--fcw-line); border-bottom-left-radius: 5px;
+}
+#forme-ai-customer-care .fcw-message-user {
+  align-self: flex-end; color: #fffefa; background: var(--fcw-green);
+  border-bottom-right-radius: 5px;
+}
+#forme-ai-customer-care .fcw-typing { color: var(--fcw-muted); font-style: italic; }
+#forme-ai-customer-care .fcw-quick-replies {
+  display: flex; gap: 7px; padding: 1px 13px 11px; overflow-x: auto; background: var(--fcw-paper);
+  scrollbar-width: thin;
+}
+#forme-ai-customer-care .fcw-quick-replies button {
+  flex: 0 0 auto; padding: 7px 9px; border: 1px solid #ded7cc; border-radius: 999px;
+  color: var(--fcw-green); background: #fffefa; font: 500 10px/1.2 inherit; cursor: pointer;
+}
+#forme-ai-customer-care .fcw-quick-replies button:hover { border-color: var(--fcw-clay); }
+#forme-ai-customer-care .fcw-form {
+  display: flex; align-items: center; gap: 8px; padding: 11px 12px;
+  border-top: 1px solid var(--fcw-line); background: #fffefa;
+}
+#forme-ai-customer-care .fcw-form input {
+  min-width: 0; flex: 1; height: 42px; padding: 0 13px; outline: none;
+  border: 1px solid #e3ddd3; border-radius: 999px; color: var(--fcw-ink); background: #fff;
+  font: 400 13px/1.3 inherit;
+}
+#forme-ai-customer-care .fcw-form input:focus { border-color: #8a9b8e; box-shadow: 0 0 0 3px rgba(38,59,50,.08); }
+#forme-ai-customer-care .fcw-form input::placeholder { color: #969b94; }
+#forme-ai-customer-care .fcw-send {
+  width: 42px; height: 42px; flex: 0 0 42px; border: 0; border-radius: 50%;
+  color: #fffefa; background: var(--fcw-green); font-size: 18px; cursor: pointer;
+}
+#forme-ai-customer-care .fcw-send:disabled { opacity: .5; cursor: wait; }
+#forme-ai-customer-care .fcw-disclaimer {
+  margin: 0; padding: 0 14px 11px; color: #848a82; background: #fffefa;
+  text-align: center; font-size: 9px; line-height: 1.45;
+}
+#forme-ai-customer-care .fcw-sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+@media (max-width: 520px) {
+  #forme-ai-customer-care .fcw-launcher { right: 13px; bottom: 14px; min-height: 52px; padding-right: 15px; }
+  #forme-ai-customer-care .fcw-panel {
+    right: 10px; bottom: 76px; width: calc(100vw - 20px);
+    height: min(620px, calc(100dvh - 92px)); min-height: 360px; border-radius: 18px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #forme-ai-customer-care .fcw-launcher { transition: none; }
+}
