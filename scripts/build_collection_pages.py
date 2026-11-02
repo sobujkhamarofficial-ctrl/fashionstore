@@ -132,23 +132,40 @@ def gallery_photo_path(kind, index):
 
 def gallery_html(node, department, parts, ancestors):
     title = node["title"]
+    children = node_children(node)
     images = []
     for index in range(6):
         kind = image_kind(department, node, ancestors, index)
         src = gallery_photo_path(kind, index)
         alt = f"{title} fashion photograph {index + 1}"
+        child = children[index % len(children)] if children else None
+        if child:
+            destination = page_url(department, list(parts) + [child["slug"]])
+            action_label = f'Explore {esc(child["title"])}'
+            caption_title = f'{esc(child["title"])} · Look {index + 1:02d}'
+            destination_attrs = ""
+            action_kind = "category"
+        else:
+            destination = src
+            action_label = "View full photo"
+            caption_title = f'{esc(title)} · Look {index + 1:02d}'
+            destination_attrs = ' target="_blank" rel="noopener"'
+            action_kind = "photo"
         images.append(
-            f'<figure class="visual-card"><div class="visual-image-wrap">'
+            f'<figure class="visual-card" data-visual-kind="{action_kind}">'
+            f'<div class="visual-image-wrap">'
+            f'<a class="visual-image-link" href="{destination}"{destination_attrs} aria-label="{action_label}">'
             f'<img class="gallery-image" src="{src}" alt="{esc(alt)}" loading="lazy" decoding="async" data-fallback="visual-image-missing" onerror="this.hidden=true;this.parentElement.classList.add(this.dataset.fallback)">'
-            f'<span class="visual-number">{index + 1:02d}</span></div>'
-            f'<figcaption><strong>{esc(title)} · Look {index + 1:02d}</strong>'
-            f'<span>Fashion photography</span></figcaption></figure>'
+            f'</a><span class="visual-number">{index + 1:02d}</span></div>'
+            f'<figcaption><strong>{caption_title}</strong>'
+            f'<span>{("Next category" if child else "Inspiration photo")}</span>'
+            f'<a class="visual-action" href="{destination}"{destination_attrs}>{action_label} ↗</a></figcaption></figure>'
         )
     return (
         '<section class="visual-gallery">'
         '<div class="section-heading"><div><span class="eyebrow">FORME photo edit</span>'
         f'<h2>Explore the {esc(title)} styles</h2></div>'
-        '<span class="count-label">6 real photographs</span></div>'
+        '<span class="count-label">6 clickable style photographs</span></div>'
         f'<div class="visual-grid">{"".join(images)}</div></section>'
     )
 
@@ -251,7 +268,7 @@ def build_page(node, department, parts, ancestors, siblings, is_department=False
 <p>{esc(description)}</p>
 <div class="structure-meta">{esc(hierarchy_note)}</div>
 </section>
-<div class="stage-note"><strong>Collection inspiration gallery.</strong> These category pages help you explore styles. Individual product listings, verified prices, sizes and stock are being added separately; gallery images are not an offer to sell a specific item.</div>
+<div class="stage-note"><strong>Clickable style gallery.</strong> Tap a photograph to explore the next category level. At the deepest level, the photograph opens full size. These inspiration images are not sellable products; Add to Cart and Buy Now appear only on actual product listings with a product record and price.</div>
 {child_section}
 {gallery}
 {sibling_links}
