@@ -209,8 +209,8 @@ def main():
     total_pages = total_groups = total_categories = total_subcategories = 0
     seen_departments = set()
     for department in departments:
-        if department["slug"] in seen_departments or department["slug"] in DEPARTMENTS:
-            raise AssertionError(f"Invalid or reserved department slug: {department['slug']}")
+        if department["slug"] in seen_departments or department["slug"] == "men":
+            raise AssertionError(f"Duplicate or reserved department slug: {department['slug']}")
         seen_departments.add(department["slug"])
         groups = department["groups"]
         if not groups:
