@@ -17,7 +17,9 @@ FORME is an editorial-style fashion storefront for Bangladesh. The site is publi
 - Private order tracking by matching order reference and checkout mobile number.
 - Verified customer review submissions, with explicit publication consent and manual moderation.
 - Server-side product ID and price validation; the server calculates the item subtotal from the database rather than trusting browser-supplied prices.
-- Order requests and item snapshots stored in Supabase tables with Row Level Security enabled.
+- Order requests and item snapshots stored in Supabase tables with Row Level Security enabled and explicit deny policies for browser roles.
+- Persistent server-side rate limits store only hashed contact fingerprints.
+- Customer order lookup by order reference plus checkout phone, including courier name, tracking reference and estimated delivery date when entered by the store team.
 - Contact messages and optional newsletter subscriptions stored in the backend.
 - Public information and customer policies: About, Shipping & Delivery, Returns & Refunds, Cancellations, Size Guide, FAQs, Payment Policy, Privacy Policy and Terms & Conditions.
 - FORME Journal with three published style and care articles.
@@ -33,7 +35,7 @@ The store team must contact the customer to confirm:
 3. The delivery area, courier availability, delivery charge and realistic delivery estimate.
 4. The accepted payment method and final total.
 
-No online payment gateway or live courier booking/tracking integration is connected. Do not request or collect card numbers, PINs, passwords or OTPs through this site. The experimental AI Customer Care widget remains disabled while the order and policy workflows are verified.
+No online payment gateway or live courier booking/tracking integration is connected. Do not request or collect card numbers, PINs, passwords or OTPs through this site. The experimental AI Customer Care widget and its public endpoint are paused while the order and policy workflows are verified. The Gemini function does not call the AI API in this paused state.
 
 Before accepting confirmed commercial orders, complete the product catalogue with real SKU data and stock, add verified merchant legal identity and official contact details, publish agreed delivery rates and service levels, integrate a Bangladesh-supported payment gateway and courier workflow, and obtain legal review of the policies.
 
