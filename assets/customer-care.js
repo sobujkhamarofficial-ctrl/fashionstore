@@ -97,14 +97,14 @@
           ready = false;
           setAvailability(false, "Gemini connection timed out");
           addMessage("Google AI সার্ভার থেকে নির্ধারিত সময়ের মধ্যে উত্তর পাওয়া যায়নি। এটি IP বা সার্ভার-সংযোগের সমস্যাও হতে পারে। অনুগ্রহ করে পরে আবার চেষ্টা করুন।", "system");
-        } else if (response.status >= 500) {
-          ready = false;
-          setAvailability(false, "AI service connection issue");
-          addMessage(data.error || "দুঃখিত, AI সার্ভার থেকে এখন উত্তর পাওয়া যাচ্ছে না। পরে আবার চেষ্টা করুন।", "system");
         } else if (response.status === 503 && data.status === "paused") {
           ready = false;
           setAvailability(false, "Temporarily paused");
           addMessage("AI সহকারীটি আপাতত বন্ধ আছে। অর্ডার ট্র্যাক করতে Order Tracking পেজে যান, অথবা Contact পেজে বার্তা পাঠান।", "system");
+        } else if (response.status >= 500) {
+          ready = false;
+          setAvailability(false, "AI service connection issue");
+          addMessage(data.error || "দুঃখিত, AI সার্ভার থেকে এখন উত্তর পাওয়া যাচ্ছে না। পরে আবার চেষ্টা করুন।", "system");
         } else {
           addMessage(data.error || "দুঃখিত, এই মুহূর্তে উত্তর তৈরি করা যাচ্ছে না। একটু পরে আবার চেষ্টা করুন।", "system");
         }
