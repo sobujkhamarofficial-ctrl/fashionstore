@@ -437,3 +437,11 @@
 #forme-storefront .f-static-product .f-product-actions button:hover{filter:brightness(1.09);transform:translateY(-1px)}
 #forme-storefront .f-static-product .f-product-actions button:focus-visible{outline:2px solid #b76f50;outline-offset:3px}
 @media(max-width:420px){#forme-storefront .f-static-product .f-product-actions{left:7px;right:7px;bottom:7px;gap:5px}#forme-storefront .f-static-product .f-product-actions button{min-height:39px;font-size:8px;padding:6px 4px}}
+
+
+/* Keep Buy Now clearly on top of every sellable catalogue product photo. */
+#forme-storefront .f-static-product .f-product-actions{inset:0;left:0;right:0;bottom:0;display:block;pointer-events:none}
+#forme-storefront .f-static-product .f-product-actions button{position:absolute;width:auto;pointer-events:auto}
+#forme-storefront .f-static-product .f-product-actions .f-add{left:10px;right:10px;bottom:10px;top:auto;width:auto}
+#forme-storefront .f-static-product .f-product-actions .f-buy-now{left:auto;right:10px;top:10px;bottom:auto;width:auto;min-width:104px;min-height:36px;padding:0 13px;border-radius:2px;box-shadow:0 3px 12px rgba(0,0,0,.18)}
+@media(max-width:420px){#forme-storefront .f-static-product .f-product-actions .f-buy-now{right:7px;top:7px;min-width:90px;min-height:34px;padding:0 9px;font-size:8px}#forme-storefront .f-static-product .f-product-actions .f-add{left:7px;right:7px;bottom:7px}}
