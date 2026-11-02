@@ -272,7 +272,7 @@ jobs:
               "action": "order",
               "order": {
                   "customer_name": "FORME automated deployment check",
-                  "customer_phone": "01712345678",
+                  "customer_phone": phone,
                   "customer_email": "",
                   "delivery_address": "Deployment check address, test only",
                   "district": "Dhaka",
