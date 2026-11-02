@@ -62,9 +62,18 @@
       row.append(element("span","",pair[0]),element("strong","",pair[1]));
       totals.append(row);
     });
+    const courierHeading=element("h3","","Delivery details");
+    const courier=element("p","fc-meta",order.courier_name ? "Delivery partner: "+order.courier_name : "Delivery partner: To be confirmed");
+    const tracking=element("p","fc-meta",order.courier_tracking_number ? "Tracking reference: "+order.courier_tracking_number : "Courier tracking reference: Not added yet");
+    const eta=element("p","fc-meta",order.estimated_delivery_at ? "Estimated delivery: "+new Date(order.estimated_delivery_at).toLocaleDateString("en-GB") : "Estimated delivery: To be confirmed");
+    const dispatched=order.dispatched_at ? element("p","fc-meta","Dispatched: "+new Date(order.dispatched_at).toLocaleString("en-GB")) : null;
+    const delivered=order.delivered_at ? element("p","fc-meta","Delivered: "+new Date(order.delivered_at).toLocaleString("en-GB")) : null;
     const payment=element("p","fc-meta","Payment status: "+String(order.payment_status||"not collected").replaceAll("_"," "));
     const note=element("div","fc-note","Order status is updated by the store team. The tracking page shows the latest status saved in the store records; it is not a live courier GPS tracker.");
-    result.append(heading,date,statusCard,timeline,itemHeading,itemList,totals,payment,note);
+    result.append(heading,date,statusCard,timeline,itemHeading,itemList,totals,courierHeading,courier,tracking,eta);
+    if(dispatched) result.append(dispatched);
+    if(delivered) result.append(delivered);
+    result.append(payment,note);
     result.hidden=false;
   }
 
