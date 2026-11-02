@@ -32,6 +32,13 @@
     empty.hidden = false;
     return;
   }
+  const requestedUnits = cart.reduce((sum, item) => sum + item.qty, 0);
+  if (requestedUnits > 20) {
+    shell.hidden = true;
+    empty.hidden = false;
+    empty.textContent = "This bag exceeds the 20-item request limit. Please return to the store and reduce the quantities.";
+    return;
+  }
 
   function renderItems() {
     const subtotal = cart.reduce((sum, p) => sum + p.price * p.qty, 0);
