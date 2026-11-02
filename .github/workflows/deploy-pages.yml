@@ -98,7 +98,8 @@ jobs:
                   photo_path = Path(relative)
                   assert photo_path.is_file(), f"Photo missing from deployment bundle: {relative}"
                   assert photo_path.stat().st_size > 8000, f"Empty photo file: {relative}"
-                  image_count += 1              pages += 1
+                  image_count += 1
+              pages += 1
 
           for department in departments:
               d = Path(department["slug"])
