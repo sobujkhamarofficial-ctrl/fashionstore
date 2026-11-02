@@ -8,7 +8,7 @@
   const submit = document.getElementById("fc-track-submit");
 
   const stages = [
-    ["pending_review","Request received","Your request is saved. FORME still needs to verify the product, stock, final price and delivery details."],
+    ["pending_review","COD order received","Your COD order is saved. FORME is checking the item, size or variant, stock, final price and delivery details before confirming dispatch."],
     ["contacted","Customer contacted","The store has contacted you about your request."],
     ["confirmed","Order confirmed","The product and delivery details have been agreed."],
     ["processing","Preparing order","Your order is being prepared."],
@@ -30,7 +30,7 @@
   function render(order) {
     result.innerHTML = "";
     const heading = element("h2","", "Order " + order.order_number);
-    const date = element("p","fc-meta", "Request date: " + new Date(order.created_at).toLocaleString("en-GB"));
+    const date = element("p","fc-meta", "Order date: " + new Date(order.created_at).toLocaleString("en-GB"));
     const current = stages.findIndex(s => s[0] === order.status);
     const stage = stages[current] || stages[0];
     const statusCard = element("div","fc-card");
@@ -50,7 +50,7 @@
       const terminal=element("p","fc-note",stage[2]);
       statusCard.append(terminal);
     }
-    const itemHeading=element("h3","","Items in this request");
+    const itemHeading=element("h3","","Items in this order");
     const itemList=element("ul","fc-track-items");
     (order.items||[]).forEach(item=>{
       const parts=[item.product_name,"Qty "+item.quantity,item.requested_variant||""].filter(Boolean).join(" · ");
@@ -68,12 +68,13 @@
     const eta=element("p","fc-meta",order.estimated_delivery_at ? "Estimated delivery: "+new Date(order.estimated_delivery_at).toLocaleDateString("en-GB") : "Estimated delivery: To be confirmed");
     const dispatched=order.dispatched_at ? element("p","fc-meta","Dispatched: "+new Date(order.dispatched_at).toLocaleString("en-GB")) : null;
     const delivered=order.delivered_at ? element("p","fc-meta","Delivered: "+new Date(order.delivered_at).toLocaleString("en-GB")) : null;
+    const paymentMethod=element("p","fc-meta","Payment method: "+(order.payment_method==="cash_on_delivery"?"Cash on delivery":String(order.payment_method||"to be confirmed").replaceAll("_"," ")));
     const payment=element("p","fc-meta","Payment status: "+String(order.payment_status||"not collected").replaceAll("_"," "));
-    const note=element("div","fc-note","Order status is updated by the store team. The tracking page shows the latest status saved in the store records; it is not a live courier GPS tracker.");
+    const note=element("div","fc-note","For cash on delivery, pay only the final amount confirmed by FORME when the parcel is delivered. Order status is updated by the store team; this page is not a live courier GPS tracker.");
     result.append(heading,date,statusCard,timeline,itemHeading,itemList,totals,courierHeading,courier,tracking,eta);
     if(dispatched) result.append(dispatched);
     if(delivered) result.append(delivered);
-    result.append(payment,note);
+    result.append(paymentMethod,payment,note);
     result.hidden=false;
   }
 
