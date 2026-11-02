@@ -37,6 +37,7 @@
   if (!form || !shell || !empty || !items || !subtotalNode) return;
 
   let busy = false;
+  let orderPlaced = false;
   function saveCart() {
     try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch (_) {}
   }
@@ -44,6 +45,11 @@
     return cart.reduce((sum, item) => sum + item.price * item.qty, 0);
   }
   function updateEmptyState() {
+    if (orderPlaced) {
+      shell.hidden = true;
+      empty.hidden = true;
+      return;
+    }
     const hasItems = cart.length > 0;
     shell.hidden = !hasItems;
     empty.hidden = hasItems;
@@ -184,6 +190,7 @@
         throw new Error(payload.error || "We could not place your order. Please check your details and try again.");
       }
       localStorage.removeItem(CART_KEY);
+      orderPlaced = true;
       cart = [];
       shell.hidden = true;
       empty.hidden = true;

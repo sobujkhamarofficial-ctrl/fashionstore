@@ -40,6 +40,14 @@ def local_path(url):
         target = target / "index.html"
     return target
 
+home = (ROOT / "index.html").read_text(encoding="utf-8")
+if "1,362" in home or "1362" in home:
+    raise SystemExit("Homepage still contains an obsolete Men product total.")
+if "buildMenCategoryFilters" not in home:
+    raise SystemExit("Homepage Men filters are not generated from the catalogue.")
+if "Showing 23 sample products from 1,362" in home:
+    raise SystemExit("Homepage contains an obsolete Men result summary.")
+
 html_files = sorted(p for p in ROOT.rglob("*.html") if ".git" not in p.parts)
 missing_links = []
 missing_images = []

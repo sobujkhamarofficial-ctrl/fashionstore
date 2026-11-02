@@ -517,6 +517,30 @@
         'belt':{title:'Belt',group:'Accessories',count:null},
         'cap':{title:'Cap',group:'Accessories',count:null}
       };
+      const buildMenCategoryFilters=()=>{
+        const listNode=root.querySelector('#f-men-category-list');
+        const totalNode=root.querySelector('#f-men-filter-total');
+        if(!listNode||!totalNode)return;
+        const groups=[{name:'All',label:"All Men's Collection",items:menProducts}];
+        [...new Set(menProducts.map(product=>product.category).filter(Boolean))].forEach(name=>{
+          groups.push({name,label:name,items:menProducts.filter(product=>product.category===name)});
+        });
+        const fragment=document.createDocumentFragment();
+        groups.forEach((group,index)=>{
+          const button=document.createElement('button');
+          button.type='button';
+          button.className='f-men-cat'+(index===0?' active':'');
+          button.dataset.fMenCat=group.name;
+          button.append(document.createTextNode(group.label+' '));
+          const count=document.createElement('span');
+          count.textContent=String(group.items.length);
+          button.append(count);
+          fragment.append(button);
+        });
+        listNode.replaceChildren(fragment);
+        totalNode.textContent=String(menProducts.length);
+      };
+      buildMenCategoryFilters();
       const menState = {category:'All',quick:'all',search:'',sort:'featured',min:0,max:99999};
       const routeBase = '/fashionstore/';
       const routeUrl = slug => slug==='home'?routeBase:slug==='men'?routeBase+'men/':routeBase+'men/'+slug+'/';
@@ -572,7 +596,10 @@
         if(menState.sort==='price-high')list.sort((a,b)=>b.price-a.price);
         if(menState.sort==='discount')list.sort((a,b)=>b.discount-a.discount);
         const route=Object.values(menCategoryRoutes).find(item=>item.title===menState.category);
-        root.querySelector('#f-men-result-count').textContent='Showing '+list.length+' preview products · '+(menState.category==='All'?'1,362 total men’s products':((route&&route.count!==null)?route.count+' listed items':'More styles in this collection'));
+        const categoryItems=menProducts.filter(p=>menState.category==='All'||p.category===menState.category);
+        const categoryOrderable=categoryItems.filter(p=>!p.preview&&Number(p.price)>0).length;
+        const categoryPreviews=categoryItems.length-categoryOrderable;
+        root.querySelector('#f-men-result-count').textContent='Showing '+list.length+' filtered listings · '+categoryOrderable+' orderable · '+categoryPreviews+' previews';
         menGrid.innerHTML=list.length?list.map(p=>'<article class="f-product" data-id="'+p.id+'" data-name="'+p.name+'" data-price="'+p.price+'" data-image="'+p.image+'" data-category="'+p.category+'"><div class="f-product-photo"><img src="'+p.image+'" alt="'+p.name+'" loading="lazy"><span class="f-product-tag '+(p.preview?'preview':'')+'">'+(p.preview?'Preview':'-'+p.discount+'%')+'</span><button class="f-wish" data-f-wish="'+p.id+'" aria-label="Save '+p.name+'"><svg viewBox="0 0 24 24"><path d="M20.8 8.8c0 5.2-8.8 11-8.8 11S3.2 14 3.2 8.8A4.5 4.5 0 0 1 12 6.5a4.5 4.5 0 0 1 8.8 2.3Z"/></svg></button>'+''+(p.preview?'<button class="f-add" disabled>Coming soon</button>':'<div class="f-product-actions"><button class="f-add" type="button" data-f-add="'+p.id+'">Add to Cart</button><button class="f-buy-now" type="button" data-f-buy-now="'+p.id+'">Buy Now</button></div>')+'</div><div class="f-product-info"><span class="f-product-name">'+p.name+'</span>'+(p.preview?'<span class="f-men-price-note">Price and stock to be confirmed</span>':'<div class="f-men-price-row"><strong>'+money(p.price)+'</strong></div>')+'</div></article>').join(''):'<div class="f-men-empty">No sample products in this category yet. More men's products will be added next.</div>';
       };
       const openMenRoute=(slug,push=true)=>{
@@ -583,7 +610,9 @@
         root.querySelector('#f-men-category-panel').hidden=slug!=='men';
         root.querySelector('.f-men-heading h1').textContent=slug==='men'?"Men's Collection":item.title;
         root.querySelector('.f-men-crumb').innerHTML=slug==='men'?'<a href="#f-top" data-f-home>Home</a> / Men':'<a href="#f-top" data-f-home>Home</a> / <a href="/fashionstore/men/" data-f-men-route="men">Men</a> / '+item.title;
-        root.querySelector('.f-men-total').textContent=slug==='men'?'76 Men catalogue listings':(item.count===null?'Accessories collection':item.count+' products');
+        const routeProducts=slug==='men'?menProducts:menProducts.filter(p=>p.category===item.title);
+        const routeOrderable=routeProducts.filter(p=>!p.preview&&Number(p.price)>0).length;
+        root.querySelector('.f-men-total').textContent=routeProducts.length+' catalogue listings · '+routeOrderable+' orderable';
         root.querySelector('#f-men-search').value='';root.querySelector('#f-men-sort').value='featured';
         root.querySelector('#f-men-min').value='';root.querySelector('#f-men-max').value='';
         root.querySelectorAll('[data-f-men-quick]').forEach(b=>b.classList.toggle('active',b.dataset.fMenQuick==='all'));
@@ -783,38 +812,12 @@
       <div class="f-container f-men-layout">
         <aside class="f-men-sidebar" aria-label="Men's collection filters">
           <div class="f-men-side-head"><b>Filters</b><button type="button" id="f-men-clear">Clear all</button></div>
-          <div class="f-men-filter-group"><h3>Categories <span>1,362</span></h3><div class="f-men-cat-list">
-            <button class="f-men-cat active" data-f-men-cat="All">All Men's Collection <span>1362</span></button>
-            <button class="f-men-cat" data-f-men-cat="Half Sleeve T-shirt">Half Sleeve T-shirt <span>368</span></button>
-            <button class="f-men-cat" data-f-men-cat="Full Sleeve T-shirt">Full Sleeve T-shirt <span>148</span></button>
-            <button class="f-men-cat" data-f-men-cat="Maggie">Maggie <span>6</span></button>
-            <button class="f-men-cat" data-f-men-cat="Shirt">Shirt <span>87</span></button>
-            <button class="f-men-cat" data-f-men-cat="Polo T-shirt">Polo T-shirt <span>163</span></button>
-            <button class="f-men-cat" data-f-men-cat="Hoodie">Hoodie <span>30</span></button>
-            <button class="f-men-cat" data-f-men-cat="Jacket">Jacket <span>39</span></button>
-            <button class="f-men-cat" data-f-men-cat="Joggers">Joggers <span>18</span></button>
-            <button class="f-men-cat" data-f-men-cat="Sweatshirt">Sweatshirt <span>17</span></button>
-            <button class="f-men-cat" data-f-men-cat="Comfy Trouser">Comfy Trouser <span>48</span></button>
-            <button class="f-men-cat" data-f-men-cat="Sports Trouser">Sports Trouser <span>25</span></button>
-            <button class="f-men-cat" data-f-men-cat="Shorts">Shorts <span>42</span></button>
-            <button class="f-men-cat" data-f-men-cat="Underwear">Underwear <span>54</span></button>
-            <button class="f-men-cat" data-f-men-cat="Socks">Socks <span>36</span></button>
-            <button class="f-men-cat" data-f-men-cat="Panjabi">Panjabi <span>144</span></button>
-            <button class="f-men-cat" data-f-men-cat="Tupi">Tupi <span>5</span></button>
-            <button class="f-men-cat" data-f-men-cat="Jeans">Jeans <span>21</span></button>
-            <button class="f-men-cat" data-f-men-cat="Pajama">Pajama <span>5</span></button>
-            <button class="f-men-cat" data-f-men-cat="Accessories">Accesorries <span>61</span></button>
-            <button class="f-men-cat" data-f-men-cat="Chino Pants">Chino Pants <span>12</span></button>
-            <button class="f-men-cat" data-f-men-cat="Cargo Pants">Cargo Pants <span>19</span></button>
-            <button class="f-men-cat" data-f-men-cat="Formal Pants">Formal Pants <span>12</span></button>
-            <button class="f-men-cat" data-f-men-cat="Sandoo And Tank Top">Sandoo And Tank Top <span>2</span></button>
-            <button class="f-men-cat" data-f-men-cat="Waistcoats">Waistcoats <span>2</span></button>
-          </div></div>
+          <div class="f-men-filter-group"><h3>Categories <span id="f-men-filter-total">85</span></h3><div class="f-men-cat-list" id="f-men-category-list"></div></div>
           <div class="f-men-filter-group"><h3>Price range</h3><div class="f-men-price-fields"><input id="f-men-min" type="number" min="0" placeholder="Min"><span>–</span><input id="f-men-max" type="number" min="0" placeholder="Max"></div><button class="f-men-price-apply" id="f-men-price-apply">Apply price</button><div class="f-men-price-presets"><button data-f-men-range="0-500">Under ৳500</button><button data-f-men-range="500-1000">৳500–৳1,000</button><button data-f-men-range="1000-2000">৳1,000–৳2,000</button><button data-f-men-range="2000-99999">Above ৳2,000</button></div></div>
         </aside>
         <div class="f-men-results">
           <div class="f-men-toolbar"><div><p>SHOP / MEN</p><h2>Men</h2></div><div class="f-men-tools"><label class="f-men-search"><input id="f-men-search" type="search" placeholder="Search a product" aria-label="Search men's products"></label><select class="f-men-sort" id="f-men-sort" aria-label="Sort men's products"><option value="featured">Featured</option><option value="price-low">Price: Low to High</option><option value="price-high">Price: High to Low</option><option value="discount">Biggest Discount</option></select></div></div>
-          <div class="f-men-result-line"><span id="f-men-result-count">Showing 23 sample products from 1,362</span><span>Men's Collection</span></div>
+          <div class="f-men-result-line"><span id="f-men-result-count">Loading catalogue filters…</span><span>Men's Collection</span></div>
           <div class="f-men-grid" id="f-men-grid"></div>
         </div>
       </div>
