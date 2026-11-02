@@ -4,3 +4,5 @@
 
 /* Keep panel state reliable even when component CSS defines display:grid. */
 [hidden]{display:none!important}
+
+.fa-payment{display:inline-block;padding:5px 8px;border:1px solid #d7e2d8;background:#edf3ed;color:#356549;font-size:9px;white-space:nowrap}
