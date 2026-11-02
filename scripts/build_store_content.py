@@ -353,4 +353,4 @@ sitemap += '</urlset>\n'
 (ROOT / "robots.txt").write_text("User-agent: *\nAllow: /\nSitemap: " + BASE_URL + "sitemap.xml\n", encoding="utf-8")
 
 # A single build entry point keeps all content pages reproducible on every Pages deployment.
-print(f"Generated {len(pages)+1} policy/information pages, 1 journal index and {len(blog_posts)} published articles.")
+print(f"Generated {len(pages)+3} policy/information pages (including contact, order tracking and reviews), 1 journal index and {len(blog_posts)} published articles.")
