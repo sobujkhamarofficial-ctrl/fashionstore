@@ -580,11 +580,11 @@
       root.addEventListener('click',e=>{
         if(!e.target.closest('.f-header'))closeMegaMenu();
         const menuToggle=e.target.closest('[data-f-men-menu-toggle]');
-        if(menuToggle){e.preventDefault();const opening=!megaMenu.classList.contains('open');megaMenu.classList.toggle('open',opening);menuToggle.setAttribute('aria-expanded',String(opening));return;}
+        if(menuToggle){e.preventDefault();const nativeMenu=menuToggle.closest('#f-men-native-mega');if(nativeMenu){nativeMenu.open=!nativeMenu.open;menuToggle.setAttribute('aria-expanded',String(nativeMenu.open));}return;}
         const menCollectionCard=e.target.closest('[data-category-link="Men"]');
-        if(menCollectionCard){e.preventDefault();openMenRoute('men',true);return;}
+        if(menCollectionCard){e.preventDefault();window.location.assign(routeUrl('men'));return;}
         const routeLink=e.target.closest('[data-f-men-route]');
-        if(routeLink){e.preventDefault();openMenRoute(routeLink.dataset.fMenRoute,true);return;}
+        if(routeLink){e.preventDefault();window.location.assign(routeUrl(routeLink.dataset.fMenRoute));return;}
         if(e.target.closest('[data-f-home]')){e.preventDefault();openHomeRoute(true);return;}
         const section=e.target.closest('[data-f-section]');
         if(section){
