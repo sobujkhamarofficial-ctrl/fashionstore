@@ -95,7 +95,7 @@ def make_page(title,desc,cats,selected=None):
 {listing}<section class="f-static-products"><div class="f-section-head"><div><span class="f-kicker">The collection</span><h2>{section_title}</h2></div><span class="f-men-total">{products_label}</span></div>
 {warning}<div class="f-static-product-grid">{cards}</div></section>
 <a class="f-static-back" href="{href("men")}">← Back to Men's Collection</a></div></main>
-<footer class="f-static-footer"><div class="f-container"><strong class="f-logo">FORME<small>EVERYDAY, REFINED</small></strong><small>Photos via Unsplash · Unsplash License · © 2026 FORME</small><a href="{BASE}" style="font-size:10px;color:#fff">Home ↗</a></div></footer></div></body></html>'''
+<footer class="f-static-footer"><div class="f-container"><strong class="f-logo">FORME<small>EVERYDAY, REFINED</small></strong><small>Photos via Unsplash · Unsplash License · © 2026 FORME</small><a href="{BASE}" style="font-size:10px;color:#fff">Home ↗</a></div></footer></div><script src="{BASE}assets/customer-care.js" defer></script></body></html>'''
 def main():
     data=json.loads((OUT/"catalog.json").read_text(encoding="utf-8"))
     cats=data["categories"]
