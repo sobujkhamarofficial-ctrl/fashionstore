@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow,noarchive">
 <meta name="theme-color" content="#F7F5F0">
 <title>FORME Admin · Order Management</title>
-<link rel="stylesheet" href="/fashionstore/assets/admin.css?v=20261102-1">
+<link rel="stylesheet" href="/fashionstore/assets/admin.css?v=20261102-2">
 </head>
 <body class="fa-body">
 <div class="fa-shell">
@@ -20,23 +20,14 @@
         <div class="fa-auth-points"><span>01 · Protected admin access</span><span>02 · Centralised order records</span><span>03 · Clear fulfilment tracking</span></div>
       </div>
       <section class="fa-auth-card">
-        <div class="fa-auth-tabs"><button type="button" class="active" data-auth-tab="login">Sign in</button><button type="button" data-auth-tab="setup">First-time setup</button></div>
+        
         <form id="fa-login-form" class="fa-form">
-          <span class="fa-eyebrow">WELCOME BACK</span><h2>Admin sign in</h2>
-          <label>Email address<input name="email" type="email" autocomplete="username" maxlength="254" required></label>
-          <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
+          <span class="fa-eyebrow">PRIVATE OWNER ACCESS</span><h2>Admin sign in</h2>
+          <label>Permanent admin email<input name="email" type="email" autocomplete="username" inputmode="email" maxlength="254" placeholder="Enter your authorised email address" required></label>
+          <label>Admin password<input name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required></label>
           <button class="fa-primary" type="submit">Sign in securely <span>↗</span></button>
           <p id="fa-login-message" class="fa-message" role="status" aria-live="polite"></p>
-        </form>
-        <form id="fa-setup-form" class="fa-form" hidden>
-          <span class="fa-eyebrow">ONE-TIME OWNER SETUP</span><h2>Create the first admin</h2>
-          <p class="fa-help">This one-time setup code can create only the first store administrator. Keep it private.</p>
-          <label>One-time setup code<input name="bootstrap_token" type="password" autocomplete="off" minlength="64" maxlength="64" required></label>
-          <label>Full name<input name="full_name" maxlength="100" autocomplete="name" required></label>
-          <label>Admin email<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
-          <label>Create a strong password<input name="password" type="password" minlength="12" maxlength="200" autocomplete="new-password" required><small>Use at least 12 characters. Do not reuse your website or email password.</small></label>
-          <button class="fa-primary" type="submit">Create admin account <span>↗</span></button>
-          <p id="fa-setup-message" class="fa-message" role="status" aria-live="polite"></p>
+          <p class="fa-login-note">This workspace is reserved for the single authorised owner account.</p>
         </form>
       </section>
     </section>
@@ -71,5 +62,5 @@
     <div id="fa-detail-content"></div>
   </section>
 </div>
-<script src="/fashionstore/assets/admin.js?v=20261102-1" defer></script>
+<script src="/fashionstore/assets/admin.js?v=20261102-2" defer></script>
 </body></html>
