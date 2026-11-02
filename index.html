@@ -3,105 +3,293 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f5f2eb">
-  <meta name="description" content="FORME — considered everyday clothing, modern essentials and thoughtful details.">
+  <meta name="theme-color" content="#263B32">
+  <meta name="description" content="FORME — considered everyday clothing, fresh collections and modern essentials.">
   <title>FORME — Everyday, refined</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root{--paper:#f5f2eb;--white:#fffefa;--ink:#1e2b25;--muted:#777d74;--line:#dedbd2;--forest:#263a30;--sage:#cbd0c2;--clay:#a65f45;--sand:#ded0bc;--serif:"Playfair Display",Georgia,serif;--sans:"DM Sans",Arial,sans-serif}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans)}button,input,select{font:inherit}button,a{cursor:pointer}a{color:inherit;text-decoration:none}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--clay);outline-offset:3px}.wrap{width:min(1200px,calc(100% - 56px));margin:auto}.announce{background:var(--forest);color:#f8f5ed;text-align:center;padding:9px 15px;font-size:9px;letter-spacing:.17em;text-transform:uppercase}.announce b{color:#d8c3a7;font-weight:600}
-    header{position:sticky;top:0;z-index:20;background:rgba(245,242,235,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.nav{height:76px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center}.links,.actions{display:flex;align-items:center;gap:24px}.links a{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.links a:hover{color:var(--ink)}.logo{font:600 29px var(--serif);letter-spacing:.18em;text-align:center}.logo small{display:block;margin-top:2px;font:8px var(--sans);letter-spacing:.32em;color:var(--muted)}.actions{justify-content:flex-end;gap:8px}.icon{height:40px;min-width:40px;border:1px solid transparent;border-radius:50%;background:transparent;color:var(--ink);font-size:19px;position:relative}.icon:hover{border-color:var(--line);background:var(--white)}.count{position:absolute;right:-1px;top:0;background:var(--clay);color:white;border-radius:50%;height:16px;min-width:16px;padding:0 3px;font:9px var(--sans);display:grid;place-items:center}.menu-btn{display:none}
-    .hero{padding:30px 0 58px}.hero-grid{display:grid;grid-template-columns:.88fr 1.12fr;min-height:560px;background:var(--sand);overflow:hidden}.hero-copy{padding:clamp(34px,6vw,80px);display:flex;flex-direction:column;justify-content:center;align-items:flex-start}.eyebrow,.kicker{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--clay)}h1{font:400 clamp(48px,6vw,78px)/.99 var(--serif);letter-spacing:-.045em;margin:22px 0 18px;max-width:480px}.hero-copy p{max-width:340px;color:#61685f;font-size:12px;line-height:1.9}.btn{display:inline-flex;align-items:center;justify-content:center;gap:16px;min-height:46px;padding:0 22px;border:1px solid var(--forest);background:var(--forest);color:#fff;font-size:9px;letter-spacing:.15em;text-transform:uppercase;transition:.2s}.btn:hover{background:#3b5145;transform:translateY(-2px)}.hero-copy .btn{margin-top:24px}.hero-visual{position:relative;min-height:560px;overflow:hidden;background:#b9ad9a}.hero-visual:before{content:"";position:absolute;width:65%;aspect-ratio:1;border:1px solid rgba(255,255,255,.55);border-radius:50%;left:17%;top:13%;box-shadow:0 0 0 36px rgba(255,255,255,.1),0 0 0 72px rgba(255,255,255,.07)}.hero-visual svg{position:absolute;width:90%;height:95%;left:5%;bottom:-3%;filter:drop-shadow(18px 22px 18px rgba(0,0,0,.15))}.visual-note{position:absolute;right:20px;bottom:20px;color:#fff;font-size:8px;letter-spacing:.2em;text-transform:uppercase}
-    .marquee{border-block:1px solid var(--line);padding:17px 0;overflow:hidden}.marquee-inner{display:flex;justify-content:space-around;gap:26px;white-space:nowrap;font:15px var(--serif);color:var(--muted);letter-spacing:.06em}.marquee b{font:11px var(--sans);color:var(--clay)}
-    section{scroll-margin-top:95px}.section{padding:78px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:28px}.section-head h2{font:400 42px/1.05 var(--serif);letter-spacing:-.03em;margin:10px 0 0}.section-head p{max-width:320px;color:var(--muted);font-size:11px;line-height:1.8;margin:0}.text-link{font-size:9px;text-transform:uppercase;letter-spacing:.14em;border-bottom:1px solid var(--ink);padding-bottom:5px;white-space:nowrap}
-    .categories{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.category{height:315px;position:relative;overflow:hidden;background:#c9b8a4}.category svg{width:100%;height:100%;transition:transform .5s}.category:hover svg{transform:scale(1.04)}.category-label{position:absolute;left:20px;bottom:18px;color:white;text-shadow:0 2px 15px #0005}.category-label strong{display:block;font:400 29px var(--serif)}.category-label span{font-size:8px;letter-spacing:.16em;text-transform:uppercase}
-    .products{background:var(--white)}.tools{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:26px}.filters{display:flex;gap:7px;flex-wrap:wrap}.filter{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:30px;padding:9px 14px;font-size:9px;letter-spacing:.1em;text-transform:uppercase}.filter.active,.filter:hover{background:var(--forest);border-color:var(--forest);color:#fff}.tool-right{display:flex;align-items:center;gap:14px}.search{display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--line);padding:8px 2px;min-width:190px}.search input{border:0;outline:0;background:transparent;font-size:10px;width:100%;color:var(--ink)}.search input:focus{box-shadow:none}.sort{border:1px solid var(--line);border-radius:30px;background:transparent;color:var(--ink);padding:9px 12px;font-size:9px}
-    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px 15px}.product{min-width:0}.photo{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--bg,#ddd4c7)}.photo svg{display:block;width:100%;height:100%;transition:transform .55s}.product:hover .photo svg{transform:scale(1.04)}.tag{position:absolute;top:11px;left:11px;background:#fffefaeb;color:#4c554c;padding:6px 8px;font-size:7px;letter-spacing:.13em;text-transform:uppercase}.wish{position:absolute;right:10px;top:10px;border:0;border-radius:50%;height:33px;width:33px;background:#fffefaeb;color:var(--ink);font-size:17px}.wish.active{color:var(--clay)}.add{position:absolute;left:9px;right:9px;bottom:9px;width:calc(100% - 18px);height:40px;background:#263a30f2;color:white;border:0;font-size:8px;text-transform:uppercase;letter-spacing:.16em;opacity:0;transform:translateY(7px);transition:.2s}.product:hover .add,.add:focus-visible{opacity:1;transform:none}.product-info{padding:12px 1px 0}.product-meta{display:flex;justify-content:space-between;gap:8px;align-items:baseline}.product-name{font:17px var(--serif)}.price{font-size:10px;font-weight:700;white-space:nowrap}.desc{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:5px}.swatches{display:flex;gap:5px;margin-top:10px}.swatches i{height:10px;width:10px;border-radius:50%;border:1px solid #0002}.empty{grid-column:1/-1;padding:55px 15px;text-align:center;color:var(--muted);font:21px var(--serif)}
-    .story{display:grid;grid-template-columns:1fr 1fr;min-height:405px;background:var(--forest);color:#f8f5ed}.story-art{background:#b5a58f;position:relative;overflow:hidden}.story-art svg{position:absolute;width:100%;height:100%;inset:0}.story-copy{padding:clamp(32px,6vw,70px);display:flex;flex-direction:column;align-items:flex-start;justify-content:center}.story-copy .kicker{color:#d8c3a7}.story-copy h2{font:400 43px/1.03 var(--serif);margin:12px 0 14px}.story-copy p{max-width:360px;font-size:11px;line-height:1.9;color:#ffffffad}.story-copy .btn{margin-top:15px;background:var(--sand);border-color:var(--sand);color:var(--forest)}
-    .benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;border-block:1px solid var(--line);padding:26px 0}.benefit{display:flex;gap:12px}.benefit-mark{color:var(--clay);font-size:18px}.benefit strong{display:block;font:16px var(--serif);font-weight:400}.benefit small{display:block;color:var(--muted);font-size:9px;line-height:1.6;margin-top:4px}
-    .newsletter{text-align:center;padding:75px 0 85px}.newsletter h2{font:400 39px var(--serif);margin:10px 0}.newsletter p{font-size:10px;color:var(--muted)}.newsletter-form{display:flex;max-width:410px;margin:22px auto 0;border-bottom:1px solid var(--ink)}.newsletter-form input{flex:1;min-width:0;padding:12px 3px;background:transparent;border:0;font-size:10px}.newsletter-form button{background:transparent;border:0;color:var(--ink);font-size:9px;letter-spacing:.1em;text-transform:uppercase}.newsletter-note{font-size:9px;color:var(--good,#426c54);margin-top:10px}
-    footer{background:var(--forest);color:#f8f5ed;padding:48px 0 20px}.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:28px;padding-bottom:38px}.footer-brand .logo{text-align:left;color:white}.footer-brand p{max-width:250px;color:#ffffff9c;font-size:10px;line-height:1.8;margin-top:15px}.footer-col strong{display:block;color:#d8c3a7;font-size:8px;text-transform:uppercase;letter-spacing:.16em;margin-bottom:14px}.footer-col a{display:block;font-size:10px;color:#ffffffb9;margin:10px 0}.footer-bottom{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #ffffff25;padding-top:16px;color:#ffffff80;font-size:8px}
-    .overlay{position:fixed;inset:0;background:#10171280;z-index:40;opacity:0;pointer-events:none;transition:.25s}.overlay.open{opacity:1;pointer-events:auto}.drawer{position:fixed;z-index:50;right:0;top:0;bottom:0;width:min(420px,100%);padding:24px;background:var(--white);transform:translateX(102%);transition:.3s;display:flex;flex-direction:column}.drawer.open{transform:none}.drawer-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:17px}.drawer-head h3{font:29px var(--serif);font-weight:400;margin:0}.close{border:0;background:transparent;color:var(--ink);font-size:24px}.cart-list{overflow:auto;flex:1;padding:13px 0}.cart-row{display:grid;grid-template-columns:65px 1fr auto;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.cart-thumb{height:82px;background:var(--sand);display:grid;place-items:center;font-size:28px}.cart-title{font:15px var(--serif)}.cart-meta{font-size:8px;color:var(--muted);margin:4px 0 8px}.qty{display:flex;align-items:center;gap:9px}.qty button{height:22px;width:22px;border:1px solid var(--line);border-radius:50%;background:transparent}.remove{border:0;background:none;color:var(--muted);font-size:8px}.subtotal{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding:17px 0;font-size:11px}.drawer .btn{width:100%}.empty-cart{text-align:center;color:var(--muted);padding:50px 0;font:22px var(--serif)}.modal{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:16px;background:#1017129c}.modal.open{display:flex}.modal-card{width:min(510px,100%);max-height:90vh;overflow:auto;background:var(--white);padding:25px}.modal-card h3{font:32px var(--serif);font-weight:400;margin:0}.modal-card p{font-size:10px;line-height:1.8;color:var(--muted)}.checkout-form{display:grid;gap:11px;margin-top:16px}.checkout-form label{font-size:8px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);display:grid;gap:6px}.checkout-form input,.checkout-form textarea{width:100%;border:1px solid var(--line);background:transparent;color:var(--ink);padding:11px;font-size:11px}.checkout-form textarea{min-height:65px}.checkout-form .btn{width:100%}.notice{font-size:8px!important;background:var(--paper);padding:10px}.toast{position:fixed;z-index:80;bottom:20px;left:50%;transform:translate(-50%,15px);opacity:0;pointer-events:none;background:var(--forest);color:white;padding:12px 17px;font-size:9px;transition:.2s;max-width:calc(100% - 24px);text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}.mobile-panel{display:none}
-    @media(max-width:850px){.wrap{width:calc(100% - 40px)}.links{display:none}.menu-btn{display:inline-block}.hero-grid{grid-template-columns:1fr 1fr;min-height:460px}.hero-visual{min-height:460px}.hero h1{font-size:56px}.grid{grid-template-columns:repeat(2,1fr)}.footer-grid{grid-template-columns:1.3fr 1fr 1fr}.footer-brand{grid-column:1/-1}}
-    @media(max-width:620px){.wrap{width:calc(100% - 30px)}.nav{height:64px;gap:4px}.logo{font-size:22px}.logo small{font-size:7px}.actions{gap:0}.icon{height:35px;min-width:35px}.hero{padding:15px 0 38px}.hero-grid{grid-template-columns:1fr}.hero-copy{min-height:340px;padding:32px 26px}.hero h1{font-size:57px}.hero-visual{min-height:350px}.marquee-inner{justify-content:flex-start;width:max-content;animation:marquee 25s linear infinite}@keyframes marquee{to{transform:translateX(-30%)}}.section{padding:56px 0}.section-head{align-items:flex-start;flex-direction:column;gap:13px}.section-head h2{font-size:36px}.categories{grid-template-columns:1fr 1fr;gap:9px}.category{height:220px}.category:last-child{grid-column:1/-1;height:245px}.category-label{left:13px;bottom:12px}.category-label strong{font-size:23px}.tools{align-items:flex-start}.filters{width:100%;overflow:auto;flex-wrap:nowrap;padding-bottom:5px}.filter{white-space:nowrap}.tool-right{width:100%;gap:9px}.search{flex:1;min-width:120px}.sort{max-width:145px}.grid{gap:23px 10px}.product-name{font-size:15px}.price{font-size:9px}.desc{font-size:7px}.add{opacity:1;transform:none}.story{grid-template-columns:1fr}.story-art{min-height:300px}.story-copy{padding:36px 27px}.story-copy h2{font-size:38px}.benefits{grid-template-columns:1fr;gap:17px}.newsletter{padding:56px 0 65px}.newsletter h2{font-size:33px}.footer-grid{grid-template-columns:1fr 1fr;gap:22px}.footer-brand{grid-column:1/-1}.footer-bottom{flex-direction:column}.mobile-panel{display:flex;position:fixed;z-index:55;top:0;left:0;bottom:0;width:min(300px,86vw);padding:24px;background:var(--white);transform:translateX(-105%);transition:.3s;flex-direction:column;gap:22px}.mobile-panel.open{transform:none}.mobile-panel a:not(.logo){font:23px var(--serif)}}
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: #f7f5f0; color: #202621; font-family: "DM Sans", "Helvetica Neue", Arial, sans-serif; }
+    button, input { font: inherit; }
+    a { color: inherit; text-decoration: none; }
+    [hidden] { display: none !important; }
   </style>
+  <style id="forme-storefront-redesign">
+#forme-storefront { --f-ink:#202621; --f-muted:#777b73; --f-paper:#f7f5f0; --f-white:#fffefa; --f-green:#263b32; --f-green2:#344d40; --f-clay:#b76f50; --f-line:#e5e0d7; --f-serif:Georgia,'Times New Roman',serif; color:var(--f-ink); background:var(--f-paper); font-family:'DM Sans','Helvetica Neue',Arial,sans-serif; overflow:hidden; }
+    #forme-storefront * { box-sizing:border-box; }
+    #forme-storefront a { color:inherit; text-decoration:none; }
+    #forme-storefront button,#forme-storefront input { font:inherit; }
+    #forme-storefront button { cursor:pointer; }
+    #forme-storefront .f-container { width:min(1320px,calc(100% - 72px)); margin:auto; }
+    #forme-storefront .f-announcement { min-height:34px; display:flex; align-items:center; justify-content:center; gap:18px; padding:7px 16px; background:var(--f-green); color:#f7f4ed; font-size:9px; letter-spacing:.16em; text-transform:uppercase; text-align:center; }
+    #forme-storefront .f-announcement strong { color:#d7b79b; font-weight:600; }
+    #forme-storefront .f-header { position:sticky; top:0; z-index:60; background:rgba(255,254,250,.96); backdrop-filter:blur(14px); border-bottom:1px solid var(--f-line); }
+    #forme-storefront .f-head-main { min-height:78px; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:30px; }
+    #forme-storefront .f-logo { display:inline-flex; width:max-content; flex-direction:column; line-height:.9; font:700 32px/1 var(--f-serif); letter-spacing:.18em; }
+    #forme-storefront .f-logo small { margin-top:7px; font:8px/1 'DM Sans',Arial,sans-serif; letter-spacing:.31em; color:#82857d; }
+    #forme-storefront .f-nav { display:flex; align-items:center; justify-content:center; gap:30px; }
+    #forme-storefront .f-nav a { position:relative; padding:31px 0 28px; color:#414840; font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; }
+    #forme-storefront .f-nav a:after { position:absolute; content:''; left:0; right:100%; bottom:20px; height:1px; background:var(--f-clay); transition:right .2s; }
+    #forme-storefront .f-nav a:hover:after { right:0; }
+    #forme-storefront .f-actions { display:flex; align-items:center; justify-content:flex-end; gap:5px; }
+    #forme-storefront .f-icon { width:42px; height:42px; display:grid; place-items:center; position:relative; border:0; border-radius:50%; color:var(--f-ink); background:transparent; }
+    #forme-storefront .f-icon:hover { background:#f0eee8; }
+    #forme-storefront .f-icon svg { width:19px; height:19px; fill:none; stroke:currentColor; stroke-width:1.55; stroke-linecap:round; stroke-linejoin:round; }
+    #forme-storefront .f-count { position:absolute; top:2px; right:0; min-width:17px; height:17px; padding:0 4px; display:grid; place-items:center; border-radius:20px; color:white; background:var(--f-clay); font-size:9px; }
+    #forme-storefront .f-menu-button { display:none; }
+    #forme-storefront .f-search-row { padding:0 0 13px; display:flex; justify-content:center; }
+    #forme-storefront .f-search { width:min(490px,100%); height:38px; padding:0 14px; display:flex; align-items:center; gap:10px; border:1px solid #e9e5dc; border-radius:2px; background:#faf9f5; }
+    #forme-storefront .f-search svg { width:16px; height:16px; fill:none; stroke:#777b73; stroke-width:1.6; }
+    #forme-storefront .f-search input { width:100%; min-width:0; border:0; outline:0; background:transparent; color:var(--f-ink); font-size:11px; }
+    #forme-storefront .f-hero { position:relative; width:100%; min-height:590px; display:flex; align-items:center; background:#6e7066 url('https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=2200&q=88') center 37%/cover no-repeat; }
+    #forme-storefront .f-hero:before { content:''; position:absolute; inset:0; background:linear-gradient(90deg,rgba(17,26,22,.72) 0%,rgba(22,31,26,.48) 42%,rgba(24,31,26,.05) 100%); }
+    #forme-storefront .f-hero-content { position:relative; z-index:1; width:min(1320px,calc(100% - 72px)); margin:auto; padding:82px 0 92px; color:#fff; }
+    #forme-storefront .f-eyebrow { display:flex; align-items:center; gap:11px; color:#e8d5c3; font-size:9px; font-weight:700; letter-spacing:.24em; text-transform:uppercase; }
+    #forme-storefront .f-eyebrow:before { content:''; width:30px; height:1px; background:#d9b99d; }
+    #forme-storefront .f-hero h1 { max-width:590px; margin:24px 0 18px; font:400 clamp(54px,7.2vw,96px)/.94 var(--f-serif); letter-spacing:-.055em; }
+    #forme-storefront .f-hero p { max-width:390px; margin:0; color:rgba(255,255,255,.83); font-size:13px; line-height:1.9; }
+    #forme-storefront .f-hero-buttons { display:flex; flex-wrap:wrap; gap:12px; margin-top:32px; }
+    #forme-storefront .f-button { min-height:48px; padding:0 23px; display:inline-flex; align-items:center; justify-content:center; gap:15px; border:1px solid var(--f-green); background:var(--f-green); color:#fff; font-size:9px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; transition:background .2s,transform .2s,border-color .2s; }
+    #forme-storefront .f-button:hover { transform:translateY(-2px); background:var(--f-green2); border-color:var(--f-green2); }
+    #forme-storefront .f-button svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:1.6; }
+    #forme-storefront .f-button-light { border-color:#fff; background:#fff; color:var(--f-ink); }
+    #forme-storefront .f-button-light:hover { border-color:#f0e9df; background:#f0e9df; }
+    #forme-storefront .f-hero-foot { position:absolute; z-index:2; right:36px; bottom:24px; color:rgba(255,255,255,.86); font-size:8px; letter-spacing:.2em; text-transform:uppercase; }
+    #forme-storefront .f-perks { background:var(--f-white); border-bottom:1px solid var(--f-line); }
+    #forme-storefront .f-perk-row { min-height:76px; display:grid; grid-template-columns:repeat(3,1fr); align-items:center; gap:18px; }
+    #forme-storefront .f-perk { display:flex; align-items:center; justify-content:center; gap:11px; color:#454d45; font-size:10px; letter-spacing:.06em; }
+    #forme-storefront .f-perk svg { width:19px; height:19px; flex:0 0 auto; fill:none; stroke:var(--f-clay); stroke-width:1.45; }
+    #forme-storefront .f-section { padding:82px 0; }
+    #forme-storefront .f-section-head { margin-bottom:28px; display:flex; justify-content:space-between; align-items:end; gap:24px; }
+    #forme-storefront .f-kicker { display:block; margin-bottom:11px; color:var(--f-clay); font-size:9px; font-weight:700; letter-spacing:.21em; text-transform:uppercase; }
+    #forme-storefront .f-section h2 { margin:0; font:400 clamp(34px,4vw,48px)/1.05 var(--f-serif); letter-spacing:-.04em; }
+    #forme-storefront .f-section-head p { max-width:330px; margin:0; color:var(--f-muted); font-size:11px; line-height:1.8; }
+    #forme-storefront .f-link { display:inline-flex; align-items:center; gap:9px; padding-bottom:5px; border-bottom:1px solid var(--f-ink); font-size:9px; font-weight:700; letter-spacing:.13em; text-transform:uppercase; white-space:nowrap; }
+    #forme-storefront .f-category-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+    #forme-storefront .f-category { position:relative; min-height:330px; overflow:hidden; background:#d8d2c7; }
+    #forme-storefront .f-category img { width:100%; height:100%; position:absolute; inset:0; object-fit:cover; transition:transform .7s; }
+    #forme-storefront .f-category:after { content:''; position:absolute; inset:36% 0 0; background:linear-gradient(transparent,rgba(14,23,18,.62)); }
+    #forme-storefront .f-category:hover img { transform:scale(1.055); }
+    #forme-storefront .f-category-label { position:absolute; z-index:1; left:22px; right:18px; bottom:20px; color:#fff; }
+    #forme-storefront .f-category-label b { display:block; font:400 29px var(--f-serif); }
+    #forme-storefront .f-category-label span { display:block; margin-top:5px; font-size:8px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; }
+    #forme-storefront .f-campaign { display:grid; grid-template-columns:1.08fr .92fr; min-height:370px; background:#e6dfd3; }
+    #forme-storefront .f-campaign-image { min-height:370px; overflow:hidden; }
+    #forme-storefront .f-campaign-image img { width:100%; height:100%; display:block; object-fit:cover; }
+    #forme-storefront .f-campaign-copy { padding:clamp(34px,6vw,76px); display:flex; flex-direction:column; justify-content:center; align-items:flex-start; }
+    #forme-storefront .f-campaign-copy h2 { max-width:440px; margin:0 0 16px; font:400 clamp(38px,4.6vw,58px)/.99 var(--f-serif); letter-spacing:-.045em; }
+    #forme-storefront .f-campaign-copy p { max-width:360px; margin:0 0 23px; color:#687068; font-size:12px; line-height:1.9; }
+    #forme-storefront .f-products-section { background:var(--f-white); }
+    #forme-storefront .f-product-tabs { display:flex; gap:8px; flex-wrap:wrap; }
+    #forme-storefront .f-tab { padding:10px 15px; border:1px solid var(--f-line); background:transparent; color:#697067; font-size:9px; letter-spacing:.1em; text-transform:uppercase; }
+    #forme-storefront .f-tab.active,#forme-storefront .f-tab:hover { border-color:var(--f-green); background:var(--f-green); color:#fff; }
+    #forme-storefront .f-product-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:28px 16px; }
+    #forme-storefront .f-product { min-width:0; }
+    #forme-storefront .f-product-photo { position:relative; aspect-ratio:3/4; overflow:hidden; background:#e8e2d9; }
+    #forme-storefront .f-product-photo img { width:100%; height:100%; display:block; object-fit:cover; transition:transform .65s; }
+    #forme-storefront .f-product:hover .f-product-photo img { transform:scale(1.045); }
+    #forme-storefront .f-product-tag { position:absolute; top:12px; left:12px; padding:7px 9px; background:rgba(255,254,250,.94); color:#303b33; font-size:8px; letter-spacing:.12em; text-transform:uppercase; }
+    #forme-storefront .f-wish { position:absolute; top:10px; right:10px; width:35px; height:35px; display:grid; place-items:center; border:0; border-radius:50%; background:rgba(255,254,250,.94); color:#263b32; }
+    #forme-storefront .f-wish svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.6; }
+    #forme-storefront .f-wish.active svg { fill:var(--f-clay); stroke:var(--f-clay); }
+    #forme-storefront .f-add { position:absolute; left:10px; right:10px; bottom:10px; min-height:42px; border:0; background:rgba(38,59,50,.96); color:#fff; font-size:9px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; opacity:0; transform:translateY(8px); transition:.2s; }
+    #forme-storefront .f-product:hover .f-add,#forme-storefront .f-add:focus-visible { opacity:1; transform:translateY(0); }
+    #forme-storefront .f-product-info { padding:13px 1px 0; }
+    #forme-storefront .f-product-line { display:flex; justify-content:space-between; align-items:baseline; gap:8px; }
+    #forme-storefront .f-product-name { font:17px var(--f-serif); }
+    #forme-storefront .f-price { font-size:10px; font-weight:700; white-space:nowrap; }
+    #forme-storefront .f-product-meta { margin-top:6px; color:var(--f-muted); font-size:8px; letter-spacing:.08em; text-transform:uppercase; }
+    #forme-storefront .f-featured { padding:0 0 82px; }
+    #forme-storefront .f-editorial { position:relative; min-height:450px; display:flex; align-items:center; overflow:hidden; color:white; background:#434d43 url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1800&q=85') center 38%/cover no-repeat; }
+    #forme-storefront .f-editorial:before { content:''; position:absolute; inset:0; background:linear-gradient(90deg,rgba(24,38,31,.78),rgba(24,38,31,.22)); }
+    #forme-storefront .f-editorial-copy { position:relative; z-index:1; width:min(1320px,calc(100% - 72px)); margin:auto; padding:68px 0; }
+    #forme-storefront .f-editorial-copy h2 { max-width:520px; margin:17px 0; font:400 clamp(43px,5.7vw,68px)/.98 var(--f-serif); letter-spacing:-.05em; }
+    #forme-storefront .f-editorial-copy p { max-width:365px; color:rgba(255,255,255,.8); font-size:12px; line-height:1.9; }
+    #forme-storefront .f-editorial-copy .f-button { margin-top:14px; background:#e6d6c5; border-color:#e6d6c5; color:#27372f; }
+    #forme-storefront .f-newsletter { padding:76px 0; background:#ece8df; text-align:center; }
+    #forme-storefront .f-newsletter h2 { margin:0 0 10px; font:400 clamp(34px,4vw,46px) var(--f-serif); }
+    #forme-storefront .f-newsletter p { margin:0; color:#73776e; font-size:11px; }
+    #forme-storefront .f-news-form { max-width:470px; margin:24px auto 0; display:flex; border-bottom:1px solid #70766d; }
+    #forme-storefront .f-news-form input { min-width:0; flex:1; padding:14px 4px; border:0; outline:0; background:transparent; color:var(--f-ink); font-size:11px; }
+    #forme-storefront .f-news-form button { border:0; background:transparent; color:var(--f-ink); font-size:9px; font-weight:700; letter-spacing:.13em; text-transform:uppercase; }
+    #forme-storefront .f-footer { padding:53px 0 20px; background:var(--f-green); color:#f7f4ed; }
+    #forme-storefront .f-footer-grid { display:grid; grid-template-columns:1.55fr 1fr 1fr 1fr; gap:36px; padding-bottom:40px; }
+    #forme-storefront .f-footer .f-logo { font-size:31px; }
+    #forme-storefront .f-footer .f-logo small { color:#bfc8bd; }
+    #forme-storefront .f-footer-about p { max-width:270px; margin-top:18px; color:rgba(255,255,255,.63); font-size:10px; line-height:1.9; }
+    #forme-storefront .f-footer-col b { display:block; margin-bottom:16px; color:#d7b79b; font-size:9px; letter-spacing:.16em; text-transform:uppercase; }
+    #forme-storefront .f-footer-col a { display:block; width:max-content; max-width:100%; margin:10px 0; color:rgba(255,255,255,.72); font-size:10px; }
+    #forme-storefront .f-footer-col a:hover { color:white; }
+    #forme-storefront .f-footer-bottom { padding-top:17px; display:flex; justify-content:space-between; gap:15px; border-top:1px solid rgba(255,255,255,.17); color:rgba(255,255,255,.47); font-size:8px; letter-spacing:.08em; }
+    #forme-storefront .f-overlay { position:fixed; inset:0; z-index:90; background:rgba(12,18,15,.48); opacity:0; pointer-events:none; transition:opacity .25s; }
+    #forme-storefront .f-overlay.open { opacity:1; pointer-events:auto; }
+    #forme-storefront .f-drawer { position:fixed; z-index:100; top:0; right:0; bottom:0; width:min(430px,100%); padding:24px; display:flex; flex-direction:column; background:#fffefa; color:var(--f-ink); transform:translateX(102%); transition:transform .3s; }
+    #forme-storefront .f-drawer.open { transform:translateX(0); }
+    #forme-storefront .f-drawer-head { padding-bottom:17px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--f-line); }
+    #forme-storefront .f-drawer-head h3 { margin:0; font:29px var(--f-serif); font-weight:400; }
+    #forme-storefront .f-drawer-close { width:38px; height:38px; border:0; background:transparent; font-size:25px; }
+    #forme-storefront .f-cart-items { flex:1; overflow:auto; padding:12px 0; }
+    #forme-storefront .f-cart-row { padding:12px 0; display:grid; grid-template-columns:76px 1fr auto; gap:12px; border-bottom:1px solid var(--f-line); }
+    #forme-storefront .f-cart-row img { width:76px; height:96px; object-fit:cover; }
+    #forme-storefront .f-cart-row b { display:block; font:16px var(--f-serif); }
+    #forme-storefront .f-cart-row small { display:block; margin:5px 0 10px; color:var(--f-muted); font-size:9px; }
+    #forme-storefront .f-qty { display:flex; align-items:center; gap:9px; }
+    #forme-storefront .f-qty button { width:23px; height:23px; border:1px solid var(--f-line); border-radius:50%; background:transparent; }
+    #forme-storefront .f-remove { border:0; background:transparent; color:var(--f-muted); font-size:9px; }
+    #forme-storefront .f-cart-foot { padding-top:17px; border-top:1px solid var(--f-line); }
+    #forme-storefront .f-total { display:flex; justify-content:space-between; margin-bottom:13px; font-size:12px; }
+    #forme-storefront .f-cart-foot .f-button { width:100%; }
+    #forme-storefront .f-empty { padding:45px 8px; color:var(--f-muted); text-align:center; font:20px var(--f-serif); }
+    #forme-storefront .f-mobile-menu { position:fixed; z-index:105; top:0; left:0; bottom:0; width:min(320px,86vw); padding:24px; display:flex; flex-direction:column; gap:23px; background:#fffefa; color:var(--f-ink); transform:translateX(-105%); transition:transform .3s; }
+    #forme-storefront .f-mobile-menu.open { transform:translateX(0); }
+    #forme-storefront .f-mobile-menu a { font:25px var(--f-serif); }
+    #forme-storefront .f-mobile-menu .f-logo { font-size:28px; }
+    #forme-storefront .f-mobile-menu-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+    #forme-storefront .f-toast { position:fixed; z-index:120; left:50%; bottom:22px; max-width:calc(100% - 30px); padding:13px 18px; background:var(--f-green); color:white; font-size:10px; letter-spacing:.05em; opacity:0; transform:translate(-50%,18px); pointer-events:none; transition:.25s; }
+    #forme-storefront .f-toast.show { opacity:1; transform:translate(-50%,0); }
+    #forme-storefront .f-no-results { grid-column:1/-1; padding:45px 10px; color:var(--f-muted); text-align:center; font:20px var(--f-serif); }
+    @media(max-width:980px) {
+      #forme-storefront .f-container,#forme-storefront .f-hero-content,#forme-storefront .f-editorial-copy { width:min(100% - 44px,800px); }
+      #forme-storefront .f-head-main { min-height:70px; }
+      #forme-storefront .f-nav { gap:17px; }
+      #forme-storefront .f-nav a { font-size:9px; }
+      #forme-storefront .f-category-grid { grid-template-columns:repeat(2,1fr); }
+      #forme-storefront .f-category { min-height:300px; }
+      #forme-storefront .f-product-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px 13px; }
+      #forme-storefront .f-add { opacity:1; transform:none; }
+      #forme-storefront .f-footer-grid { grid-template-columns:1.3fr 1fr 1fr; }
+      #forme-storefront .f-footer-about { grid-column:1/-1; }
+    }
+    @media(max-width:680px) {
+      #forme-storefront .f-container,#forme-storefront .f-hero-content,#forme-storefront .f-editorial-copy { width:calc(100% - 30px); }
+      #forme-storefront .f-announcement { min-height:31px; font-size:7px; letter-spacing:.1em; }
+      #forme-storefront .f-head-main { min-height:62px; grid-template-columns:40px 1fr 90px; gap:3px; }
+      #forme-storefront .f-menu-button { display:grid; }
+      #forme-storefront .f-head-main>.f-logo { justify-self:center; font-size:24px; }
+      #forme-storefront .f-head-main>.f-logo small { font-size:7px; }
+      #forme-storefront .f-nav { display:none; }
+      #forme-storefront .f-actions { gap:0; }
+      #forme-storefront .f-icon { width:34px; height:36px; }
+      #forme-storefront .f-icon svg { width:17px; height:17px; }
+      #forme-storefront .f-search-row { padding:0 0 10px; }
+      #forme-storefront .f-search { width:100%; height:35px; }
+      #forme-storefront .f-hero { min-height:570px; background-position:58% center; }
+      #forme-storefront .f-hero:before { background:linear-gradient(90deg,rgba(16,25,20,.74),rgba(16,25,20,.34)); }
+      #forme-storefront .f-hero-content { padding:65px 0 82px; }
+      #forme-storefront .f-hero h1 { max-width:390px; margin:19px 0 14px; font-size:59px; }
+      #forme-storefront .f-hero p { max-width:310px; font-size:11px; }
+      #forme-storefront .f-hero-foot { right:15px; bottom:15px; font-size:7px; }
+      #forme-storefront .f-perk-row { min-height:0; padding:16px 0; grid-template-columns:1fr; gap:12px; }
+      #forme-storefront .f-perk { justify-content:flex-start; font-size:9px; }
+      #forme-storefront .f-section { padding:56px 0; }
+      #forme-storefront .f-section-head { align-items:flex-start; flex-direction:column; gap:13px; margin-bottom:22px; }
+      #forme-storefront .f-section h2 { font-size:36px; }
+      #forme-storefront .f-section-head p { font-size:10px; }
+      #forme-storefront .f-category-grid { gap:9px; }
+      #forme-storefront .f-category { min-height:230px; }
+      #forme-storefront .f-category:nth-child(3),#forme-storefront .f-category:nth-child(4) { min-height:210px; }
+      #forme-storefront .f-category-label { left:13px; bottom:13px; }
+      #forme-storefront .f-category-label b { font-size:24px; }
+      #forme-storefront .f-category-label span { font-size:7px; }
+      #forme-storefront .f-campaign { grid-template-columns:1fr; }
+      #forme-storefront .f-campaign-image { min-height:280px; max-height:310px; }
+      #forme-storefront .f-campaign-copy { padding:35px 25px 40px; }
+      #forme-storefront .f-campaign-copy h2 { font-size:42px; }
+      #forme-storefront .f-product-tabs { width:100%; flex-wrap:nowrap; overflow:auto; padding-bottom:5px; }
+      #forme-storefront .f-tab { white-space:nowrap; }
+      #forme-storefront .f-product-name { font-size:15px; }
+      #forme-storefront .f-price { font-size:9px; }
+      #forme-storefront .f-product-meta { font-size:7px; }
+      #forme-storefront .f-featured { padding:0 0 56px; }
+      #forme-storefront .f-editorial { min-height:410px; background-position:58% center; }
+      #forme-storefront .f-editorial-copy { padding:52px 0; }
+      #forme-storefront .f-editorial-copy h2 { font-size:47px; }
+      #forme-storefront .f-newsletter { padding:57px 0; }
+      #forme-storefront .f-newsletter h2 { font-size:35px; }
+      #forme-storefront .f-footer-grid { grid-template-columns:1fr 1fr; gap:25px 18px; }
+      #forme-storefront .f-footer-about { grid-column:1/-1; }
+      #forme-storefront .f-footer-bottom { flex-direction:column; line-height:1.7; }
+    }
+    @media(prefers-reduced-motion:reduce) { #forme-storefront *,#forme-storefront *:before,#forme-storefront *:after { scroll-behavior:auto!important; transition:none!important; animation:none!important; } }
+  </style>
+  <script id="forme-storefront-interactions">
+    document.addEventListener('DOMContentLoaded', () => {
+      const root = document.querySelector('#forme-storefront');
+      if (!root) return;
+      const cart = [];
+      const wishlist = new Set();
+      const money = n => '৳' + Number(n).toLocaleString('en-BD');
+      const toast = message => { const node=root.querySelector('#f-toast'); node.textContent=message; node.classList.add('show'); clearTimeout(toast.timer); toast.timer=setTimeout(()=>node.classList.remove('show'),2200); };
+      const overlay=root.querySelector('#f-overlay'), drawer=root.querySelector('#f-drawer'), menu=root.querySelector('#f-mobile-menu');
+      const closePanels=()=>{overlay.classList.remove('open');drawer.classList.remove('open');menu.classList.remove('open');};
+      const openCart=()=>{overlay.classList.add('open');drawer.classList.add('open');};
+      const updateCart=()=>{
+        const count=cart.reduce((s,p)=>s+p.qty,0), total=cart.reduce((s,p)=>s+p.qty*p.price,0);
+        root.querySelector('#f-cart-count').textContent=count;
+        root.querySelector('#f-cart-items').innerHTML=cart.length?cart.map(p=>`<div class="f-cart-row"><img src="${p.image}" alt=""><div><b>${p.name}</b><small>${money(p.price)}</small><div class="f-qty"><button data-f-qty="${p.id}" data-f-delta="-1" aria-label="Decrease">−</button><span>${p.qty}</span><button data-f-qty="${p.id}" data-f-delta="1" aria-label="Increase">+</button></div></div><button class="f-remove" data-f-remove="${p.id}">Remove</button></div>`).join(''):'<div class="f-empty">Your bag is waiting for something good.</div>';
+        root.querySelector('#f-cart-total').textContent=money(total);
+      };
+      root.addEventListener('click',e=>{
+        const add=e.target.closest('[data-f-add]');
+        if(add){const id=add.dataset.fAdd, card=add.closest('.f-product'), data={id,name:card.dataset.name,price:Number(card.dataset.price),image:card.dataset.image};const found=cart.find(p=>p.id===id);if(found)found.qty++;else cart.push({...data,qty:1});updateCart();toast('Added to your bag.');return;}
+        const wish=e.target.closest('[data-f-wish]');
+        if(wish){const id=wish.dataset.fWish;wishlist.has(id)?wishlist.delete(id):wishlist.add(id);wish.classList.toggle('active',wishlist.has(id));toast(wishlist.has(id)?'Saved to your wishlist.':'Removed from your wishlist.');return;}
+        const tab=e.target.closest('[data-f-filter]');
+        if(tab){root.querySelectorAll('.f-tab').forEach(t=>t.classList.toggle('active',t===tab));const filter=tab.dataset.fFilter;let visible=0;root.querySelectorAll('.f-product').forEach(card=>{const show=filter==='All'||card.dataset.category===filter;card.hidden=!show;if(show)visible++;});const empty=root.querySelector('#f-no-results');empty.hidden=visible!==0;return;}
+        const qty=e.target.closest('[data-f-qty]');
+        if(qty){const item=cart.find(p=>p.id===qty.dataset.fQty);item.qty+=Number(qty.dataset.fDelta);if(item.qty<1)cart.splice(cart.indexOf(item),1);updateCart();return;}
+        const remove=e.target.closest('[data-f-remove]');if(remove){const i=cart.findIndex(p=>p.id===remove.dataset.fRemove);if(i>=0)cart.splice(i,1);updateCart();return;}
+        if(e.target.closest('#f-cart-open')){openCart();return;}
+        if(e.target.closest('#f-cart-close')||e.target===overlay){closePanels();return;}
+        if(e.target.closest('#f-menu-open')){overlay.classList.add('open');menu.classList.add('open');return;}
+        if(e.target.closest('#f-menu-close')){closePanels();return;}
+        if(e.target.closest('#f-checkout')){toast('Checkout preview — connect order and payment services before launch.');return;}
+      });
+      const search=root.querySelector('#f-search-input');
+      search.addEventListener('input',()=>{const q=search.value.trim().toLowerCase();if(q)root.querySelector('#f-new-in').scrollIntoView({behavior:'smooth',block:'start'});let visible=0;root.querySelectorAll('#f-new-in .f-product').forEach(card=>{const show=(card.dataset.name+' '+card.dataset.category).toLowerCase().includes(q);card.hidden=!show;if(show)visible++;});root.querySelector('#f-no-results').hidden=visible!==0;});
+      root.querySelector('#f-news-form').addEventListener('submit',e=>{e.preventDefault();root.querySelector('#f-news-note').textContent='Thanks for joining the FORME list.';e.target.reset();});
+      menu.addEventListener('click',e=>{if(e.target.closest('a'))closePanels();});
+      updateCart();
+    });
+  </script>
 </head>
 <body>
-  <div class="announce">A considered wardrobe, made for <b>every day</b> · Complimentary delivery over ৳4,000</div>
-  <header><div class="wrap nav">
-    <nav class="links"><a href="#new-arrivals">New in</a><a href="#collections">Collections</a><a href="#story">Our story</a></nav>
-    <button class="icon menu-btn" id="menu-open" aria-label="Open menu">☰</button>
-    <a class="logo" href="#top">FORME<small>EVERYDAY, REFINED</small></a>
-    <div class="actions"><button class="icon" id="search-focus" aria-label="Search products">⌕</button><button class="icon" id="cart-open" aria-label="Open bag">♧<span class="count" id="cart-count">0</span></button></div>
-  </div></header>
-  <main id="top">
-    <section class="hero"><div class="wrap hero-grid">
-      <div class="hero-copy"><span class="eyebrow">The new everyday edit · 2026</span><h1>Less, but more considered.</h1><p>Thoughtful silhouettes, tactile fabrics and the pieces you will reach for again and again.</p><a class="btn" href="#new-arrivals">Explore the collection <span>↗</span></a></div>
-      <div class="hero-visual"><svg viewBox="0 0 600 700" role="img" aria-label="Editorial fashion illustration"><defs><linearGradient id="fabric" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f1e9dc"/><stop offset="1" stop-color="#85745f"/></linearGradient></defs><ellipse cx="300" cy="660" rx="210" ry="20" fill="#463e34" opacity=".2"/><circle cx="300" cy="100" r="56" fill="#b98567"/><path d="M245 92Q265 20 340 45Q370 65 355 105Q330 75 300 80Q265 120 245 92Z" fill="#352d29"/><path d="M265 170L335 170L360 265L410 660L190 660L240 265Z" fill="url(#fabric)"/><path d="M240 255L170 285L100 560L165 580L270 340ZM360 255L430 285L500 560L435 580L330 340Z" fill="#d5c3ac"/><path d="M265 170L300 255L335 170M300 255V660" fill="none" stroke="#9b8770" stroke-width="4"/><path d="M185 660H255L240 700H170ZM345 660H415L430 700H360Z" fill="#423b35"/></svg><span class="visual-note">A study in everyday form / 001</span></div>
-    </div></section>
-    <div class="marquee"><div class="wrap marquee-inner"><span>Wear what feels like you</span><b>✳</b><span>Made to move with you</span><b>✳</b><span>Simple forms, lasting appeal</span><b>✳</b><span>Wear what feels like you</span></div></div>
-    <section class="section" id="collections"><div class="wrap">
-      <div class="section-head"><div><span class="kicker">Find your form</span><h2>Shop by collection</h2></div><p>Build a wardrobe around pieces that work together, season after season.</p></div>
-      <div class="categories">
-        <a class="category" href="#new-arrivals" data-category="Women"><svg viewBox="0 0 500 650" aria-label="Dress illustration"><rect width="500" height="650" fill="#ad9a84"/><circle cx="250" cy="270" r="185" fill="#fff" opacity=".13"/><path d="M205 125L250 145L280 285L340 515Q250 550 160 515L220 285L250 145L295 125L330 180L285 205L250 165L215 205L170 180Z" fill="#5c6257"/></svg><div class="category-label"><strong>Women</strong><span>Soft silhouettes ↗</span></div></a>
-        <a class="category" href="#new-arrivals" data-category="Men"><svg viewBox="0 0 500 650" aria-label="Shirt illustration"><rect width="500" height="650" fill="#9ca99d"/><circle cx="250" cy="270" r="185" fill="#fff" opacity=".13"/><path d="M195 125L245 150L295 125L365 170L330 260L300 245L315 520H185L200 245L170 260L135 170Z" fill="#37453f"/><path d="M195 125L245 180L295 125L270 215L245 235L220 215Z" fill="#dadbd0"/></svg><div class="category-label"><strong>Men</strong><span>Everyday structure ↗</span></div></a>
-        <a class="category" href="#new-arrivals" data-category="Accessories"><svg viewBox="0 0 500 650" aria-label="Bag illustration"><rect width="500" height="650" fill="#b8a58e"/><circle cx="250" cy="270" r="185" fill="#fff" opacity=".13"/><rect x="145" y="210" width="210" height="270" rx="28" fill="#6f4b3d"/><path d="M195 225V175Q250 65 305 175V225" fill="none" stroke="#e8d9c4" stroke-width="15"/></svg><div class="category-label"><strong>Accessories</strong><span>The finishing touch ↗</span></div></a>
-      </div>
-    </div></section>
-    <section class="section products" id="new-arrivals"><div class="wrap">
-      <div class="section-head"><div><span class="kicker">A fresh perspective</span><h2>New and noteworthy</h2></div><a class="text-link" href="#new-arrivals">Discover all pieces ↗</a></div>
-      <div class="tools"><div class="filters" id="filters"><button class="filter active" data-filter="All">All pieces</button><button class="filter" data-filter="Women">Women</button><button class="filter" data-filter="Men">Men</button><button class="filter" data-filter="Accessories">Accessories</button></div><div class="tool-right"><label class="search">⌕<input id="product-search" type="search" placeholder="Find your next favourite" aria-label="Search products"></label><select class="sort" id="sort-select" aria-label="Sort products"><option value="featured">Featured</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option></select></div></div>
-      <div class="grid" id="product-grid"></div>
-    </div></section>
-    <section class="section" id="story"><div class="wrap story"><div class="story-art"><svg viewBox="0 0 500 650" aria-label="Minimal garment illustration"><rect width="500" height="650" fill="#b5a58f"/><circle cx="250" cy="270" r="185" fill="#fff" opacity=".13"/><path d="M205 125L250 145L280 285L340 515Q250 550 160 515L220 285L250 145L295 125L330 180L285 205L250 165L215 205L170 180Z" fill="#3a5046"/><path d="M215 205Q250 230 285 205" fill="none" stroke="#e7d8c5" stroke-width="4"/></svg></div><div class="story-copy"><span class="kicker">The FORME point of view</span><h2>Buy fewer things. Love them longer.</h2><p>We believe a good wardrobe is not about having more. It is about choosing well: versatile shapes, comfortable fabrics and details that make the ordinary feel considered.</p><a class="btn" href="#new-arrivals">Find your everyday pieces ↗</a></div></div></section>
-    <section class="section" style="padding-top:5px"><div class="wrap benefits"><div class="benefit"><span class="benefit-mark">↗</span><div><strong>Thoughtful delivery</strong><small>Clear delivery timelines across Bangladesh.</small></div></div><div class="benefit"><span class="benefit-mark">↻</span><div><strong>Easy exchanges</strong><small>A simple process when the fit is not quite right.</small></div></div><div class="benefit"><span class="benefit-mark">◇</span><div><strong>Secure checkout</strong><small>Payment options and order tracking coming soon.</small></div></div></div></section>
-    <section class="newsletter"><div class="wrap"><span class="kicker">A note from FORME</span><h2>Good things, occasionally.</h2><p>New arrivals, thoughtful edits and a little inspiration. No noise.</p><form class="newsletter-form" id="newsletter-form"><input type="email" required placeholder="Your email address" aria-label="Your email address"><button>Join the list ↗</button></form><div class="newsletter-note" id="newsletter-note" aria-live="polite"></div></div></section>
+<div id="forme-storefront">
+  <div class="f-announcement">Discover the new season edit <strong>·</strong> Everyday pieces, thoughtfully chosen</div>
+  <header class="f-header">
+    <div class="f-container f-head-main">
+      <button class="f-icon f-menu-button" id="f-menu-open" aria-label="Open menu"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <a href="#f-top" class="f-logo">FORME<small>EVERYDAY, REFINED</small></a>
+      <nav class="f-nav" aria-label="Main navigation"><a href="#f-new-in">New arrivals</a><a href="#f-categories">Collections</a><a href="#f-editorial">Our story</a><a href="#f-footer">Contact</a></nav>
+      <div class="f-actions"><button class="f-icon" aria-label="Search" onclick="document.getElementById('f-search-input').focus()"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg></button><button class="f-icon" id="f-cart-open" aria-label="Shopping bag"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg><span class="f-count" id="f-cart-count">0</span></button></div>
+    </div>
+    <div class="f-container f-search-row"><label class="f-search"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg><input id="f-search-input" type="search" placeholder="Search clothing, collections and more" aria-label="Search products"></label></div>
+  </header>
+  <main id="f-top">
+    <section class="f-hero"><div class="f-hero-content"><span class="f-eyebrow">The new everyday edit · 2026</span><h1>Style that feels like you.</h1><p>Discover considered essentials, easy silhouettes and fresh pieces made to move with your everyday.</p><div class="f-hero-buttons"><a class="f-button f-button-light" href="#f-new-in">Shop new arrivals <svg viewBox="0 0 24 24"><path d="M4 12h15M13 5l7 7-7 7"/></svg></a><a class="f-button" href="#f-categories">Explore collections</a></div></div><span class="f-hero-foot">FORME / The new season collection</span></section>
+    <section class="f-perks"><div class="f-container f-perk-row"><div class="f-perk"><svg viewBox="0 0 24 24"><path d="M3 7h12v11H3zM15 11h4l3 3v4h-7zM7 18a2 2 0 1 0 4 0M17 18a2 2 0 1 0 4 0"/></svg>Considered everyday essentials</div><div class="f-perk"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7L4 8.5"/><path d="M4 4v4.5h4.5M12 7v5l3 2"/></svg>Comfort-first designs</div><div class="f-perk"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v5c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6l-8-3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg>A wardrobe with your point of view</div></div></section>
+    <section class="f-section" id="f-categories"><div class="f-container"><div class="f-section-head"><div><span class="f-kicker">Find your form</span><h2>Shop by category</h2></div><p>Start with the pieces you love. Explore edits for every mood, moment and everyday plan.</p></div><div class="f-category-grid">
+      <a class="f-category" href="#f-new-in"><img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=800&q=82" alt="Women's contemporary fashion" loading="lazy"><div class="f-category-label"><b>Women</b><span>Discover the edit ↗</span></div></a>
+      <a class="f-category" href="#f-new-in"><img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&w=800&q=82" alt="Men's modern clothing" loading="lazy"><div class="f-category-label"><b>Men</b><span>Discover the edit ↗</span></div></a>
+      <a class="f-category" href="#f-new-in"><img src="https://images.unsplash.com/photo-1503919005314-30d93d07d823?auto=format&fit=crop&w=800&q=82" alt="Kids fashion" loading="lazy"><div class="f-category-label"><b>Kids</b><span>Discover the edit ↗</span></div></a>
+      <a class="f-category" href="#f-new-in"><img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=800&q=82" alt="Fashion accessories and styling" loading="lazy"><div class="f-category-label"><b>Accessories</b><span>Discover the edit ↗</span></div></a>
+    </div></div></section>
+    <section class="f-featured"><div class="f-container f-campaign"><div class="f-campaign-image"><img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=85" alt="Fresh seasonal fashion collection" loading="lazy"></div><div class="f-campaign-copy"><span class="f-kicker">A little more you</span><h2>New season. New favourites.</h2><p>Refresh your wardrobe with easy layers, timeless tones and the little details that make every look your own.</p><a class="f-button" href="#f-new-in">Explore the collection <svg viewBox="0 0 24 24"><path d="M4 12h15M13 5l7 7-7 7"/></svg></a></div></div></section>
+    <section class="f-section f-products-section" id="f-new-in"><div class="f-container"><div class="f-section-head"><div><span class="f-kicker">Just landed</span><h2>New arrivals</h2></div><a class="f-link" href="#f-new-in">View all pieces ↗</a></div><div class="f-product-tabs"><button class="f-tab active" data-f-filter="All">All pieces</button><button class="f-tab" data-f-filter="Women">Women</button><button class="f-tab" data-f-filter="Men">Men</button><button class="f-tab" data-f-filter="Accessories">Accessories</button></div><div class="f-product-grid" style="margin-top:22px">
+      <article class="f-product" data-name="The Column Dress" data-category="Women" data-id="f1" data-price="2890" data-image="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=700&q=82"><div class="f-product-photo"><img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=700&q=82" alt="The Column Dress" loading="lazy"><span class="f-product-tag">Bestseller</span><button class="f-wish" data-f-wish="f1" aria-label="Save The Column Dress"><svg viewBox="0 0 24 24"><path d="M20.8 8.8c0 5.2-8.8 11-8.8 11S3.2 14 3.2 8.8A4.5 4.5 0 0 1 12 6.5a4.5 4.5 0 0 1 8.8 2.3Z"/></svg></button><button class="f-add" data-f-add="f1">Add to bag +</button></div><div class="f-product-info"><div class="f-product-line"><span class="f-product-name">The Column Dress</span><span class="f-price">৳2,890</span></div><div class="f-product-meta">Soft cotton · Sand</div></div></article>
+      <article class="f-product" data-name="Everyday Overshirt" data-category="Men" data-id="f2" data-price="2190" data-image="https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&w=700&q=82"><div class="f-product-photo"><img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&w=700&q=82" alt="Everyday Overshirt" loading="lazy"><span class="f-product-tag">New</span><button class="f-wish" data-f-wish="f2" aria-label="Save Everyday Overshirt"><svg viewBox="0 0 24 24"><path d="M20.8 8.8c0 5.2-8.8 11-8.8 11S3.2 14 3.2 8.8A4.5 4.5 0 0 1 12 6.5a4.5 4.5 0 0 1 8.8 2.3Z"/></svg></button><button class="f-add" data-f-add="f2">Add to bag +</button></div><div class="f-product-info"><div class="f-product-line"><span class="f-product-name">Everyday Overshirt</span><span class="f-price">৳2,190</span></div><div class="f-product-meta">Textured cotton · Olive</div></div></article>
+      <article class="f-product" data-name="Relaxed Trousers" data-category="Men" data-id="f3" data-price="1990" data-image="https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=700&q=82"><div class="f-product-photo"><img src="https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=700&q=82" alt="Relaxed Trousers" loading="lazy"><button class="f-wish" data-f-wish="f3" aria-label="Save Relaxed Trousers"><svg viewBox="0 0 24 24"><path d="M20.8 8.8c0 5.2-8.8 11-8.8 11S3.2 14 3.2 8.8A4.5 4.5 0 0 1 12 6.5a4.5 4.5 0 0 1 8.8 2.3Z"/></svg></button><button class="f-add" data-f-add="f3">Add to bag +</button></div><div class="f-product-info"><div class="f-product-line"><span class="f-product-name">Relaxed Trousers</span><span class="f-price">৳1,990</span></div><div class="f-product-meta">Easy tailoring · Stone</div></div></article>
+      <article class="f-product" data-name="Arc Mini Tote" data-category="Accessories" data-id="f4" data-price="1590" data-image="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=700&q=82"><div class="f-product-photo"><img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=700&q=82" alt="Arc Mini Tote" loading="lazy"><span class="f-product-tag">Limited edit</span><button class="f-wish" data-f-wish="f4" aria-label="Save Arc Mini Tote"><svg viewBox="0 0 24 24"><path d="M20.8 8.8c0 5.2-8.8 11-8.8 11S3.2 14 3.2 8.8A4.5 4.5 0 0 1 12 6.5a4.5 4.5 0 0 1 8.8 2.3Z"/></svg></button><button class="f-add" data-f-add="f4">Add to bag +</button></div><div class="f-product-info"><div class="f-product-line"><span class="f-product-name">Arc Mini Tote</span><span class="f-price">৳1,590</span></div><div class="f-product-meta">Everyday carry · Cocoa</div></div></article>
+    </div><div id="f-no-results" class="f-no-results" hidden>No pieces found. Try another category or search.</div></div></section>
+    <section class="f-featured"><div class="f-container f-campaign"><div class="f-campaign-copy"><span class="f-kicker">The FORME point of view</span><h2>Buy fewer things. Love them longer.</h2><p>Build a wardrobe around the pieces that feel right: relaxed shapes, wearable colours and details that stay with you beyond a season.</p><a class="f-button" href="#f-categories">Discover your collection ↗</a></div><div class="f-campaign-image"><img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1200&q=85" alt="Thoughtfully styled wardrobe essentials" loading="lazy"></div></div></section>
+    <section class="f-section" id="f-editorial" style="padding-top:0"><div class="f-container f-editorial"><div class="f-editorial-copy"><span class="f-eyebrow">The FORME point of view</span><h2>Everyday pieces. A little more considered.</h2><p>From the first layer to the finishing touch, find clothing that feels comfortable, expressive and easy to make your own.</p><a class="f-button" href="#f-new-in">Find your everyday pieces ↗</a></div></div></section>
+    <section class="f-newsletter"><div class="f-container"><span class="f-kicker">A note from FORME</span><h2>Good things, occasionally.</h2><p>New arrivals, thoughtful edits and a little inspiration. No noise.</p><form class="f-news-form" id="f-news-form"><input type="email" required placeholder="Your email address" aria-label="Your email address"><button type="submit">Join the list ↗</button></form><div id="f-news-note" class="f-product-meta" aria-live="polite"></div></div></section>
   </main>
-  <footer><div class="wrap"><div class="footer-grid"><div class="footer-brand"><a class="logo" href="#top">FORME<small>EVERYDAY, REFINED</small></a><p>Modern essentials designed around the idea that getting dressed should feel effortless.</p></div><div class="footer-col"><strong>Explore</strong><a href="#new-arrivals">New arrivals</a><a href="#collections">Women</a><a href="#collections">Men</a><a href="#collections">Accessories</a></div><div class="footer-col"><strong>Help</strong><a href="#help">Delivery information</a><a href="#help">Returns & exchanges</a><a href="#help">Size guide</a><a href="mailto:hello@example.com">Contact</a></div><div class="footer-col"><strong>Follow along</strong><a href="#">Instagram ↗</a><a href="#">Facebook ↗</a><a href="#">TikTok ↗</a></div></div><div class="footer-bottom"><span>© 2026 FORME. Storefront preview — replace sample products before launch.</span><span>MADE WITH INTENTION · BANGLADESH</span></div></div></footer>
-  <div class="overlay" id="overlay"></div>
-  <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Shopping bag"><div class="drawer-head"><h3>Your bag <span id="drawer-count">(0)</span></h3><button class="close" id="cart-close" aria-label="Close bag">×</button></div><div class="cart-list" id="cart-list"></div><div class="subtotal"><span>Subtotal</span><strong id="subtotal">৳0</strong></div><p style="font-size:8px;color:var(--muted)">Delivery and taxes are calculated at checkout. Demo only — no payment is collected.</p><button class="btn" id="checkout-open">Continue to checkout ↗</button></aside>
-  <nav class="mobile-panel" id="mobile-panel"><div class="drawer-head"><a class="logo" href="#top">FORME<small>EVERYDAY, REFINED</small></a><button class="close" id="menu-close" aria-label="Close menu">×</button></div><a href="#new-arrivals">New in</a><a href="#collections">Collections</a><a href="#story">Our story</a></nav>
-  <div class="modal" id="checkout-modal"><div class="modal-card"><div class="drawer-head"><div><span class="kicker">One last step</span><h3>Almost yours.</h3></div><button class="close" id="checkout-close" aria-label="Close checkout">×</button></div><p>Enter your details to preview the order experience. This demo does not submit a real order or collect payment.</p><form class="checkout-form" id="checkout-form"><label>Full name<input name="name" required placeholder="Your name"></label><label>Phone number<input name="phone" type="tel" required placeholder="01XXXXXXXXX"></label><label>Email address<input name="email" type="email" required placeholder="you@example.com"></label><label>Delivery address<textarea name="address" required placeholder="House, road, area, city"></textarea></label><div class="subtotal"><span>Order total</span><strong id="checkout-total">৳0</strong></div><button class="btn" type="submit">Preview order ↗</button></form><p class="notice">Before launch, connect a backend, secure order storage, payment gateway, delivery rules and verified customer-support details.</p></div></div>
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script>
-  (() => {
-    const products=[
-      {id:"p1",name:"The Column Dress",category:"Women",price:2890,desc:"Soft cotton · Sand",kind:"dress",bg:"#d9c8b3",fabric:"#68786b",tag:"Bestseller"},
-      {id:"p2",name:"Everyday Overshirt",category:"Men",price:2190,desc:"Textured linen · Olive",kind:"shirt",bg:"#c2c9be",fabric:"#475b50",tag:"New"},
-      {id:"p3",name:"Relaxed Trousers",category:"Men",price:1990,desc:"Easy tailoring · Stone",kind:"pants",bg:"#d7d1c6",fabric:"#7e7466"},
-      {id:"p4",name:"Arc Mini Tote",category:"Accessories",price:1590,desc:"Everyday carry · Cocoa",kind:"bag",bg:"#c9b5a0",fabric:"#765343",tag:"Limited"},
-      {id:"p5",name:"Soft Form Blouse",category:"Women",price:1790,desc:"Lightweight weave · Ivory",kind:"shirt",bg:"#e2d9cc",fabric:"#eae3d9"},
-      {id:"p6",name:"Studio Shirt",category:"Men",price:2290,desc:"Relaxed fit · Ecru",kind:"shirt",bg:"#d7d0c3",fabric:"#c8b99f"},
-      {id:"p7",name:"Weekend Midi",category:"Women",price:2690,desc:"Draped cotton · Clay",kind:"dress",bg:"#c9a99a",fabric:"#a45b3f",tag:"Popular"},
-      {id:"p8",name:"Market Carryall",category:"Accessories",price:1290,desc:"Everyday canvas · Natural",kind:"bag",bg:"#d8c9b5",fabric:"#b39c7a"}
-    ];
-    const state={filter:"All",search:"",sort:"featured",cart:[],wishlist:new Set()};
-    const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-    const money=n=>"৳"+Number(n).toLocaleString("en-BD");
-    function garment(p){let shape="";if(p.kind==="dress")shape='<path d="M205 125L250 145L280 285L340 515Q250 550 160 515L220 285L250 145L295 125L330 180L285 205L250 165L215 205L170 180Z"';else if(p.kind==="shirt")shape='<path d="M195 125L245 150L295 125L365 170L330 260L300 245L315 520H185L200 245L170 260L135 170Z"';else if(p.kind==="pants")shape='<path d="M180 130H320L335 520H265L245 285L225 520H155Z"';else shape='<rect x="145" y="210" width="210" height="270" rx="28"';let end=p.kind==="bag"?"/>":'"/>';return '<svg viewBox="0 0 500 650" role="img" aria-label="'+p.kind+' illustration"><rect width="500" height="650" fill="'+p.bg+'"/><circle cx="250" cy="270" r="185" fill="#fff" opacity=".12"/><ellipse cx="250" cy="555" rx="150" ry="20" fill="#3b362d" opacity=".13"/>'+shape+' fill="'+p.fabric+end+(p.kind==="bag"?'<path d="M195 225V175Q250 65 305 175V225" fill="none" stroke="#e8ddce" stroke-width="15"/>':'')+'<text x="250" y="610" fill="#fff" opacity=".58" text-anchor="middle" font-size="11" letter-spacing="6">F O R M E</text></svg>';}
-    function renderProducts(){let list=products.filter(p=>(state.filter==="All"||p.category===state.filter)&&(p.name+" "+p.desc+" "+p.category).toLowerCase().includes(state.search));if(state.sort==="low")list.sort((a,b)=>a.price-b.price);if(state.sort==="high")list.sort((a,b)=>b.price-a.price);$("#product-grid").innerHTML=list.length?list.map(p=>'<article class="product"><div class="photo" style="--bg:'+p.bg+'">'+garment(p)+(p.tag?'<span class="tag">'+p.tag+'</span>':'')+'<button class="wish '+(state.wishlist.has(p.id)?"active":"")+'" data-wish="'+p.id+'" aria-label="Add '+p.name+' to wishlist">'+(state.wishlist.has(p.id)?"♥":"♡")+'</button><button class="add" data-add="'+p.id+'">Add to bag +</button></div><div class="product-info"><div class="product-meta"><span class="product-name">'+p.name+'</span><span class="price">'+money(p.price)+'</span></div><div class="desc">'+p.desc+'</div></div></article>').join(""):'<div class="empty">No pieces match that search. Try another name or category.</div>';}
-    function toast(message){const el=$("#toast");el.textContent=message;el.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove("show"),2400);}
-    function openDrawer(){$("#overlay").classList.add("open");$("#drawer").classList.add("open");}
-    function closeDrawer(){$("#overlay").classList.remove("open");$("#drawer").classList.remove("open");}
-    function updateCart(){const count=state.cart.reduce((s,x)=>s+x.qty,0),total=state.cart.reduce((s,x)=>s+x.qty*x.price,0);$("#cart-count").textContent=count;$("#drawer-count").textContent="("+count+")";$("#subtotal").textContent=money(total);$("#checkout-total").textContent=money(total);$("#checkout-open").disabled=!count;$("#checkout-open").style.opacity=count?1:.45;$("#cart-list").innerHTML=state.cart.length?state.cart.map(item=>{const p=products.find(x=>x.id===item.id);return '<div class="cart-row"><div class="cart-thumb">✳</div><div><div class="cart-title">'+p.name+'</div><div class="cart-meta">'+p.category+' · '+money(p.price)+'</div><div class="qty"><button data-qty="'+p.id+'" data-delta="-1">−</button><span>'+item.qty+'</span><button data-qty="'+p.id+'" data-delta="1">+</button></div></div><button class="remove" data-remove="'+p.id+'">Remove</button></div>';}).join(""):'<div class="empty-cart">Your bag is waiting for something good.</div>';}
-    function add(id){const item=state.cart.find(x=>x.id===id),p=products.find(x=>x.id===id);if(item)item.qty++;else state.cart.push({id,qty:1,price:p.price});updateCart();toast("Added to your bag.");}
-    $("#filters").addEventListener("click",e=>{const b=e.target.closest("[data-filter]");if(!b)return;state.filter=b.dataset.filter;$$(".filter").forEach(x=>x.classList.toggle("active",x===b));renderProducts();});
-    $("#product-search").addEventListener("input",e=>{state.search=e.target.value.trim().toLowerCase();renderProducts();});
-    $("#sort-select").addEventListener("change",e=>{state.sort=e.target.value;renderProducts();});
-    $("#product-grid").addEventListener("click",e=>{const addBtn=e.target.closest("[data-add]"),wish=e.target.closest("[data-wish]");if(addBtn){add(addBtn.dataset.add);return;}if(wish){const id=wish.dataset.wish;if(state.wishlist.has(id))state.wishlist.delete(id);else state.wishlist.add(id);renderProducts();toast(state.wishlist.has(id)?"Saved to wishlist.":"Removed from wishlist.");}});
-    $$(".category[data-category]").forEach(el=>el.addEventListener("click",()=>{state.filter=el.dataset.category;$$(".filter").forEach(b=>b.classList.toggle("active",b.dataset.filter===state.filter));renderProducts();}));
-    $("#cart-open").addEventListener("click",openDrawer);$("#cart-close").addEventListener("click",closeDrawer);$("#overlay").addEventListener("click",()=>{closeDrawer();$("#mobile-panel").classList.remove("open");});
-    $("#cart-list").addEventListener("click",e=>{const q=e.target.closest("[data-qty]"),r=e.target.closest("[data-remove]");if(q){const item=state.cart.find(x=>x.id===q.dataset.qty);item.qty+=Number(q.dataset.delta);if(item.qty<1)state.cart=state.cart.filter(x=>x!==item);updateCart();}if(r){state.cart=state.cart.filter(x=>x.id!==r.dataset.remove);updateCart();}});
-    $("#checkout-open").addEventListener("click",()=>{if(!state.cart.length)return;closeDrawer();$("#checkout-modal").classList.add("open");});
-    $("#checkout-close").addEventListener("click",()=>$("#checkout-modal").classList.remove("open"));$("#checkout-modal").addEventListener("click",e=>{if(e.target.id==="checkout-modal")$("#checkout-modal").classList.remove("open");});
-    $("#checkout-form").addEventListener("submit",e=>{e.preventDefault();$("#checkout-modal").classList.remove("open");toast("Demo only — no order was placed. Connect your backend and payment provider before launch.");});
-    $("#menu-open").addEventListener("click",()=>{$("#overlay").classList.add("open");$("#mobile-panel").classList.add("open");});$("#menu-close").addEventListener("click",()=>{$("#overlay").classList.remove("open");$("#mobile-panel").classList.remove("open");});$("#mobile-panel").addEventListener("click",e=>{if(e.target.closest("a")){$("#overlay").classList.remove("open");$("#mobile-panel").classList.remove("open");}});
-    $("#search-focus").addEventListener("click",()=>{$("#product-search").focus();$("#new-arrivals").scrollIntoView({behavior:"smooth"});});
-    $("#newsletter-form").addEventListener("submit",e=>{e.preventDefault();$("#newsletter-note").textContent="Thanks — newsletter signup is a preview until an email service is connected.";e.target.reset();});
-    renderProducts();updateCart();
-  })();
-  </script>
+  <footer class="f-footer" id="f-footer"><div class="f-container"><div class="f-footer-grid"><div class="f-footer-about"><a href="#f-top" class="f-logo">FORME<small>EVERYDAY, REFINED</small></a><p>Modern essentials and considered everyday clothing. Discover a wardrobe shaped around comfort, confidence and your own point of view.</p></div><div class="f-footer-col"><b>Explore</b><a href="#f-new-in">New arrivals</a><a href="#f-categories">Women</a><a href="#f-categories">Men</a><a href="#f-categories">Accessories</a></div><div class="f-footer-col"><b>Customer care</b><a href="#f-footer">Contact us</a><a href="#f-footer">Delivery information</a><a href="#f-footer">Returns & exchanges</a><a href="#f-footer">Size guide</a></div><div class="f-footer-col"><b>Follow along</b><a href="#f-footer">Instagram ↗</a><a href="#f-footer">Facebook ↗</a><a href="#f-footer">TikTok ↗</a></div></div><div class="f-footer-bottom"><span>© 2026 FORME. All rights reserved.</span><span>MADE WITH INTENTION · BANGLADESH</span></div></div></footer>
+  <div class="f-overlay" id="f-overlay"></div>
+  <aside class="f-drawer" id="f-drawer" aria-label="Shopping bag" role="dialog" aria-modal="true"><div class="f-drawer-head"><h3>Your bag</h3><button class="f-drawer-close" id="f-cart-close" aria-label="Close bag">×</button></div><div class="f-cart-items" id="f-cart-items"><div class="f-empty">Your bag is waiting for something good.</div></div><div class="f-cart-foot"><div class="f-total"><span>Subtotal</span><b id="f-cart-total">৳0</b></div><button class="f-button" id="f-checkout">Continue to checkout ↗</button></div></aside>
+  <nav class="f-mobile-menu" id="f-mobile-menu"><div class="f-mobile-menu-top"><a href="#f-top" class="f-logo">FORME<small>EVERYDAY, REFINED</small></a><button class="f-drawer-close" id="f-menu-close" aria-label="Close menu">×</button></div><a href="#f-new-in">New arrivals</a><a href="#f-categories">Collections</a><a href="#f-editorial">Our story</a><a href="#f-footer">Contact</a></nav>
+  <div class="f-toast" id="f-toast" role="status" aria-live="polite"></div>
+</div>
 </body>
 </html>
