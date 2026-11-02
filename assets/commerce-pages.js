@@ -21,7 +21,7 @@
   const addButton = document.createElement("a");
   addButton.className = "fc-static-cart";
   addButton.href = "/fashionstore/pages/checkout.html";
-  addButton.setAttribute("aria-label", "Review your bag and submit an order request");
+  addButton.setAttribute("aria-label", "Review your bag and place a cash-on-delivery order");
   document.body.appendChild(addButton);
 
   const toast = document.createElement("div");
@@ -45,44 +45,16 @@
   }
 
   document.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-f-add], [data-f-buy-now]");
-    if (!button) return;
-    const buyNow = button.hasAttribute("data-f-buy-now");
-    const card = button.closest(".f-static-product");
-    if (!card) return;
-    const id = buyNow ? button.dataset.fBuyNow : button.dataset.fAdd;
-    const name = card.dataset.name;
-    const price = Number(card.dataset.price);
-    const image = card.dataset.image;
-    if (!id || !name || !Number.isFinite(price) || price <= 0) {
-      notify("This item is not available for an order request yet.");
-      return;
-    }
-    if (cartQuantity() >= 20) {
-      notify("Your bag can contain up to 20 items in total.");
-      return;
-    }
-    const existing = cart.find(item => item.id === id);
-    if (existing) {
-      if (Number(existing.qty || 1) >= 10) {
-        notify("Maximum 10 units of one item.");
-        return;
-      }
-      existing.qty = Number(existing.qty || 1) + 1;
-    } else {
-      if (cart.length >= 10) {
-        notify("Your bag can contain up to 10 different items.");
-        return;
-      }
-      cart.push({ id, name, price, image, qty: 1 });
-    }
-    saveCart(cart);
-    render();
-    if (buyNow) {
-      window.location.assign("/fashionstore/pages/checkout.html");
-      return;
-    }
-    notify("Added to your bag. Final price and availability will be confirmed.");
+    const button=event.target.closest("[data-f-add], [data-f-buy-now]");if(!button)return;
+    const buyNow=button.hasAttribute("data-f-buy-now"),card=button.closest(".f-static-product");if(!card)return;
+    const id=buyNow?button.dataset.fBuyNow:button.dataset.fAdd,name=card.dataset.name,price=Number(card.dataset.price),image=card.dataset.image;
+    if(!id||!name||!Number.isFinite(price)||price<=0){notify("This item is not available for a COD order yet.");return;}
+    if(buyNow){cart.splice(0,cart.length);cart.push({id,name,price,image,qty:1});saveCart(cart);render();window.location.assign("/fashionstore/pages/checkout.html");return;}
+    if(cartQuantity()>=20){notify("Your bag can contain up to 20 items in total.");return;}
+    const existing=cart.find(item=>item.id===id);
+    if(existing){if(Number(existing.qty||1)>=10){notify("Maximum 10 units of one item.");return;}existing.qty=Number(existing.qty||1)+1;}
+    else{if(cart.length>=10){notify("Your bag can contain up to 10 different items.");return;}cart.push({id,name,price,image,qty:1});}
+    saveCart(cart);render();notify("Added to your bag. Place your COD order when ready.");
   });
 
   render();
