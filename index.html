@@ -22,6 +22,18 @@
     #forme-storefront .f-nav a { position:relative; padding:31px 0 28px; color:#414840; font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; }
     #forme-storefront .f-nav a:after { position:absolute; content:''; left:0; right:100%; bottom:20px; height:1px; background:var(--f-clay); transition:right .2s; }
     #forme-storefront .f-nav a:hover:after { right:0; }
+    #forme-storefront .f-nav-men { position:relative; padding:31px 0 28px; border:0; background:transparent; color:#414840; font-size:10px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; }
+    #forme-storefront .f-nav-men:hover { color:var(--f-clay); }
+    #forme-storefront .f-nav-men span { margin-left:5px; font-size:12px; }
+    #forme-storefront .f-mega-menu { position:absolute; z-index:70; top:100%; left:0; right:0; display:none; padding:25px 0 22px; border-top:1px solid var(--f-line); border-bottom:1px solid var(--f-line); background:#fffefa; box-shadow:0 18px 30px rgba(26,35,28,.12); }
+    #forme-storefront .f-mega-menu.open { display:block; }
+    #forme-storefront .f-mega-inner { width:min(1240px,calc(100% - 72px)); margin:auto; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)) 170px; gap:28px; }
+    #forme-storefront .f-mega-group b { display:block; margin-bottom:12px; color:var(--f-clay); font-size:9px; letter-spacing:.18em; text-transform:uppercase; }
+    #forme-storefront .f-mega-links { display:grid; grid-template-columns:1fr 1fr; gap:9px 14px; }
+    #forme-storefront .f-mega-links a { color:#414840; font-size:11px; }
+    #forme-storefront .f-mega-links a:hover { color:var(--f-clay); text-decoration:underline; }
+    #forme-storefront .f-mega-all { align-self:center; justify-self:end; padding:13px 16px; border:1px solid var(--f-green); background:var(--f-green); color:#fff!important; font-size:9px!important; font-weight:700; letter-spacing:.1em; text-align:center; text-transform:uppercase; }
+    #forme-storefront .f-mega-all:hover { background:var(--f-green2); text-decoration:none!important; }
     #forme-storefront .f-actions { display:flex; align-items:center; justify-content:flex-end; gap:5px; }
     #forme-storefront .f-icon { width:42px; height:42px; display:grid; place-items:center; position:relative; border:0; border-radius:50%; color:var(--f-ink); background:transparent; }
     #forme-storefront .f-icon:hover { background:#f0eee8; }
@@ -479,6 +491,12 @@
         'cap':{title:'Cap',group:'Accessories',count:null}
       };
       const menState = {category:'All',quick:'all',search:'',sort:'featured',min:0,max:99999};
+      const routeBase = (()=>{const path=window.location.pathname;const menAt=path.indexOf('/men/');if(menAt>=0)return path.slice(0,menAt+1);if(path.endsWith('/index.html'))return path.slice(0,-10);if(path.endsWith('/'))return path;return path.slice(0,path.lastIndexOf('/')+1);})();
+      const routeUrl = slug => slug==='home'?routeBase:slug==='men'?routeBase+'men/':routeBase+'men/'+slug+'/';
+      const routeFromPath = ()=>{const path=window.location.pathname;const relative=path.startsWith(routeBase)?path.slice(routeBase.length):path.replace(/^\\/+/, '');const parts=relative.split('/').filter(Boolean);if(parts[0]==='men'&&parts[1]&&menCategoryRoutes[parts[1]])return parts[1];if(parts[0]==='men')return 'men';return null;};
+      const megaMenu=root.querySelector('#f-men-mega-menu');
+      const closeMegaMenu=()=>{if(megaMenu)megaMenu.classList.remove('open');const trigger=root.querySelector('[data-f-men-menu-toggle]');if(trigger)trigger.setAttribute('aria-expanded','false');};
+      root.querySelectorAll('[data-f-men-route]').forEach(link=>{link.href=routeUrl(link.dataset.fMenRoute);});
       const toast = message => { const node=root.querySelector('#f-toast'); node.textContent=message; node.classList.add('show'); clearTimeout(toast.timer); toast.timer=setTimeout(()=>node.classList.remove('show'),2200); };
       const overlay=root.querySelector('#f-overlay'), drawer=root.querySelector('#f-drawer'), menu=root.querySelector('#f-mobile-menu');
       const closePanels=()=>{overlay.classList.remove('open');drawer.classList.remove('open');menu.classList.remove('open');};
@@ -529,7 +547,7 @@
         root.classList.add('f-men-mode');
         root.querySelector('#f-men-category-panel').hidden=slug!=='men';
         root.querySelector('.f-men-heading h1').textContent=slug==='men'?"Men's Collection":item.title;
-        root.querySelector('.f-men-crumb').innerHTML=slug==='men'?'<a href="#f-top" data-f-home>Home</a> / Men':'<a href="#f-top" data-f-home>Home</a> / <a href="?category=men" data-f-men-route="men">Men</a> / '+item.title;
+        root.querySelector('.f-men-crumb').innerHTML=slug==='men'?'<a href="#f-top" data-f-home>Home</a> / Men':'<a href="#f-top" data-f-home>Home</a> / <a href="men/" data-f-men-route="men">Men</a> / '+item.title;
         root.querySelector('.f-men-total').textContent=slug==='men'?'1,362 products':(item.count===null?'Accessories collection':item.count+' products');
         root.querySelector('#f-men-search').value='';root.querySelector('#f-men-sort').value='featured';
         root.querySelector('#f-men-min').value='';root.querySelector('#f-men-max').value='';
@@ -537,7 +555,8 @@
         root.querySelectorAll('[data-f-men-cat]').forEach(b=>b.classList.toggle('active',b.dataset.fMenCat===(slug==='men'?'All':item.title)));
         root.querySelectorAll('.f-nav a[data-f-section]').forEach(a=>a.classList.toggle('f-nav-active',a.dataset.fSection==='men'));
         document.title=(slug==='men'?"Men's Collection":item.title)+' | FORME';
-        if(push)history.pushState({formeCategory:slug},'',window.location.pathname+'?category='+slug);
+        closeMegaMenu();
+        if(push)history.pushState({formeCategory:slug},'',routeUrl(slug));
         window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'view_category',category:slug,category_name:slug==='men'?"Men's Collection":item.title,category_group:item?.group||'Men'});
         renderMenProducts();
         root.querySelector('#f-men-shop').scrollIntoView({behavior:'smooth',block:'start'});
@@ -545,10 +564,16 @@
       const openHomeRoute=(push=true)=>{
         root.classList.remove('f-men-mode');root.querySelectorAll('.f-nav a').forEach(a=>a.classList.remove('f-nav-active'));
         document.title='FORME — Everyday, refined';
-        if(push)history.pushState({formeHome:true},'',window.location.pathname+'#f-top');
+        closeMegaMenu();
+        if(push)history.pushState({formeHome:true},'',routeUrl('home'));
         root.querySelector('#f-top').scrollIntoView({behavior:'smooth',block:'start'});
       };
       root.addEventListener('click',e=>{
+        if(!e.target.closest('.f-header'))closeMegaMenu();
+        const menuToggle=e.target.closest('[data-f-men-menu-toggle]');
+        if(menuToggle){e.preventDefault();const opening=!megaMenu.classList.contains('open');megaMenu.classList.toggle('open',opening);menuToggle.setAttribute('aria-expanded',String(opening));return;}
+        const menCollectionCard=e.target.closest('[data-category-link="Men"]');
+        if(menCollectionCard){e.preventDefault();openMenRoute('men',true);return;}
         const routeLink=e.target.closest('[data-f-men-route]');
         if(routeLink){e.preventDefault();openMenRoute(routeLink.dataset.fMenRoute,true);return;}
         if(e.target.closest('[data-f-home]')){e.preventDefault();openHomeRoute(true);return;}
@@ -574,10 +599,14 @@
       root.querySelector('#f-men-sort').addEventListener('change',e=>{menState.sort=e.target.value;renderMenProducts();});
       renderMenProducts();
       window.addEventListener('popstate',()=>{
-        const slug=new URLSearchParams(window.location.search).get('category');
+        const slug=routeFromPath();
         if(slug)openMenRoute(slug,false);else openHomeRoute(false);
       });
-      const initialMenRoute=new URLSearchParams(window.location.search).get('category');
+      const legacySlug=new URLSearchParams(window.location.search).get('category');
+      if(legacySlug==='men'||menCategoryRoutes[legacySlug])history.replaceState({},'',routeUrl(legacySlug));
+      else if(window.location.hash==='#f-men-shop')history.replaceState({},'',routeUrl('men'));
+      else if(window.location.search)history.replaceState({},'',window.location.pathname+window.location.hash);
+      const initialMenRoute=routeFromPath();
       if(initialMenRoute)openMenRoute(initialMenRoute,false);
       root.querySelectorAll('[data-f-type-tab]').forEach(tab=>tab.addEventListener('click',()=>{const selected=tab.dataset.fTypeTab;root.querySelectorAll('[data-f-type-tab]').forEach(item=>{const active=item===tab;item.classList.toggle('active',active);item.setAttribute('aria-selected',String(active));});root.querySelectorAll('[data-f-type-panel]').forEach(panel=>panel.classList.toggle('active',panel.dataset.fTypePanel===selected));}));
       search.addEventListener('input',()=>{const q=search.value.trim().toLowerCase();if(q)root.querySelector('#f-new-in').scrollIntoView({behavior:'smooth',block:'start'});let visible=0;root.querySelectorAll('#f-new-in .f-product').forEach(card=>{const show=(card.dataset.name+' '+card.dataset.category).toLowerCase().includes(q);card.hidden=!show;if(show)visible++;});root.querySelector('#f-no-results').hidden=visible!==0;});
@@ -594,9 +623,10 @@
     <div class="f-container f-head-main">
       <button class="f-icon f-menu-button" id="f-menu-open" aria-label="Open menu"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
       <a href="#f-top" class="f-logo">FORME<small>EVERYDAY, REFINED</small></a>
-      <nav class="f-nav" aria-label="Main navigation"><a href="#f-men-shop" data-f-section="men">Men</a><a href="#f-top" data-f-section="women">Women</a><a href="#f-top" data-f-section="teens">Teens</a><a href="#f-top" data-f-section="kids">Kids</a><a href="#f-top" data-f-section="sports">Sports</a></nav>
+      <nav class="f-nav" aria-label="Main navigation"><button class="f-nav-men" type="button" data-f-men-menu-toggle aria-expanded="false">Men <span>⌄</span></button><a href="#f-top" data-f-section="women">Women</a><a href="#f-top" data-f-section="teens">Teens</a><a href="#f-top" data-f-section="kids">Kids</a><a href="#f-top" data-f-section="sports">Sports</a></nav>
       <div class="f-actions"><button class="f-icon" aria-label="Search" onclick="document.getElementById('f-search-input').focus()"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg></button><button class="f-icon" id="f-cart-open" aria-label="Shopping bag"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg><span class="f-count" id="f-cart-count">0</span></button></div>
     </div>
+    <div class="f-mega-menu" id="f-men-mega-menu"><div class="f-mega-inner"><div class="f-mega-group"><b>Topwear</b><div class="f-mega-links"><a href="men/half-sleeve-t-shirt/" data-f-men-route="half-sleeve-t-shirt">Half Sleeve T-shirt</a><a href="men/full-sleeve-t-shirt/" data-f-men-route="full-sleeve-t-shirt">Full Sleeve T-shirt</a><a href="men/polo-t-shirt/" data-f-men-route="polo-t-shirt">Polo T-shirt</a><a href="men/shirt/" data-f-men-route="shirt">Shirt</a><a href="men/panjabi/" data-f-men-route="panjabi">Panjabi</a><a href="men/hoodie/" data-f-men-route="hoodie">Hoodie</a><a href="men/jacket/" data-f-men-route="jacket">Jacket</a><a href="men/sweatshirt/" data-f-men-route="sweatshirt">Sweatshirt</a></div></div><div class="f-mega-group"><b>Bottomwear</b><div class="f-mega-links"><a href="men/comfy-trouser/" data-f-men-route="comfy-trouser">Comfy Trouser</a><a href="men/sports-trouser/" data-f-men-route="sports-trouser">Sports Trouser</a><a href="men/jeans/" data-f-men-route="jeans">Jeans</a><a href="men/joggers/" data-f-men-route="joggers">Joggers</a><a href="men/cargo-pants/" data-f-men-route="cargo-pants">Cargo Pants</a><a href="men/chino-pants/" data-f-men-route="chino-pants">Chino Pants</a><a href="men/shorts/" data-f-men-route="shorts">Shorts</a><a href="men/pajama/" data-f-men-route="pajama">Pajama</a></div></div><div class="f-mega-group"><b>Accessories</b><div class="f-mega-links"><a href="men/face-mask/" data-f-men-route="face-mask">Face Mask</a><a href="men/underwear/" data-f-men-route="underwear">Underwear</a><a href="men/socks/" data-f-men-route="socks">Socks</a><a href="men/wallet/" data-f-men-route="wallet">Wallet</a><a href="men/belt/" data-f-men-route="belt">Belt</a><a href="men/cap/" data-f-men-route="cap">Cap</a></div></div><a class="f-mega-all" href="men/" data-f-men-route="men">View all men's items ↗</a></div></div>
     <div class="f-container f-search-row"><label class="f-search"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg><input id="f-search-input" type="search" placeholder="Search clothing, collections and more" aria-label="Search products"></label></div>
   </header>
   <main id="f-top">
@@ -604,7 +634,7 @@
     <section class="f-perks"><div class="f-container f-perk-row"><div class="f-perk"><svg viewBox="0 0 24 24"><path d="M3 7h12v11H3zM15 11h4l3 3v4h-7zM7 18a2 2 0 1 0 4 0M17 18a2 2 0 1 0 4 0"/></svg>Considered everyday essentials</div><div class="f-perk"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7L4 8.5"/><path d="M4 4v4.5h4.5M12 7v5l3 2"/></svg>Comfort-first designs</div><div class="f-perk"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v5c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6l-8-3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg>A wardrobe with your point of view</div></div></section>
     <section class="f-section" id="f-categories"><div class="f-container"><div class="f-section-head"><div><span class="f-kicker">Find your form</span><h2>Shop by category</h2></div><p>Start with the pieces you love. Explore edits for every mood, moment and everyday plan.</p></div><div class="f-category-grid">
       <a class="f-category" href="#f-new-in"><img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=800&q=82" alt="Women's contemporary fashion" loading="lazy"><div class="f-category-label"><b>Women</b><span>Discover the edit ↗</span></div></a>
-      <a class="f-category" href="#f-new-in"><img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&w=800&q=82" alt="Men's modern clothing" loading="lazy"><div class="f-category-label"><b>Men</b><span>Discover the edit ↗</span></div></a>
+      <a class="f-category" href="men/" data-f-men-route="men"><img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&w=800&q=82" alt="Men's modern clothing" loading="lazy"><div class="f-category-label"><b>Men</b><span>Discover the edit ↗</span></div></a>
       <a class="f-category" href="#f-new-in"><img src="https://images.unsplash.com/photo-1503919005314-30d93d07d823?auto=format&fit=crop&w=800&q=82" alt="Kids fashion" loading="lazy"><div class="f-category-label"><b>Kids</b><span>Discover the edit ↗</span></div></a>
       <a class="f-category" href="#f-new-in"><img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=800&q=82" alt="Fashion accessories and styling" loading="lazy"><div class="f-category-label"><b>Accessories</b><span>Discover the edit ↗</span></div></a>
     </div></div></section>
