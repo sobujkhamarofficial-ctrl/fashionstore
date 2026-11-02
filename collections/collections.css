@@ -108,3 +108,14 @@ a{color:inherit;text-decoration:none}
 .visual-card:nth-child(6n+4) .visual-image-wrap.visual-image-missing{background:linear-gradient(145deg,#f0e8d1,#ddcfaa)}
 .visual-card:nth-child(6n+5) .visual-image-wrap.visual-image-missing{background:linear-gradient(145deg,#efdfdf,#d6bec9)}
 .visual-card:nth-child(6n) .visual-image-wrap.visual-image-missing{background:linear-gradient(145deg,#dce9e9,#b8d0cc)}
+
+/* Clickable collection inspiration cards */
+.visual-image-link{display:block;width:100%;height:100%;color:inherit;cursor:pointer}
+.visual-image-link:focus-visible{outline:3px solid var(--clay);outline-offset:-4px}
+.visual-card figcaption{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:7px 10px}
+.visual-card figcaption strong{min-width:0}
+.visual-card figcaption span{padding-top:2px;color:var(--muted);font-size:8px;text-align:right}
+.visual-action{grid-column:1/-1;justify-self:start;display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;background:var(--green);color:var(--white)!important;font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;transition:background .18s,transform .18s}
+.visual-action:hover{background:#344d40;transform:translateY(-1px)}
+.visual-action:focus-visible{outline:2px solid var(--clay);outline-offset:3px}
+@media(max-width:760px){.visual-card figcaption{display:flex;flex-direction:column;align-items:flex-start;gap:6px}.visual-card figcaption span{text-align:left}.visual-action{width:100%;min-height:32px}}
