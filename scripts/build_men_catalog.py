@@ -63,7 +63,7 @@ def card(p,priority=False):
       f'<div class="f-product-actions"><button class="f-add" type="button" data-f-add="{esc(product_id)}">Add to Cart</button><button class="f-buy-now" type="button" data-f-buy-now="{esc(product_id)}">Buy Now</button></div></div>'
       '<div class="f-product-info">'
       f'<span class="f-product-name">{esc(p["name"])}</span><span class="f-men-savings">{esc(p["description"])}</span>'
-      f'<div class="f-men-price-row"><strong>৳{int(p["price"]):,}</strong><del>৳{int(p["compareAt"]):,}</del></div>'
+      f'<div class="f-men-price-row"><strong>৳{int(p["price"]):,}</strong></div>'
       '</div></article>')
 def directory(cats):
     groups=[]
