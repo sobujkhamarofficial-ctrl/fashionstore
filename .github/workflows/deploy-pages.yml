@@ -215,7 +215,7 @@ jobs:
           print(f"Verified {len(required)} ecommerce assets/pages, checkout controls, newsletter/contact API and Journal links.")
           PY
       - name: Validate Python build scripts
-        run: python3 -m py_compile scripts/build_collection_pages.py scripts/build_men_catalog.py scripts/download_fashion_photos.py
+        run: python3 -m py_compile scripts/build_collection_pages.py scripts/build_men_catalog.py scripts/download_fashion_photos.py scripts/build_store_content.py
       - name: Verify branded not-found page and image fallbacks
         run: |
           python3 - <<'PY'
