@@ -1,157 +1,142 @@
 (function () {
   "use strict";
-
-  if (document.getElementById("forme-ai-customer-care")) return;
-
-  const API_ENDPOINT = "https://zfgcovvfczjiqagrnfjr.supabase.co/functions/v1/fashion-customer-care";
-  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_EWY6B3OF8lOQB7uB7jBZRA_3MwimKRy";
-  const MAX_LOCAL_HISTORY = 12;
-
-  const stylesheet = document.createElement("link");
-  stylesheet.rel = "stylesheet";
-  stylesheet.href = "/fashionstore/assets/customer-care.css";
-  document.head.appendChild(stylesheet);
-
-  const shell = document.createElement("section");
-  shell.id = "forme-ai-customer-care";
-  shell.setAttribute("aria-label", "FORME AI Customer Care");
-  shell.innerHTML = [
-    '<button class="fcw-launcher" type="button" aria-label="Open FORME AI customer care" aria-expanded="false">',
-      '<span class="fcw-launcher-icon" aria-hidden="true">✦</span>',
-      '<span class="fcw-launcher-label">Chat with FORME</span>',
-      '<span class="fcw-launcher-dot" aria-hidden="true"></span>',
-    '</button>',
-    '<section class="fcw-panel" role="dialog" aria-modal="false" aria-label="FORME Customer Care" hidden>',
-      '<header class="fcw-header">',
-        '<div class="fcw-brand-mark" aria-hidden="true">F</div>',
-        '<div class="fcw-heading"><strong>FORME Customer Care</strong><span><i></i> AI assistant · Beta</span></div>',
-        '<button class="fcw-close" type="button" aria-label="Close chat">×</button>',
-      '</header>',
-      '<div class="fcw-intro"><strong>How can we help?</strong><span>Ask about styles, collections or finding the right piece.</span></div>',
-      '<div class="fcw-messages" aria-live="polite" aria-relevant="additions"></div>',
-      '<div class="fcw-quick-replies" aria-label="Suggested questions">',
-        '<button type="button" data-prompt="Can you help me choose a style?">Help me choose a style</button>',
-        '<button type="button" data-prompt="Tell me about the products on this page.">About this page</button>',
-        '<button type="button" data-prompt="What should I know about delivery and returns?">Delivery &amp; returns</button>',
-      '</div>',
-      '<form class="fcw-form">',
-        '<label class="fcw-sr-only" for="fcw-input">Your message</label>',
-        '<input id="fcw-input" name="message" type="text" maxlength="1000" autocomplete="off" placeholder="Type your message…" required>',
-        '<button class="fcw-send" type="submit" aria-label="Send message"><span aria-hidden="true">➤</span></button>',
-      '</form>',
-      '<p class="fcw-disclaimer">Beta assistant. Product and policy details may need confirmation. Please do not share payment details, passwords or OTPs.</p>',
-    '</section>'
-  ].join("");
-
-  document.body.appendChild(shell);
-
-  const launcher = shell.querySelector(".fcw-launcher");
-  const panel = shell.querySelector(".fcw-panel");
-  const closeButton = shell.querySelector(".fcw-close");
-  const messagesNode = shell.querySelector(".fcw-messages");
-  const form = shell.querySelector(".fcw-form");
-  const input = shell.querySelector("#fcw-input");
-  const sendButton = shell.querySelector(".fcw-send");
-  const quickReplies = shell.querySelector(".fcw-quick-replies");
+  const API = "https://zfgcovvfczjiqagrnfjr.supabase.co/functions/v1/fashion-customer-care";
+  const BASE = "/fashionstore/";
   const conversation = [];
-  let busy = false;
-
-  function addMessage(role, text, save) {
-    const bubble = document.createElement("div");
-    bubble.className = "fcw-message " + (role === "user" ? "fcw-message-user" : "fcw-message-assistant");
-    bubble.textContent = text;
-    messagesNode.appendChild(bubble);
-    if (save !== false) conversation.push({ role: role, text: text });
-    while (conversation.length > MAX_LOCAL_HISTORY) conversation.shift();
-    messagesNode.scrollTop = messagesNode.scrollHeight;
-    return bubble;
+  let ready = false, busy = false, panel, launch, input, sendButton, chat, statusLine, promptButtons = [];
+  function makeClientId() {
+    try { if (window.crypto && typeof window.crypto.randomUUID === "function") return window.crypto.randomUUID(); } catch (_) {}
+    return "forme-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 14);
   }
-
-  function setOpen(open) {
-    panel.hidden = !open;
-    launcher.setAttribute("aria-expanded", open ? "true" : "false");
-    launcher.classList.toggle("fcw-launcher-open", open);
-    if (open) {
-      window.setTimeout(function () { input.focus(); }, 30);
+  const clientId = makeClientId();
+  function addMessage(value, type) {
+    const node = document.createElement("div");
+    node.className = "fa-message" + (type ? " " + type : "");
+    node.textContent = String(value || "");
+    chat.appendChild(node);
+    chat.scrollTop = chat.scrollHeight;
+    return node;
+  }
+  function setAvailability(isReady, label) {
+    ready = Boolean(isReady);
+    statusLine.classList.toggle("ready", ready);
+    statusLine.querySelector(".fa-status-label").textContent = label || (ready ? "Assistant is ready" : "Assistant is temporarily unavailable");
+    input.disabled = !ready || busy;
+    sendButton.disabled = !ready || busy;
+    promptButtons.forEach(function (button) { button.disabled = !ready || busy; });
+  }
+  function toggle(open) {
+    const next = typeof open === "boolean" ? open : !panel.classList.contains("is-open");
+    panel.classList.toggle("is-open", next);
+    launch.setAttribute("aria-expanded", String(next));
+    if (next && ready) window.setTimeout(function () { input.focus(); }, 100);
+  }
+  function showTyping() {
+    const node = document.createElement("div");
+    node.className = "fa-message";
+    node.setAttribute("aria-label", "FORME assistant is typing");
+    node.innerHTML = '<span class="fa-typing"><i></i><i></i><i></i></span>';
+    chat.appendChild(node);
+    chat.scrollTop = chat.scrollHeight;
+    return node;
+  }
+  async function refreshStatus() {
+    try {
+      const response = await fetch(API, { method: "GET", cache: "no-store", headers: { "Accept": "application/json" } });
+      const data = await response.json().catch(function () { return {}; });
+      if (response.ok && data.status === "ready") {
+        setAvailability(true, "Online · Gemini-powered");
+        addMessage("হ্যালো! আমি FORME-এর ভার্চুয়াল সহকারী। পোশাকের স্টাইল, ফিট, সাইজ-গাইড, কেয়ার এবং ওয়েবসাইটের নীতিমালা সম্পর্কে প্রশ্ন করতে পারেন।", "");
+      } else {
+        setAvailability(false, "Security update required");
+        addMessage("FORME AI সহকারীটি নিরাপত্তা আপডেটের জন্য আপাতত বন্ধ আছে। শিগগিরই চালু হবে। এর মধ্যে অর্ডার সংক্রান্ত তথ্যের জন্য Order Tracking বা Contact পেজ ব্যবহার করুন।", "");
+      }
+    } catch (_) {
+      setAvailability(false, "Connection unavailable");
+      addMessage("সহকারীর সঙ্গে সংযোগ করা যাচ্ছে না। অনুগ্রহ করে কিছুক্ষণ পর আবার চেষ্টা করুন অথবা Contact পেজ ব্যবহার করুন।", "");
     }
   }
-
-  function getPageContext() {
-    const main = document.querySelector(".f-static-main, .page-shell, #forme-storefront main, main");
-    const visibleText = main ? (main.innerText || main.textContent || "") : "";
-    return [
-      "Page title: " + (document.title || "FORME"),
-      "Page path: " + window.location.pathname,
-      "Visible page content: " + visibleText.replace(/\s+/g, " ").trim().slice(0, 1450)
-    ].join("\n").slice(0, 1800);
-  }
-
-  async function sendMessage(text) {
-    const message = (text || "").trim();
-    if (!message || busy) return;
-
-    const history = conversation.slice(-8).map(function (item) {
-      return { role: item.role, text: item.text };
-    });
-
-    addMessage("user", message);
+  async function sendMessage(value) {
+    const message = String(value || "").trim();
+    if (!message || busy || !ready) return;
     input.value = "";
+    addMessage(message, "user");
+    const typing = showTyping();
     busy = true;
-    sendButton.disabled = true;
-    input.disabled = true;
-    quickReplies.hidden = true;
-    const typing = document.createElement("div");
-    typing.className = "fcw-message fcw-message-assistant fcw-typing";
-    typing.textContent = "FORME is thinking…";
-    messagesNode.appendChild(typing);
-    messagesNode.scrollTop = messagesNode.scrollHeight;
-
+    setAvailability(true, "Preparing your answer…");
+    const priorHistory = conversation.slice(-8).map(function (item) { return { role: item.role, text: item.text }; });
     try {
-      const response = await fetch(API_ENDPOINT, {
+      const response = await fetch(API, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "apikey": SUPABASE_PUBLISHABLE_KEY
-        },
-        body: JSON.stringify({
-          message: message,
-          history: history,
-          pageContext: getPageContext()
-        })
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({ message: message, history: priorHistory, client_id: clientId })
       });
       const data = await response.json().catch(function () { return {}; });
       typing.remove();
-      if (!response.ok || !data.reply) {
-        throw new Error(data.error || "The assistant could not reply. Please try again.");
+      if (!response.ok || !data.ok || !data.reply) {
+        if (response.status === 503 && data.status === "paused") {
+          setAvailability(false, "Temporarily paused");
+          addMessage("AI সহকারীটি আপাতত বন্ধ আছে। অর্ডার ট্র্যাক করতে Order Tracking পেজে যান, অথবা Contact পেজে বার্তা পাঠান।", "system");
+        } else {
+          addMessage(data.error || "দুঃখিত, এই মুহূর্তে উত্তর তৈরি করা যাচ্ছে না। একটু পরে আবার চেষ্টা করুন।", "system");
+        }
+        return;
       }
-      addMessage("assistant", data.reply);
-    } catch (error) {
+      conversation.push({ role: "user", text: message }, { role: "model", text: String(data.reply) });
+      while (conversation.length > 8) conversation.shift();
+      addMessage(data.reply, "");
+    } catch (_) {
       typing.remove();
-      addMessage("assistant", error && error.message ? error.message : "Connection problem. Please try again shortly.", false);
+      addMessage("নেটওয়ার্ক সমস্যার কারণে উত্তর পাওয়া যায়নি। আবার চেষ্টা করুন।", "system");
     } finally {
       busy = false;
-      sendButton.disabled = false;
-      input.disabled = false;
+      setAvailability(ready, ready ? "Online · Gemini-powered" : "Temporarily unavailable");
       input.focus();
     }
   }
-
-  launcher.addEventListener("click", function () { setOpen(panel.hidden); });
-  closeButton.addEventListener("click", function () { setOpen(false); });
-  form.addEventListener("submit", function (event) {
-    event.preventDefault();
-    sendMessage(input.value);
-  });
-  input.addEventListener("keydown", function (event) {
-    if (event.key === "Enter" && !event.shiftKey) {
+  function mount() {
+    if (document.getElementById("forme-ai-widget")) return;
+    const root = document.createElement("div");
+    root.id = "forme-ai-widget";
+    root.innerHTML =
+      '<section class="fa-panel" role="dialog" aria-modal="false" aria-label="FORME virtual assistant">' +
+        '<header class="fa-head"><div class="fa-brand"><span class="fa-mark" aria-hidden="true">F.</span><div><div class="fa-title">FORME Concierge</div><div class="fa-subtitle">STYLE · FIT · EVERYDAY CARE</div></div></div><button type="button" class="fa-close" data-fa-close aria-label="Close assistant">×</button></header>' +
+        '<div class="fa-status" role="status" aria-live="polite"><span class="fa-status-dot"></span><span class="fa-status-label">Checking secure connection…</span></div>' +
+        '<div class="fa-chat" aria-live="polite" aria-label="Conversation"></div>' +
+        '<div class="fa-prompts"><button class="fa-prompt" type="button" data-fa-prompt="Help me choose an everyday outfit.">Everyday style</button><button class="fa-prompt" type="button" data-fa-prompt="How should I choose the right clothing size and fit?">Size &amp; fit</button><button class="fa-prompt" type="button" data-fa-prompt="Please explain FORME delivery and return policies.">Delivery &amp; returns</button></div>' +
+        '<div class="fa-warning">Please do not share phone numbers, order references, addresses, payment details, PINs or OTPs. <a href="' + BASE + 'pages/order-tracking.html">Track an order</a>.</div>' +
+        '<form class="fa-form"><textarea class="fa-input" rows="1" maxlength="1200" placeholder="Ask FORME a question…" aria-label="Your message" disabled></textarea><button class="fa-send" type="submit" aria-label="Send message" disabled><svg viewBox="0 0 24 24"><path d="m21 3-7.5 18-3.7-7.8L2 9.5 21 3Z"/><path d="M9.8 13.2 14 9"/></svg></button></form>' +
+        '<div class="fa-foot">AI responses are guidance only · Store availability is confirmed by our team</div>' +
+      '</section>' +
+      '<button type="button" class="fa-launch" aria-expanded="false" aria-label="Open FORME assistant"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H5l1.7-3A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8 10h8M8 13.5h5"/></svg><span>ASK FORME</span><i class="fa-launch-dot" aria-hidden="true"></i></button>';
+    document.body.appendChild(root);
+    panel = root.querySelector(".fa-panel");
+    launch = root.querySelector(".fa-launch");
+    input = root.querySelector(".fa-input");
+    sendButton = root.querySelector(".fa-send");
+    chat = root.querySelector(".fa-chat");
+    statusLine = root.querySelector(".fa-status");
+    promptButtons = Array.from(root.querySelectorAll("[data-fa-prompt]"));
+    launch.addEventListener("click", function () { toggle(); });
+    root.querySelector("[data-fa-close]").addEventListener("click", function () { toggle(false); });
+    root.querySelector(".fa-form").addEventListener("submit", function (event) {
       event.preventDefault();
       sendMessage(input.value);
-    }
-  });
-  quickReplies.addEventListener("click", function (event) {
-    const button = event.target.closest("button[data-prompt]");
-    if (button) sendMessage(button.getAttribute("data-prompt"));
-  });
-
-  addMessage("assistant", "Hello! আমি FORME-এর AI Customer Care Assistant। কীভাবে সাহায্য করতে পারি?", false);
+    });
+    input.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage(input.value);
+      }
+    });
+    promptButtons.forEach(function (button) {
+      button.addEventListener("click", function () { sendMessage(button.dataset.faPrompt); });
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && panel.classList.contains("is-open")) toggle(false);
+    });
+    refreshStatus();
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount, { once: true });
+  else mount();
 })();
