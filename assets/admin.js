@@ -17,15 +17,15 @@ function saveSession(data){
 function clearSession(){sessionStorage.removeItem(ACCESS);}
 async function adminRequest(payload){
  const headers={"Content-Type":"application/json","apikey":KEY};
- if(token())headers.Authorization="Bearer "+token();
+ if(token() && payload.operation !== "login")headers.Authorization="Bearer "+token();
  const res=await fetch(API,{method:"POST",headers,body:JSON.stringify({action:"admin",...payload})});
  const data=await res.json().catch(()=>({}));
  if(res.status===401){clearSession();showAuth();}
  if(!res.ok||!data.ok)throw new Error(data.error||"The admin request could not be completed.");
  return data;
 }
-function showAuth(){ $("fa-auth").hidden=false;$("fa-dashboard").hidden=true; }
-function showDashboard(){ $("fa-auth").hidden=true;$("fa-dashboard").hidden=false; }
+function showAuth(){ const auth=$("fa-auth"),dashboard=$("fa-dashboard");auth.hidden=false;auth.style.display="grid";dashboard.hidden=true;dashboard.style.display="none"; }
+function showDashboard(){ const auth=$("fa-auth"),dashboard=$("fa-dashboard");auth.hidden=true;auth.style.display="none";dashboard.hidden=false;dashboard.style.display="block"; }
 function date(value){if(!value)return "—";const d=new Date(value);return Number.isNaN(d.getTime())?"—":d.toLocaleString("en-BD",{dateStyle:"medium",timeStyle:"short"});}
 function statusLabel(value){return String(value||"pending_review").replaceAll("_"," ");}
 function alertBox(text){const el=$("fa-alert");el.textContent=text;el.hidden=!text;}
@@ -69,12 +69,12 @@ function openOrder(id){
  $("fa-modal").hidden=false;document.body.style.overflow="hidden";
 }
 function closeOrder(){$("fa-modal").hidden=true;document.body.style.overflow="";}
-$("fa-login-form").addEventListener("submit",async e=>{e.preventDefault();const form=e.currentTarget,data=new FormData(form),button=form.querySelector("button[type=submit]");button.disabled=true;message("fa-login-message","Signing in…",false);try{const email=String(data.get("email")||"").trim().toLowerCase();if(email!==ADMIN_EMAIL)throw new Error("Only the authorised owner email can sign in.");const session=await adminRequest({operation:"login",email,password:String(data.get("password")||"")});await saveSession(session);showDashboard();await loadOrders();if(!$("fa-dashboard").hidden)message("fa-login-message","",true);}catch(err){clearSession();message("fa-login-message",err.message,false);}finally{button.disabled=false;}});
+$("fa-login-form").addEventListener("submit",async e=>{e.preventDefault();const form=e.currentTarget,data=new FormData(form),button=form.querySelector("button[type=submit]");button.disabled=true;message("fa-login-message","Checking your access…",false);try{const email=String(data.get("email")||"").trim().toLowerCase();if(email!==ADMIN_EMAIL)throw new Error("Only the authorised owner email can sign in.");const session=await adminRequest({operation:"login",email,password:String(data.get("password")||"")});saveSession(session);form.reset();message("fa-login-message","",true);showDashboard();void loadOrders();}catch(err){clearSession();showAuth();message("fa-login-message",err.message,false);}finally{button.disabled=false;}});
 
 $("fa-refresh").addEventListener("click",loadOrders);$("fa-search").addEventListener("input",renderOrders);$("fa-filter").addEventListener("change",renderOrders);
 $("fa-order-rows").addEventListener("click",e=>{const btn=e.target.closest("[data-view]");if(btn)openOrder(btn.dataset.view);});
 $("fa-modal").addEventListener("click",e=>{if(e.target.closest("[data-close-modal]"))closeOrder();});
 $("fa-detail-content").addEventListener("submit",async e=>{if(e.target.id!=="fa-edit-form")return;e.preventDefault();if(!selected)return;const form=e.target,data=new FormData(form),fields={};for(const key of ["status","price_verification","payment_method","payment_status","courier_name","courier_tracking_number","internal_note"])fields[key]=String(data.get(key)||"").trim()||null;for(const key of ["delivery_charge_bdt","final_total_bdt"])fields[key]=data.get(key)===""?null:Number(data.get(key));const delivery=data.get("estimated_delivery_at");fields.estimated_delivery_at=delivery?new Date(delivery).toISOString():null;const button=form.querySelector("button[type=submit]");button.disabled=true;message("fa-edit-message","Saving order changes…",false);try{const result=await adminRequest({operation:"update",order_id:selected.id,fields});orders=orders.map(o=>o.id===selected.id?{...o,...result.order}:o);renderOrders();renderStats(await adminRequest({operation:"list"}).then(d=>d.stats||{}));selected=orders.find(o=>o.id===selected.id);openOrder(selected.id);message("fa-edit-message","Order updated successfully.",true);}catch(err){message("fa-edit-message",err.message,false);}finally{button.disabled=false;}});
 $("fa-logout").addEventListener("click",async()=>{try{if(token())await adminRequest({operation:"logout"});}catch(_){}clearSession();orders=[];closeOrder();showAuth();$("fa-login-form").reset();});
-(async()=>{if(token()){showDashboard();await loadOrders();}else showAuth();})();
+(()=>{if(token()){showDashboard();void loadOrders();}else showAuth();})();
 })();
