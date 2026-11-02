@@ -24,10 +24,10 @@
         <form id="fa-login-form" class="fa-form">
           <span class="fa-eyebrow">PRIVATE OWNER ACCESS</span><h2>Admin sign in</h2>
           <label>Authorised admin email<input name="email" type="email" value="sobujkhamar.official@gmail.com" autocomplete="username" inputmode="email" maxlength="254" readonly aria-readonly="true" required></label>
-          <label>Admin password<input name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required></label>
+          <label>Admin password<input name="password" type="password" autocomplete="current-password" minlength="16" maxlength="200" placeholder="Enter your server password" required></label>
           <button class="fa-primary" type="submit">Sign in securely <span>↗</span></button>
           <p id="fa-login-message" class="fa-message" role="status" aria-live="polite"></p>
-          <p class="fa-login-note">This workspace is reserved for the single authorised owner account.</p>
+          <p class="fa-login-note">The password is checked only against the private server secret. It is never stored in this page or in the public repository.</p>
         </form>
       </section>
     </section>
@@ -62,5 +62,5 @@
     <div id="fa-detail-content"></div>
   </section>
 </div>
-<script src="/fashionstore/assets/admin.js?v=20261102-3" defer></script>
+<script src="/fashionstore/assets/admin.js?v=20261103-1" defer></script>
 </body></html>

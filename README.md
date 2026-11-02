@@ -39,6 +39,12 @@ No online payment gateway or live courier booking/tracking integration is connec
 
 Before accepting confirmed commercial orders, complete the product catalogue with real SKU data and stock, add verified merchant legal identity and official contact details, publish agreed delivery rates and service levels, integrate a Bangladesh-supported payment gateway and courier workflow, and obtain legal review of the policies.
 
+## Admin password and access
+
+The private FORME admin page uses a single fixed owner email: `sobujkhamar.official@gmail.com`. The password is not stored in the browser, website files or GitHub. Set it as the Supabase Edge Function secret `FORME_ADMIN_PASSWORD` for the `storefront-commerce-api` function. Use a password between 16 and 200 characters. To change or reset the password, replace that secret in Supabase Dashboard → Edge Functions → Secrets; the new password is used without changing the website code. Existing admin sessions become invalid when the secret changes. Admin sessions expire after 8 hours and can also be ended with Sign out.
+
+Never commit the password or other server secrets to this repository.
+
 ## Backend
 
 Supabase project: `forme-fashion-backend`

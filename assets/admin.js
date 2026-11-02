@@ -1,26 +1,26 @@
 (function(){
 "use strict";
 const API="https://zfgcovvfczjiqagrnfjr.supabase.co/functions/v1/storefront-commerce-api";
-const AUTH="https://zfgcovvfczjiqagrnfjr.supabase.co/auth/v1";
 const KEY="sb_publishable_EWY6B3OF8lOQB7uB7jBZRA_3MwimKRy";
 const ADMIN_EMAIL="sobujkhamar.official@gmail.com";
-const ACCESS="forme-admin-access",REFRESH="forme-admin-refresh";
+const ACCESS="forme-admin-access";
 const $=id=>document.getElementById(id);
 let orders=[],selected=null;
 const money=n=>"৳"+Number(n||0).toLocaleString("en-BD");
 const esc=value=>String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
 const token=()=>sessionStorage.getItem(ACCESS)||"";
 function message(id,text,ok){const el=$(id);el.textContent=text;el.classList.toggle("ok",!!ok);}
-async function authRequest(path,body){const res=await fetch(AUTH+path,{method:"POST",headers:{"Content-Type":"application/json","apikey":KEY},body:JSON.stringify(body)});const data=await res.json().catch(()=>({}));if(!res.ok)throw new Error(data.msg||data.message||data.error_description||"Sign-in failed. Check your details.");return data;}
-async function saveSession(data){if(!data.access_token||!data.refresh_token)throw new Error("Authentication did not return a valid session.");sessionStorage.setItem(ACCESS,data.access_token);sessionStorage.setItem(REFRESH,data.refresh_token);}
-function clearSession(){sessionStorage.removeItem(ACCESS);sessionStorage.removeItem(REFRESH);}
-async function adminRequest(payload,allowRefresh=true){
- const headers={"Content-Type":"application/json","apikey":KEY};if(token())headers.Authorization="Bearer "+token();
+function saveSession(data){
+ if(!data||typeof data.access_token!=="string"||!/^[0-9a-f]{64}$/i.test(data.access_token))throw new Error("The server did not return a valid admin session.");
+ sessionStorage.setItem(ACCESS,data.access_token);
+}
+function clearSession(){sessionStorage.removeItem(ACCESS);}
+async function adminRequest(payload){
+ const headers={"Content-Type":"application/json","apikey":KEY};
+ if(token())headers.Authorization="Bearer "+token();
  const res=await fetch(API,{method:"POST",headers,body:JSON.stringify({action:"admin",...payload})});
  const data=await res.json().catch(()=>({}));
- if(res.status===401&&allowRefresh&&sessionStorage.getItem(REFRESH)){
-   try{const refreshed=await authRequest("/token?grant_type=refresh_token",{refresh_token:sessionStorage.getItem(REFRESH)});await saveSession(refreshed);return adminRequest(payload,false);}catch(_){clearSession();}
- }
+ if(res.status===401){clearSession();showAuth();}
  if(!res.ok||!data.ok)throw new Error(data.error||"The admin request could not be completed.");
  return data;
 }
@@ -69,12 +69,12 @@ function openOrder(id){
  $("fa-modal").hidden=false;document.body.style.overflow="hidden";
 }
 function closeOrder(){$("fa-modal").hidden=true;document.body.style.overflow="";}
-$("fa-login-form").addEventListener("submit",async e=>{e.preventDefault();const form=e.currentTarget,data=new FormData(form),button=form.querySelector("button[type=submit]");button.disabled=true;message("fa-login-message","Signing in…",false);try{const email=String(data.get("email")||"").trim().toLowerCase();if(email!==ADMIN_EMAIL)throw new Error("Only the authorised owner email can sign in.");const session=await authRequest("/token?grant_type=password",{email,password:String(data.get("password"))});await saveSession(session);showDashboard();await loadOrders();if(!$("fa-dashboard").hidden)message("fa-login-message","",true);}catch(err){clearSession();message("fa-login-message",err.message,false);}finally{button.disabled=false;}});
+$("fa-login-form").addEventListener("submit",async e=>{e.preventDefault();const form=e.currentTarget,data=new FormData(form),button=form.querySelector("button[type=submit]");button.disabled=true;message("fa-login-message","Signing in…",false);try{const email=String(data.get("email")||"").trim().toLowerCase();if(email!==ADMIN_EMAIL)throw new Error("Only the authorised owner email can sign in.");const session=await adminRequest({operation:"login",email,password:String(data.get("password")||"")});await saveSession(session);showDashboard();await loadOrders();if(!$("fa-dashboard").hidden)message("fa-login-message","",true);}catch(err){clearSession();message("fa-login-message",err.message,false);}finally{button.disabled=false;}});
 
 $("fa-refresh").addEventListener("click",loadOrders);$("fa-search").addEventListener("input",renderOrders);$("fa-filter").addEventListener("change",renderOrders);
 $("fa-order-rows").addEventListener("click",e=>{const btn=e.target.closest("[data-view]");if(btn)openOrder(btn.dataset.view);});
 $("fa-modal").addEventListener("click",e=>{if(e.target.closest("[data-close-modal]"))closeOrder();});
 $("fa-detail-content").addEventListener("submit",async e=>{if(e.target.id!=="fa-edit-form")return;e.preventDefault();if(!selected)return;const form=e.target,data=new FormData(form),fields={};for(const key of ["status","price_verification","payment_method","payment_status","courier_name","courier_tracking_number","internal_note"])fields[key]=String(data.get(key)||"").trim()||null;for(const key of ["delivery_charge_bdt","final_total_bdt"])fields[key]=data.get(key)===""?null:Number(data.get(key));const delivery=data.get("estimated_delivery_at");fields.estimated_delivery_at=delivery?new Date(delivery).toISOString():null;const button=form.querySelector("button[type=submit]");button.disabled=true;message("fa-edit-message","Saving order changes…",false);try{const result=await adminRequest({operation:"update",order_id:selected.id,fields});orders=orders.map(o=>o.id===selected.id?{...o,...result.order}:o);renderOrders();renderStats(await adminRequest({operation:"list"}).then(d=>d.stats||{}));selected=orders.find(o=>o.id===selected.id);openOrder(selected.id);message("fa-edit-message","Order updated successfully.",true);}catch(err){message("fa-edit-message",err.message,false);}finally{button.disabled=false;}});
-$("fa-logout").addEventListener("click",async()=>{const t=token();try{if(t)await fetch(AUTH+"/logout",{method:"POST",headers:{"apikey":KEY,"Authorization":"Bearer "+t}});}catch(_){}clearSession();orders=[];closeOrder();showAuth();$("fa-login-form").reset();});
-(async()=>{if(!token()&&sessionStorage.getItem(REFRESH)){try{const d=await authRequest("/token?grant_type=refresh_token",{refresh_token:sessionStorage.getItem(REFRESH)});await saveSession(d);}catch(_){clearSession();}}if(token()){showDashboard();await loadOrders();}else showAuth();})();
+$("fa-logout").addEventListener("click",async()=>{try{if(token())await adminRequest({operation:"logout"});}catch(_){}clearSession();orders=[];closeOrder();showAuth();$("fa-login-form").reset();});
+(async()=>{if(token()){showDashboard();await loadOrders();}else showAuth();})();
 })();

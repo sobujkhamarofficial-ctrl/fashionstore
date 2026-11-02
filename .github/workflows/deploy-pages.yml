@@ -13,7 +13,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build-and-deploy:
@@ -160,6 +160,7 @@ jobs:
           PY
       - name: Verify ecommerce, policies and journal integration
         run: |
+          node --check assets/admin.js
           node --check assets/checkout.js
           node --check assets/order-tracking.js
           node --check assets/reviews.js
