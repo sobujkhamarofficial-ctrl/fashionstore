@@ -29,10 +29,15 @@ def node_children(node):
 def node_kind(node, is_department=False):
     if is_department:
         return "Department"
+    level = node.get("level")
+    if level == "category":
+        return "Category"
+    if level == "sub-category":
+        return "Sub-category"
+    if level == "sub-sub-category":
+        return "Sub-sub-category"
     if "categories" in node:
         return "Collection"
-    if "subcategories" in node:
-        return "Category"
     return "Sub-category"
 
 
