@@ -300,6 +300,27 @@
     #forme-storefront .f-men-price-row em { color:#b45f4c; font-size:9px; font-style:normal; font-weight:700; }
     #forme-storefront .f-men-free { position:absolute; left:9px; bottom:9px; padding:5px 7px; background:rgba(255,254,250,.94); color:#385a43; font-size:7px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; }
     #forme-storefront .f-men-empty { grid-column:1/-1; padding:50px 15px; color:var(--f-muted); text-align:center; font:20px var(--f-serif); }
+    #forme-storefront .f-men-category-panel { margin-top:22px; margin-bottom:28px; padding:18px 22px 10px; border:1px solid var(--f-line); background:#fffefa; }
+    #forme-storefront .f-men-category-top { display:flex; align-items:end; justify-content:space-between; gap:14px; padding:0 0 13px; border-bottom:1px solid var(--f-line); }
+    #forme-storefront .f-men-category-top b { display:block; font:22px var(--f-serif); }
+    #forme-storefront .f-men-category-top small { display:block; margin-top:5px; color:var(--f-muted); font-size:9px; }
+    #forme-storefront .f-men-category-top>span { color:var(--f-muted); font-size:9px; white-space:nowrap; }
+    #forme-storefront .f-men-category-group { display:grid; grid-template-columns:135px minmax(0,1fr); gap:16px; padding:17px 0; border-bottom:1px solid var(--f-line); }
+    #forme-storefront .f-men-category-group:last-child { border-bottom:0; }
+    #forme-storefront .f-men-category-group-title b { display:block; font:19px var(--f-serif); }
+    #forme-storefront .f-men-category-group-title small { display:block; margin-top:6px; color:var(--f-muted); font-size:8px; letter-spacing:.08em; text-transform:uppercase; }
+    #forme-storefront .f-men-category-links { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
+    #forme-storefront .f-men-category-link { min-height:53px; padding:10px 11px; display:flex; flex-direction:column; justify-content:center; gap:5px; border:1px solid var(--f-line); background:#faf9f5; transition:background .18s,border-color .18s,color .18s,transform .18s; }
+    #forme-storefront .f-men-category-link b { font-size:9px; font-weight:600; line-height:1.35; }
+    #forme-storefront .f-men-category-link small { color:#878b82; font-size:8px; }
+    #forme-storefront .f-men-category-link:hover { transform:translateY(-2px); border-color:var(--f-green); background:var(--f-green); color:#fff; }
+    #forme-storefront .f-men-category-link:hover small { color:#d9e0d8; }
+    #forme-storefront .f-men-category-panel[hidden] { display:none!important; }
+    #forme-storefront .f-men-layout { grid-template-columns:minmax(0,1fr); }
+    #forme-storefront .f-men-sidebar { display:none; }
+    #forme-storefront .f-men-price-note { display:block; margin-top:7px; color:#81877d; font-size:9px; }
+    #forme-storefront .f-men-category-crumb a { color:var(--f-clay); text-decoration:underline; }
+    #forme-storefront .f-men-grid .f-product-tag.preview { background:#e8e3d8; color:#596257; }
     @media(max-width:980px) {
       #forme-storefront .f-nav { gap:14px; }
       #forme-storefront .f-nav a { font-size:8px; letter-spacing:.08em; }
@@ -325,6 +346,13 @@
       #forme-storefront .f-men-grid .f-product-name { font-size:12px; }
       #forme-storefront .f-men-grid .f-product-info { padding-top:8px; }
       #forme-storefront .f-men-grid .f-product-photo .f-add { opacity:1; transform:none; }
+      #forme-storefront .f-men-category-panel { margin-top:14px; margin-bottom:18px; padding:13px 12px 5px; }
+      #forme-storefront .f-men-category-top b { font-size:19px; }
+      #forme-storefront .f-men-category-group { display:block; padding:13px 0; }
+      #forme-storefront .f-men-category-group-title { margin-bottom:10px; }
+      #forme-storefront .f-men-category-group-title b { font-size:17px; }
+      #forme-storefront .f-men-category-links { grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; }
+      #forme-storefront .f-men-category-link { min-height:48px; padding:8px; }
     }
   </style>
   <script id="forme-storefront-interactions">
@@ -361,6 +389,95 @@
         {id:'m24',name:'Mens Chino Pant - Navy',category:'Chino Pants',price:1550,old:2020,discount:23,save:470,image:'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=700&q=82',free:true},
         {id:'m25',name:'Mens Premium Panjabi - Mehfil',category:'Panjabi',price:2490,old:6500,discount:62,save:4010,image:'https://images.unsplash.com/photo-1618354691438-25bc04584c23?auto=format&fit=crop&w=700&q=82',badge:'Mega Deal',free:true}
       ];
+      menProducts.find(p=>p.id==='m21').category='Wallet';
+      menProducts.find(p=>p.id==='m22').category='Belt';
+      menProducts.find(p=>p.id==='m23').category='Wallet';
+      menProducts.push(
+        {id:'m26',name:'Fabrilife Mens Premium Designer Edition Full Sleeve T-Shirt - Andromeda',category:'Full Sleeve T-shirt',price:750,old:980,discount:23,save:230,image:'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=700&q=82'},
+        {id:'m27',name:'Mens Premium Sports Active Wear Full Sleeve T-shirt - Navigator',category:'Full Sleeve T-shirt',price:680,old:890,discount:24,save:210,image:'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=82',free:true},
+        {id:'m28',name:'Mens Premium Blank Full Sleeve T-Shirt - Sky Blue',category:'Full Sleeve T-shirt',price:650,old:850,discount:24,save:200,image:'https://images.unsplash.com/photo-1625910513413-5efba2c5e9a2?auto=format&fit=crop&w=700&q=82'},
+        {id:'m29',name:'Mens Premium Blank Full Sleeve T-Shirt - Gray Melange',category:'Full Sleeve T-shirt',price:650,old:850,discount:24,save:200,image:'https://images.unsplash.com/photo-1618354691438-25bc04584c23?auto=format&fit=crop&w=700&q=82',free:true},
+        {id:'m30',name:'Premium Double PK Cotton Polo - Laurel Oak',category:'Polo T-shirt',price:1090,old:1290,discount:16,save:200,image:'https://images.unsplash.com/photo-1625910513413-5efba2c5e9a2?auto=format&fit=crop&w=700&q=82'},
+        {id:'m31',name:'Designer Edition Single Jersey Knitted Cotton Polo - Hallmark',category:'Polo T-shirt',price:780,old:1020,discount:24,save:240,image:'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=700&q=82'},
+        {id:'m32',name:'Premium Designer Edition Double PK Cotton Polo - Magnificent',category:'Polo T-shirt',price:1140,old:1490,discount:23,save:350,image:'https://images.unsplash.com/photo-1625910513413-5efba2c5e9a2?auto=format&fit=crop&w=700&q=82'},
+        {id:'m33',name:'Premium Double PK Cotton Polo - Maroon',category:'Polo T-shirt',price:1090,old:1290,discount:16,save:200,image:'https://images.unsplash.com/photo-1618354691438-25bc04584c23?auto=format&fit=crop&w=700&q=82'},
+        {id:'m34',name:'Mens Premium Formal Shirt - Lucent',category:'Shirt',price:1380,old:1850,discount:25,save:470,image:'https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=700&q=82',free:true},
+        {id:'m35',name:'Mens Premium Formal Shirt - Showcast',category:'Shirt',price:1690,old:2300,discount:27,save:610,image:'https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=700&q=82'},
+        {id:'m36',name:'Mens Premium Casual Shirt - Pinstripe',category:'Shirt',price:1390,old:1900,discount:27,save:510,image:'https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&w=700&q=82'},
+        {id:'m37',name:'Premium Cuban Shirt - Maroon',category:'Shirt',price:1350,old:1760,discount:23,save:410,image:'https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&w=700&q=82',free:true},
+        {id:'m38',name:'Premium Jacquard Panjabi - Shaqawa',category:'Panjabi',price:2190,old:3200,discount:32,save:1010,image:'https://images.unsplash.com/photo-1618354691438-25bc04584c23?auto=format&fit=crop&w=700&q=82',free:true},
+        {id:'m39',name:'Mens Multi-Shades Hoodie - Maroon',category:'Hoodie',price:1690,old:2000,discount:16,save:310,image:'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=700&q=82'},
+        {id:'m40',name:'Mens Premium Jacket - Solstice (Black)',category:'Jacket',price:1999,old:2500,discount:20,save:501,image:'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=700&q=82'},
+        {id:'m41',name:'Mens Premium Sweatshirt - Monarch',category:'Sweatshirt',price:1470,old:2000,discount:27,save:530,image:'https://images.unsplash.com/photo-1578681994506-b8f463449011?auto=format&fit=crop&w=700&q=82'},
+        {id:'m42',name:'Mens Premium Trouser - Admiral',category:'Comfy Trouser',price:990,old:1290,discount:23,save:300,image:'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=700&q=82'},
+        {id:'m43',name:'Mens Premium Trouser - Redblack',category:'Comfy Trouser',price:990,old:1290,discount:23,save:300,image:'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=700&q=82'},
+        {id:'m44',name:'Mens Premium Trouser - Redstripe',category:'Comfy Trouser',price:990,old:1290,discount:23,save:300,image:'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=700&q=82'},
+        {id:'m45',name:'Mens Premium Sports Edition Trouser - Active',category:'Sports Trouser',price:790,old:1010,discount:22,save:220,image:'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=700&q=82'},
+        {id:'m46',name:'Mens Premium Sports Edition Trouser - Flameborn',category:'Sports Trouser',price:865,old:1200,discount:28,save:335,image:'https://images.unsplash.com/photo-1506629905607-d9bd6c54b6f0?auto=format&fit=crop&w=700&q=82',free:true},
+        {id:'m47',name:'Mens Premium Activewear Edition Trouser - Voltage',category:'Sports Trouser',price:865,old:1200,discount:28,save:335,image:'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=700&q=82'},
+        {id:'m48',name:'Mens Denim Jeans - Midnight',category:'Jeans',price:1690,old:2200,discount:23,save:510,image:'https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=700&q=82'},
+        {id:'m49',name:'Mens Denim Jeans - Heritage Blue',category:'Jeans',price:1960,old:2500,discount:22,save:540,image:'https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=700&q=82',free:true},
+        {id:'m50',name:'Mens Denim Jeans - Pacific Blue',category:'Jeans',price:2190,old:2850,discount:23,save:660,image:'https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=700&q=82',free:true},
+        {id:'m51',name:'Mens Denim Jeans - Jet Black',category:'Jeans',price:1690,old:2200,discount:23,save:510,image:'https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=700&q=82'},
+        {id:'m52',name:'Mens Premium Sports Joggers - Resilience',category:'Joggers',price:770,old:1010,discount:24,save:240,image:'https://images.unsplash.com/photo-1506629905607-d9bd6c54b6f0?auto=format&fit=crop&w=700&q=82'},
+        {id:'m53',name:'Mens Premium Sports Joggers - Gymnast',category:'Joggers',price:770,old:1010,discount:24,save:240,image:'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=700&q=82'},
+        {id:'m54',name:'Mens Premium Sports Joggers - Interactive',category:'Joggers',price:790,old:1010,discount:22,save:220,image:'https://images.unsplash.com/photo-1506629905607-d9bd6c54b6f0?auto=format&fit=crop&w=700&q=82',free:true},
+        {id:'m55',name:'Mens Premium Sports Joggers - Universal',category:'Joggers',price:770,old:1010,discount:24,save:240,image:'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=700&q=82'},
+        {id:'m56',name:'Premium Cargo Pant [6 Pocket] - Tan',category:'Cargo Pants',price:1990,old:2590,discount:23,save:600,image:'https://images.unsplash.com/photo-1517438476312-10d79c077509?auto=format&fit=crop&w=700&q=82',free:true},
+        {id:'m57',name:'Premium Cargo Pant (Five Pockets) - Recon',category:'Cargo Pants',price:1890,old:2590,discount:27,save:700,image:'https://images.unsplash.com/photo-1517438476312-10d79c077509?auto=format&fit=crop&w=700&q=82'},
+        {id:'m58',name:'Mens Chino Pant - Tan',category:'Chino Pants',price:1550,old:2020,discount:23,save:470,image:'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=700&q=82'},
+        {id:'m59',name:'Mens Premium CNS Activewear Shorts - Edric',category:'Shorts',price:630,old:890,discount:29,save:260,image:'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=700&q=82',free:true},
+        {id:'m60',name:'Mens Sports Edition Shorts - Helios',category:'Shorts',price:590,old:900,discount:34,save:310,image:'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=700&q=82'},
+        {id:'m61',name:'Sports Edition Shorts - Kinetic',category:'Shorts',price:550,old:720,discount:24,save:170,image:'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=700&q=82'},
+        {id:'m62',name:'Mens Sports Edition Shorts - Aquamarine',category:'Shorts',price:590,old:900,discount:34,save:310,image:'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=700&q=82'},
+        {id:'m63',name:'Sports Edition Shorts - Titan',category:'Shorts',price:435,old:720,discount:40,save:285,image:'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=700&q=82'},
+        {id:'m64',name:'Mens Everyday Pajama - Preview 01',category:'Pajama',price:0,old:0,discount:0,save:0,preview:true,image:'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=700&q=82'},
+        {id:'m65',name:'Mens Relaxed Pajama - Preview 02',category:'Pajama',price:0,old:0,discount:0,save:0,preview:true,image:'https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=700&q=82'},
+        {id:'m66',name:'Premium Cotton Face Mask - Preview 01',category:'Face Mask',price:0,old:0,discount:0,save:0,preview:true,image:'https://images.unsplash.com/photo-1584634731339-252c581abfc5?auto=format&fit=crop&w=700&q=82'},
+        {id:'m67',name:'Professional Layer Mask - Preview 02',category:'Face Mask',price:0,old:0,discount:0,save:0,preview:true,image:'https://images.unsplash.com/photo-1584634731339-252c581abfc5?auto=format&fit=crop&w=700&q=82'},
+        {id:'m68',name:'Sports Edition Mask - Preview 03',category:'Face Mask',price:0,old:0,discount:0,save:0,preview:true,image:'https://images.unsplash.com/photo-1584634731339-252c581abfc5?auto=format&fit=crop&w=700&q=82'},
+        {id:'m69',name:'Mens Premium Antibacterial Boxer Brief - Monument',category:'Underwear',price:399,old:520,discount:23,save:121,image:'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=700&q=82'},
+        {id:'m70',name:'Mens Premium Antibacterial Boxer Brief - Laurel Oak',category:'Underwear',price:399,old:520,discount:23,save:121,image:'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=700&q=82'},
+        {id:'m71',name:'Mens Premium Antibacterial Trunk - Black',category:'Underwear',price:399,old:520,discount:23,save:121,image:'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=700&q=82'},
+        {id:'m72',name:'Mens Premium Antibacterial Boxer Brief - White',category:'Underwear',price:399,old:520,discount:23,save:121,image:'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=700&q=82'},
+        {id:'m73',name:'Mens Premium Cotton Boxer Shorts - Black',category:'Underwear',price:450,old:590,discount:24,save:140,image:'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=700&q=82'},
+        {id:'m74',name:'Premium Antibacterial Socks - Dynamo',category:'Socks',price:160,old:290,discount:45,save:130,image:'https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?auto=format&fit=crop&w=700&q=82'},
+        {id:'m75',name:'Premium Antibacterial Socks - Falcon (Gray Melange)',category:'Socks',price:220,old:290,discount:24,save:70,image:'https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?auto=format&fit=crop&w=700&q=82'},
+        {id:'m76',name:'Premium Antibacterial Socks - Aerobics',category:'Socks',price:160,old:250,discount:36,save:90,image:'https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?auto=format&fit=crop&w=700&q=82'},
+        {id:'m77',name:'Premium Antibacterial Socks - Relay',category:'Socks',price:160,old:250,discount:36,save:90,image:'https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?auto=format&fit=crop&w=700&q=82'},
+        {id:'m78',name:'Premium Antibacterial Socks - Zenith',category:'Socks',price:160,old:290,discount:45,save:130,image:'https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?auto=format&fit=crop&w=700&q=82'},
+        {id:'m79',name:'Premium Antibacterial Socks - Gray Melange',category:'Socks',price:185,old:250,discount:26,save:65,image:'https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?auto=format&fit=crop&w=700&q=82'},
+        {id:'m80',name:'Premium Genuine Leather Wallet - Nordic',category:'Wallet',price:990,old:1600,discount:38,save:610,image:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=700&q=82'},
+        {id:'m81',name:'Premium Genuine Leather Wallet - Mavro',category:'Wallet',price:795,old:1150,discount:31,save:355,image:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=700&q=82'},
+        {id:'m82',name:'Classic Leather Belt - Preview 01',category:'Belt',price:0,old:0,discount:0,save:0,preview:true,image:'https://images.unsplash.com/photo-1624222247344-550fb8f7a5a2?auto=format&fit=crop&w=700&q=82'},
+        {id:'m83',name:'Everyday Leather Belt - Preview 02',category:'Belt',price:0,old:0,discount:0,save:0,preview:true,image:'https://images.unsplash.com/photo-1624222247344-550fb8f7a5a2?auto=format&fit=crop&w=700&q=82'},
+        {id:'m84',name:'Classic Baseball Cap - Preview 01',category:'Cap',price:0,old:0,discount:0,save:0,preview:true,image:'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=700&q=82'},
+        {id:'m85',name:'Everyday Cotton Cap - Preview 02',category:'Cap',price:0,old:0,discount:0,save:0,preview:true,image:'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=700&q=82'}
+      );
+      const menCategoryRoutes = {
+        'half-sleeve-t-shirt':{title:'Half Sleeve T-shirt',group:'Topwear',count:368},
+        'full-sleeve-t-shirt':{title:'Full Sleeve T-shirt',group:'Topwear',count:148},
+        'polo-t-shirt':{title:'Polo T-shirt',group:'Topwear',count:163},
+        'shirt':{title:'Shirt',group:'Topwear',count:87},
+        'panjabi':{title:'Panjabi',group:'Topwear',count:144},
+        'hoodie':{title:'Hoodie',group:'Topwear',count:30},
+        'jacket':{title:'Jacket',group:'Topwear',count:39},
+        'sweatshirt':{title:'Sweatshirt',group:'Topwear',count:17},
+        'comfy-trouser':{title:'Comfy Trouser',group:'Bottomwear',count:48},
+        'sports-trouser':{title:'Sports Trouser',group:'Bottomwear',count:25},
+        'jeans':{title:'Jeans',group:'Bottomwear',count:21},
+        'joggers':{title:'Joggers',group:'Bottomwear',count:18},
+        'cargo-pants':{title:'Cargo Pants',group:'Bottomwear',count:19},
+        'chino-pants':{title:'Chino Pants',group:'Bottomwear',count:12},
+        'shorts':{title:'Shorts',group:'Bottomwear',count:42},
+        'pajama':{title:'Pajama',group:'Bottomwear',count:5},
+        'face-mask':{title:'Face Mask',group:'Accessories',count:101},
+        'underwear':{title:'Underwear',group:'Accessories',count:54},
+        'socks':{title:'Socks',group:'Accessories',count:36},
+        'wallet':{title:'Wallet',group:'Accessories',count:null},
+        'belt':{title:'Belt',group:'Accessories',count:null},
+        'cap':{title:'Cap',group:'Accessories',count:null}
+      };
       const menState = {category:'All',quick:'all',search:'',sort:'featured',min:0,max:99999};
       const toast = message => { const node=root.querySelector('#f-toast'); node.textContent=message; node.classList.add('show'); clearTimeout(toast.timer); toast.timer=setTimeout(()=>node.classList.remove('show'),2200); };
       const overlay=root.querySelector('#f-overlay'), drawer=root.querySelector('#f-drawer'), menu=root.querySelector('#f-mobile-menu');
@@ -401,15 +518,45 @@
         if(menState.sort==='price-low')list.sort((a,b)=>a.price-b.price);
         if(menState.sort==='price-high')list.sort((a,b)=>b.price-a.price);
         if(menState.sort==='discount')list.sort((a,b)=>b.discount-a.discount);
-        root.querySelector('#f-men-result-count').textContent='Showing '+list.length+' sample styles · 1,362 total men’s products';
-        menGrid.innerHTML=list.length?list.map(p=>'<article class="f-product" data-id="'+p.id+'" data-name="'+p.name+'" data-price="'+p.price+'" data-image="'+p.image+'" data-category="'+p.category+'"><div class="f-product-photo"><img src="'+p.image+'" alt="'+p.name+'" loading="lazy"><span class="f-product-tag">-'+p.discount+'%</span><button class="f-wish" data-f-wish="'+p.id+'" aria-label="Save '+p.name+'"><svg viewBox="0 0 24 24"><path d="M20.8 8.8c0 5.2-8.8 11-8.8 11S3.2 14 3.2 8.8A4.5 4.5 0 0 1 12 6.5a4.5 4.5 0 0 1 8.8 2.3Z"/></svg></button>'+(p.free?'<span class="f-men-free">Free Delivery</span>':'')+'<button class="f-add" data-f-add="'+p.id+'">Add to bag +</button></div><div class="f-product-info"><span class="f-product-name">'+p.name+'</span><span class="f-men-savings">Save '+money(p.save)+'</span><div class="f-men-price-row"><strong>'+money(p.price)+'</strong><del>'+money(p.old)+'</del><em>-'+p.discount+'%</em></div></div></article>').join(''):'<div class="f-men-empty">No sample products in this category yet. More men's products will be added next.</div>';
+        const route=Object.values(menCategoryRoutes).find(item=>item.title===menState.category);
+        root.querySelector('#f-men-result-count').textContent='Showing '+list.length+' preview products · '+(menState.category==='All'?'1,362 total men’s products':((route&&route.count!==null)?route.count+' listed items':'More styles in this collection'));
+        menGrid.innerHTML=list.length?list.map(p=>'<article class="f-product" data-id="'+p.id+'" data-name="'+p.name+'" data-price="'+p.price+'" data-image="'+p.image+'" data-category="'+p.category+'"><div class="f-product-photo"><img src="'+p.image+'" alt="'+p.name+'" loading="lazy"><span class="f-product-tag '+(p.preview?'preview':'')+'">'+(p.preview?'Preview':'-'+p.discount+'%')+'</span><button class="f-wish" data-f-wish="'+p.id+'" aria-label="Save '+p.name+'"><svg viewBox="0 0 24 24"><path d="M20.8 8.8c0 5.2-8.8 11-8.8 11S3.2 14 3.2 8.8A4.5 4.5 0 0 1 12 6.5a4.5 4.5 0 0 1 8.8 2.3Z"/></svg></button>'+(p.free?'<span class="f-men-free">Free Delivery</span>':'')+(p.preview?'<button class="f-add" disabled>Coming soon</button>':'<button class="f-add" data-f-add="'+p.id+'">Add to bag +</button>')+'</div><div class="f-product-info"><span class="f-product-name">'+p.name+'</span>'+(p.preview?'<span class="f-men-price-note">Price and stock to be confirmed</span>':'<span class="f-men-savings">Save '+money(p.save)+'</span><div class="f-men-price-row"><strong>'+money(p.price)+'</strong><del>'+money(p.old)+'</del><em>-'+p.discount+'%</em></div>')+'</div></article>').join(''):'<div class="f-men-empty">No sample products in this category yet. More men's products will be added next.</div>';
+      };
+      const openMenRoute=(slug,push=true)=>{
+        if(slug!=='men'&&!menCategoryRoutes[slug])slug='men';
+        const item=menCategoryRoutes[slug];
+        menState.category=slug==='men'?'All':item.title;menState.quick='all';menState.search='';menState.sort='featured';menState.min=0;menState.max=99999;
+        root.classList.add('f-men-mode');
+        root.querySelector('#f-men-category-panel').hidden=slug!=='men';
+        root.querySelector('.f-men-heading h1').textContent=slug==='men'?"Men's Collection":item.title;
+        root.querySelector('.f-men-crumb').innerHTML=slug==='men'?'<a href="#f-top" data-f-home>Home</a> / Men':'<a href="#f-top" data-f-home>Home</a> / <a href="?category=men" data-f-men-route="men">Men</a> / '+item.title;
+        root.querySelector('.f-men-total').textContent=slug==='men'?'1,362 products':(item.count===null?'Accessories collection':item.count+' products');
+        root.querySelector('#f-men-search').value='';root.querySelector('#f-men-sort').value='featured';
+        root.querySelector('#f-men-min').value='';root.querySelector('#f-men-max').value='';
+        root.querySelectorAll('[data-f-men-quick]').forEach(b=>b.classList.toggle('active',b.dataset.fMenQuick==='all'));
+        root.querySelectorAll('[data-f-men-cat]').forEach(b=>b.classList.toggle('active',b.dataset.fMenCat===(slug==='men'?'All':item.title)));
+        root.querySelectorAll('.f-nav a[data-f-section]').forEach(a=>a.classList.toggle('f-nav-active',a.dataset.fSection==='men'));
+        document.title=(slug==='men'?"Men's Collection":item.title)+' | FORME';
+        if(push)history.pushState({formeCategory:slug},'',window.location.pathname+'?category='+slug);
+        window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'view_category',category:slug,category_name:slug==='men'?"Men's Collection":item.title,category_group:item?.group||'Men'});
+        renderMenProducts();
+        root.querySelector('#f-men-shop').scrollIntoView({behavior:'smooth',block:'start'});
+      };
+      const openHomeRoute=(push=true)=>{
+        root.classList.remove('f-men-mode');root.querySelectorAll('.f-nav a').forEach(a=>a.classList.remove('f-nav-active'));
+        document.title='FORME — Everyday, refined';
+        if(push)history.pushState({formeHome:true},'',window.location.pathname+'#f-top');
+        root.querySelector('#f-top').scrollIntoView({behavior:'smooth',block:'start'});
       };
       root.addEventListener('click',e=>{
+        const routeLink=e.target.closest('[data-f-men-route]');
+        if(routeLink){e.preventDefault();openMenRoute(routeLink.dataset.fMenRoute,true);return;}
+        if(e.target.closest('[data-f-home]')){e.preventDefault();openHomeRoute(true);return;}
         const section=e.target.closest('[data-f-section]');
         if(section){
           e.preventDefault();
           const target=section.dataset.fSection;
-          if(target==='men'){root.classList.add('f-men-mode');root.querySelectorAll('.f-nav a[data-f-section]').forEach(a=>a.classList.toggle('f-nav-active',a.dataset.fSection==='men'));root.querySelector('#f-men-shop').scrollIntoView({behavior:'smooth',block:'start'});}
+          if(target==='men'){openMenRoute('men',true);}
           else toast(section.textContent.trim()+' collection will be added next.');
           return;
         }
@@ -426,6 +573,12 @@
       root.querySelector('#f-men-search').addEventListener('input',e=>{menState.search=e.target.value.trim().toLowerCase();renderMenProducts();});
       root.querySelector('#f-men-sort').addEventListener('change',e=>{menState.sort=e.target.value;renderMenProducts();});
       renderMenProducts();
+      window.addEventListener('popstate',()=>{
+        const slug=new URLSearchParams(window.location.search).get('category');
+        if(slug)openMenRoute(slug,false);else openHomeRoute(false);
+      });
+      const initialMenRoute=new URLSearchParams(window.location.search).get('category');
+      if(initialMenRoute)openMenRoute(initialMenRoute,false);
       root.querySelectorAll('[data-f-type-tab]').forEach(tab=>tab.addEventListener('click',()=>{const selected=tab.dataset.fTypeTab;root.querySelectorAll('[data-f-type-tab]').forEach(item=>{const active=item===tab;item.classList.toggle('active',active);item.setAttribute('aria-selected',String(active));});root.querySelectorAll('[data-f-type-panel]').forEach(panel=>panel.classList.toggle('active',panel.dataset.fTypePanel===selected));}));
       search.addEventListener('input',()=>{const q=search.value.trim().toLowerCase();if(q)root.querySelector('#f-new-in').scrollIntoView({behavior:'smooth',block:'start'});let visible=0;root.querySelectorAll('#f-new-in .f-product').forEach(card=>{const show=(card.dataset.name+' '+card.dataset.category).toLowerCase().includes(q);card.hidden=!show;if(show)visible++;});root.querySelector('#f-no-results').hidden=visible!==0;});
       root.querySelector('#f-news-form').addEventListener('submit',e=>{e.preventDefault();root.querySelector('#f-news-note').textContent='Thanks for joining the FORME list.';e.target.reset();});
@@ -512,6 +665,37 @@
     <section class="f-men-shop" id="f-men-shop">
       <div class="f-men-offers"><strong>Special Offers</strong><button class="active" data-f-men-quick="all">All Men</button><button data-f-men-quick="mega">Mega Deal</button><button data-f-men-quick="new">New Arrival</button><button data-f-men-quick="top">Top Selling</button><button data-f-men-quick="free">Free Delivery</button><button data-f-men-quick="merch">Merchandise</button></div>
       <div class="f-container f-men-heading"><div class="f-men-crumb"><a href="#f-top" data-f-home>Home</a> / Men</div><div class="f-men-heading-line"><div><h1>Men's Collection</h1><p>Everyday essentials, considered fits and modern classics.</p></div><span class="f-men-total">1,362 products</span></div></div>
+      <div class="f-container f-men-category-panel" id="f-men-category-panel">
+        <div class="f-men-category-top"><div><b>Explore men's categories</b><small>Choose a category to open its own product page.</small></div><span>22 categories</span></div>
+        <div class="f-men-category-group"><div class="f-men-category-group-title"><b>Topwear</b><small>8 categories</small></div><div class="f-men-category-links">
+          <a class="f-men-category-link" href="?category=half-sleeve-t-shirt" data-f-men-route="half-sleeve-t-shirt"><b>Half Sleeve T-shirt</b><small>368 products</small></a>
+          <a class="f-men-category-link" href="?category=full-sleeve-t-shirt" data-f-men-route="full-sleeve-t-shirt"><b>Full Sleeve T-shirt</b><small>148 products</small></a>
+          <a class="f-men-category-link" href="?category=polo-t-shirt" data-f-men-route="polo-t-shirt"><b>Polo T-shirt</b><small>163 products</small></a>
+          <a class="f-men-category-link" href="?category=shirt" data-f-men-route="shirt"><b>Shirt</b><small>87 products</small></a>
+          <a class="f-men-category-link" href="?category=panjabi" data-f-men-route="panjabi"><b>Panjabi</b><small>144 products</small></a>
+          <a class="f-men-category-link" href="?category=hoodie" data-f-men-route="hoodie"><b>Hoodie</b><small>30 products</small></a>
+          <a class="f-men-category-link" href="?category=jacket" data-f-men-route="jacket"><b>Jacket</b><small>39 products</small></a>
+          <a class="f-men-category-link" href="?category=sweatshirt" data-f-men-route="sweatshirt"><b>Sweatshirt</b><small>17 products</small></a>
+        </div></div>
+        <div class="f-men-category-group"><div class="f-men-category-group-title"><b>Bottomwear</b><small>8 categories</small></div><div class="f-men-category-links">
+          <a class="f-men-category-link" href="?category=comfy-trouser" data-f-men-route="comfy-trouser"><b>Comfy Trouser</b><small>48 products</small></a>
+          <a class="f-men-category-link" href="?category=sports-trouser" data-f-men-route="sports-trouser"><b>Sports Trouser</b><small>25 products</small></a>
+          <a class="f-men-category-link" href="?category=jeans" data-f-men-route="jeans"><b>Jeans</b><small>21 products</small></a>
+          <a class="f-men-category-link" href="?category=joggers" data-f-men-route="joggers"><b>Joggers</b><small>18 products</small></a>
+          <a class="f-men-category-link" href="?category=cargo-pants" data-f-men-route="cargo-pants"><b>Cargo Pants</b><small>19 products</small></a>
+          <a class="f-men-category-link" href="?category=chino-pants" data-f-men-route="chino-pants"><b>Chino Pants</b><small>12 products</small></a>
+          <a class="f-men-category-link" href="?category=shorts" data-f-men-route="shorts"><b>Shorts</b><small>42 products</small></a>
+          <a class="f-men-category-link" href="?category=pajama" data-f-men-route="pajama"><b>Pajama</b><small>5 products</small></a>
+        </div></div>
+        <div class="f-men-category-group"><div class="f-men-category-group-title"><b>Accessories</b><small>6 categories</small></div><div class="f-men-category-links">
+          <a class="f-men-category-link" href="?category=face-mask" data-f-men-route="face-mask"><b>Face Mask</b><small>101 products</small></a>
+          <a class="f-men-category-link" href="?category=underwear" data-f-men-route="underwear"><b>Underwear</b><small>54 products</small></a>
+          <a class="f-men-category-link" href="?category=socks" data-f-men-route="socks"><b>Socks</b><small>36 products</small></a>
+          <a class="f-men-category-link" href="?category=wallet" data-f-men-route="wallet"><b>Wallet</b><small>Leather & everyday</small></a>
+          <a class="f-men-category-link" href="?category=belt" data-f-men-route="belt"><b>Belt</b><small>Leather & everyday</small></a>
+          <a class="f-men-category-link" href="?category=cap" data-f-men-route="cap"><b>Cap</b><small>Everyday accessories</small></a>
+        </div></div>
+      </div>
       <div class="f-container f-men-layout">
         <aside class="f-men-sidebar" aria-label="Men's collection filters">
           <div class="f-men-side-head"><b>Filters</b><button type="button" id="f-men-clear">Clear all</button></div>
