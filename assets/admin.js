@@ -34,7 +34,9 @@ function visibleOrders(){const q=$("fa-search").value.trim().toLowerCase(),f=$("
 function renderOrders(){
  const rows=visibleOrders();$("fa-order-count").textContent=rows.length+" records";$("fa-order-rows").innerHTML=rows.map(o=>{
  const items=Array.isArray(o.store_order_items)?o.store_order_items:[];
- return '<tr><td><strong>'+esc(o.order_number)+'</strong><small>'+esc(date(o.created_at))+'</small></td><td><strong>'+esc(o.customer_name)+'</strong><small>'+esc(o.customer_phone)+'</small></td><td>'+esc(date(o.created_at))+'</td><td>'+items.reduce((n,x)=>n+Number(x.quantity||0),0)+' units</td><td><strong>'+money(o.subtotal_bdt)+'</strong></td><td><span class="fa-status '+esc(o.status)+'">'+esc(statusLabel(o.status))+'</span></td><td><button class="fa-view" type="button" data-view="'+esc(o.id)+'">View & manage ↗</button></td></tr>';
+ const method=o.payment_method==="cash_on_delivery"?"Cash on delivery":String(o.payment_method||"Not set").replaceAll("_"," ");
+ const paid=String(o.payment_status||"not collected").replaceAll("_"," ");
+ return '<tr><td><strong>'+esc(o.order_number)+'</strong><small>'+esc(date(o.created_at))+'</small></td><td><strong>'+esc(o.customer_name)+'</strong><small>'+esc(o.customer_phone)+'</small></td><td>'+esc(date(o.created_at))+'</td><td>'+items.reduce((n,x)=>n+Number(x.quantity||0),0)+' units</td><td><strong>'+money(o.subtotal_bdt)+'</strong></td><td><span class="fa-payment">'+esc(method)+'</span><small>'+esc(paid)+'</small></td><td><span class="fa-status '+esc(o.status)+'">'+esc(statusLabel(o.status))+'</span></td><td><button class="fa-view" type="button" data-view="'+esc(o.id)+'">View & manage ↗</button></td></tr>';
  }).join("");
  $("fa-empty").hidden=rows.length!==0;$("fa-order-rows").parentElement.hidden=rows.length===0;
 }
@@ -52,7 +54,7 @@ function openOrder(id){
  const card=(label,value)=>'<div class="fa-detail-card"><span>'+esc(label)+'</span><strong>'+esc(value||"—")+'</strong></div>';
  const itemHtml=items.map(i=>'<div class="fa-line-item"><div><strong>'+esc(i.product_name)+'</strong><small>'+esc(i.requested_variant||"Standard variant")+' · Qty '+Number(i.quantity||0)+'</small></div><strong>'+money(i.line_total_bdt)+'</strong></div>').join("");
  $("fa-detail-content").innerHTML=
- '<div class="fa-detail-grid">'+card("Customer",o.customer_name)+card("Phone",o.customer_phone)+card("Email",o.customer_email)+card("Placed",date(o.created_at))+card("District / area",[o.district,o.area].filter(Boolean).join(", "))+card("Delivery address",o.delivery_address)+card("Customer note",o.customer_note)+card("Item subtotal",money(o.subtotal_bdt))+'</div>'+
+ '<div class="fa-detail-grid">'+card("Customer",o.customer_name)+card("Phone",o.customer_phone)+card("Email",o.customer_email)+card("Placed",date(o.created_at))+card("District / area",[o.district,o.area].filter(Boolean).join(", "))+card("Delivery address",o.delivery_address)+card("Customer note",o.customer_note)+card("Item subtotal",money(o.subtotal_bdt))+card("Payment method",o.payment_method==="cash_on_delivery"?"Cash on delivery":String(o.payment_method||"—").replaceAll("_"," "))+card("Payment status",String(o.payment_status||"not collected").replaceAll("_"," "))+card("Delivery charge",money(o.delivery_charge_bdt))+card("Final total",money(o.final_total_bdt))+'</div>'+
  '<section class="fa-detail-section"><h3>Items in this request</h3>'+itemHtml+'</section>'+
  '<section class="fa-detail-section"><h3>Operations & fulfilment</h3><form id="fa-edit-form" class="fa-edit-grid">'+
  '<label>Order status<select name="status">'+["pending_review","contacted","confirmed","processing","shipped","delivered","cancelled","rejected"].map(v=>option(v,o.status,statusLabel(v))).join("")+'</select></label>'+
