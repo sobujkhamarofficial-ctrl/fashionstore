@@ -24,24 +24,37 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
-
-      - name: Verify Men category pages
+      - name: Generate Men's product pages
+        run: python3 scripts/build_men_catalog.py
+      - name: Verify Men's products
         run: |
           test -s men/index.html
           test -s men/men-pages.css
+          test -s men/catalog.json
           test -s men/men/index.html
-          for category in half-sleeve-t-shirt full-sleeve-t-shirt polo-t-shirt shirt panjabi hoodie jacket sweatshirt comfy-trouser sports-trouser jeans joggers cargo-pants chino-pants shorts pajama face-mask underwear socks wallet belt cap; do
-            test -s "men/$category/index.html"
-          done
-
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          cats = json.loads(Path("men/catalog.json").read_text())["categories"]
+          assert len(cats) == 22
+          total = 0
+          for c in cats:
+              p = Path("men") / c["slug"] / "index.html"
+              assert p.is_file() and p.stat().st_size > 1000, str(p)
+              text = p.read_text()
+              assert len(c["products"]) == 6
+              assert text.count('class="f-product f-static-product"') == 6, c["slug"]
+              total += len(c["products"])
+          assert total == 132, total
+          assert Path("men/index.html").read_text().count('class="f-men-category-link"') == 22
+          print(f"Verified 22 categories and {total} products.")
+          PY
       - name: Upload static storefront
         uses: actions/upload-pages-artifact@v3
         with:
           path: .
-
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
