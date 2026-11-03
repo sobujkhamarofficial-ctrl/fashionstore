@@ -57,7 +57,8 @@
       itemList.append(element("li","",parts));
     });
     const totals=element("div","fc-track-totals");
-    [["Item subtotal",money(order.subtotal_bdt)],["Delivery",money(order.delivery_charge_bdt)],["Final total",money(order.final_total_bdt)]].forEach(pair=>{
+    const subtotalLabel = order.order_kind === "catalogue_request" || order.price_verification !== "verified" ? "Listed subtotal · provisional" : "Item subtotal";
+    [[subtotalLabel,money(order.subtotal_bdt)],["Delivery",money(order.delivery_charge_bdt)],["Final total",money(order.final_total_bdt)]].forEach(pair=>{
       const row=element("div","");
       row.append(element("span","",pair[0]),element("strong","",pair[1]));
       totals.append(row);
@@ -70,7 +71,7 @@
     const delivered=order.delivered_at ? element("p","fc-meta","Delivered: "+new Date(order.delivered_at).toLocaleString("en-GB")) : null;
     const paymentMethod=element("p","fc-meta","Payment method: "+(order.payment_method==="cash_on_delivery"?"Cash on delivery":String(order.payment_method||"to be confirmed").replaceAll("_"," ")));
     const payment=element("p","fc-meta","Payment status: "+String(order.payment_status||"not collected").replaceAll("_"," "));
-    const note=element("div","fc-note","For cash on delivery, pay only the final amount confirmed by FORME when the parcel is delivered. Order status is updated by the store team; this page is not a live courier GPS tracker.");
+    const note=element("div","fc-note",order.price_verification !== "verified" || order.order_kind === "catalogue_request" ? "Any listed subtotal is provisional until FORME verifies the exact product, price and delivery charge. For cash on delivery, pay only the final amount you agree with FORME when the parcel is delivered. Status is updated by the store team; this is not live courier GPS tracking." : "For cash on delivery, pay only the final amount confirmed by FORME when the parcel is delivered. Order status is updated by the store team; this page is not a live courier GPS tracker.");
     result.append(heading,date,statusCard,timeline,itemHeading,itemList,totals,courierHeading,courier,tracking,eta);
     if(dispatched) result.append(dispatched);
     if(delivered) result.append(delivered);
