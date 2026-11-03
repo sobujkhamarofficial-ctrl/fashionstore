@@ -6,6 +6,104 @@ const BASE="/fashionstore/";
 const history=[];
 let ready=false,busy=false,panel,launch,input,sendButton,chat,statusLine,promptButtons=[];
 
+
+const SESSION_ID=(()=>{try{return crypto.randomUUID();}catch(_){return Date.now().toString(16)+"-"+Math.random().toString(16).slice(2);}})();
+const MEMORY_ENABLED_KEY="forme-ai-style-memory-enabled";
+const MEMORY_IDS_KEY="forme-ai-style-memory-ids";
+let photoInput,voiceButton,memoryToggle;
+function rememberedIds(){
+ try{return localStorage.getItem(MEMORY_ENABLED_KEY)==="1"?JSON.parse(localStorage.getItem(MEMORY_IDS_KEY)||"[]").filter(x=>typeof x==="string").slice(0,5):[];}catch(_){return [];}
+}
+function setMemory(enabled){
+ try{if(enabled)localStorage.setItem(MEMORY_ENABLED_KEY,"1");else{localStorage.removeItem(MEMORY_ENABLED_KEY);localStorage.removeItem(MEMORY_IDS_KEY);}}catch(_){}
+ if(memoryToggle)memoryToggle.checked=!!enabled;
+}
+function rememberProduct(id){
+ if(!id)return;
+ if(localStorage.getItem(MEMORY_ENABLED_KEY)!=="1"){message("স্টাইল মেমরি ব্যবহার করতে আগে নিচের অপশনটি চালু করুন।","system");return;}
+ const ids=rememberedIds().filter(x=>x!==id);ids.unshift(id);
+ try{localStorage.setItem(MEMORY_IDS_KEY,JSON.stringify(ids.slice(0,5)));}catch(_){}
+ message("এই পণ্যটি আপনার ডিভাইসের স্টাইল পছন্দে রাখা হয়েছে।","system");
+}
+async function prepareImage(file){
+ if(!file||!["image/jpeg","image/png","image/webp"].includes(file.type))throw new Error("JPG, PNG অথবা WebP ছবি নির্বাচন করুন।");
+ if(file.size>6*1024*1024)throw new Error("ছবিটি ৬ MB-এর ছোট হতে হবে।");
+ const url=URL.createObjectURL(file);
+ try{
+  const img=new Image();img.src=url;await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=()=>reject(new Error("ছবিটি খোলা যায়নি।"));});
+  const scale=Math.min(1,1100/Math.max(img.naturalWidth,img.naturalHeight));
+  const canvas=document.createElement("canvas");canvas.width=Math.max(1,Math.round(img.naturalWidth*scale));canvas.height=Math.max(1,Math.round(img.naturalHeight*scale));
+  const ctx=canvas.getContext("2d");if(!ctx)throw new Error("ছবি প্রস্তুত করা যাচ্ছে না।");ctx.drawImage(img,0,0,canvas.width,canvas.height);
+  const blob=await new Promise(resolve=>canvas.toBlob(resolve,"image/jpeg",0.78));
+  if(!blob||blob.size>1500000)throw new Error("ছবিটি ১.৫ MB-এর কম করা যায়নি। অন্য ছবি ব্যবহার করুন।");
+  const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result).split(",")[1]||"");reader.onerror=()=>reject(new Error("ছবিটি পড়া যায়নি।"));reader.readAsDataURL(blob);});
+  return {mimeType:"image/jpeg",data};
+ }finally{URL.revokeObjectURL(url);}
+}
+function speakReply(text){
+ if(!("speechSynthesis" in window)||!("SpeechSynthesisUtterance" in window)){message("এই ব্রাউজারে voice playback সমর্থিত নয়।","system");return;}
+ window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(String(text||""));
+ utterance.lang=/[\u0980-\u09ff]/.test(utterance.text)?"bn-BD":"en-US";utterance.rate=0.96;window.speechSynthesis.speak(utterance);
+}
+async function saveFeedback(rating,reason,intent,sentiment,model,latency,node){
+ try{
+  const response=await fetch(COMMERCE_API,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({
+   action:"ai-feedback",rating,reason,intent:intent||"general",sentiment:sentiment||"neutral",model:model||null,session_id:SESSION_ID,
+   page_path:window.location.pathname,latency_ms:Math.max(0,Math.min(180000,Math.round(latency||0)))
+  })});
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok||!data.ok)throw new Error(data.error||"ফিডব্যাক জমা হয়নি।");
+  node.replaceChildren(el("span","fa-feedback-thanks","ধন্যবাদ, আপনার মতামত সংরক্ষিত হয়েছে।"));
+ }catch(error){node.appendChild(el("span","fa-feedback-error",error.message||"ফিডব্যাক জমা হয়নি।"));}
+}
+function addReplyControls(replyNode,data,latency){
+ const actions=el("div","fa-reply-actions"),good=el("button","fa-feedback-button","👍 সহায়ক"),bad=el("button","fa-feedback-button","👎 সমস্যা");
+ const speak=el("button","fa-speak-button","🔊 শুনুন");speak.type="button";speak.addEventListener("click",()=>speakReply(data.reply));
+ const feedback=el("div","fa-feedback-area");good.type="button";bad.type="button";
+ good.addEventListener("click",()=>{good.disabled=true;bad.disabled=true;void saveFeedback(1,"helpful",data.intent,data.sentiment,data.model,latency,feedback);});
+ bad.addEventListener("click",()=>{
+  if(feedback.querySelector(".fa-feedback-reasons"))return;
+  const choices=el("div","fa-feedback-reasons");
+  [["wrong_information","তথ্য ভুল"],["irrelevant","প্রাসঙ্গিক নয়"],["tone","উত্তরের ধরন"],["other","অন্য সমস্যা"]].forEach(([reason,label])=>{
+   const b=el("button","fa-feedback-button",label);b.type="button";b.addEventListener("click",()=>{good.disabled=true;bad.disabled=true;choices.querySelectorAll("button").forEach(x=>x.disabled=true);void saveFeedback(-1,reason,data.intent,data.sentiment,data.model,latency,feedback);});choices.appendChild(b);
+  });feedback.appendChild(choices);
+ });
+ actions.append(good,bad,speak);feedback.appendChild(actions);replyNode.appendChild(feedback);
+}
+function renderSupportForm(draft){
+ const form=el("form","fa-support-form");
+ form.append(el("div","fa-order-form-title","FORME কাস্টমার কেয়ার টিকিট"),el("p","fa-order-form-copy","আপনার সমস্যাটি টিমের কাছে পাঠানোর আগে যোগাযোগের তথ্য ও সারাংশ যাচাই করুন।"));
+ const typeNames={order:"অর্ডার",delivery:"ডেলিভারি",product:"পণ্য",payment:"পেমেন্ট",other:"অন্যান্য"};
+ form.appendChild(el("div","fa-support-meta","বিষয়: "+(typeNames[draft.issue_type]||"অন্যান্য")+" · অগ্রাধিকার: "+(draft.priority==="high"?"জরুরি":"সাধারণ")));
+ form.appendChild(field("আপনার নাম *","name",{required:true,maxLength:120,autocomplete:"name"}));
+ form.appendChild(field("মোবাইল নম্বর *","phone",{required:true,maxLength:20,autocomplete:"tel",placeholder:"01XXXXXXXXX",pattern:"(?:\\+?88)?01[3-9][0-9]{8}",title:"বাংলাদেশের বৈধ মোবাইল নম্বর লিখুন।"}));
+ form.appendChild(field("ইমেইল (ঐচ্ছিক)","email",{type:"email",maxLength:254,autocomplete:"email"}));
+ const summary=field("সমস্যার সারাংশ *","summary",{required:true,maxLength:900,multiline:true,rows:4});
+ summary.querySelector("textarea").value=String(draft.summary||"").slice(0,900);form.appendChild(summary);
+ const consent=el("label","fa-consent"),check=el("input");check.type="checkbox";check.required=true;
+ const note=el("span");note.appendChild(document.createTextNode("আমি "));
+ const link=el("a","","Privacy Policy");link.href=BASE+"pages/privacy.html";link.target="_blank";link.rel="noopener noreferrer";
+ note.append(link,document.createTextNode(" পড়ে এই অনুরোধের জন্য আমার দেওয়া তথ্য ব্যবহারে সম্মতি দিচ্ছি।"));consent.append(check,note);form.appendChild(consent);
+ form.appendChild(el("p","fa-order-disclaimer","চ্যাটের সম্পূর্ণ ইতিহাস বা ছবি টিকিটে পাঠানো হবে না। শুধু উপরের সারাংশ ও আপনার দেওয়া যোগাযোগের তথ্য যাবে।"));
+ const submit=el("button","fa-order-submit","সহায়তা টিকিট জমা দিন");submit.type="submit";form.appendChild(submit);
+ const status=el("div","fa-order-status");status.setAttribute("role","status");status.setAttribute("aria-live","polite");form.appendChild(status);
+ form.addEventListener("submit",async event=>{
+  event.preventDefault();if(form.dataset.submitting==="true"||!form.reportValidity())return;
+  const data=new FormData(form),payload={action:"ai-support-ticket",name:String(data.get("name")||"").trim(),phone:String(data.get("phone")||"").trim(),email:String(data.get("email")||"").trim(),issue_type:String(draft.issue_type||"other"),priority:String(draft.priority||"normal"),summary:String(data.get("summary")||"").trim(),privacy_consent:check.checked};
+  form.dataset.submitting="true";submit.disabled=true;status.textContent="সাপোর্ট টিকিট জমা হচ্ছে…";
+  try{
+   const response=await fetch(COMMERCE_API,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(payload)});
+   const result=await response.json().catch(()=>({}));
+   if(!response.ok||!result.ok)throw new Error(result.error||"টিকিট জমা হয়নি। আবার চেষ্টা করুন।");
+   const success=el("section","fa-support-success");
+   success.append(el("strong","","✓ টিকিট জমা হয়েছে"),el("p","","আপনার সহায়তা অনুরোধটি FORME টিমের ইনবক্সে পাঠানো হয়েছে। আপনার দেওয়া যোগাযোগের মাধ্যমে টিম উত্তর দেবে।"));
+   if(result.reference)success.append(el("div","fa-support-reference","Reference: "+String(result.reference)));
+   form.replaceWith(success);
+  }catch(error){status.textContent=error.message||"টিকিট জমা হয়নি।";form.dataset.submitting="false";submit.disabled=false;}
+ });
+ chat.appendChild(form);scroll();form.querySelector('[name="name"]').focus();
+}
+
 function el(tag,cls,text){
  const n=document.createElement(tag);
  if(cls)n.className=cls;
@@ -65,6 +163,7 @@ function showProducts(products){
    el("div","fa-product-price","তালিকাভুক্ত মূল্য "+money(p.price_bdt)),
    el("div","fa-product-status",p.availability_status==="in_stock"?"স্টক: ক্যাটালগে উপলব্ধ":p.availability_status==="preorder"?"প্রি-অর্ডার; টিম নিশ্চিত করবে":"স্টক ও চূড়ান্ত দাম যাচাই সাপেক্ষে")
   );
+  const save=el("button","fa-save-style-button","☆ স্টাইল মনে রাখুন");save.type="button";save.addEventListener("click",()=>rememberProduct(String(p.product_id)));info.appendChild(save);
   const order=el("button","fa-order-button","এই পণ্যটি অর্ডার করতে চাই");
   order.type="button";
   order.addEventListener("click",()=>openOrder([{
