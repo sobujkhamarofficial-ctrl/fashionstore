@@ -5,7 +5,7 @@ const KEY="sb_publishable_EWY6B3OF8lOQB7uB7jBZRA_3MwimKRy";
 const ADMIN_EMAIL="sobujkhamar.official@gmail.com";
 const ACCESS="forme-admin-access";
 const $=id=>document.getElementById(id);
-let orders=[],selected=null;
+let orders=[],selected=null,products=[],selectedProduct=null,activeTab="orders",productsLoaded=false;
 const money=n=>"৳"+Number(n||0).toLocaleString("en-BD");
 const esc=value=>String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
 const token=()=>sessionStorage.getItem(ACCESS)||"";
@@ -42,6 +42,61 @@ function renderOrders(){
  }).join("");
  $("fa-empty").hidden=rows.length!==0;$("fa-order-rows").parentElement.hidden=rows.length===0;
 }
+function visibleProducts(){
+ const q=$("fa-product-search").value.trim().toLowerCase(),filter=$("fa-product-filter").value;
+ return products.filter(p=>(filter==="all"||p.availability_status===filter)&&(!q||[p.id,p.name,p.category].some(v=>String(v||"").toLowerCase().includes(q))));
+}
+function renderProducts(){
+ const rows=visibleProducts();
+ $("fa-product-count").textContent=rows.length+" of "+products.length+" products";
+ $("fa-product-rows").innerHTML=rows.map(p=>{
+  const status=String(p.availability_status||"needs_confirmation").replaceAll("_"," ");
+  const verification=p.details_verified?"Verified":"Needs verification";
+  return '<tr><td><strong>'+esc(p.name)+'</strong><small>'+esc(p.id)+'</small></td><td>'+esc(p.category)+'</td><td><strong>'+money(p.price_bdt)+'</strong></td><td><span class="fa-status '+esc(p.availability_status)+'">'+esc(status)+'</span></td><td><span class="fa-payment">'+esc(verification)+'</span></td><td><button class="fa-view" type="button" data-product-edit="'+esc(p.id)+'">Edit product ↗</button></td></tr>';
+ }).join("");
+ $("fa-product-empty").hidden=rows.length!==0;
+ $("fa-product-rows").parentElement.hidden=rows.length===0;
+}
+async function loadProducts(){
+ alertBox("");
+ try{
+  const result=await adminRequest({operation:"products"});
+  products=Array.isArray(result.products)?result.products:[];
+  productsLoaded=true;
+  renderProducts();
+ }catch(error){alertBox(error.message);}
+}
+function showTab(tab){
+ activeTab=tab;
+ const ordersTab=$("fa-orders-tab"),productsTab=$("fa-products-tab");
+ const ordersPanel=$("fa-orders-panel"),productsPanel=$("fa-products-panel");
+ const isOrders=tab==="orders";
+ ordersTab.classList.toggle("active",isOrders);ordersTab.setAttribute("aria-selected",String(isOrders));
+ productsTab.classList.toggle("active",!isOrders);productsTab.setAttribute("aria-selected",String(!isOrders));
+ ordersPanel.hidden=!isOrders;productsPanel.hidden=isOrders;
+ if(!isOrders&&!productsLoaded)void loadProducts();
+}
+function openProduct(id){
+ selectedProduct=products.find(p=>p.id===id);
+ if(!selectedProduct)return;
+ const p=selectedProduct;
+ $("fa-detail-title").textContent="Edit catalogue product";
+ $("fa-detail-content").innerHTML=
+  '<section class="fa-detail-section"><p class="fa-product-editor-note">Check the physical item and source information before setting it to verified. This updates the live storefront catalogue.</p>'+
+  '<form id="fa-product-edit-form" class="fa-edit-grid">'+
+  '<label class="wide">Product name<input name="name" maxlength="180" required value="'+esc(p.name)+'"></label>'+
+  '<label>Category<input name="category" maxlength="120" required value="'+esc(p.category)+'"></label>'+
+  '<label>Current selling price (BDT)<input name="price_bdt" type="number" min="1" step="1" required value="'+esc(p.price_bdt)+'"></label>'+
+  '<label>Compare-at price (BDT)<input name="compare_at_price_bdt" type="number" min="0" step="1" value="'+esc(p.compare_at_price_bdt??"")+'"></label>'+
+  '<label class="wide">Product image URL<input name="image_url" maxlength="1000" required value="'+esc(p.image_url||"")+'"><small>Use an Unsplash photo URL or a FORME-hosted product photo.</small></label>'+
+  '<label class="wide">Description<textarea name="description" maxlength="2000" required>'+esc(p.description||"")+'</textarea></label>'+
+  '<label>Availability<select name="availability_status">'+["needs_confirmation","in_stock","out_of_stock","preorder","archived"].map(v=>option(v,p.availability_status,v.replaceAll("_"," "))).join("")+'</select></label>'+
+  '<label class="fa-checkline"><input type="checkbox" name="is_active" '+(p.is_active?"checked":"")+'> Visible in the catalogue</label>'+
+  '<label class="fa-checkline"><input type="checkbox" name="details_verified" '+(p.details_verified?"checked":"")+'> Product details verified</label>'+
+  '<div class="fa-save-row wide"><button class="fa-primary" type="submit">Save product <span>↗</span></button></div>'+
+  '<p id="fa-product-edit-message" class="fa-message wide" role="status" aria-live="polite"></p></form></section>';
+ $("fa-modal").hidden=false;document.body.style.overflow="hidden";
+}
 async function loadOrders(){
  $("fa-refresh").disabled=true;alertBox("");
  try{const data=await adminRequest({operation:"list"});orders=Array.isArray(data.orders)?data.orders:[];renderStats(data.stats||{});$("fa-welcome").textContent=(data.user&&data.user.email?data.user.email:"Admin")+" · Private order workspace";renderOrders();}
@@ -77,10 +132,32 @@ function openOrder(id){
 function closeOrder(){$("fa-modal").hidden=true;document.body.style.overflow="";}
 $("fa-login-form").addEventListener("submit",async e=>{e.preventDefault();const form=e.currentTarget,data=new FormData(form),button=form.querySelector("button[type=submit]");button.disabled=true;message("fa-login-message","Checking your access…",false);try{const email=String(data.get("email")||"").trim().toLowerCase();if(email!==ADMIN_EMAIL)throw new Error("Only the authorised owner email can sign in.");const session=await adminRequest({operation:"login",email,password:String(data.get("password")||"")});saveSession(session);form.reset();message("fa-login-message","",true);showDashboard();void loadOrders();}catch(err){clearSession();showAuth();message("fa-login-message",err.message,false);}finally{button.disabled=false;}});
 
-$("fa-refresh").addEventListener("click",loadOrders);$("fa-search").addEventListener("input",renderOrders);$("fa-filter").addEventListener("change",renderOrders);
+$("fa-refresh").addEventListener("click",()=>activeTab==="orders"?loadOrders():loadProducts());$("fa-search").addEventListener("input",renderOrders);$("fa-filter").addEventListener("change",renderOrders);
+$("fa-orders-tab").addEventListener("click",()=>showTab("orders"));$("fa-products-tab").addEventListener("click",()=>showTab("products"));
+$("fa-product-search").addEventListener("input",renderProducts);$("fa-product-filter").addEventListener("change",renderProducts);
+$("fa-product-rows").addEventListener("click",e=>{const btn=e.target.closest("[data-product-edit]");if(btn)openProduct(btn.dataset.productEdit);});
 $("fa-order-rows").addEventListener("click",e=>{const btn=e.target.closest("[data-view]");if(btn)openOrder(btn.dataset.view);});
 $("fa-modal").addEventListener("click",e=>{if(e.target.closest("[data-close-modal]"))closeOrder();});
+$("fa-detail-content").addEventListener("submit",async e=>{
+ if(e.target.id!=="fa-product-edit-form")return;
+ e.preventDefault();if(!selectedProduct)return;
+ const form=e.target,data=new FormData(form);
+ const fields={
+  name:String(data.get("name")||"").trim(),category:String(data.get("category")||"").trim(),
+  description:String(data.get("description")||"").trim(),price_bdt:Number(data.get("price_bdt")),
+  compare_at_price_bdt:data.get("compare_at_price_bdt")===""?null:Number(data.get("compare_at_price_bdt")),
+  image_url:String(data.get("image_url")||"").trim(),availability_status:String(data.get("availability_status")||"needs_confirmation"),
+  is_active:form.elements.is_active.checked,details_verified:form.elements.details_verified.checked
+ };
+ const button=form.querySelector('button[type="submit"]');button.disabled=true;message("fa-product-edit-message","Saving product changes…",false);
+ try{
+  const result=await adminRequest({operation:"product-update",product_id:selectedProduct.id,fields});
+  products=products.map(p=>p.id===selectedProduct.id?{...p,...result.product}:p);selectedProduct=result.product;renderProducts();
+  message("fa-product-edit-message","Product updated successfully.",true);
+ }catch(err){message("fa-product-edit-message",err.message,false);}
+ finally{button.disabled=false;}
+});
 $("fa-detail-content").addEventListener("submit",async e=>{if(e.target.id!=="fa-edit-form")return;e.preventDefault();if(!selected)return;const form=e.target,data=new FormData(form),fields={};for(const key of ["status","price_verification","payment_method","payment_status","courier_name","courier_tracking_number","internal_note"])fields[key]=String(data.get(key)||"").trim()||null;for(const key of ["delivery_charge_bdt","final_total_bdt"])fields[key]=data.get(key)===""?null:Number(data.get(key));const delivery=data.get("estimated_delivery_at");fields.estimated_delivery_at=delivery?new Date(delivery).toISOString():null;const button=form.querySelector("button[type=submit]");button.disabled=true;message("fa-edit-message","Saving order changes…",false);try{const result=await adminRequest({operation:"update",order_id:selected.id,fields});orders=orders.map(o=>o.id===selected.id?{...o,...result.order}:o);renderOrders();renderStats(await adminRequest({operation:"list"}).then(d=>d.stats||{}));selected=orders.find(o=>o.id===selected.id);openOrder(selected.id);message("fa-edit-message","Order updated successfully.",true);}catch(err){message("fa-edit-message",err.message,false);}finally{button.disabled=false;}});
-$("fa-logout").addEventListener("click",async()=>{try{if(token())await adminRequest({operation:"logout"});}catch(_){}clearSession();orders=[];closeOrder();showAuth();$("fa-login-form").reset();});
+$("fa-logout").addEventListener("click",async()=>{try{if(token())await adminRequest({operation:"logout"});}catch(_){}clearSession();orders=[];products=[];productsLoaded=false;closeOrder();showTab("orders");showAuth();$("fa-login-form").reset();});
 (()=>{if(token()){showDashboard();void loadOrders();}else showAuth();})();
 })();
