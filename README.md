@@ -91,3 +91,17 @@ GitHub Actions runs these build steps on pushes to `main`:
 6. Publish the static site to GitHub Pages.
 
 Never commit API secrets, service-role keys, payment credentials or private customer data to this public repository.
+
+## FORME AI Control API v1
+
+A separate private server-to-server Edge Function is deployed at:
+https://zfgcovvfczjiqagrnfjr.supabase.co/functions/v1/forme-ai-api
+
+V1 currently supports active catalogue search, exact product lookup, catalogue-quality summaries, and Gemini-generated unpublished product/SEO content drafts. It is intentionally read-only: it cannot modify products, inventory, orders, payments, courier bookings, or advertising campaigns.
+
+The function source, API guide, and OpenAPI contract are maintained in:
+- `supabase/functions/forme-ai-api/index.ts`
+- `supabase/functions/forme-ai-api/README.md`
+- `supabase/functions/forme-ai-api/openapi.yaml`
+
+Agent routes remain disabled until the private Supabase Edge Function secret `FORME_AI_AGENT_KEY` is configured. The key must never be committed to GitHub or placed in browser code. Check the public `/health` route to confirm readiness after adding the secret.
