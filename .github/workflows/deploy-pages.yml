@@ -379,6 +379,8 @@ jobs:
           for name, source in [("Men", men_builder), ("collection", collection_builder), ("store content", store_builder), ("blog", blog_builder)]:
               assert "customer-care.js" in source, f"{name} is missing the customer-care widget"
               assert "customer-live-voice.js" in source, f"{name} pages are missing the dedicated Live Voice client"
+          voice_client = Path("assets/customer-live-voice.js").read_text()
+          assert "data instanceof Blob" in voice_client and "await data.text()" in voice_client, "Live Voice must decode Blob WebSocket frames before JSON parsing"
 
           assert "commerce-actions.js" in collection_builder and "commerce-actions.css" in collection_builder
           assert "assets/blog.css" in men_builder and '<strong>Blog</strong>' in men_builder, "Men pages need a dedicated Blog footer"

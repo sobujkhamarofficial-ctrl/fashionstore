@@ -192,7 +192,7 @@ def render_article(article: dict, all_articles: list[dict]) -> str:
     return f'''{head}<body>{header()}<main class="fc-main fb-main">{body}</main>{footer(all_articles)}
 <script src="{BASE}assets/blog.js?v=20261103-1" defer></script>
 <script src="{BASE}assets/customer-care.js?v=20261103-5" defer></script>
-<script src="{BASE}assets/customer-live-voice.js?v=20261103-2" defer></script>
+<script src="{BASE}assets/customer-live-voice.js?v=20261103-3" defer></script>
 </body></html>'''
 
 def render_index(articles: list[dict]) -> str:
@@ -233,7 +233,7 @@ def render_index(articles: list[dict]) -> str:
     return f'''{head}<body>{header()}<main class="fc-main fb-main">{body}</main>{footer(articles)}
 <script src="{BASE}assets/blog.js?v=20261103-1" defer></script>
 <script src="{BASE}assets/customer-care.js?v=20261103-5" defer></script>
-<script src="{BASE}assets/customer-live-voice.js?v=20261103-2" defer></script>
+<script src="{BASE}assets/customer-live-voice.js?v=20261103-3" defer></script>
 </body></html>'''
 
 def rebuild_sitemap() -> int:
