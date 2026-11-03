@@ -16,7 +16,7 @@ def header():
 <a class="fc-logo" href="{BASE}">FORME<small>EVERYDAY, REFINED</small></a>
 <nav class="fc-nav" aria-label="Site navigation">
 <a href="{BASE}">Shop</a><a href="{BASE}men/">Men</a><a href="{BASE}women/">Women</a>
-<a href="{BASE}blog/">Journal</a><a href="{BASE}pages/about.html">About</a>
+<a href="{BASE}pages/about.html">About</a>
 <a href="{BASE}pages/contact.html">Contact</a>
 </nav></div></header>'''
 
@@ -25,7 +25,8 @@ def footer():
 <div class="fc-foot-grid">
 <div><a class="fc-logo" style="color:#fff" href="{BASE}">FORME<small style="color:#d8ded8">EVERYDAY, REFINED</small></a>
 <p>Considered clothing and modern everyday essentials. A Bangladesh-focused fashion storefront.</p></div>
-<div><h3>Explore</h3><a href="{BASE}">Shop all</a><a href="{BASE}men/">Men</a><a href="{BASE}women/">Women</a><a href="{BASE}blog/">Journal</a></div>
+<div><h3>Explore</h3><a href="{BASE}">Shop all</a><a href="{BASE}men/">Men</a><a href="{BASE}women/">Women</a></div>
+<div><h3>Blog</h3><a href="{BASE}blog/">সব ব্লগ পোস্ট</a><a href="{BASE}blog/bangladesh-capsule-wardrobe-guide.html">ক্যাপসুল ওয়ার্ডরোব</a><a href="{BASE}blog/shirt-fit-size-measurement-bangladesh.html">শার্টের সঠিক ফিট</a><a href="{BASE}blog/fabric-guide-hot-humid-weather.html">ফ্যাব্রিক গাইড</a><a href="{BASE}blog/mens-wardrobe-essentials-bangladesh.html">পুরুষদের ওয়ার্ডরোব</a><a href="{BASE}blog/womens-everyday-wardrobe-bangladesh.html">নারীদের ওয়ার্ডরোব</a></div>
 <div><h3>Customer care</h3><a href="{BASE}pages/shipping-delivery.html">Shipping & delivery</a><a href="{BASE}pages/returns-refunds.html">Returns & refunds</a><a href="{BASE}pages/cancellations.html">Cancellations</a><a href="{BASE}pages/size-guide.html">Size guide</a><a href="{BASE}pages/reviews.html">Customer reviews</a><a href="{BASE}pages/faq.html">FAQs</a><a href="{BASE}pages/order-tracking.html">Track an order</a></div>
 <div><h3>Information</h3><a href="{BASE}pages/about.html">About FORME</a><a href="{BASE}pages/contact.html">Contact</a><a href="{BASE}pages/payment.html">Payment policy</a><a href="{BASE}pages/privacy.html">Privacy policy</a><a href="{BASE}pages/terms.html">Terms & conditions</a></div>
 </div><div class="fc-footer-bottom"><span>© 2026 FORME. All rights reserved.</span><span>Bangladesh · Pilot storefront</span></div>
@@ -37,7 +38,7 @@ def page(title, kicker, lede, body, description=None, canonical=None):
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#F7F5F0"><meta name="description" content="{e(desc)}">
-<link rel="stylesheet" href="{ASSET}"><link rel="stylesheet" href="{BASE}assets/customer-care.css?v=20261102-3"><title>{e(title)} | FORME</title>
+<link rel="stylesheet" href="{ASSET}"><link rel="stylesheet" href="{BASE}assets/blog.css?v=20261103-1"><link rel="stylesheet" href="{BASE}assets/customer-care.css?v=20261102-3"><title>{e(title)} | FORME</title>
 {f'<link rel="canonical" href="{url}">' if url else ''}
 </head><body>{header()}<main class="fc-main">
 <div class="fc-breadcrumb"><a href="{BASE}">Home</a> / {e(title)}</div>
