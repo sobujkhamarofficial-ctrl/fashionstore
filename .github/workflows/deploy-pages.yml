@@ -185,6 +185,7 @@ jobs:
       - name: Verify ecommerce, policies and journal integration
         run: |
           node --check assets/admin.js
+          node --check assets/order-tracking.js
           node --check assets/checkout.js
           node --check assets/blog.js
           node --check assets/catalogue-orders.js
@@ -348,6 +349,10 @@ jobs:
           assert "data-catalogue-order" in home, "Homepage preview items are missing an Order Now control"
           assert "assets/catalogue-live.js" in home and "assets/catalogue-live.css" in home, "Homepage is missing live product catalogue sync"
           assert "catalogue-live.js" in Path("scripts/build_men_catalog.py").read_text(), "Men pages are missing live product catalogue sync"
+          admin_html = Path("admin/index.html").read_text()
+          admin_js = Path("assets/admin.js").read_text()
+          assert "fa-product-export" in admin_html and "fa-product-import" in admin_html, "Admin CSV controls are missing"
+          assert "product-bulk-update" in admin_js and "parseCsv" in admin_js, "Admin bulk product import is not connected"
           assert Path("assets/catalogue-orders.css").is_file(), "Catalogue order modal styles are missing"
           commerce = Path("assets/checkout.js").read_text()
           assert "storefront-commerce-api" in commerce and "AQ." not in commerce
