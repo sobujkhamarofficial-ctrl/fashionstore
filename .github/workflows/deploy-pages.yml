@@ -200,6 +200,7 @@ jobs:
           node --check assets/site-forms.js
           node --check assets/commerce-actions.js
           node --check assets/customer-care.js
+          node --check assets/customer-live-voice.js
           python3 - <<'PY'
           import json
           import re

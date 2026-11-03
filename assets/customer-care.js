@@ -348,6 +348,7 @@ function mount(){
  '<section class="fa-panel" role="dialog" aria-modal="false" aria-hidden="true" aria-label="FORME AI shopping assistant">'+
  '<header class="fa-head"><div class="fa-brand"><span class="fa-mark" aria-hidden="true">F.</span><div><div class="fa-title">FORME Shopping Assistant</div><div class="fa-subtitle">DISCOVER · COMPARE · ORDER</div></div></div><button type="button" class="fa-close" data-fa-close aria-label="Close assistant">×</button></header>'+
  '<div class="fa-status" role="status" aria-live="polite"><span class="fa-status-dot"></span><span class="fa-status-label">Checking secure connection…</span></div>'+
+ '<button type="button" class="fa-live-banner" data-fa-live-open aria-label="লাইভ ভয়েস মোড চালু করুন"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3Z"/><path d="M5 10a7 7 0 0 0 14 0M12 18v3M9 21h6"/></svg><span><strong>লাইভ ভয়েসে কথা বলুন</strong><small>সরাসরি কথা বলুন, কণ্ঠে উত্তর শুনুন</small></span><b>শুরু করুন <i aria-hidden="true">→</i></b></button>'+
  '<div class="fa-chat" aria-live="polite" aria-label="Conversation"></div>'+
  '<div class="fa-prompts"><button class="fa-prompt" type="button" data-fa-prompt="Show me some shirts.">শার্ট দেখাও</button><button class="fa-prompt" type="button" data-fa-prompt="Show me polo T-shirts within ৳1500.">পোলো টি-শার্ট</button><button class="fa-prompt" type="button" data-fa-prompt="Help me choose the right clothing size and fit.">সাইজ ও ফিট</button></div>'+
  '<div class="fa-warning">চ্যাটে ফোন নম্বর বা ঠিকানা লিখবেন না। ছবি শুধু এই অনুরোধে বিশ্লেষণ হবে, সংরক্ষণ করা হবে না। <a href="'+BASE+'pages/order-tracking.html">Track an order</a>.</div>'+
@@ -358,13 +359,28 @@ function mount(){
  '<textarea class="fa-input" rows="1" maxlength="1200" placeholder="কী পণ্য খুঁজছেন? লিখুন…" aria-label="Your message"></textarea>'+
  '<button class="fa-composer-tool fa-mic" type="button" data-fa-voice aria-label="কথা বলে লিখুন" title="কথা বলে লিখুন"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"/></svg></button>'+
  '<button class="fa-send" type="submit" aria-label="Send message" title="পাঠান"><svg viewBox="0 0 24 24"><path d="m21 3-7.5 18-3.7-7.8L2 9.5 21 3Z"/><path d="M9.8 13.2 14 9"/></svg></button></form>'+
- '<div class="fa-foot">Pilot catalogue · stock and final price confirmed by FORME</div></section>'+
+ '<div class="fa-live-modal" data-fa-live-modal aria-hidden="true">'+
+ '<section class="fa-live-dialog" role="dialog" aria-modal="true" aria-label="FORME Live Voice Mode">'+
+ '<header class="fa-live-head"><div><span class="fa-live-kicker">FORME · VOICE ASSISTANT</span><strong>লাইভ ভয়েস মোড</strong></div><button type="button" data-fa-live-close aria-label="ভয়েস মোড বন্ধ করুন">×</button></header>'+
+ '<p class="fa-live-intro">স্বাভাবিকভাবে বাংলায় বা ইংরেজিতে কথা বলুন। FORME AI শুনবে এবং সরাসরি কণ্ঠে উত্তর দেবে।</p>'+
+ '<div class="fa-live-orb" data-fa-live-orb aria-hidden="true"><span></span><span></span><span></span></div>'+
+ '<div class="fa-live-status" data-fa-live-status role="status" aria-live="polite">কথা শুরু করতে নিচের বাটনে চাপ দিন।</div>'+
+ '<div class="fa-live-transcript" data-fa-live-transcript aria-live="polite"></div>'+
+ '<div class="fa-live-products" data-fa-live-products></div>'+
+ '<div class="fa-live-controls"><button type="button" class="fa-live-start" data-fa-live-start>কথা শুরু করুন</button><button type="button" class="fa-live-stop" data-fa-live-stop disabled>কল শেষ করুন</button></div>'+
+ '<button type="button" class="fa-live-view-chat" data-fa-live-view-chat hidden>চ্যাটে পণ্য / ফর্ম দেখুন</button>'+
+ '<small class="fa-live-privacy">মাইক্রোফোন চালু করতে অনুমতি লাগবে। কল শেষ করলে মাইক্রোফোন বন্ধ হবে। অর্ডার বা সাপোর্ট অনুরোধ জমা দিতে ওয়েবসাইটের ফর্ম পূরণ করতে হবে।</small>'+
+ '</section></div>'+'<div class="fa-foot">Pilot catalogue · stock and final price confirmed by FORME</div></section>'+
  '<button type="button" class="fa-launch" aria-expanded="false" aria-label="Open FORME chat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H5l1.7-3A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8 10h8M8 13.5h5"/></svg><span>SHOP WITH AI</span><i class="fa-launch-dot" aria-hidden="true"></i></button>';
  document.body.appendChild(root);
  panel=root.querySelector(".fa-panel");launch=root.querySelector(".fa-launch");input=root.querySelector(".fa-input");
  sendButton=root.querySelector(".fa-send");chat=root.querySelector(".fa-chat");statusLine=root.querySelector(".fa-status");
  promptButtons=Array.from(root.querySelectorAll("[data-fa-prompt]"));photoInput=root.querySelector("[data-fa-file]");
  memoryToggle=root.querySelector("[data-fa-memory]");voiceButton=root.querySelector("[data-fa-voice]");
+ document.addEventListener("forme:voice-products",event=>{if(Array.isArray(event.detail)&&event.detail.length){toggle(true);showProducts(event.detail);}});
+ document.addEventListener("forme:voice-order",event=>{const items=event.detail&&event.detail.items;if(Array.isArray(items)&&items.length){toggle(true);openOrder(items);}});
+ document.addEventListener("forme:voice-support",event=>{if(event.detail&&typeof event.detail==="object"){toggle(true);renderSupportForm(event.detail);}});
+
  try{memoryToggle.checked=localStorage.getItem(MEMORY_ENABLED_KEY)==="1";}catch(_){memoryToggle.checked=false;}
  launch.addEventListener("click",()=>toggle());root.querySelector("[data-fa-close]").addEventListener("click",()=>toggle(false));
  root.querySelector(".fa-form").addEventListener("submit",e=>{e.preventDefault();sendMessage(input.value);});

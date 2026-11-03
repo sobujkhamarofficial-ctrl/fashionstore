@@ -391,8 +391,9 @@ Deno.serve(async (req: Request) => {
 
   let image:{mimeType:string;data:string}|null=null;
   try{image=parseImageAttachment(body.image);}catch(error){return json({error:error instanceof Error?error.message:"The image attachment is invalid."},400,origin,requestId);}
-  const message=redactPrivateDetails(text(body.message,1200))||(image?"Please analyse this garment photo and find similar items from the FORME catalogue.":"");
-  if(!message||message.length<2)return json({error:"Please type a question first or attach a product photo."},400,origin,requestId);
+  const liveToolMode=body.action==="live-tool";
+  const message=liveToolMode?"Live voice tool request.":(redactPrivateDetails(text(body.message,1200))||(image?"Please analyse this garment photo and find similar items from the FORME catalogue.":""));
+  if(!liveToolMode&&(!message||message.length<2))return json({error:"Please type a question first or attach a product photo."},400,origin,requestId);
 
   const ip = clientIp(req);
   try {
@@ -416,6 +417,31 @@ Deno.serve(async (req: Request) => {
   }
 
   try {
+    if(liveToolMode){
+      const toolName=text(body.toolName,80);
+      const allowedTools=new Set(["search_products","get_product_details","prepare_order","prepare_support_ticket"]);
+      if(!allowedTools.has(toolName))return json({ok:false,error:"This voice action is not available."},400,origin,requestId);
+      const args=body.args&&typeof body.args==="object"&&!Array.isArray(body.args)?body.args as Record<string,unknown>:{};
+      const catalogue=await loadPublicProducts();
+      const shownProducts=new Map<string,Record<string,any>>();
+      let toolResult:Record<string,unknown>;
+      let supportDraft:Record<string,unknown>|null=null;
+      if(toolName==="prepare_support_ticket"){
+        const kinds=new Set(["order","delivery","product","payment","other"]),priorities=new Set(["normal","high"]);
+        const issueType=text(args.issue_type,30),priority=text(args.priority,20),summary=redactPrivateDetails(text(args.summary,900));
+        if(!kinds.has(issueType)||!priorities.has(priority)||summary.length<12){
+          toolResult={ok:false,message:"A support ticket draft needs a valid issue type, priority and concise summary."};
+        }else{
+          supportDraft={issue_type:issueType,priority,summary};
+          toolResult={ok:true,support_form_prepared:true,note:"The secure support form is ready. No ticket has been submitted yet."};
+        }
+      }else{
+        toolResult=await executeShoppingTool(toolName,args,catalogue,shownProducts);
+      }
+      const products=Array.from(shownProducts.values()).map(publicProductShape);
+      const orderDraft=toolResult.order_draft&&typeof toolResult.order_draft==="object"?toolResult.order_draft:null;
+      return json({ok:true,result:toolResult,products,orderDraft,supportDraft},200,origin,requestId);
+    }
     const history = safeHistory(body.history);
     const userParts:Array<Record<string,unknown>>=[{text:message}];
     if(image)userParts.push({inlineData:{mimeType:image.mimeType,data:image.data}});
