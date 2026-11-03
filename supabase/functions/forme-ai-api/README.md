@@ -25,6 +25,10 @@ Request JSON:
 - category: string, optional
 - audience: men | women | teens | kids | unisex, optional; only records with audience_verified=true match
 - season: spring | summer | autumn | winter | all_season, optional; only records with season_verified=true match
+- size: exact size option, optional; requires attributes_verified=true
+- color: exact colour option, optional; requires attributes_verified=true
+- material: exact material value, optional; requires attributes_verified=true
+- fit: exact fit value, optional; requires attributes_verified=true
 - max_price_bdt: integer, optional; results are filtered using price_verified=true only
 - limit: integer from 1 to 30, optional
 
