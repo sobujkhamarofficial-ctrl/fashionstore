@@ -165,6 +165,10 @@ bangla_policy = {
 for filename, (title, kicker, lede, body) in pages.items():
     out = ROOT / "pages" / filename
     out.parent.mkdir(parents=True, exist_ok=True)
+    # Privacy Policy is maintained as a standalone, full-length page. Preserve
+    # the committed source instead of replacing it with the legacy short template.
+    if filename == "privacy.html" and out.is_file():
+        continue
     bilingual_body = body + bangla_policy.get(filename, "")
     out.write_text(page(title, kicker, lede, bilingual_body, canonical="https://sobujkhamarofficial-ctrl.github.io/fashionstore/pages/" + filename), encoding="utf-8")
 
