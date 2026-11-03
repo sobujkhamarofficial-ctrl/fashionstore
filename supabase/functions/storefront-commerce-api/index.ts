@@ -100,6 +100,23 @@ async function adminFetch(path: string, init: RequestInit = {}) {
   return await fetch(PROJECT_URL + path, { ...init, headers, signal: init.signal || AbortSignal.timeout(15_000) });
 }
 
+
+function parseTextArray(value: unknown, maxItems: number, maxLength: number): string[] | null {
+  if (!Array.isArray(value) || value.length > maxItems) return null;
+  const items: string[] = [];
+  const seen = new Set<string>();
+  for (const raw of value) {
+    if (typeof raw !== "string") return null;
+    const item = raw.trim();
+    if (!item || item.length > maxLength) return null;
+    const key = item.toLowerCase();
+    if (seen.has(key)) return null;
+    seen.add(key);
+    items.push(item);
+  }
+  return items;
+}
+
 async function adminLogin(body: Record<string, unknown>, req: Request, origin: string | null) {
   const serverPassword = Deno.env.get("FORME_ADMIN_PASSWORD") || "";
   if (serverPassword.length < 16 || serverPassword.length > 200) {
@@ -278,7 +295,7 @@ async function adminAction(body: Record<string, unknown>, req: Request, origin: 
   }
 
   if (operation === "products") {
-    const response = await adminFetch("/rest/v1/store_products?select=id,name,category,description,price_bdt,compare_at_price_bdt,image_url,is_active,details_verified,availability_status,updated_at&order=category.asc,name.asc&limit=500");
+    const response = await adminFetch("/rest/v1/store_products?select=id,name,category,description,price_bdt,compare_at_price_bdt,image_url,is_active,details_verified,price_verified,availability_status,audience,audience_verified,audience_verified_at,season_tags,season_verified,season_verified_at,size_options,color_options,sku,stock_quantity,stock_checked_at,material,fit,pattern,search_keywords,attributes_verified,attributes_verified_at,price_verified_at,updated_at&order=category.asc,name.asc&limit=500");
     const products = await response.json().catch(() => []);
     if (!response.ok || !Array.isArray(products)) {
       console.error("Admin product list failed:", response.status);
@@ -335,6 +352,25 @@ async function adminAction(body: Record<string, unknown>, req: Request, origin: 
       if (verified && (Number(price) <= 0 || availability === "needs_confirmation" || availability === "archived")) return json({ error: "A verified product needs a positive price and a final stock status: " + id }, 400, origin);
       if ((availability === "in_stock" || availability === "preorder") && verified !== true) return json({ error: "Verify the product details before marking it in stock or preorder: " + id }, 400, origin);
       if (compare !== null && compare !== undefined && Number(compare) > 0 && Number(compare) < Number(price)) return json({ error: "The comparison price must be at least the current price for " + id }, 400, origin);
+      const allowedAudiences = new Set(["men","women","teens","kids","unisex"]);
+      const allowedSeasons = new Set(["spring","summer","autumn","winter","all_season"]);
+      const audience = row.audience === "" || row.audience === null ? null : text(row.audience,20).toLowerCase();
+      const seasonTags = parseTextArray(row.season_tags,5,20);
+      const sizes = parseTextArray(row.size_options,40,30);
+      const colors = parseTextArray(row.color_options,40,50);
+      const keywords = parseTextArray(row.search_keywords,40,80);
+      if (audience !== null && !allowedAudiences.has(audience)) return json({ error: "Invalid audience for " + id }, 400, origin);
+      if (row.audience_verified === true && !audience) return json({ error: "Audience is required before marking it verified: " + id }, 400, origin);
+      if (!seasonTags || seasonTags.some((value) => !allowedSeasons.has(value)) || (seasonTags.includes("all_season") && seasonTags.length > 1)) return json({ error: "Invalid season tags for " + id }, 400, origin);
+      if (row.season_verified === true && seasonTags.length === 0) return json({ error: "Season tags are required before marking them verified: " + id }, 400, origin);
+      if (!sizes || !colors || !keywords) return json({ error: "Invalid or duplicate size, colour or search-keyword values for " + id }, 400, origin);
+      const sku = row.sku === "" || row.sku === null ? null : text(row.sku,80);
+      const material = row.material === "" || row.material === null ? null : text(row.material,120);
+      const fit = row.fit === "" || row.fit === null ? null : text(row.fit,80);
+      const pattern = row.pattern === "" || row.pattern === null ? null : text(row.pattern,80);
+      if (row.stock_quantity !== null && row.stock_quantity !== "" && (!Number.isInteger(row.stock_quantity) || Number(row.stock_quantity) < 0 || Number(row.stock_quantity) > 2_000_000)) return json({ error: "Invalid stock quantity for " + id }, 400, origin);
+      if (row.attributes_verified === true && typeof row.attributes_verified !== "boolean") return json({ error: "Invalid attributes verification for " + id }, 400, origin);
+      if (row.price_verified === true && (typeof row.price_verified !== "boolean" || Number(price) <= 0)) return json({ error: "A verified price must be positive for " + id }, 400, origin);
       entries.push({
         id,
         fields: {
@@ -344,6 +380,25 @@ async function adminAction(body: Record<string, unknown>, req: Request, origin: 
           availability_status: availability,
           is_active: active,
           details_verified: verified,
+          audience,
+          audience_verified: row.audience_verified === true,
+          audience_verified_at: row.audience_verified === true ? new Date().toISOString() : null,
+          season_tags: seasonTags,
+          season_verified: row.season_verified === true,
+          season_verified_at: row.season_verified === true ? new Date().toISOString() : null,
+          size_options: sizes,
+          color_options: colors,
+          sku,
+          stock_quantity: row.stock_quantity === "" || row.stock_quantity === null ? null : row.stock_quantity,
+          stock_checked_at: row.stock_quantity === "" || row.stock_quantity === null ? null : new Date().toISOString(),
+          material,
+          fit,
+          pattern,
+          search_keywords: keywords,
+          attributes_verified: row.attributes_verified === true,
+          attributes_verified_at: row.attributes_verified === true ? new Date().toISOString() : null,
+          price_verified: row.price_verified === true,
+          price_verified_at: row.price_verified === true ? new Date().toISOString() : null,
           updated_at: new Date().toISOString(),
         },
       });
@@ -420,14 +475,74 @@ async function adminAction(body: Record<string, unknown>, req: Request, origin: 
       }
       fields.availability_status = input.availability_status;
     }
+
+    const allowedAudiences = new Set(["men","women","teens","kids","unisex"]);
+    const allowedSeasons = new Set(["spring","summer","autumn","winter","all_season"]);
+    if (input.audience !== undefined) {
+      const value = input.audience === null || input.audience === "" ? null : text(input.audience, 20).toLowerCase();
+      if (value !== null && !allowedAudiences.has(value)) return json({ error: "Choose a valid audience segment." }, 400, origin);
+      fields.audience = value;
+    }
+    if (input.audience_verified !== undefined) {
+      if (typeof input.audience_verified !== "boolean") return json({ error: "Audience verification must be true or false." }, 400, origin);
+      fields.audience_verified = input.audience_verified;
+      fields.audience_verified_at = input.audience_verified ? new Date().toISOString() : null;
+    }
+    if (input.season_tags !== undefined) {
+      const values = parseTextArray(input.season_tags, 5, 20);
+      if (!values || values.some((value) => !allowedSeasons.has(value))) return json({ error: "Use valid season tags: spring, summer, autumn, winter or all_season." }, 400, origin);
+      if (values.includes("all_season") && values.length > 1) return json({ error: "all_season cannot be combined with other seasons." }, 400, origin);
+      fields.season_tags = values;
+    }
+    if (input.season_verified !== undefined) {
+      if (typeof input.season_verified !== "boolean") return json({ error: "Season verification must be true or false." }, 400, origin);
+      fields.season_verified = input.season_verified;
+      fields.season_verified_at = input.season_verified ? new Date().toISOString() : null;
+    }
+    for (const [key, maxItems, maxLength] of [
+      ["size_options",40,30],["color_options",40,50],["search_keywords",40,80],
+    ] as const) {
+      if (input[key] !== undefined) {
+        const values = parseTextArray(input[key], maxItems, maxLength);
+        if (!values) return json({ error: "Invalid or duplicate values in " + key + "." }, 400, origin);
+        fields[key] = values;
+      }
+    }
+    for (const [key, max] of [["sku",80],["material",120],["fit",80],["pattern",80]] as const) {
+      if (input[key] !== undefined) {
+        if (input[key] !== null && typeof input[key] !== "string") return json({ error: "Invalid text value for " + key + "." }, 400, origin);
+        const value = input[key] === null ? "" : (input[key] as string).trim();
+        if (value.length > max) return json({ error: key + " is too long." }, 400, origin);
+        fields[key] = value || null;
+      }
+    }
+    if (input.stock_quantity !== undefined) {
+      const value = input.stock_quantity;
+      if (value !== null && (!Number.isInteger(value) || Number(value) < 0 || Number(value) > 2_000_000)) return json({ error: "Stock quantity must be blank or a whole number from 0 to 2,000,000." }, 400, origin);
+      fields.stock_quantity = value;
+      fields.stock_checked_at = value === null ? null : new Date().toISOString();
+    }
+    if (input.attributes_verified !== undefined) {
+      if (typeof input.attributes_verified !== "boolean") return json({ error: "Attribute verification must be true or false." }, 400, origin);
+      fields.attributes_verified = input.attributes_verified;
+      fields.attributes_verified_at = input.attributes_verified ? new Date().toISOString() : null;
+    }
+    if (input.price_verified !== undefined) {
+      if (typeof input.price_verified !== "boolean") return json({ error: "Price verification must be true or false." }, 400, origin);
+      fields.price_verified = input.price_verified;
+      fields.price_verified_at = input.price_verified ? new Date().toISOString() : null;
+    }
     if (!Object.keys(fields).length) return json({ error: "No product changes were supplied." }, 400, origin);
 
-    const currentResponse = await adminFetch("/rest/v1/store_products?id=eq." + encodeURIComponent(id) + "&select=id,name,category,description,price_bdt,image_url,details_verified,availability_status&limit=1");
+    const currentResponse = await adminFetch("/rest/v1/store_products?id=eq." + encodeURIComponent(id) + "&select=id,name,category,description,price_bdt,image_url,details_verified,availability_status,audience,audience_verified,season_tags,season_verified,attributes_verified,price_verified&limit=1");
     const currentRows = await currentResponse.json().catch(() => []);
     const current = Array.isArray(currentRows) ? currentRows[0] : null;
     if (!currentResponse.ok || !current) return json({ error: "This product could not be found." }, 404, origin);
 
     const finalProduct = { ...current, ...fields };
+    if (finalProduct.audience_verified === true && !finalProduct.audience) return json({ error: "Select an audience before marking it verified." }, 400, origin);
+    if (finalProduct.season_verified === true && (!Array.isArray(finalProduct.season_tags) || finalProduct.season_tags.length === 0)) return json({ error: "Add at least one season tag before marking seasons verified." }, 400, origin);
+    if (finalProduct.price_verified === true && Number(finalProduct.price_bdt) <= 0) return json({ error: "Enter a positive price before marking the price verified." }, 400, origin);
     if (finalProduct.details_verified === true) {
       if (!finalProduct.name || !finalProduct.category || !finalProduct.description || !finalProduct.image_url || Number(finalProduct.price_bdt) <= 0) {
         return json({ error: "Add a real name, category, description, image and positive price before marking this product verified." }, 400, origin);
@@ -505,7 +620,7 @@ Deno.serve(async (req: Request) => {
     if (url.searchParams.get("action") === "products") {
       try {
         const query = new URLSearchParams({
-          select: "id,name,category,description,price_bdt,compare_at_price_bdt,image_url,is_active,availability_status,details_verified",
+          select: "id,name,category,description,price_bdt,compare_at_price_bdt,image_url,is_active,availability_status,details_verified,price_verified,audience,audience_verified,season_tags,season_verified,size_options,color_options,material,fit,pattern,attributes_verified",
           order: "category.asc,name.asc",
           limit: "500",
         });
