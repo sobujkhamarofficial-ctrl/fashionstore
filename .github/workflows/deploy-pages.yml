@@ -191,6 +191,9 @@ jobs:
           node --check assets/cart-page.js
           node --check assets/image-viewer.js
           node --check assets/order-tracking.js
+          node --check assets/order-confirmation.js
+          node --check assets/catalogue-order-page.js
+          node --check assets/catalogue-orders.js
           node --check assets/reviews.js
           node --check assets/site-forms.js
           node --check assets/commerce-pages.js
@@ -208,7 +211,11 @@ jobs:
               "assets/image-viewer.js",
               "assets/image-viewer.css",
               "pages/order-tracking.html",
+              "pages/order-confirmation.html",
+              "pages/catalogue-order.html",
               "assets/order-tracking.js",
+              "assets/order-confirmation.js",
+              "assets/catalogue-order-page.js",
               "assets/reviews.js",
               "pages/about.html",
               "pages/shipping-delivery.html",
