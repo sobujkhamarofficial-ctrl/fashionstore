@@ -332,7 +332,13 @@ jobs:
           assert "assets/reviews.js" in reviews
           assert "No payment is collected" in checkout
           catalogue_runtime = Path("assets/catalogue-orders.js").read_text()
-          assert "catalogue-order" in catalogue_runtime and "অর্ডার রিকোয়েস্ট পাঠান" in catalogue_runtime
+          catalogue_form_runtime = Path("assets/catalogue-order-page.js").read_text()
+          assert "catalogue-order.html" in catalogue_runtime and "data-catalogue-order" in catalogue_runtime
+          assert "অর্ডার রিকোয়েস্ট পাঠান" in catalogue_form_runtime and 'action:"catalogue-order"' in catalogue_form_runtime
+          catalogue_page = Path("pages/catalogue-order.html").read_text()
+          confirmation_page = Path("pages/order-confirmation.html").read_text()
+          assert "fc-catalogue-order-form" in catalogue_page and "catalogue-order-page.js" in catalogue_page
+          assert "fc-order-reference" in confirmation_page and "order-confirmation.js" in confirmation_page
           assert "data-catalogue-order" in Path("scripts/build_collection_pages.py").read_text()
           assert "catalogue-orders.js" in Path("scripts/build_collection_pages.py").read_text()
           assert "catalogue-orders.js" in home and "catalogue-orders.css" in home, "Homepage catalogue requests are not connected"
