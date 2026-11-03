@@ -277,7 +277,7 @@ def build_page(node, department, parts, ancestors, siblings, is_department=False
 <script src="{BASE}assets/catalogue-orders.js?v=20261103-3" defer></script>
 <script src="{BASE}assets/collection-products.js?v=20261103-1" defer></script>\n<script src="{BASE}assets/product-card-links.js?v=20261103-1" defer></script>\n<script src="{BASE}assets/commerce-actions.js?v=20261103-1" defer></script>
 <script src="{BASE}assets/image-viewer.js?v=20261103-1" defer></script>
-<script src="{BASE}assets/customer-care.js?v=20261103-5" defer></script><script src="{BASE}assets/customer-live-voice.js?v=20261103-3" defer></script>
+<script src="{BASE}assets/customer-care.js?v=20261103-6" defer></script><script src="{BASE}assets/customer-live-voice.js?v=20261103-3" defer></script>
 </body>
 </html>
 '''
