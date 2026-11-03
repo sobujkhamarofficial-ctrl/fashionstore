@@ -280,8 +280,8 @@ async function loadPublicProducts():Promise<Array<Record<string,any>>>{
 function normalizeSearch(value:string):string{return text(value,1200).toLowerCase().replace(/[^a-z0-9\u0980-\u09ff]+/g," ").replace(/\s+/g," ").trim();}
 function productAudience(product:Record<string,any>):string{
  const source=normalizeSearch([product.id,product.name,product.category].join(" "));
- if(/\b(women|womens|woman|ladies|female)\b/.test(source)||/নারী|মহিলা/.test(source))return "women";
- if(/\b(kids?|children|child|boys?|girls?|toddlers?)\b/.test(source)||/শিশু|বাচ্চা/.test(source))return "kids";
+ if(/\b(women|womens|woman|ladies|female)\b/.test(source)||/নারী|মহিলা|মেয়েদের|মেয়েদের|মহিলাদের|নারীদের/.test(source))return "women";
+ if(/\b(kids?|children|child|boys?|girls?|toddlers?)\b/.test(source)||/শিশু|শিশুদের|বাচ্চা|বাচ্চাদের|ছোটদের/.test(source))return "kids";
  if(/\b(teens?|teenager)\b/.test(source)||/কিশোর/.test(source))return "teens";
  if(/\b(men|mens|male)\b/.test(source)||String(product.id||"").toLowerCase().startsWith("men-"))return "men";
  return "unisex";
@@ -307,8 +307,8 @@ function productSearchTerms(product:Record<string,any>):string[]{
 }
 function requestedAudiences(query:string):string[]{
  const raw=normalizeSearch(query),found:string[]=[];
- if(/\b(women|womens|woman|ladies|female)\b/.test(raw)||/নারী|মহিলা/.test(raw))found.push("women");
- if(/\b(kids?|children|child|boys?|girls?|toddlers?)\b/.test(raw)||/শিশু|বাচ্চা/.test(raw))found.push("kids");
+ if(/\b(women|womens|woman|ladies|female)\b/.test(raw)||/নারী|মহিলা|মেয়েদের|মেয়েদের|মহিলাদের|নারীদের/.test(raw))found.push("women");
+ if(/\b(kids?|children|child|boys?|girls?|toddlers?)\b/.test(raw)||/শিশু|শিশুদের|বাচ্চা|বাচ্চাদের|ছোটদের/.test(raw))found.push("kids");
  if(/\b(teens?|teenager)\b/.test(raw)||/কিশোরী|কিশোর/.test(raw))found.push("teens");
  if(/\b(men|mens|male)\b/.test(raw)||/পুরুষদের|ছেলেদের/.test(raw))found.push("men");
  return [...new Set(found)];
@@ -321,7 +321,7 @@ function scoreProduct(product:Record<string,any>,query:string,category:string):n
  if(requested.length&&!requested.includes(audience))return 0;
  const winterRequested=/\bwinter\b|\bcold weather\b|শীত|শীতের/.test(normalizeSearch(query+" "+category));
  if(winterRequested&&!seasonTags.includes("winter"))return 0;
- const stop=new Set(["men","mens","male","women","womens","woman","female","kids","kid","children","child","boys","boy","girls","girl","teen","teens","fashion","clothing","clothes","apparel","product","products","item","items","show","me","some","for","the","a","an","in","under","with","and","please","want","looking","buy","order","দেখাও","দেখান","চাই","জন্য","একটা","কিছু"]);
+ const stop=new Set(["মেয়েদের","মেয়েদের","মহিলাদের","নারীদের","শিশুদের","বাচ্চাদের","ছোটদের","নারী","মহিলা","শিশু","বাচ্চা","কিশোরী","কিশোর","পুরুষদের","ছেলেদের","men","mens","male","women","womens","woman","female","kids","kid","children","child","boys","boy","girls","girl","teen","teens","fashion","clothing","clothes","apparel","product","products","item","items","show","me","some","for","the","a","an","in","under","with","and","please","want","looking","buy","order","দেখাও","দেখান","চাই","জন্য","একটা","কিছু"]);
  const core=q.filter((word)=>!stop.has(word));
  const matches=(word:string)=>searchable.includes(word)||(word.endsWith("s")&&word.length>3&&searchable.includes(word.slice(0,-1)));
  if(core.length&&!core.some(matches)&&!winterRequested)return 0;
