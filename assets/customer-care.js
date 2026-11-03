@@ -306,13 +306,18 @@ async function refreshStatus(){
   }
  }catch(_){setReady(false,"Connection unavailable");message("সহকারীর সঙ্গে সংযোগ করা যাচ্ছে না। পরে আবার চেষ্টা করুন।","system");}
 }
-async function sendMessage(value){
- const text=String(value||"").trim();if(!text||busy)return;
- input.value="";message(text,"user");const wait=typing();busy=true;setReady(ready,"পণ্য ও তথ্য খোঁজা হচ্ছে…");
+async function sendMessage(value,options){
+ const opts=options||{},textValue=String(value||"").trim();
+ if((!textValue&&!opts.image)||busy)return;
+ input.value="";message(opts.displayText||textValue||"📷 ছবি সংযুক্ত","user");
+ const wait=typing();busy=true;setReady(ready,"পণ্য ও তথ্য খোঁজা হচ্ছে…");
+ const started=performance.now();
  const prior=history.slice(-8).map(x=>({role:x.role,text:x.text}));
  const controller=new AbortController(),timer=window.setTimeout(()=>controller.abort(),55000);
  try{
-  const response=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({message:text,history:prior}),signal:controller.signal});
+  const payload={message:textValue||"Find similar catalogue items for this garment photo.",history:prior,rememberedProductIds:rememberedIds()};
+  if(opts.image)payload.image=opts.image;
+  const response=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(payload),signal:controller.signal});
   const data=await response.json().catch(()=>({}));wait.remove();
   if(!response.ok||!data.ok||!data.reply){
    if(response.status===429||data.status==="rate_limited"){setReady(true,"Message limit reached");message("মেসেজ সীমা পূর্ণ হয়েছে। কিছুক্ষণ পরে আবার চেষ্টা করুন।","system");}
@@ -320,16 +325,22 @@ async function sendMessage(value){
    return;
   }
   setReady(true,"Online · catalogue connected");
-  history.push({role:"user",text},{role:"model",text:String(data.reply)+(data.context?"\n\n[Internal catalogue context: "+String(data.context).slice(0,1800)+"]":"")});
+  history.push({role:"user",text:textValue||"Customer shared a garment image for this request."},{role:"model",text:String(data.reply)+(data.context?"\n\n[Internal catalogue context: "+String(data.context).slice(0,1800)+"]":"")});
   while(history.length>8)history.shift();
-  message(data.reply,"");showProducts(data.products);
+  const replyNode=message(data.reply,"");
+  addReplyControls(replyNode,data,performance.now()-started);
+  showProducts(data.products);
   if(data.orderDraft&&Array.isArray(data.orderDraft.items)&&data.orderDraft.items.length)renderOrderForm(data.orderDraft);
+  if(data.supportDraft&&typeof data.supportDraft==="object")renderSupportForm(data.supportDraft);
  }catch(error){
   wait.remove();const timed=error&&(error.name==="AbortError"||error.name==="TimeoutError");
   setReady(false,timed?"Connection timed out":"Connection unavailable");
   message(timed?"উত্তর পেতে বেশি সময় লাগছে। আবার চেষ্টা করুন।":"নেটওয়ার্ক সমস্যার কারণে উত্তর পাওয়া যায়নি।","system");
- }finally{window.clearTimeout(timer);busy=false;setReady(ready,ready?"Online · product and order assistant":"Connection issue · retry available");input.focus();}
+ }finally{
+  window.clearTimeout(timer);busy=false;setReady(ready,ready?"Online · product and order assistant":"Connection issue · retry available");input.focus();
+ }
 }
+
 function mount(){
  if(document.getElementById("forme-ai-widget"))return;
  const root=document.createElement("div");root.id="forme-ai-widget";
