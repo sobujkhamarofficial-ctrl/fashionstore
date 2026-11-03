@@ -27,7 +27,9 @@ CATALOGUE AND VISUAL SEARCH:
 - If the customer attaches a garment photo, describe garment attributes only (garment type, colour, pattern, fabric appearance and style); never identify or infer anything about a person. Search the live catalogue for similar products. Be clear when no close match exists; do not claim an exact match based on appearance alone.
 - For a previously shown product, use get_product_details with its exact catalogue ID.
 - The public catalogue is a pilot dataset. Every current product record needs manual verification. Explain that listed price, image/details and stock are provisional and the store team must confirm them.
-- The live database currently has mainly Men's apparel and accessories, only a very limited Women's listing, and no Kids catalogue. Never show Men's items when the customer explicitly asks for Kids, boys, girls or Women's clothing unless the matching record itself belongs to that audience. If no suitable match exists, say it is not currently listed.
+- The live catalogue is segment-aware but inventory is uneven: it currently has only one Women's SKU and no Kids or Teens SKUs. Never fill these gaps with Men's products or editorial inspiration photos. If there is no matching real SKU, say so clearly and offer to help contact the team.
+- Respect the audience metadata returned with each product. For Women/ladies show only audience=women; for Kids/children/boys/girls show only audience=kids; for Teens show only audience=teens. Unknown/unisex products do not belong to a requested demographic unless the record explicitly says so.
+- The Winter Edit is curated from actual Hoodie, Jacket, Sweatshirt and Full Sleeve T-shirt records. Explain that these are layering options only; never claim verified warmth, lining, insulation or fabric composition unless the product record confirms it.
 - Respect budgets with budget_max. Do not claim stock unless status is exactly in_stock. needs_confirmation means stock is unverified; preorder must be described as preorder.
 - Usually show up to 4 suitable items, explain differences briefly, and ask which they prefer.
 - Saved style preferences are available only when the customer opted in on this device. Treat selected items as soft style hints, never proof of purchase or ownership.
@@ -256,7 +258,7 @@ async function requestGemini(
 const PRODUCT_SELECT = "id,name,category,description,price_bdt,compare_at_price_bdt,image_url,is_active,details_verified,availability_status";
 const PRODUCT_SITE_ORIGIN = "https://sobujkhamarofficial-ctrl.github.io";
 const AI_TOOLS = [{functionDeclarations:[
- {name:"search_products",description:"Search the live FORME public catalogue before product recommendations, comparisons or product-specific prices. Translate Bengali requests to English keywords. Never invent matches.",parameters:{type:"OBJECT",properties:{query:{type:"STRING"},category:{type:"STRING"},budget_max:{type:"INTEGER"}},required:["query"]}},
+ {name:"search_products",description:"Search the live FORME public catalogue using product name, category, Bengali synonyms, segment and seasonal metadata before recommendations or comparisons. Respect audience boundaries and never invent matches.",parameters:{type:"OBJECT",properties:{query:{type:"STRING"},category:{type:"STRING"},budget_max:{type:"INTEGER"}},required:["query"]}},
  {name:"get_product_details",description:"Read an exact product returned by an earlier search.",parameters:{type:"OBJECT",properties:{product_id:{type:"STRING"}},required:["product_id"]}},
  {name:"prepare_order",description:"Prepare but do not submit a secure in-chat order form after the customer clearly requests to buy selected products. Use catalogue IDs only.",parameters:{type:"OBJECT",properties:{items:{type:"ARRAY",items:{type:"OBJECT",properties:{product_id:{type:"STRING"},quantity:{type:"INTEGER"},requested_variant:{type:"STRING"}},required:["product_id","quantity"]}}},required:["items"]}},
  {name:"prepare_support_ticket",description:"Prepare a secure support-ticket form when the customer explicitly asks for a human agent or their complaint remains unresolved. The form is not submitted until the customer fills it out and consents.",parameters:{type:"OBJECT",properties:{issue_type:{type:"STRING",enum:["order","delivery","product","payment","other"]},priority:{type:"STRING",enum:["normal","high"]},summary:{type:"STRING"}},required:["issue_type","priority","summary"]}}
@@ -275,25 +277,60 @@ async function loadPublicProducts():Promise<Array<Record<string,any>>>{
  const rows=await response.json();if(!Array.isArray(rows))throw new Error("Invalid catalogue data.");
  return rows.filter((row)=>row&&row.is_active===true).map((row)=>({id:text(row.id,100),name:text(row.name,180),category:text(row.category,120),description:text(row.description,1200),price_bdt:Number(row.price_bdt||0),compare_at_price_bdt:row.compare_at_price_bdt===null?null:Number(row.compare_at_price_bdt||0),image_url:imageUrlForProduct(row.image_url),details_verified:row.details_verified===true,availability_status:text(row.availability_status,40)})).filter((row)=>row.id&&row.name&&row.price_bdt>0&&row.image_url&&["needs_confirmation","in_stock","preorder"].includes(row.availability_status));
 }
-function normalizeSearch(value:string):string{return text(value,240).toLowerCase().replace(/[^a-z0-9\u0980-\u09ff]+/g," ").replace(/\s+/g," ").trim();}
+function normalizeSearch(value:string):string{return text(value,1200).toLowerCase().replace(/[^a-z0-9\u0980-\u09ff]+/g," ").replace(/\s+/g," ").trim();}
+function productAudience(product:Record<string,any>):string{
+ const source=normalizeSearch([product.id,product.name,product.category].join(" "));
+ if(/\b(women|womens|woman|ladies|female)\b/.test(source)||/নারী|মহিলা/.test(source))return "women";
+ if(/\b(kids?|children|child|boys?|girls?|toddlers?)\b/.test(source)||/শিশু|বাচ্চা/.test(source))return "kids";
+ if(/\b(teens?|teenager)\b/.test(source)||/কিশোর/.test(source))return "teens";
+ if(/\b(men|mens|male)\b/.test(source)||String(product.id||"").toLowerCase().startsWith("men-"))return "men";
+ return "unisex";
+}
+function productSeasonTags(product:Record<string,any>):string[]{
+ const category=normalizeSearch(product.category),tags:string[]=[];
+ if(["hoodie","jacket","sweatshirt"].some(term=>category.includes(term)))tags.push("winter","layering");
+ if(category.includes("full sleeve"))tags.push("layering","cooler-weather");
+ return tags;
+}
+function productSearchTerms(product:Record<string,any>):string[]{
+ const category=normalizeSearch(product.category),words:string[]=[];
+ if(category.includes("hoodie"))words.push("hoodies","হুডি","শীতের পোশাক","winter layer");
+ if(category.includes("jacket"))words.push("jackets","জ্যাকেট","outerwear","শীতের জ্যাকেট");
+ if(category.includes("sweatshirt"))words.push("sweatshirts","সোয়েটশার্ট","শীতের পোশাক");
+ if(category.includes("full sleeve"))words.push("full sleeve","long sleeve","ফুল স্লিভ","লং স্লিভ");
+ if(category.includes("trouser")||category.includes("pants"))words.push("trousers","প্যান্ট","ট্রাউজার");
+ if(category.includes("t shirt"))words.push("tshirt","টি শার্ট","টিশার্ট");
+ if(category.includes("polo"))words.push("পোলো");
+ if(category.includes("panjabi"))words.push("পাঞ্জাবি");
+ if(category.includes("dress"))words.push("ড্রেস");
+ return words;
+}
+function requestedAudiences(query:string):string[]{
+ const raw=normalizeSearch(query),found:string[]=[];
+ if(/\b(women|womens|woman|ladies|female)\b/.test(raw)||/নারী|মহিলা/.test(raw))found.push("women");
+ if(/\b(kids?|children|child|boys?|girls?|toddlers?)\b/.test(raw)||/শিশু|বাচ্চা|কিশোরী|কিশোর/.test(raw))found.push("kids");
+ if(/\b(teens?|teenager)\b/.test(raw))found.push("teens");
+ if(/\b(men|mens|male)\b/.test(raw)||/পুরুষদের|ছেলেদের/.test(raw))found.push("men");
+ return [...new Set(found)];
+}
 function scoreProduct(product:Record<string,any>,query:string,category:string):number{
- const searchable=normalizeSearch([product.name,product.category,product.description].join(" "));
- const q=normalizeSearch(query).split(" ").filter((w)=>w.length>1);
- const c=normalizeSearch(category).split(" ").filter((w)=>w.length>1);
- const audience=new Set(["women","womens","woman","female","girls","girl","kids","kid","children","child","boys","boy"]);
- const stop=new Set(["men","mens","male","clothing","clothes","fashion","apparel","product","products","item","items","show","me","some","for","the","a","an","in","under","with","and","please","want","looking","buy","order"]);
+ const audience=productAudience(product),seasonTags=productSeasonTags(product),searchTerms=productSearchTerms(product);
+ const searchable=normalizeSearch([product.name,product.category,product.description,audience,seasonTags.join(" "),searchTerms.join(" ")].join(" "));
+ const q=normalizeSearch(query).split(" ").filter((w)=>w.length>1),c=normalizeSearch(category).split(" ").filter((w)=>w.length>1);
+ const requested=requestedAudiences(query+" "+category);
+ if(requested.length&&!requested.includes(audience))return 0;
+ const winterRequested=/\bwinter\b|\bcold weather\b|শীত|শীতের/.test(normalizeSearch(query+" "+category));
+ if(winterRequested&&!seasonTags.includes("winter"))return 0;
+ const stop=new Set(["men","mens","male","women","womens","woman","female","kids","kid","children","child","boys","boy","girls","girl","teen","teens","fashion","clothing","clothes","apparel","product","products","item","items","show","me","some","for","the","a","an","in","under","with","and","please","want","looking","buy","order","দেখাও","দেখান","চাই","জন্য","একটা","কিছু"]);
+ const core=q.filter((word)=>!stop.has(word));
  const matches=(word:string)=>searchable.includes(word)||(word.endsWith("s")&&word.length>3&&searchable.includes(word.slice(0,-1)));
- const requestedAudience=q.filter((word)=>audience.has(word));
- if(requestedAudience.length&&!requestedAudience.some((word)=>matches(word)))return 0;
- const core=q.filter((word)=>!audience.has(word)&&!stop.has(word));
- if(core.length&&!core.some(matches))return 0;
- let score=0;
- for(const word of core)if(matches(word))score+=searchable.includes(word)?4:2;
- for(const word of requestedAudience)if(matches(word))score+=4;
+ if(core.length&&!core.some(matches)&&!winterRequested)return 0;
+ let score=0;for(const word of core)if(matches(word))score+=searchable.includes(word)?4:2;
+ for(const word of requested)score+=5;if(winterRequested)score+=8;
  for(const word of c)if(normalizeSearch(product.category).includes(word))score+=5;
  return score;
 }
-function publicProductShape(p:Record<string,any>):Record<string,unknown>{return {product_id:p.id,name:p.name,category:p.category,description:p.description,price_bdt:p.price_bdt,compare_at_price_bdt:p.compare_at_price_bdt,image_url:p.image_url,details_verified:p.details_verified,availability_status:p.availability_status,price_note:"Listed catalogue price; final price requires store verification."};}
+function publicProductShape(p:Record<string,any>):Record<string,unknown>{return {product_id:p.id,name:p.name,category:p.category,description:p.description,price_bdt:p.price_bdt,compare_at_price_bdt:p.compare_at_price_bdt,image_url:p.image_url,audience:productAudience(p),season_tags:productSeasonTags(p),search_terms:productSearchTerms(p),details_verified:p.details_verified,availability_status:p.availability_status,price_note:"Listed catalogue price; final price requires store verification."};}
 async function executeShoppingTool(name:string,args:Record<string,unknown>,catalogue:Array<Record<string,any>>,shownProducts:Map<string,Record<string,any>>):Promise<Record<string,unknown>>{
  if(name==="search_products"){
   const query=text(args.query,240),category=text(args.category,120),budget=Number.isInteger(args.budget_max)&&Number(args.budget_max)>=0?Number(args.budget_max):null;

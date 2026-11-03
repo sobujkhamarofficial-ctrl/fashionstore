@@ -108,14 +108,15 @@ jobs:
               seen_paths.add(key)
               body = path.read_text()
               sources = re.findall(r'<img class="gallery-image" src="([^"]+)"', body)
-              order_buttons = re.findall(r'class="visual-order-button"[^>]*data-catalogue-order', body)
               assert len(sources) == 6, f"Expected 6 gallery photos in {key}; found {len(sources)}"
               assert len(set(sources)) == 6, f"Expected six different photos in {key}"
-              assert len(order_buttons) == 6, f"Every gallery photo must have an Order Now control in {key}"
+              assert 'data-catalogue-order' not in body, f"Editorial gallery must not pretend to be a live SKU in {key}"
+              assert 'visual-order-button' not in body, f"Editorial gallery still has a fake order button in {key}"
+              assert 'data-collection-products' in body, f"Live product listing mount is missing in {key}"
+              assert 'collection-products.js' in body, f"Live catalogue script is missing in {key}"
               assert 'visual-image-link' not in body, f"Gallery photo still navigates away in {key}"
               assert 'visual-action' not in body, f"Old Explore/photo action remains in {key}"
               assert 'target="_blank"' not in body, f"Gallery page must stay on FORME: {key}"
-              assert 'catalogue-orders.js' in body, f"Catalogue order runtime missing in {key}"
               assert 'image-viewer.js' in body and 'image-viewer.css' in body, f"Image viewer missing in {key}"
               assert 'Continue exploring' not in body, f"Sibling loop navigation remains in {key}"
               for source in sources:
@@ -165,9 +166,12 @@ jobs:
 
           home = Path("index.html").read_text()
           assert home.count('class="f-native-mega"') >= 6, "Homepage desktop menus are incomplete"
+          assert 'href="/fashionstore/winter/"' in home, "Homepage Winter Edit link is missing"
           assert home.count('class="f-mobile-categories"') >= 6, "Homepage mobile menus are incomplete"
 
           Path("men/index.html").read_text()
+          assert Path("winter/index.html").is_file(), "Winter landing page is missing"
+          assert Path("pages/product.html").is_file(), "Product details page is missing"
           men_page = Path("men/index.html").read_text()
           assert men_page.count('class="f-native-mega"') >= 6, "Men page desktop dropdowns are incomplete"
 
@@ -195,6 +199,9 @@ jobs:
           node --check assets/order-confirmation.js
           node --check assets/catalogue-order-page.js
           node --check assets/catalogue-live.js
+          node --check assets/collection-products.js
+          node --check assets/product-card-links.js
+          node --check assets/product-detail.js
           node --check assets/catalogue-orders.js
           node --check assets/reviews.js
           node --check assets/site-forms.js
@@ -216,10 +223,16 @@ jobs:
               "pages/order-tracking.html",
               "pages/order-confirmation.html",
               "pages/catalogue-order.html",
+              "pages/product.html",
+              "winter/index.html",
               "assets/order-tracking.js",
               "assets/order-confirmation.js",
               "assets/catalogue-order-page.js",
               "assets/catalogue-live.js",
+              "assets/collection-products.js",
+              "assets/collection-products.css",
+              "assets/product-card-links.js",
+              "assets/product-detail.js",
               "assets/catalogue-live.css",
               "assets/commerce-actions.js",
               "assets/commerce-actions.css",

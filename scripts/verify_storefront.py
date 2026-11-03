@@ -45,6 +45,11 @@ if "1,362" in home or "1362" in home:
     raise SystemExit("Homepage still contains an obsolete Men product total.")
 if "buildMenCategoryFilters" not in home:
     raise SystemExit("Homepage Men filters are not generated from the catalogue.")
+if 'href="/fashionstore/winter/"' not in home:
+    raise SystemExit("Homepage Winter Edit link is missing.")
+for required in ("pages/product.html", "winter/index.html", "assets/product-detail.js", "assets/collection-products.js", "assets/product-card-links.js"):
+    if not (ROOT / required).is_file():
+        raise SystemExit(f"Missing product detail / Winter feature: {required}")
 if "Showing 23 sample products from 1,362" in home:
     raise SystemExit("Homepage contains an obsolete Men result summary.")
 

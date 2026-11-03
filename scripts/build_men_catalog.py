@@ -49,7 +49,8 @@ def header(cats):
       f'<a href="{href("men")}" class="f-nav-men-link f-nav-active">Men</a>'
       + '<details class="f-native-mega" id="f-men-native-mega"><summary class="f-nav-men-toggle" aria-label="Open men categories"><span aria-hidden="true">⌄</span></summary>'+menu+'</details>'
       + other_nav
-      + '</nav><div class="f-actions"><a class="f-icon" href="'+BASE+'#f-new-in" aria-label="Browse new arrivals"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg></a></div>'
+      + f'<a href="{BASE}winter/" class="f-winter-nav">Winter</a>'
+      + '</nav><div class="f-actions">'<a class="f-icon" href="'+BASE+'#f-new-in" aria-label="Browse new arrivals"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg></a></div>'
       + '</div></header>')
 def card(p,priority=False):
     badge=f'<span class="f-product-tag">{esc(p["badge"])}</span>' if p.get("badge") else ""
@@ -59,10 +60,10 @@ def card(p,priority=False):
     return ('<article class="f-product f-static-product"'
       f' data-id="{esc(product_id)}" data-name="{esc(p["name"])}" data-price="{int(p["price"])}" data-image="{esc(p["image"])}">'
       '<div class="f-product-photo">'
-      f'<img src="{esc(p["image"])}" alt="{esc(p["name"])}" loading="{loading}"{high} data-fallback="f-photo-missing" onerror="this.hidden=true;this.parentElement.classList.add(this.dataset.fallback)">{badge}'
+      f'<a class="f-product-detail-link f-product-image-link" href="{BASE}pages/product.html?id={esc(product_id)}" aria-label="View details for {esc(p["name"])}"><img src="{esc(p["image"])}" alt="{esc(p["name"])}" loading="{loading}"{high} data-fallback="f-photo-missing" onerror="this.hidden=true;this.parentElement.classList.add(this.dataset.fallback)"></a>{badge}'
       f'<div class="f-product-actions"><button class="f-add" type="button" data-f-add="{esc(product_id)}">Add to Cart</button><button class="f-buy-now" type="button" data-f-buy-now="{esc(product_id)}">অর্ডার নাও</button></div></div>'
       '<div class="f-product-info">'
-      f'<span class="f-product-name">{esc(p["name"])}</span><span class="f-men-savings">{esc(p["description"])}</span>'
+      f'<a class="f-product-name f-product-detail-link" href="{BASE}pages/product.html?id={esc(product_id)}">{esc(p["name"])}</a><span class="f-men-savings">{esc(p["description"])}</span><a class="f-product-more" href="{BASE}pages/product.html?id={esc(product_id)}">বিস্তারিত দেখুন ↗</a>'
       f'<div class="f-men-price-row"><strong>৳{int(p["price"]):,}</strong></div>'
       '</div></article>')
 def directory(cats):
@@ -99,7 +100,7 @@ def make_page(title,desc,cats,selected=None):
 {listing}<section class="f-static-products"><div class="f-section-head"><div><span class="f-kicker">The collection</span><h2>{section_title}</h2></div><span class="f-men-total">{products_label}</span></div>
 {warning}<div class="f-static-product-grid">{cards}</div></section>
 <a class="f-static-back" href="{href("men")}">← Back to Men's Collection</a></div></main>
-<footer class="f-static-footer"><div class="f-container"><strong class="f-logo">FORME<small>EVERYDAY, REFINED</small></strong><small>Pilot catalogue · stock, variants and final delivery details are confirmed by the store before dispatch</small><nav class="f-static-legal"><a href="{BASE}pages/shipping-delivery.html">Shipping</a><a href="{BASE}pages/returns-refunds.html">Returns</a><a href="{BASE}pages/reviews.html">Reviews</a><a href="{BASE}pages/order-tracking.html">Track order</a><a href="{BASE}pages/privacy.html">Privacy</a><a href="{BASE}pages/terms.html">Terms</a><a href="{BASE}pages/contact.html">Contact</a></nav><div class="fb-footer-blog"><strong>Blog</strong><a href="{BASE}blog/">সব ব্লগ পোস্ট</a></div><a href="{BASE}" style="font-size:10px;color:#fff">Home ↗</a></div></footer></div><script src="{BASE}assets/commerce-actions.js?v=20261103-1" defer></script><script src="{BASE}assets/catalogue-live.js?v=20261103-3" defer></script><script src="{BASE}assets/image-viewer.js?v=20261103-1" defer></script><script src="{BASE}assets/customer-care.js?v=20261103-5" defer></script><script src="{BASE}assets/customer-live-voice.js?v=20261103-3" defer></script></body></html>'''
+<footer class="f-static-footer"><div class="f-container"><strong class="f-logo">FORME<small>EVERYDAY, REFINED</small></strong><small>Pilot catalogue · stock, variants and final delivery details are confirmed by the store before dispatch</small><nav class="f-static-legal"><a href="{BASE}pages/shipping-delivery.html">Shipping</a><a href="{BASE}pages/returns-refunds.html">Returns</a><a href="{BASE}pages/reviews.html">Reviews</a><a href="{BASE}pages/order-tracking.html">Track order</a><a href="{BASE}pages/privacy.html">Privacy</a><a href="{BASE}pages/terms.html">Terms</a><a href="{BASE}pages/contact.html">Contact</a></nav><div class="fb-footer-blog"><strong>Blog</strong><a href="{BASE}blog/">সব ব্লগ পোস্ট</a></div><a href="{BASE}" style="font-size:10px;color:#fff">Home ↗</a></div></footer></div><script src="{BASE}assets/product-card-links.js?v=20261103-1" defer></script><script src="{BASE}assets/commerce-actions.js?v=20261103-1" defer></script><script src="{BASE}assets/catalogue-live.js?v=20261103-4" defer></script><script src="{BASE}assets/image-viewer.js?v=20261103-1" defer></script><script src="{BASE}assets/customer-care.js?v=20261103-5" defer></script><script src="{BASE}assets/customer-live-voice.js?v=20261103-3" defer></script></body></html>'''
 def main():
     data=json.loads((OUT/"catalog.json").read_text(encoding="utf-8"))
     cats=data["categories"]

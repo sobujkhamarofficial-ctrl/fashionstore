@@ -97,7 +97,7 @@ def build_nav_html(departments, men_categories):
         '<div class="site-topline">FORME · EVERYDAY, REFINED</div>'
         '<header class="site-header"><div class="site-header-inner">'
         f'<a class="site-logo" href="{BASE}">FORME<span>EVERYDAY, REFINED</span></a>'
-        f'<nav class="primary-categories" aria-label="Main categories">{links}</nav>'
+        f'<nav class="primary-categories" aria-label="Main categories">{links}<div class="nav-department nav-winter"><a href="{BASE}winter/">Winter</a></div></nav>'
         '</div></header>'
     )
 
@@ -131,39 +131,45 @@ def gallery_photo_path(kind, index):
 
 
 def gallery_html(node, department, parts, ancestors):
+    """Editorial imagery is inspiration only; only database SKUs can be ordered."""
     title = node["title"]
     children = node_children(node)
-    category_path = " / ".join([department["title"], *(item[0] for item in ancestors), title])
     images = []
     for index in range(6):
         kind = image_kind(department, node, ancestors, index)
         src = gallery_photo_path(kind, index)
-        alt = f"{title} fashion photograph {index + 1}"
+        alt = f"{title} fashion style inspiration {index + 1}"
         child = children[index % len(children)] if children else None
-        if child:
-            caption_title = f'{child["title"]} · Look {index + 1:02d}'
-            caption_note = "Style reference · request for this look"
-        else:
-            caption_title = f'{title} · Look {index + 1:02d}'
-            caption_note = "Style reference · price and availability to be confirmed"
+        caption_title = f'{child["title"]} · Style {index + 1:02d}' if child else f'{title} · Style {index + 1:02d}'
+        caption_note = "Editorial inspiration · not a purchasable product"
         images.append(
-            f'<figure class="visual-card" data-visual-kind="catalogue-request">'
+            f'<figure class="visual-card" data-visual-kind="inspiration">'
             f'<div class="visual-image-wrap">'
             f'<img class="gallery-image" src="{src}" alt="{esc(alt)}" loading="lazy" decoding="async" data-fallback="visual-image-missing" onerror="this.hidden=true;this.parentElement.classList.add(this.dataset.fallback)">'
             f'<span class="visual-number">{index + 1:02d}</span></div>'
-            f'<figcaption><strong>{esc(caption_title)}</strong>'
-            f'<span>{esc(caption_note)}</span>'
-            f'<button class="visual-order-button" type="button" data-catalogue-order '
-            f'data-product-name="{esc(caption_title)}" data-product-category="{esc(category_path)}" '
-            f'data-image-url="{esc(src)}" data-source-path="{esc(page_url(department, parts))}" '
-            f'aria-label="অর্ডার নাও: {esc(caption_title)}">অর্ডার নাও</button></figcaption></figure>'
+            f'<figcaption><strong>{esc(caption_title)}</strong><span>{esc(caption_note)}</span></figcaption></figure>'
         )
     return (
         '<section class="visual-gallery">'
         '<div class="section-heading"><div><span class="eyebrow">FORME photo edit</span>'
-        f'<h2>Choose a style to request from {esc(title)}</h2></div>'
-        '<span class="count-label">6 style references · order request available</span></div>'
+        f'<h2>Style inspiration for {esc(title)}</h2></div>'
+        '<span class="count-label">6 editorial references · browse real products above</span></div>'
         f'<div class="visual-grid">{"".join(images)}</div></section>'
+    )
+
+
+def live_products_html(department, parts, node):
+    title = node["title"]
+    terms = " ".join([department["slug"], *parts, title])
+    return (
+        f'<section class="live-collection-section" data-collection-products '
+        f'data-department="{esc(department["slug"])}" data-terms="{esc(terms)}">'
+        '<div class="section-heading"><div><span class="eyebrow">Live FORME catalogue</span>'
+        f'<h2>Available {esc(title)} products</h2></div>'
+        '<span class="count-label" data-live-product-count>Checking live catalogue…</span></div>'
+        '<div class="live-collection-grid" data-live-product-grid></div>'
+        '<p class="live-collection-empty" data-live-product-empty hidden></p>'
+        '</section>'
     )
 
 def card_html(child, department, parts):
@@ -240,7 +246,7 @@ def build_page(node, department, parts, ancestors, siblings, is_department=False
 <meta name="theme-color" content="#F7F5F0">
 <meta name="description" content="{esc(description)}">
 <link rel="canonical" href="https://sobujkhamarofficial-ctrl.github.io{current_url}">
-<link rel="stylesheet" href="{BASE}collections/collections.css">
+<link rel="stylesheet" href="{BASE}collections/collections.css">\n<link rel="stylesheet" href="{BASE}assets/collection-products.css?v=20261103-1">
 <link rel="stylesheet" href="{BASE}assets/customer-care.css?v=20261103-5">
 <link rel="stylesheet" href="{BASE}assets/image-viewer.css?v=20261103-1">
 <link rel="stylesheet" href="{BASE}assets/commerce-actions.css?v=20261103-1">
@@ -258,8 +264,9 @@ def build_page(node, department, parts, ancestors, siblings, is_department=False
 <p>{esc(description)}</p>
 <div class="structure-meta">{esc(hierarchy_note)}</div>
 </section>
-<div class="stage-note"><strong>Request a style.</strong> Select “অর্ডার নাও” on any photograph to send a request for that look. These are representative style references; the store will confirm the exact product, price, size and stock before accepting the order. No advance payment is collected.</div>
+<div class="stage-note"><strong>Catalogue note.</strong> Editorial photos below are style inspiration, not product listings. Only real products loaded from FORME's live catalogue can be opened or ordered. Product stock, sizes, materials and final prices remain subject to team confirmation.</div>
 {child_section}
+{live_products_html(department, parts, node)}
 {gallery}
 {sibling_links}
 {parent_label_html}
@@ -267,7 +274,7 @@ def build_page(node, department, parts, ancestors, siblings, is_department=False
 </main>
 <footer class="site-footer"><div class="page-container"><a class="site-logo" href="{BASE}">FORME<span>EVERYDAY, REFINED</span></a><p>Curated fashion photography · Explore the FORME catalogue.</p><nav><a href="{BASE}pages/shipping-delivery.html">Shipping</a> · <a href="{BASE}pages/returns-refunds.html">Returns</a> · <a href="{BASE}pages/reviews.html">Reviews</a> · <a href="{BASE}pages/order-tracking.html">Track order</a> · <a href="{BASE}pages/privacy.html">Privacy</a> · <a href="{BASE}pages/terms.html">Terms</a> · <a href="{BASE}pages/contact.html">Contact</a></nav><div class="fb-footer-blog"><strong>Blog</strong><a href="{BASE}blog/">সব ব্লগ পোস্ট</a></div><p><a href="{BASE}">Return to FORME home ↗</a></p></div></footer>
 <script src="{BASE}assets/catalogue-orders.js?v=20261103-3" defer></script>
-<script src="{BASE}assets/commerce-actions.js?v=20261103-1" defer></script>
+<script src="{BASE}assets/collection-products.js?v=20261103-1" defer></script>\n<script src="{BASE}assets/product-card-links.js?v=20261103-1" defer></script>\n<script src="{BASE}assets/commerce-actions.js?v=20261103-1" defer></script>
 <script src="{BASE}assets/image-viewer.js?v=20261103-1" defer></script>
 <script src="{BASE}assets/customer-care.js?v=20261103-5" defer></script><script src="{BASE}assets/customer-live-voice.js?v=20261103-3" defer></script>
 </body>

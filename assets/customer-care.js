@@ -163,6 +163,7 @@ function showProducts(products){
    el("div","fa-product-price","তালিকাভুক্ত মূল্য "+money(p.price_bdt)),
    el("div","fa-product-status",p.availability_status==="in_stock"?"স্টক: ক্যাটালগে উপলব্ধ":p.availability_status==="preorder"?"প্রি-অর্ডার; টিম নিশ্চিত করবে":"স্টক ও চূড়ান্ত দাম যাচাই সাপেক্ষে")
   );
+  const detail=el("a","fa-product-detail-link","বিস্তারিত দেখুন ↗");detail.href="/fashionstore/pages/product.html?id="+encodeURIComponent(String(p.product_id));info.appendChild(detail);
   const save=el("button","fa-save-style-button","☆ স্টাইল মনে রাখুন");save.type="button";save.addEventListener("click",()=>rememberProduct(String(p.product_id)));info.appendChild(save);
   const order=el("button","fa-order-button","এই পণ্যটি অর্ডার করতে চাই");
   order.type="button";
