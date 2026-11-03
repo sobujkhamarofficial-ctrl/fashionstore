@@ -275,7 +275,7 @@ def build_page(node, department, parts, ancestors, siblings, is_department=False
 </main>
 <footer class="site-footer"><div class="page-container"><a class="site-logo" href="{BASE}">FORME<span>EVERYDAY, REFINED</span></a><p>Curated fashion photography · Explore the FORME catalogue.</p><nav><a href="{BASE}pages/shipping-delivery.html">Shipping</a> · <a href="{BASE}pages/returns-refunds.html">Returns</a> · <a href="{BASE}pages/reviews.html">Reviews</a> · <a href="{BASE}pages/order-tracking.html">Track order</a> · <a href="{BASE}pages/privacy.html">Privacy</a> · <a href="{BASE}pages/terms.html">Terms</a> · <a href="{BASE}pages/contact.html">Contact</a></nav><div class="fb-footer-blog"><strong>Blog</strong><a href="{BASE}blog/">সব ব্লগ পোস্ট</a></div><p><a href="{BASE}">Return to FORME home ↗</a></p></div></footer>
 <script src="{BASE}assets/catalogue-orders.js?v=20261103-3" defer></script>
-<script src="{BASE}assets/collection-products.js?v=20261103-1" defer></script>\n<script src="{BASE}assets/product-card-links.js?v=20261103-1" defer></script>\n<script src="{BASE}assets/commerce-actions.js?v=20261103-1" defer></script>
+<script src="{BASE}assets/collection-products.js?v=20261103-2" defer></script>\n<script src="{BASE}assets/product-card-links.js?v=20261103-1" defer></script>\n<script src="{BASE}assets/commerce-actions.js?v=20261103-1" defer></script>
 <script src="{BASE}assets/image-viewer.js?v=20261103-1" defer></script>
 <script src="{BASE}assets/customer-care.js?v=20261103-6" defer></script><script src="{BASE}assets/customer-live-voice.js?v=20261103-3" defer></script>
 </body>
