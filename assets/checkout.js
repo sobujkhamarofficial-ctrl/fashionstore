@@ -142,7 +142,7 @@
       const payload = await response.json().catch(() => ({}));
       if (!response.ok || !payload.ok || !Array.isArray(payload.products)) throw new Error(payload.error || "The product could not be loaded. Please try again.");
       const product = payload.products.find(item => String(item.id) === productId);
-      if (!product || !product.is_active || !Number(product.price_bdt)) throw new Error("This product is not currently available for a checkout request.");
+      if (!product || !product.is_active || !["needs_confirmation","in_stock","preorder"].includes(String(product.availability_status)) || !Number(product.price_bdt)) throw new Error("This product is not currently available for a checkout request. Please return to the collection for the latest availability.");
       cart = [{ id:String(product.id), name:String(product.name || ""), price:Number(product.price_bdt), image:String(product.image_url || ""), qty:1, variant:"" }];
       saveCart();
     } catch (error) {
