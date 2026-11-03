@@ -93,18 +93,19 @@
     scope.querySelectorAll(".f-product[data-id], .f-static-product[data-id]").forEach(syncCard);
   }
 
-  function lockCards() {
+  function lockCards(message) {
     document.querySelectorAll(".f-product[data-id], .f-static-product[data-id]").forEach(card => {
       if (!card.querySelector("[data-f-add], [data-f-buy-now]")) return;
       card.querySelectorAll("[data-f-add], [data-f-buy-now]").forEach(button => {
         button.disabled = true;
         button.title = "Live product information is temporarily unavailable. Please refresh and try again.";
       });
-      setNote(card, {}, "Live price and availability check is temporarily unavailable. Please refresh.");
+      setNote(card, {}, message || "Live price and availability check is temporarily unavailable. Please refresh.");
     });
   }
 
   async function load() {
+    lockCards("Checking the latest price and availability…");
     try {
       const response = await fetch(API + "?action=products", {
         method: "GET",
