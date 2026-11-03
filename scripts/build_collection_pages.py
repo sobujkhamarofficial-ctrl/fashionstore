@@ -241,7 +241,9 @@ def build_page(node, department, parts, ancestors, siblings, is_department=False
 <meta name="description" content="{esc(description)}">
 <link rel="canonical" href="https://sobujkhamarofficial-ctrl.github.io{current_url}">
 <link rel="stylesheet" href="{BASE}collections/collections.css">
-<link rel="stylesheet" href="{BASE}assets/customer-care.css?v=20261102-3">\n<link rel="stylesheet" href="{BASE}assets/image-viewer.css?v=20261103-1">\n<link rel="stylesheet" href="{BASE}assets/blog.css?v=20261103-1">
+<link rel="stylesheet" href="{BASE}assets/customer-care.css?v=20261102-3">
+<link rel="stylesheet" href="{BASE}assets/image-viewer.css?v=20261103-1">
+<link rel="stylesheet" href="{BASE}assets/blog.css?v=20261103-1">
 <title>{esc(unique_title)} | FORME</title>
 </head>
 <body>
@@ -263,7 +265,8 @@ def build_page(node, department, parts, ancestors, siblings, is_department=False
 </div>
 </main>
 <footer class="site-footer"><div class="page-container"><a class="site-logo" href="{BASE}">FORME<span>EVERYDAY, REFINED</span></a><p>Curated fashion photography · Explore the FORME catalogue.</p><nav><a href="{BASE}pages/shipping-delivery.html">Shipping</a> · <a href="{BASE}pages/returns-refunds.html">Returns</a> · <a href="{BASE}pages/reviews.html">Reviews</a> · <a href="{BASE}pages/order-tracking.html">Track order</a> · <a href="{BASE}pages/privacy.html">Privacy</a> · <a href="{BASE}pages/terms.html">Terms</a> · <a href="{BASE}pages/contact.html">Contact</a></nav><div class="fb-footer-blog"><strong>Blog</strong><a href="{BASE}blog/">সব ব্লগ পোস্ট</a><a href="{BASE}blog/bangladesh-capsule-wardrobe-guide.html">ক্যাপসুল ওয়ার্ডরোব</a><a href="{BASE}blog/shirt-fit-size-measurement-bangladesh.html">শার্টের সঠিক ফিট</a><a href="{BASE}blog/fabric-guide-hot-humid-weather.html">ফ্যাব্রিক গাইড</a></div><p><a href="{BASE}">Return to FORME home ↗</a></p></div></footer>
-<script src="{BASE}assets/catalogue-orders.js?v=20261103-1" defer></script>\n<script src="{BASE}assets/image-viewer.js?v=20261103-1" defer></script>
+<script src="{BASE}assets/catalogue-orders.js?v=20261103-1" defer></script>
+<script src="{BASE}assets/image-viewer.js?v=20261103-1" defer></script>
 <script src="{BASE}assets/customer-care.js?v=20261102-3" defer></script>
 </body>
 </html>
