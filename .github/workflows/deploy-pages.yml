@@ -402,6 +402,18 @@ jobs:
               assert voice_status.get("model") == "models/gemini-3.8-live", voice_status
               assert voice_status.get("status") in {"configured", "paused"}, voice_status
 
+          voice_request = Request(
+              voice_endpoint,
+              data=json.dumps({"purpose": "deployment-smoke-test"}).encode("utf-8"),
+              headers={"Content-Type": "application/json", "Origin": "https://sobujkhamarofficial-ctrl.github.io"},
+              method="POST",
+          )
+          with urlopen(voice_request, timeout=25) as response:
+              token_payload = json.loads(response.read().decode("utf-8"))
+              assert response.status == 200 and token_payload.get("ok") is True, {k: v for k, v in token_payload.items() if k != "token"}
+              assert str(token_payload.get("token", "")).startswith("auth_tokens/"), "Gemini ephemeral token was not issued"
+              assert token_payload.get("model") == "models/gemini-3.8-live", "Live model mismatch"
+
           endpoint = "https://zfgcovvfczjiqagrnfjr.supabase.co/functions/v1/storefront-commerce-api"
           with urlopen(endpoint, timeout=25) as response:
               health = json.loads(response.read().decode("utf-8"))
