@@ -27,7 +27,7 @@ FORME is an editorial-style fashion storefront for Bangladesh. The site is publi
 
 ## Current pilot limitations
 
-The public catalogue contains sample product records. Names, images, listed prices, variants and stock are not yet verified as a final sellable inventory. All seeded products are marked as requiring store confirmation. An online checkout submission creates an **order request** only, not a confirmed order or payment transaction.
+The public catalogue contains sample product records. Names, images, listed prices, variants and stock are not yet verified as a final sellable inventory. All seeded products are marked as requiring store confirmation. The live database currently has 212 active product records, none marked as verified or in stock, and its database categories currently focus on Men's apparel and accessories. An online checkout submission creates an **order request** only, not a confirmed order or payment transaction.
 
 The store team must contact the customer to confirm:
 1. The exact product, size/variant and availability.
@@ -35,7 +35,7 @@ The store team must contact the customer to confirm:
 3. The delivery area, courier availability, delivery charge and realistic delivery estimate.
 4. The accepted payment method and final total.
 
-No online payment gateway or live courier booking/tracking integration is connected. Do not request or collect card numbers, PINs, passwords or OTPs through this site. The experimental AI Customer Care widget and its public endpoint are paused while the order and policy workflows are verified. The Gemini function does not call the AI API in this paused state.
+No online payment gateway or live courier booking/tracking integration is connected. Do not request or collect card numbers, PINs, passwords or OTPs through this site. FORME AI Shopping Assistant is connected to the live public product catalogue using Gemini function calling. It can search products, display image cards, read product details and prepare an in-chat order request form. The customer must submit the form themselves; the server calculates prices and creates only a pending_review order request. The AI cannot directly confirm orders, reserve inventory, collect payment or book couriers.
 
 Before accepting confirmed commercial orders, complete the product catalogue with real SKU data and stock, add verified merchant legal identity and official contact details, publish agreed delivery rates and service levels, integrate a Bangladesh-supported payment gateway and courier workflow, and obtain legal review of the policies.
 
