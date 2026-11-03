@@ -110,3 +110,22 @@
  #forme-ai-widget .fa-ai-tools button{flex:1;padding:5px;font-size:9px}
  #forme-ai-widget .fa-memory-toggle{font-size:8px}
 }
+
+
+/* Compact composer: photo picker and voice input stay inside the message field. */
+#forme-ai-widget .fa-form{align-items:center;gap:7px}
+#forme-ai-widget .fa-input{min-height:42px;height:42px;max-height:112px;resize:vertical;padding:11px 10px}
+#forme-ai-widget .fa-composer-tool{width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;border:1px solid #e6e1d8;border-radius:50%;background:#fffefa;color:#536457;cursor:pointer;transition:background .16s,border-color .16s,color .16s,transform .16s}
+#forme-ai-widget .fa-composer-tool:hover{border-color:#c9b9a8;background:#f5f1eb;color:var(--fa-green);transform:translateY(-1px)}
+#forme-ai-widget .fa-composer-tool:focus-visible{outline:2px solid rgba(183,111,80,.35);outline-offset:2px}
+#forme-ai-widget .fa-composer-tool svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#forme-ai-widget .fa-mic{border-color:#e1d9cf;background:#f7f4ee;color:#765f4f}
+#forme-ai-widget .fa-mic[hidden]{display:none}
+#forme-ai-widget .fa-send{width:40px;height:40px;flex:0 0 40px;border-radius:50%}
+#forme-ai-widget .fa-send svg{width:17px;height:17px}
+@media(max-width:390px){
+ #forme-ai-widget .fa-form{gap:5px;padding:9px 9px 10px}
+ #forme-ai-widget .fa-composer-tool{width:35px;height:35px;flex-basis:35px}
+ #forme-ai-widget .fa-send{width:37px;height:37px;flex-basis:37px}
+ #forme-ai-widget .fa-input{padding:10px 8px;font-size:11px}
+}
