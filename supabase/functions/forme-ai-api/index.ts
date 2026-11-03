@@ -214,6 +214,11 @@ function validateFilters(body: Record<string, unknown>): string | null {
   if (season && !["spring", "summer", "autumn", "winter", "all_season"].includes(season)) {
     return "season must be spring, summer, autumn, winter or all_season.";
   }
+  for (const field of ["size", "color", "material", "fit"] as const) {
+    if (body[field] !== undefined && (!clean(body[field], 80) || clean(body[field], 80).length > 80)) {
+      return field + " must be a non-empty string of at most 80 characters.";
+    }
+  }
   return null;
 }
 
@@ -222,6 +227,10 @@ function searchProducts(products: Product[], body: Record<string, unknown>): Pro
   const category = clean(body.category, 100);
   const audience = clean(body.audience, 20).toLowerCase();
   const season = clean(body.season, 20).toLowerCase();
+  const requestedSize = normalized(clean(body.size, 80));
+  const requestedColor = normalized(clean(body.color, 80));
+  const requestedMaterial = normalized(clean(body.material, 80));
+  const requestedFit = normalized(clean(body.fit, 80));
   const maxPrice = Number.isInteger(body.max_price_bdt) && Number(body.max_price_bdt) >= 0
     ? Number(body.max_price_bdt)
     : null;
@@ -232,15 +241,28 @@ function searchProducts(products: Product[], body: Record<string, unknown>): Pro
     const name = normalized(product.name);
     const cat = normalized(product.category);
     const desc = normalized(product.description);
+    const attributesVerified = product.attributes_verified === true;
+    const attributeText = attributesVerified
+      ? normalized([
+          ...product.size_options, ...product.color_options,
+          product.material || "", product.fit || "", product.pattern || "",
+          ...product.search_keywords,
+        ].join(" "))
+      : "";
     let score = 0;
     for (const term of terms) {
       if (name.includes(term)) score += 5;
       if (cat.includes(term)) score += 3;
       if (desc.includes(term)) score += 1;
+      if (attributeText.includes(term)) score += 3;
     }
     if (category && !cat.includes(normalized(category))) return { product, score: 0 };
     if (audience && (!product.audience_verified || product.audience !== audience)) return { product, score: 0 };
     if (season && (!product.season_verified || !product.season_tags.includes(season))) return { product, score: 0 };
+    if (requestedSize && (!attributesVerified || !product.size_options.some((value) => normalized(value) === requestedSize))) return { product, score: 0 };
+    if (requestedColor && (!attributesVerified || !product.color_options.some((value) => normalized(value) === requestedColor))) return { product, score: 0 };
+    if (requestedMaterial && (!attributesVerified || normalized(product.material || "") !== requestedMaterial)) return { product, score: 0 };
+    if (requestedFit && (!attributesVerified || normalized(product.fit || "") !== requestedFit)) return { product, score: 0 };
     if (maxPrice !== null && (!product.price_verified || product.listed_price_bdt > maxPrice)) return { product, score: 0 };
     if (terms.length && score === 0) return { product, score: 0 };
     return { product, score: terms.length ? score : 1 };
@@ -274,7 +296,7 @@ function productResponse(product: Product): Record<string, unknown> {
     material: product.attributes_verified ? product.material : null,
     fit: product.attributes_verified ? product.fit : null,
     pattern: product.attributes_verified ? product.pattern : null,
-    search_keywords: product.search_keywords,
+    search_keywords: product.attributes_verified ? product.search_keywords : [],
     attributes_verified: product.attributes_verified,
     image_url: product.image_url,
     updated_at: product.updated_at,
