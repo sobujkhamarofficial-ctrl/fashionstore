@@ -200,7 +200,8 @@ function showTab(tab){
  const panels={orders:$("fa-orders-panel"),products:$("fa-products-panel"),messages:$("fa-messages-panel"),feedback:$("fa-feedback-panel")};
  Object.keys(tabs).forEach(key=>{const active=key===tab;tabs[key].classList.toggle("active",active);tabs[key].setAttribute("aria-selected",String(active));panels[key].hidden=!active;});
  if(tab==="products"&&!productsLoaded)void loadProducts();
- if(tab==="messages"&&!messagesLoaded)void loadMessages();\n if(tab==="feedback"&&!feedbackLoaded)void loadFeedback();
+ if(tab==="messages"&&!messagesLoaded)void loadMessages();
+ if(tab==="feedback"&&!feedbackLoaded)void loadFeedback();
 }
 function openMessage(id){
  selectedMessage=messages.find(m=>m.id===id);if(!selectedMessage)return;
