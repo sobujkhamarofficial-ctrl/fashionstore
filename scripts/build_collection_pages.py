@@ -241,7 +241,7 @@ def build_page(node, department, parts, ancestors, siblings, is_department=False
 <meta name="description" content="{esc(description)}">
 <link rel="canonical" href="https://sobujkhamarofficial-ctrl.github.io{current_url}">
 <link rel="stylesheet" href="{BASE}collections/collections.css">
-<link rel="stylesheet" href="{BASE}assets/customer-care.css?v=20261102-3">
+<link rel="stylesheet" href="{BASE}assets/customer-care.css?v=20261103-5">
 <link rel="stylesheet" href="{BASE}assets/image-viewer.css?v=20261103-1">
 <link rel="stylesheet" href="{BASE}assets/commerce-actions.css?v=20261103-1">
 <link rel="stylesheet" href="{BASE}assets/blog.css?v=20261103-1">
@@ -269,7 +269,7 @@ def build_page(node, department, parts, ancestors, siblings, is_department=False
 <script src="{BASE}assets/catalogue-orders.js?v=20261103-3" defer></script>
 <script src="{BASE}assets/commerce-actions.js?v=20261103-1" defer></script>
 <script src="{BASE}assets/image-viewer.js?v=20261103-1" defer></script>
-<script src="{BASE}assets/customer-care.js?v=20261102-3" defer></script>
+<script src="{BASE}assets/customer-care.js?v=20261103-5" defer></script><script src="{BASE}assets/customer-live-voice.js?v=20261103-2" defer></script>
 </body>
 </html>
 '''

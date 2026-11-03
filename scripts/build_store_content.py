@@ -38,14 +38,14 @@ def page(title, kicker, lede, body, description=None, canonical=None):
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#F7F5F0"><meta name="description" content="{e(desc)}">
-<link rel="stylesheet" href="{ASSET}"><link rel="stylesheet" href="{BASE}assets/blog.css?v=20261103-1"><link rel="stylesheet" href="{BASE}assets/customer-care.css?v=20261102-3"><title>{e(title)} | FORME</title>
+<link rel="stylesheet" href="{ASSET}"><link rel="stylesheet" href="{BASE}assets/blog.css?v=20261103-1"><link rel="stylesheet" href="{BASE}assets/customer-care.css?v=20261103-5"><title>{e(title)} | FORME</title>
 {f'<link rel="canonical" href="{url}">' if url else ''}
 </head><body>{header()}<main class="fc-main">
 <div class="fc-breadcrumb"><a href="{BASE}">Home</a> / {e(title)}</div>
 <span class="fc-kicker">{e(kicker)}</span><h1>{e(title)}</h1><p class="fc-lede">{e(lede)}</p>
 <p class="fc-meta">Updated 2 November 2026 · FORME Bangladesh</p>
 <div class="fc-content">{body}</div>
-</main>{footer()}<script src="{BASE}assets/customer-care.js?v=20261102-3" defer></script></body></html>'''
+</main>{footer()}<script src="{BASE}assets/customer-care.js?v=20261103-5" defer></script><script src="{BASE}assets/customer-live-voice.js?v=20261103-2" defer></script></body></html>'''
 
 pages = {
 "about.html": (

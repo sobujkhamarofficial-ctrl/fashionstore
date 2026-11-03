@@ -372,8 +372,14 @@ jobs:
           men_builder = Path("scripts/build_men_catalog.py").read_text()
           collection_builder = Path("scripts/build_collection_pages.py").read_text()
           assert "data-f-add" in men_builder and "data-f-buy-now" in men_builder and "commerce-actions.js" in men_builder
-          assert "customer-care.js" in men_builder
-          assert "customer-care.js" in collection_builder
+          men_builder = Path("scripts/build_men_catalog.py").read_text()
+          collection_builder = Path("scripts/build_collection_pages.py").read_text()
+          store_builder = Path("scripts/build_store_content.py").read_text()
+          blog_builder = Path("scripts/build_blog.py").read_text()
+          for name, source in [("Men", men_builder), ("collection", collection_builder), ("store content", store_builder), ("blog", blog_builder)]:
+              assert "customer-care.js" in source, f"{name} is missing the customer-care widget"
+              assert "customer-live-voice.js" in source, f"{name} pages are missing the dedicated Live Voice client"
+
           assert "commerce-actions.js" in collection_builder and "commerce-actions.css" in collection_builder
           assert "assets/blog.css" in men_builder and '<strong>Blog</strong>' in men_builder, "Men pages need a dedicated Blog footer"
           assert "assets/blog.css" in collection_builder and '<strong>Blog</strong>' in collection_builder, "Collection pages need a dedicated Blog footer"

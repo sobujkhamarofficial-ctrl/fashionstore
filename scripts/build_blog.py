@@ -128,7 +128,7 @@ def common_head(title: str, description: str, canonical: str, og_image: str, ext
 <link rel="canonical" href="{esc(canonical)}">
 <link rel="stylesheet" href="{BASE}assets/content-pages.css">
 <link rel="stylesheet" href="{BASE}assets/blog.css?v=20261103-1">
-<link rel="stylesheet" href="{BASE}assets/customer-care.css?v=20261102-3">
+<link rel="stylesheet" href="{BASE}assets/customer-care.css?v=20261103-5">
 <title>{esc(title)} | FORME Blog</title>
 {structured}
 </head>'''
@@ -191,7 +191,8 @@ def render_article(article: dict, all_articles: list[dict]) -> str:
     head = common_head(article["title"], article["excerpt"], canonical, cover_url, article_json)
     return f'''{head}<body>{header()}<main class="fc-main fb-main">{body}</main>{footer(all_articles)}
 <script src="{BASE}assets/blog.js?v=20261103-1" defer></script>
-<script src="{BASE}assets/customer-care.js?v=20261102-3" defer></script>
+<script src="{BASE}assets/customer-care.js?v=20261103-5" defer></script>
+<script src="{BASE}assets/customer-live-voice.js?v=20261103-2" defer></script>
 </body></html>'''
 
 def render_index(articles: list[dict]) -> str:
@@ -231,7 +232,8 @@ def render_index(articles: list[dict]) -> str:
 <div class="fb-note"><strong>পাঠকের জন্য:</strong> এই Blog-এ প্রকাশিত লেখাগুলো সাধারণ fashion ও clothing-care guidance। FORME-এর pilot catalogue-এ কিছু product detail, size, stock ও final price এখনও team confirmation-এর অধীন। অর্ডারের আগে পণ্যের নির্দিষ্ট তথ্য নিশ্চিত করুন।</div>'''
     return f'''{head}<body>{header()}<main class="fc-main fb-main">{body}</main>{footer(articles)}
 <script src="{BASE}assets/blog.js?v=20261103-1" defer></script>
-<script src="{BASE}assets/customer-care.js?v=20261102-3" defer></script>
+<script src="{BASE}assets/customer-care.js?v=20261103-5" defer></script>
+<script src="{BASE}assets/customer-live-voice.js?v=20261103-2" defer></script>
 </body></html>'''
 
 def rebuild_sitemap() -> int:
