@@ -26,7 +26,7 @@ def footer():
 <div><a class="fc-logo" style="color:#fff" href="{BASE}">FORME<small style="color:#d8ded8">EVERYDAY, REFINED</small></a>
 <p>Considered clothing and modern everyday essentials. A Bangladesh-focused fashion storefront.</p></div>
 <div><h3>Explore</h3><a href="{BASE}">Shop all</a><a href="{BASE}men/">Men</a><a href="{BASE}women/">Women</a></div>
-<div><h3>Blog</h3><a href="{BASE}blog/">সব ব্লগ পোস্ট</a><a href="{BASE}blog/bangladesh-capsule-wardrobe-guide.html">ক্যাপসুল ওয়ার্ডরোব</a><a href="{BASE}blog/shirt-fit-size-measurement-bangladesh.html">শার্টের সঠিক ফিট</a><a href="{BASE}blog/fabric-guide-hot-humid-weather.html">ফ্যাব্রিক গাইড</a><a href="{BASE}blog/mens-wardrobe-essentials-bangladesh.html">পুরুষদের ওয়ার্ডরোব</a><a href="{BASE}blog/womens-everyday-wardrobe-bangladesh.html">নারীদের ওয়ার্ডরোব</a></div>
+<div><h3>Blog</h3><a href="{BASE}blog/">সব ব্লগ পোস্ট</a></div>
 <div><h3>Customer care</h3><a href="{BASE}pages/shipping-delivery.html">Shipping & delivery</a><a href="{BASE}pages/returns-refunds.html">Returns & refunds</a><a href="{BASE}pages/cancellations.html">Cancellations</a><a href="{BASE}pages/size-guide.html">Size guide</a><a href="{BASE}pages/reviews.html">Customer reviews</a><a href="{BASE}pages/faq.html">FAQs</a><a href="{BASE}pages/order-tracking.html">Track an order</a></div>
 <div><h3>Information</h3><a href="{BASE}pages/about.html">About FORME</a><a href="{BASE}pages/contact.html">Contact</a><a href="{BASE}pages/payment.html">Payment policy</a><a href="{BASE}pages/privacy.html">Privacy policy</a><a href="{BASE}pages/terms.html">Terms & conditions</a></div>
 </div><div class="fc-footer-bottom"><span>© 2026 FORME. All rights reserved.</span><span>Bangladesh · Pilot storefront</span></div>
