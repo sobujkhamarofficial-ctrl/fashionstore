@@ -360,6 +360,10 @@ async function adminAction(body: Record<string, unknown>, req: Request, origin: 
       const colors = parseTextArray(row.color_options,40,50);
       const keywords = parseTextArray(row.search_keywords,40,80);
       if (audience !== null && !allowedAudiences.has(audience)) return json({ error: "Invalid audience for " + id }, 400, origin);
+      if (typeof row.audience_verified !== "boolean" || typeof row.season_verified !== "boolean"
+        || typeof row.attributes_verified !== "boolean" || typeof row.price_verified !== "boolean") {
+        return json({ error: "Audience, season, attribute and price verification flags must be true or false for " + id }, 400, origin);
+      }
       if (row.audience_verified === true && !audience) return json({ error: "Audience is required before marking it verified: " + id }, 400, origin);
       if (!seasonTags || seasonTags.some((value) => !allowedSeasons.has(value)) || (seasonTags.includes("all_season") && seasonTags.length > 1)) return json({ error: "Invalid season tags for " + id }, 400, origin);
       if (row.season_verified === true && seasonTags.length === 0) return json({ error: "Season tags are required before marking them verified: " + id }, 400, origin);
@@ -369,8 +373,7 @@ async function adminAction(body: Record<string, unknown>, req: Request, origin: 
       const fit = row.fit === "" || row.fit === null ? null : text(row.fit,80);
       const pattern = row.pattern === "" || row.pattern === null ? null : text(row.pattern,80);
       if (row.stock_quantity !== null && row.stock_quantity !== "" && (!Number.isInteger(row.stock_quantity) || Number(row.stock_quantity) < 0 || Number(row.stock_quantity) > 2_000_000)) return json({ error: "Invalid stock quantity for " + id }, 400, origin);
-      if (row.attributes_verified === true && typeof row.attributes_verified !== "boolean") return json({ error: "Invalid attributes verification for " + id }, 400, origin);
-      if (row.price_verified === true && (typeof row.price_verified !== "boolean" || Number(price) <= 0)) return json({ error: "A verified price must be positive for " + id }, 400, origin);
+      if (row.price_verified === true && Number(price) <= 0) return json({ error: "A verified price must be positive for " + id }, 400, origin);
       entries.push({
         id,
         fields: {
