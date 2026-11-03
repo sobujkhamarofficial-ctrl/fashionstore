@@ -1,0 +1,21 @@
+.fc-global-bag{
+  position:fixed;left:18px;bottom:18px;z-index:99980;display:inline-flex;
+  align-items:center;justify-content:center;min-height:46px;max-width:min(82vw,320px);
+  padding:0 17px;border:1px solid rgba(255,255,255,.15);border-radius:2px;
+  background:#263b32;color:#fffefa;text-decoration:none;
+  box-shadow:0 6px 24px rgba(24,35,28,.2);
+  font:700 10px/1.2 "DM Sans",Arial,sans-serif;letter-spacing:.035em;
+  transition:background .18s,transform .18s
+}
+.fc-global-bag:hover,.fc-global-bag:focus-visible{background:#b76f50;color:#fff;transform:translateY(-2px)}
+.fc-global-bag.has-items{background:#b76f50}
+.fc-global-bag:focus-visible{outline:2px solid #263b32;outline-offset:3px}
+.fc-commerce-toast{
+  position:fixed;left:50%;bottom:20px;z-index:100000;max-width:calc(100vw - 30px);
+  padding:13px 17px;background:#263b32;color:#fffefa;text-align:center;
+  font:11px/1.5 "DM Sans",Arial,sans-serif;opacity:0;visibility:hidden;
+  transform:translate(-50%,12px);transition:opacity .2s,transform .2s,visibility .2s
+}
+.fc-commerce-toast.is-visible{opacity:1;visibility:visible;transform:translate(-50%,0)}
+@media(max-width:640px){.fc-global-bag{left:12px;bottom:14px;min-height:44px;padding:0 13px;font-size:9px}.fc-commerce-toast{bottom:12px;font-size:10px}}
+@media(prefers-reduced-motion:reduce){.fc-global-bag,.fc-commerce-toast{transition:none}}
