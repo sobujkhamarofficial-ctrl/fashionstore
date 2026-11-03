@@ -274,7 +274,6 @@ jobs:
               "assets/catalogue-orders.js",
               "assets/catalogue-orders.css",
               "assets/site-forms.js",
-              "assets/commerce-pages.js",
               "assets/customer-care.js",
               "assets/customer-care.css",
               "sitemap.xml",
