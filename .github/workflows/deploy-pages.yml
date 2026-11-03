@@ -196,6 +196,8 @@ jobs:
           node --check assets/commerce-pages.js
           node --check assets/customer-care.js
           python3 - <<'PY'
+          import json
+          import re
           from pathlib import Path
 
           required = [
