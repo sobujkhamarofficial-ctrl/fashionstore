@@ -1,0 +1,95 @@
+openapi: 3.1.0
+info:
+  title: FORME AI Control API
+  version: 1.0.0
+  description: Private server-to-server API for authorised FORME AI agents. V1 supports catalogue reads and unpublished AI content drafts only.
+servers:
+  - url: https://zfgcovvfczjiqagrnfjr.supabase.co/functions/v1/forme-ai-api
+security:
+  - formeAgentKey: []
+  - bearerAgentKey: []
+paths:
+  /health:
+    get:
+      security: []
+      summary: Public service readiness check
+      responses:
+        "200":
+          description: Readiness information without any secret values
+  /v1/catalogue/search:
+    post:
+      summary: Search active catalogue products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query: { type: string, minLength: 2, maxLength: 160 }
+                category: { type: string, maxLength: 100 }
+                max_price_bdt: { type: integer, minimum: 0 }
+                limit: { type: integer, minimum: 1, maximum: 30, default: 10 }
+      responses:
+        "200": { description: Matching products with verification flags }
+        "401": { description: Missing or invalid agent key }
+        "422": { description: Audience or season filters are not supported yet }
+  /v1/catalogue/product:
+    post:
+      summary: Retrieve one active catalogue product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [product_id]
+              properties:
+                product_id: { type: string, maxLength: 100 }
+      responses:
+        "200": { description: Product details and verification status }
+        "404": { description: Product not found }
+  /v1/catalogue/summary:
+    post:
+      summary: Get catalogue quality and availability counts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200": { description: Catalogue aggregate and data-quality limitations }
+  /v1/ai/content/draft:
+    post:
+      summary: Generate an unpublished product-content draft with Gemini
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [product_id, content_type]
+              properties:
+                product_id: { type: string, maxLength: 100 }
+                content_type:
+                  type: string
+                  enum: [product_description, seo_title, seo_description, social_caption, product_faq]
+                language:
+                  type: string
+                  enum: [bn, en]
+                  default: bn
+                objective: { type: string, maxLength: 240 }
+      responses:
+        "200": { description: Draft content. It is never saved or published automatically. }
+        "401": { description: Missing or invalid agent key }
+        "503": { description: Gemini or the agent secret is not configured }
+components:
+  securitySchemes:
+    formeAgentKey:
+      type: apiKey
+      in: header
+      name: X-FORME-AI-KEY
+    bearerAgentKey:
+      type: http
+      scheme: bearer
