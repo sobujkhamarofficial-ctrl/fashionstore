@@ -123,9 +123,17 @@ Deno.serve(async (req: Request) => {
         uses: 1,
         expireTime: new Date(now + 30 * 60 * 1000).toISOString(),
         newSessionExpireTime: new Date(now + 60 * 1000).toISOString(),
-        liveConnectConstraints: {
+        bidiGenerateContentSetup: {
           model: MODEL,
-          config: { responseModalities: ["AUDIO"], sessionResumption: {} },
+          generationConfig: {
+            responseModalities: ["AUDIO"],
+            speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Kore" } } },
+          },
+          systemInstruction: { parts: [{ text: SYSTEM_INSTRUCTION }] },
+          tools: LIVE_TOOLS,
+          inputAudioTranscription: {},
+          outputAudioTranscription: {},
+          sessionResumption: {},
         },
       }),
       signal: AbortSignal.timeout(12000),
