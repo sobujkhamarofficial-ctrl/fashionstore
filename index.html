@@ -4,7 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#F7F5F0">
-  <meta name="description" content="FORME — considered everyday clothing and modern essentials.">
+  <meta name="description" content="FORME — considered everyday clothing and modern essentials in Bangladesh. Explore clothing, accessories, practical style guides and cash-on-delivery order requests.">
+  <link rel="canonical" href="https://sobujkhamarofficial-ctrl.github.io/fashionstore/">
+  <meta property="og:type" content="website"><meta property="og:site_name" content="FORME">
+  <meta property="og:title" content="FORME — Modern essentials"><meta property="og:description" content="Considered everyday clothing and modern essentials. Explore the FORME collections and order requests.">
+  <meta property="og:url" content="https://sobujkhamarofficial-ctrl.github.io/fashionstore/">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&amp;fit=crop&amp;w=1200&amp;q=85">
+  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="FORME — Modern essentials">
+  <meta name="twitter:description" content="Considered everyday clothing and modern essentials in Bangladesh.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&amp;fit=crop&amp;w=1200&amp;q=85">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"FORME","url":"https://sobujkhamarofficial-ctrl.github.io/fashionstore/","inLanguage":"en-BD","description":"Considered everyday clothing and modern essentials in Bangladesh."}</script>
   <title>FORME — Modern essentials</title>
   <style id="forme-storefront-redesign">#forme-storefront { --f-ink:#202621; --f-muted:#777b73; --f-paper:#f7f5f0; --f-white:#fffefa; --f-green:#263b32; --f-green2:#344d40; --f-clay:#b76f50; --f-line:#e5e0d7; --f-serif:Georgia,'Times New Roman',serif; color:var(--f-ink); background:var(--f-paper); font-family:'DM Sans','Helvetica Neue',Arial,sans-serif; overflow:hidden; }
     #forme-storefront * { box-sizing:border-box; }
@@ -565,7 +574,7 @@
         if(add){
           const buyNow=add.hasAttribute('data-f-buy-now'),id=buyNow?add.dataset.fBuyNow:add.dataset.fAdd,card=add.closest('.f-product'),data={id,name:card&&card.dataset.name,price:Number(card&&card.dataset.price),image:card&&card.dataset.image};
           if(!id||!data.name||!Number.isFinite(data.price)||data.price<=0){toast('This item is not available for a COD order yet.');return;}
-          if(buyNow){cart.splice(0,cart.length);cart.push({...data,qty:1});updateCart();window.location.assign('/fashionstore/pages/checkout.html');return;}
+          if(buyNow){cart.splice(0,cart.length);cart.push({...data,qty:1});updateCart();window.location.assign('/fashionstore/pages/checkout.html?product='+encodeURIComponent(id));return;}
           if(cartQuantity()>=20){toast('Your bag can contain up to 20 items in total.');return;}
           const found=cart.find(p=>p.id===id);if(found){if(found.qty>=10){toast('Maximum 10 units of one item.');return;}found.qty++;}else{if(cart.length>=10){toast('Your bag can contain up to 10 different items.');return;}cart.push({...data,qty:1});}
           updateCart();toast('Added to your bag. Place your COD order when ready.');return;
