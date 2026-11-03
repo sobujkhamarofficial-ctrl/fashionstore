@@ -350,18 +350,50 @@ function mount(){
  '<div class="fa-status" role="status" aria-live="polite"><span class="fa-status-dot"></span><span class="fa-status-label">Checking secure connection…</span></div>'+
  '<div class="fa-chat" aria-live="polite" aria-label="Conversation"></div>'+
  '<div class="fa-prompts"><button class="fa-prompt" type="button" data-fa-prompt="Show me some shirts.">শার্ট দেখাও</button><button class="fa-prompt" type="button" data-fa-prompt="Show me polo T-shirts within ৳1500.">পোলো টি-শার্ট</button><button class="fa-prompt" type="button" data-fa-prompt="Help me choose the right clothing size and fit.">সাইজ ও ফিট</button></div>'+
- '<div class="fa-warning">চ্যাটে ফোন নম্বর বা ঠিকানা লিখবেন না। অর্ডারের জন্য নিরাপদ ফর্ম ব্যবহার করুন। <a href="'+BASE+'pages/order-tracking.html">Track an order</a>.</div>'+
+ '<div class="fa-warning">চ্যাটে ফোন নম্বর বা ঠিকানা লিখবেন না। ছবি শুধু এই অনুরোধে বিশ্লেষণ হবে, সংরক্ষণ করা হবে না। <a href="'+BASE+'pages/order-tracking.html">Track an order</a>.</div>'+
+ '<div class="fa-memory-toggle"><label><input type="checkbox" data-fa-memory> আমার স্টাইল পছন্দ এই ডিভাইসে মনে রাখুন</label><button type="button" data-fa-memory-reset>মুছুন</button></div>'+
+ '<div class="fa-ai-tools"><button type="button" data-fa-photo>📷 ছবি দিয়ে খুঁজুন</button><button type="button" data-fa-voice>🎙 কথা বলে লিখুন</button><input type="file" data-fa-file accept="image/jpeg,image/png,image/webp" hidden></div>'+
  '<form class="fa-form"><textarea class="fa-input" rows="1" maxlength="1200" placeholder="কী পণ্য খুঁজছেন? লিখুন…" aria-label="Your message"></textarea><button class="fa-send" type="submit" aria-label="Send message"><svg viewBox="0 0 24 24"><path d="m21 3-7.5 18-3.7-7.8L2 9.5 21 3Z"/><path d="M9.8 13.2 14 9"/></svg></button></form>'+
  '<div class="fa-foot">Pilot catalogue · stock and final price confirmed by FORME</div></section>'+
  '<button type="button" class="fa-launch" aria-expanded="false" aria-label="Open FORME chat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H5l1.7-3A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8 10h8M8 13.5h5"/></svg><span>SHOP WITH AI</span><i class="fa-launch-dot" aria-hidden="true"></i></button>';
  document.body.appendChild(root);
- panel=root.querySelector(".fa-panel");launch=root.querySelector(".fa-launch");input=root.querySelector(".fa-input");sendButton=root.querySelector(".fa-send");chat=root.querySelector(".fa-chat");statusLine=root.querySelector(".fa-status");promptButtons=Array.from(root.querySelectorAll("[data-fa-prompt]"));
+ panel=root.querySelector(".fa-panel");launch=root.querySelector(".fa-launch");input=root.querySelector(".fa-input");
+ sendButton=root.querySelector(".fa-send");chat=root.querySelector(".fa-chat");statusLine=root.querySelector(".fa-status");
+ promptButtons=Array.from(root.querySelectorAll("[data-fa-prompt]"));photoInput=root.querySelector("[data-fa-file]");
+ memoryToggle=root.querySelector("[data-fa-memory]");voiceButton=root.querySelector("[data-fa-voice]");
+ try{memoryToggle.checked=localStorage.getItem(MEMORY_ENABLED_KEY)==="1";}catch(_){memoryToggle.checked=false;}
  launch.addEventListener("click",()=>toggle());root.querySelector("[data-fa-close]").addEventListener("click",()=>toggle(false));
  root.querySelector(".fa-form").addEventListener("submit",e=>{e.preventDefault();sendMessage(input.value);});
  input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMessage(input.value);}});
  promptButtons.forEach(b=>b.addEventListener("click",()=>sendMessage(b.dataset.faPrompt)));
+ root.querySelector("[data-fa-photo]").addEventListener("click",()=>photoInput.click());
+ photoInput.addEventListener("change",async()=>{
+  const file=photoInput.files&&photoInput.files[0];photoInput.value="";if(!file)return;
+  try{
+   const image=await prepareImage(file);
+   await sendMessage("এই ছবির মতো পোশাক খুঁজে দাও। ছবির পোশাকের ধরন, রং ও স্টাইল দেখে মিল আছে এমন পণ্য দেখাও।",{image,displayText:"📷 পোশাকের ছবি পাঠানো হয়েছে"});
+  }catch(error){message(error.message||"ছবি পাঠানো যায়নি।","system");}
+ });
+ memoryToggle.addEventListener("change",()=>{
+  setMemory(memoryToggle.checked);
+  message(memoryToggle.checked?"স্টাইল মেমরি চালু হয়েছে। নির্বাচিত পণ্যের ID শুধু এই ডিভাইসে থাকবে।":"স্টাইল মেমরি বন্ধ করা হয়েছে এবং সংরক্ষিত পণ্যের ID মুছে ফেলা হয়েছে।","system");
+ });
+ root.querySelector("[data-fa-memory-reset]").addEventListener("click",()=>{
+  try{localStorage.removeItem(MEMORY_IDS_KEY);}catch(_){}
+  message("সংরক্ষিত স্টাইল পছন্দ মুছে ফেলা হয়েছে।","system");
+ });
+ const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!Recognition)voiceButton.hidden=true;
+ else voiceButton.addEventListener("click",()=>{
+  const recognition=new Recognition();recognition.lang="bn-BD";recognition.interimResults=false;recognition.maxAlternatives=1;voiceButton.disabled=true;
+  recognition.onresult=event=>{const transcript=event.results&&event.results[0]&&event.results[0][0]?event.results[0][0].transcript:"";if(transcript)input.value=transcript;};
+  recognition.onerror=()=>message("ভয়েস ইনপুট পাওয়া যায়নি। আবার চেষ্টা করুন।","system");
+  recognition.onend=()=>{voiceButton.disabled=false;input.focus();};
+  try{recognition.start();}catch(_){voiceButton.disabled=false;}
+ });
  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&panel.classList.contains("is-open"))toggle(false);});
  refreshStatus();
 }
+
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",mount,{once:true});else mount();
 })();
