@@ -47,6 +47,7 @@
       <div class="fa-tabbar" role="tablist" aria-label="Store management">
         <button id="fa-orders-tab" class="fa-tab active" type="button" role="tab" aria-selected="true">Orders</button>
         <button id="fa-products-tab" class="fa-tab" type="button" role="tab" aria-selected="false">Products &amp; catalogue</button>
+        <button id="fa-messages-tab" class="fa-tab" type="button" role="tab" aria-selected="false">Customer messages</button>
       </div>
       <section id="fa-orders-panel" class="fa-orders-panel">
         <div class="fa-panel-head"><div><span class="fa-eyebrow">CUSTOMER REQUESTS</span><h2>Orders</h2></div><span id="fa-order-count" class="fa-count">0 records</span></div>
@@ -65,6 +66,15 @@
         <div class="fa-table-wrap"><table><thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Availability</th><th>Details</th><th></th></tr></thead><tbody id="fa-product-rows"><tr><td colspan="6" class="fa-empty-cell">Open this tab to load products.</td></tr></tbody></table></div>
         <div id="fa-product-empty" class="fa-empty" hidden>No products match this view.</div>
         <p class="fa-footnote">A product should only be marked verified after its actual photograph, description, selling price, size/colour options and physical stock have been checked. “In stock” and “Preorder” require verified details.</p>
+      </section>
+      <section id="fa-messages-panel" class="fa-orders-panel" hidden>
+        <div class="fa-panel-head"><div><span class="fa-eyebrow">CUSTOMER CARE</span><h2>Messages</h2><p class="fa-panel-note">Enquiries submitted through the public contact form. Reply using the customer's supplied contact channel.</p></div><span id="fa-message-count" class="fa-count">0 messages</span></div>
+        <div class="fa-toolbar">
+          <label class="fa-search">⌕ <input id="fa-message-search" type="search" placeholder="Search name, subject or message"></label>
+          <select id="fa-message-filter" aria-label="Filter messages"><option value="all">All messages</option><option value="new">New</option><option value="in_progress">In progress</option><option value="resolved">Resolved</option><option value="spam">Spam</option></select>
+        </div>
+        <div class="fa-table-wrap"><table><thead><tr><th>Customer</th><th>Topic</th><th>Message</th><th>Received</th><th>Status</th><th></th></tr></thead><tbody id="fa-message-rows"><tr><td colspan="6" class="fa-empty-cell">Open this tab to load messages.</td></tr></tbody></table></div>
+        <div id="fa-message-empty" class="fa-empty" hidden>No messages match this view.</div>
       </section>
       <p class="fa-footnote">COD orders arrive as pending review. Verify product availability, requested size or variant, final price and delivery charge before confirming dispatch. Record payment only after it has actually been received.</p>
     </section>
