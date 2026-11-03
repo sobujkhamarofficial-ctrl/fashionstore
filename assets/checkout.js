@@ -133,7 +133,7 @@
 
   async function restoreDirectProduct() {
     const productId = new URLSearchParams(window.location.search).get("product");
-    if (!productId || cart.length) return;
+    if (!productId) return;
     try {
       const response = await fetch(API + "?action=products", {
         method: "GET", cache: "no-store",
