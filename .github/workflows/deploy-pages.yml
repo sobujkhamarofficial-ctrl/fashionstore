@@ -256,7 +256,7 @@ jobs:
           assert 'pages/cart.html' in home, "Home bag does not lead to cart review"
           assert 'assets/site-forms.js' in home, "Home newsletter is not connected"
           assert 'blog/bangladesh-capsule-wardrobe-guide.html' in home, "Home Blog preview is missing"
-          assert '<b>Blog</b>' in home and 'Journal' not in home, "Homepage footer Blog section is missing or still named Journal"
+          assert '<b>Blog</b>' in home and 'FORME Journal' not in home, "Homepage footer Blog section is missing or still named Journal"
           header = home.split('</header>', 1)[0]
           assert '/blog/' not in header, "Blog must not be added to the homepage header navigation"
           blog_index = Path('blog/index.html').read_text()
@@ -272,7 +272,7 @@ jobs:
               assert post['slug'] not in seen_slugs, f"Duplicate blog slug: {post['slug']}"
               seen_slugs.add(post['slug'])
               body_text = " ".join([paragraph for section in post['sections'] for paragraph in section['p']] + [example[1] for example in post['examples']] + [answer for _, answer in post['faqs']])
-              word_count = len(re.findall(r"\\S+", body_text))
+              word_count = len(re.findall(r"\S+", body_text))
               assert 3000 <= word_count <= 4000, f"{post['slug']} has {word_count} body words"
               article_path = Path("blog") / (post['slug'] + ".html")
               assert article_path.is_file(), f"Missing generated article: {article_path}"
