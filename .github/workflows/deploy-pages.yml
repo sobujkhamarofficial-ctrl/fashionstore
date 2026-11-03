@@ -74,7 +74,7 @@ jobs:
         run: python3 scripts/build_collection_pages.py
       - name: Build FORME policy, information and journal pages
         run: python3 scripts/build_store_content.py
-      - name: Build ten long-form Bengali Blog articles
+      - name: Build long-form Bengali Blog articles
         run: python3 scripts/build_blog.py
       - name: Verify five-level category hierarchy pages
         run: |
@@ -231,6 +231,16 @@ jobs:
               "blog/clothing-care-wash-store.html",
               "blog/online-fashion-shopping-checklist.html",
               "blog/buy-better-responsible-wardrobe.html",
+              "blog/tshirt-fit-neckline-style-guide.html",
+              "blog/panjabi-fit-fabric-occasion-guide.html",
+              "blog/kurti-salwar-kameez-fit-style-guide.html",
+              "blog/saree-fabric-drape-blouse-style-guide.html",
+              "blog/monsoon-clothing-layering-care-bangladesh.html",
+              "blog/office-workwear-capsule-style-guide.html",
+              "blog/activewear-fit-fabric-training-clothing-guide.html",
+              "blog/fashion-accessories-bag-belt-scarf-style-guide.html",
+              "blog/kids-clothing-size-comfort-safety-care-guide.html",
+              "blog/shoe-size-fit-material-care-guide.html",
               "scripts/build_blog.py",
               "content/blog_posts_part1.json",
               "content/blog_posts_part2.json",
