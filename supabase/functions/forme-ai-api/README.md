@@ -21,19 +21,21 @@ Returns service readiness, the available routes, and whether the agent secret an
 ### POST /v1/catalogue/search
 
 Request JSON:
-- query: string, optional when category is provided
+- query: string, optional when category, audience or season is provided
 - category: string, optional
-- max_price_bdt: integer, optional; results are filtered using verified prices only
+- audience: men | women | teens | kids | unisex, optional; only records with audience_verified=true match
+- season: spring | summer | autumn | winter | all_season, optional; only records with season_verified=true match
+- max_price_bdt: integer, optional; results are filtered using price_verified=true only
 - limit: integer from 1 to 30, optional
 
-Audience and season filters are deliberately rejected for now because the current product table does not have structured audience or season fields. Do not infer them from an ID or product name.
+Product responses include verification flags and structured audience, season, sizes and colours. The private API also returns SKU and recorded stock quantity. A null stock quantity means stock has not been recorded; it does not mean zero. Never treat unverified audience, season or attributes as facts.
 
 ### POST /v1/catalogue/product
 
 Request JSON:
 - product_id: string
 
-Returns the active catalogue record with its verification and availability status.
+Returns the active catalogue record with audience/season verification, size and colour options, SKU, recorded stock quantity, price verification and other available product attributes. This route is private; do not forward internal stock quantities or SKU to shoppers unless a separate policy permits it.
 
 ### POST /v1/catalogue/summary
 
@@ -50,7 +52,7 @@ Request JSON:
 - language: bn | en (default bn)
 - objective: optional short writing objective
 
-Gemini generates an unpublished draft using only the product facts returned by the database. The endpoint does not save or publish the draft. The response always sets publication_status to draft_only and review_required to true. Prices are deliberately omitted because the current schema has one overall product verification flag, not separate price verification.
+Gemini generates an unpublished draft using only product facts that pass their specific verification flags. Size, colour, material, fit and pattern are used only when attributes_verified=true; audience and season are used only when their own verification flags are true. Prices are always omitted from generated copy. The endpoint does not save or publish the draft; the response always sets publication_status to draft_only and review_required to true.
 
 ## Example request
 
@@ -63,6 +65,8 @@ X-FORME-AI-KEY: YOUR_PRIVATE_AGENT_KEY
 Body:
 {
   "query": "hoodie",
+  "audience": "men",
+  "season": "winter",
   "limit": 5
 }
 
@@ -72,8 +76,10 @@ Body:
 - No writes to product records and no automatic publication.
 - The agent credential is never returned by the health endpoint.
 - All AI-created copy is a draft and must be reviewed by a human.
-- Product search does not invent audience or season segments.
+- Audience and season searches use explicit verification flags; no segment is guessed from a product ID or category.
+- Product attributes are usable only after attributes_verified is true.
 - Unverified product prices and availability are clearly labelled and must not be stated as confirmed.
+- Stock quantity remains internal to the private API; null means unknown, not zero.
 
 ## Enable the agent credential
 
@@ -84,6 +90,17 @@ Value: create a long random value of at least 32 characters and keep it in a pas
 
 Do not put the value in this repository. After saving the secret, call GET /health and confirm status is ready_for_agent_auth. Until then all agent routes intentionally return 503.
 
+## Product Intelligence fields
+
+The `store_products` table now supports:
+- `audience` + `audience_verified`
+- `season_tags` + `season_verified`
+- `size_options`, `color_options`, `material`, `fit`, `pattern`, `search_keywords` + `attributes_verified`
+- `sku`, nullable `stock_quantity` + `stock_checked_at`
+- `price_verified`
+
+The initial backfill assigns the Men audience only to records whose source is explicitly `men_directory` or `homepage_men`, and assigns Men/Women only to matching `homepage_featured` department records. Seasonal tags, sizes, colours, SKU, stock and price verification were not guessed or backfilled. Admin users can maintain these fields in the product editor or CSV. In CSV, array fields use semicolon-separated values.
+
 ## Planned extensions (not enabled in v1)
 
-Per-agent credentials and scopes, structured audience/season attributes, product variant/inventory data, human-approved write actions, Google Ads, Meta, Merchant Center, payment and courier adapters.
+Per-agent credentials and scopes, further structured product attributes, human-approved write actions, Google Ads, Meta, Merchant Center, payment and courier adapters.
