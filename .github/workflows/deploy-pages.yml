@@ -261,14 +261,15 @@ jobs:
           assert '<b>Blog</b>' in home and 'FORME Journal' not in home, "Homepage footer Blog section is missing or still named Journal"
           header = home.split('</header>', 1)[0]
           assert '/blog/' not in header, "Blog must not be added to the homepage header navigation"
+          sources = sorted(Path("content").glob("blog_posts_part*.json"))
+          posts = []
+          for source in sources:
+              posts.extend(json.loads(source.read_text(encoding="utf-8")))
+          assert len(posts) in (10, 20, 30), f"Expected 10, 20 or 30 blog articles, got {len(posts)}"
           blog_index = Path('blog/index.html').read_text()
-          assert blog_index.count('class="fb-card"') == 10, "Blog index must contain exactly ten launch articles"
+          assert blog_index.count('class="fb-card"') == len(posts), "Blog index card count does not match published articles"
           assert 'fb-search' in blog_index and 'data-blog-filter' in blog_index, "Blog search and topic filters are missing"
           assert 'FORME Blog' in blog_index, "Blog index title is missing"
-          posts = []
-          for source in ["content/blog_posts_part1.json", "content/blog_posts_part2.json", "content/blog_posts_part3.json", "content/blog_posts_part4.json"]:
-              posts.extend(json.loads(Path(source).read_text(encoding="utf-8")))
-          assert len(posts) == 10, f"Expected ten blog source articles, got {len(posts)}"
           seen_slugs = set()
           for post in posts:
               assert post['slug'] not in seen_slugs, f"Duplicate blog slug: {post['slug']}"
@@ -283,6 +284,8 @@ jobs:
           assert '<h3>Blog</h3>' in Path('pages/cart.html').read_text() and '<h3>Blog</h3>' in Path('pages/checkout.html').read_text(), "Cart and checkout footer Blog links are missing"
           assert '/blog/' not in Path('pages/cart.html').read_text().split('</header>', 1)[0], "Blog must not be in cart header navigation"
           assert '/blog/' not in Path('pages/checkout.html').read_text().split('</header>', 1)[0], "Blog must not be in checkout header navigation"
+          assert "<strong>Blog</strong>" in Path("404.html").read_text(), "Not-found page footer Blog section is missing"
+          assert "<h3>Blog</h3>" in Path("pages/contact.html").read_text(), "Information-page footer Blog section is missing"
           assert 'assets/customer-care.js' in home, "AI chat bundle must load on the homepage"
           assert 'data-f-buy-now="f1"' in home and 'data-f-add="f1"' in home, "Featured product purchase controls are missing"
           assert 'data-f-buy-now="' in home, "Men product Buy Now template is missing"
