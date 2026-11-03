@@ -17,7 +17,7 @@ CATALOGUE:
 - For product searches, recommendations, comparisons or product-specific prices, call search_products first. Translate Bengali requests into English search keywords. Use only tool results.
 - For a previously shown product, use get_product_details with its exact catalogue ID.
 - The public catalogue is a pilot dataset. Every current product record needs manual verification. Explain that listed price, image/details and stock are provisional and the store team must confirm them.
-- Current database records mainly cover Men's apparel and accessories. If Kids, Women's or another requested category has no match, say it is not currently represented in the live catalogue. Do not substitute unrelated items.
+- The live database currently has mainly Men's apparel and accessories, only a very limited Women's listing, and no Kids catalogue. Respect audience requests: never show Men's items when the customer explicitly asks for Kids, boys, girls or Women's clothing unless the matching record itself explicitly belongs to that audience. If no suitable match exists, say it is not currently listed.
 - Respect customer budgets with budget_max. Do not claim stock unless status is exactly in_stock. needs_confirmation means stock is unverified; preorder must be described as preorder.
 - Usually show up to 4 suitable items, explain differences briefly, and ask which they prefer.
 
@@ -227,9 +227,19 @@ async function loadPublicProducts():Promise<Array<Record<string,any>>>{
 function normalizeSearch(value:string):string{return text(value,240).toLowerCase().replace(/[^a-z0-9\u0980-\u09ff]+/g," ").replace(/\s+/g," ").trim();}
 function scoreProduct(product:Record<string,any>,query:string,category:string):number{
  const searchable=normalizeSearch([product.name,product.category,product.description].join(" "));
- const q=normalizeSearch(query).split(" ").filter((w)=>w.length>1),c=normalizeSearch(category).split(" ").filter((w)=>w.length>1);let score=0;
- for(const w of q)if(searchable.includes(w))score+=product.name.toLowerCase().includes(w)?4:2;
- for(const w of c)if(normalizeSearch(product.category).includes(w))score+=5;
+ const q=normalizeSearch(query).split(" ").filter((w)=>w.length>1);
+ const c=normalizeSearch(category).split(" ").filter((w)=>w.length>1);
+ const audience=new Set(["women","womens","woman","female","girls","girl","kids","kid","children","child","boys","boy"]);
+ const stop=new Set(["men","mens","male","clothing","clothes","fashion","apparel","product","products","item","items","show","me","some","for","the","a","an","in","under","with","and","please","want","looking","buy","order"]);
+ const matches=(word:string)=>searchable.includes(word)||(word.endsWith("s")&&word.length>3&&searchable.includes(word.slice(0,-1)));
+ const requestedAudience=q.filter((word)=>audience.has(word));
+ if(requestedAudience.length&&!requestedAudience.some((word)=>matches(word)))return 0;
+ const core=q.filter((word)=>!audience.has(word)&&!stop.has(word));
+ if(core.length&&!core.some(matches))return 0;
+ let score=0;
+ for(const word of core)if(matches(word))score+=searchable.includes(word)?4:2;
+ for(const word of requestedAudience)if(matches(word))score+=4;
+ for(const word of c)if(normalizeSearch(product.category).includes(word))score+=5;
  return score;
 }
 function publicProductShape(p:Record<string,any>):Record<string,unknown>{return {product_id:p.id,name:p.name,category:p.category,description:p.description,price_bdt:p.price_bdt,compare_at_price_bdt:p.compare_at_price_bdt,image_url:p.image_url,details_verified:p.details_verified,availability_status:p.availability_status,price_note:"Listed catalogue price; final price requires store verification."};}
