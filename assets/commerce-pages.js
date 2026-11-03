@@ -49,7 +49,7 @@
     const buyNow=button.hasAttribute("data-f-buy-now"),card=button.closest(".f-static-product");if(!card)return;
     const id=buyNow?button.dataset.fBuyNow:button.dataset.fAdd,name=card.dataset.name,price=Number(card.dataset.price),image=card.dataset.image;
     if(!id||!name||!Number.isFinite(price)||price<=0){notify("This item is not available for a COD order yet.");return;}
-    if(buyNow){cart.splice(0,cart.length);cart.push({id,name,price,image,qty:1});saveCart(cart);render();window.location.assign("/fashionstore/pages/checkout.html");return;}
+    if(buyNow){cart.splice(0,cart.length);cart.push({id,name,price,image,qty:1});saveCart(cart);render();window.location.assign("/fashionstore/pages/checkout.html?product="+encodeURIComponent(id));return;}
     if(cartQuantity()>=20){notify("Your bag can contain up to 20 items in total.");return;}
     const existing=cart.find(item=>item.id===id);
     if(existing){if(Number(existing.qty||1)>=10){notify("Maximum 10 units of one item.");return;}existing.qty=Number(existing.qty||1)+1;}
