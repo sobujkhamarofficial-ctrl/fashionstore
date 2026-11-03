@@ -83,3 +83,30 @@
 @media(max-width:600px){#forme-ai-widget{right:12px;bottom:74px}#forme-ai-widget .fa-panel{right:0;bottom:62px;width:min(430px,calc(100vw - 24px));height:min(740px,calc(100dvh - 130px));min-height:360px}#forme-ai-widget .fa-launch{min-height:48px;padding:0 14px}}
 @media(max-width:390px){#forme-ai-widget .fa-product-card{grid-template-columns:82px minmax(0,1fr)}#forme-ai-widget .fa-product-image{width:82px;height:108px}#forme-ai-widget .fa-order-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){#forme-ai-widget *,#forme-ai-widget *:before,#forme-ai-widget *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+
+#forme-ai-widget .fa-memory-toggle{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 13px 3px;background:var(--fa-white);color:#757d74;font-size:9px}
+#forme-ai-widget .fa-memory-toggle label{display:flex;align-items:center;gap:6px;cursor:pointer}
+#forme-ai-widget .fa-memory-toggle input{accent-color:var(--fa-green)}
+#forme-ai-widget .fa-memory-toggle button{border:0;background:transparent;color:var(--fa-clay);font-size:9px;text-decoration:underline;cursor:pointer}
+#forme-ai-widget .fa-ai-tools{display:flex;gap:7px;padding:8px 12px 3px;background:var(--fa-white)}
+#forme-ai-widget .fa-ai-tools button{min-height:30px;padding:5px 9px;border:1px solid var(--fa-line);border-radius:7px;background:#fff;color:#445348;font-size:10px;cursor:pointer}
+#forme-ai-widget .fa-ai-tools button:disabled{opacity:.5;cursor:wait}
+#forme-ai-widget .fa-save-style-button{padding:5px 7px;border:1px solid #e2d8cc;border-radius:6px;background:#fff;color:#6e735f;font-size:9px;cursor:pointer}
+#forme-ai-widget .fa-reply-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+#forme-ai-widget .fa-feedback-button,#forme-ai-widget .fa-speak-button{padding:5px 7px;border:1px solid var(--fa-line);border-radius:6px;background:#fff;color:#687267;font-size:9px;cursor:pointer}
+#forme-ai-widget .fa-feedback-button:disabled{opacity:.45;cursor:default}
+#forme-ai-widget .fa-feedback-reasons{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+#forme-ai-widget .fa-feedback-thanks,#forme-ai-widget .fa-feedback-error{display:block;margin-top:6px;font-size:9px;line-height:1.4;color:#587260}
+#forme-ai-widget .fa-feedback-error{color:#a34f42}
+#forme-ai-widget .fa-support-form{margin:0 0 12px;padding:13px;border:1px solid #ded7cc;border-radius:10px;background:#fffefa;color:#2d3a31}
+#forme-ai-widget .fa-support-meta{margin:8px 0;padding:8px;border-radius:6px;background:#f5f1eb;color:#8b6a53;font-size:10px}
+#forme-ai-widget .fa-support-success{margin:0 0 12px;padding:14px;border:1px solid #cbd9ce;border-radius:10px;background:#f6faf6;color:#34443a;text-align:center}
+#forme-ai-widget .fa-support-success strong{font:600 14px Georgia,serif}
+#forme-ai-widget .fa-support-success p{margin:7px 0;color:#667268;font-size:10px;line-height:1.5}
+#forme-ai-widget .fa-support-reference{padding:8px;border-radius:6px;background:#fff;color:#263b32;font:700 11px monospace;overflow-wrap:anywhere}
+@media(max-width:390px){
+ #forme-ai-widget .fa-ai-tools{gap:5px;padding-right:8px;padding-left:8px}
+ #forme-ai-widget .fa-ai-tools button{flex:1;padding:5px;font-size:9px}
+ #forme-ai-widget .fa-memory-toggle{font-size:8px}
+}
