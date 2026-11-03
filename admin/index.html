@@ -57,6 +57,12 @@
       </section>
       <section id="fa-products-panel" class="fa-orders-panel" hidden>
         <div class="fa-panel-head"><div><span class="fa-eyebrow">CATALOGUE CONTROL</span><h2>Products</h2><p class="fa-panel-note">Review the real product details before marking an item verified or in stock.</p></div><span id="fa-product-count" class="fa-count">0 products</span></div>
+        <div class="fa-product-tools">
+          <button id="fa-product-export" class="fa-secondary" type="button">Download product CSV</button>
+          <label class="fa-file-button" for="fa-product-import">Import edited CSV</label>
+          <input id="fa-product-import" type="file" accept=".csv,text/csv" hidden>
+          <p id="fa-product-import-status" class="fa-message" role="status" aria-live="polite">Export the catalogue, update verified product details, then import the file. Up to 250 products per import.</p>
+        </div>
         <div class="fa-toolbar">
           <label class="fa-search">⌕ <input id="fa-product-search" type="search" placeholder="Search product name, ID or category"></label>
           <select id="fa-product-filter" aria-label="Filter products">
