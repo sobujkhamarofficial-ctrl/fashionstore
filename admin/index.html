@@ -44,11 +44,27 @@
         <article><span>Delivered</span><strong id="fa-stat-delivered">—</strong><small>Completed deliveries</small></article>
         <article><span>Payments received</span><strong id="fa-stat-paid">—</strong><small>Recorded as paid</small></article>
       </div>
-      <section class="fa-orders-panel">
+      <div class="fa-tabbar" role="tablist" aria-label="Store management">
+        <button id="fa-orders-tab" class="fa-tab active" type="button" role="tab" aria-selected="true">Orders</button>
+        <button id="fa-products-tab" class="fa-tab" type="button" role="tab" aria-selected="false">Products &amp; catalogue</button>
+      </div>
+      <section id="fa-orders-panel" class="fa-orders-panel">
         <div class="fa-panel-head"><div><span class="fa-eyebrow">CUSTOMER REQUESTS</span><h2>Orders</h2></div><span id="fa-order-count" class="fa-count">0 records</span></div>
         <div class="fa-toolbar"><label class="fa-search">⌕ <input id="fa-search" type="search" placeholder="Search reference, name or phone"></label><select id="fa-filter" aria-label="Filter orders"><option value="all">All statuses</option><option value="pending_review">Pending review</option><option value="contacted">Contacted</option><option value="confirmed">Confirmed</option><option value="processing">Processing</option><option value="shipped">Shipped</option><option value="delivered">Delivered</option><option value="cancelled">Cancelled</option><option value="rejected">Rejected</option></select></div>
         <div class="fa-table-wrap"><table><thead><tr><th>Order</th><th>Customer</th><th>Placed</th><th>Items</th><th>Subtotal</th><th>Payment</th><th>Status</th><th></th></tr></thead><tbody id="fa-order-rows"><tr><td colspan="8" class="fa-empty-cell">Loading orders…</td></tr></tbody></table></div>
         <div id="fa-empty" class="fa-empty" hidden>No orders match this view.</div>
+      </section>
+      <section id="fa-products-panel" class="fa-orders-panel" hidden>
+        <div class="fa-panel-head"><div><span class="fa-eyebrow">CATALOGUE CONTROL</span><h2>Products</h2><p class="fa-panel-note">Review the real product details before marking an item verified or in stock.</p></div><span id="fa-product-count" class="fa-count">0 products</span></div>
+        <div class="fa-toolbar">
+          <label class="fa-search">⌕ <input id="fa-product-search" type="search" placeholder="Search product name, ID or category"></label>
+          <select id="fa-product-filter" aria-label="Filter products">
+            <option value="all">All products</option><option value="needs_confirmation">Needs verification</option><option value="in_stock">In stock</option><option value="out_of_stock">Out of stock</option><option value="preorder">Preorder</option><option value="archived">Archived</option>
+          </select>
+        </div>
+        <div class="fa-table-wrap"><table><thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Availability</th><th>Details</th><th></th></tr></thead><tbody id="fa-product-rows"><tr><td colspan="6" class="fa-empty-cell">Open this tab to load products.</td></tr></tbody></table></div>
+        <div id="fa-product-empty" class="fa-empty" hidden>No products match this view.</div>
+        <p class="fa-footnote">A product should only be marked verified after its actual photograph, description, selling price, size/colour options and physical stock have been checked. “In stock” and “Preorder” require verified details.</p>
       </section>
       <p class="fa-footnote">COD orders arrive as pending review. Verify product availability, requested size or variant, final price and delivery charge before confirming dispatch. Record payment only after it has actually been received.</p>
     </section>
