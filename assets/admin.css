@@ -17,3 +17,11 @@
 .fa-status.needs_confirmation{background:#f5f0e4;color:#876329;border-color:#e9ddc4}
 .fa-status.out_of_stock,.fa-status.archived{background:#f3eeee;color:#925b55;border-color:#ead7d4}
 .fa-status.in_stock,.fa-status.preorder{background:#edf3ed;color:#356549;border-color:#d7e2d8}
+
+.fa-message-preview{max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fa-message-body{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;line-height:1.8;padding:14px;background:var(--fa-white);border:1px solid var(--fa-line)}
+.fa-status.new{background:#f5f0e4;color:#876329;border-color:#e9ddc4}
+.fa-status.in_progress{background:#edf0f4;color:#53627b;border-color:#dce3eb}
+.fa-status.resolved{background:#edf3ed;color:#356549;border-color:#d7e2d8}
+.fa-status.spam{background:#f3eeee;color:#925b55;border-color:#ead7d4}
+@media(max-width:680px){.fa-tabbar{flex-wrap:wrap}.fa-tab{flex:1;min-width:125px}}
