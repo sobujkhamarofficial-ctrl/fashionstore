@@ -5,7 +5,7 @@ const KEY="sb_publishable_EWY6B3OF8lOQB7uB7jBZRA_3MwimKRy";
 const ADMIN_EMAIL="sobujkhamar.official@gmail.com";
 const ACCESS="forme-admin-access";
 const $=id=>document.getElementById(id);
-let orders=[],selected=null,products=[],selectedProduct=null,activeTab="orders",productsLoaded=false;
+let orders=[],selected=null,products=[],selectedProduct=null,messages=[],selectedMessage=null,activeTab="orders",productsLoaded=false,messagesLoaded=false;
 const money=n=>"৳"+Number(n||0).toLocaleString("en-BD");
 const esc=value=>String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
 const token=()=>sessionStorage.getItem(ACCESS)||"";
@@ -66,15 +66,38 @@ async function loadProducts(){
   renderProducts();
  }catch(error){alertBox(error.message);}
 }
+function visibleMessages(){
+ const q=$("fa-message-search").value.trim().toLowerCase(),filter=$("fa-message-filter").value;
+ return messages.filter(m=>(filter==="all"||m.status===filter)&&(!q||[m.name,m.email,m.phone,m.subject,m.message].some(v=>String(v||"").toLowerCase().includes(q))));
+}
+function renderMessages(){
+ const rows=visibleMessages();$("fa-message-count").textContent=rows.length+" of "+messages.length+" messages";
+ $("fa-message-rows").innerHTML=rows.map(m=>'<tr><td><strong>'+esc(m.name)+'</strong><small>'+esc(m.phone||m.email||"No contact supplied")+'</small></td><td>'+esc(m.subject)+'</td><td class="fa-message-preview">'+esc(m.message)+'</td><td>'+esc(date(m.created_at))+'</td><td><span class="fa-status '+esc(m.status)+'">'+esc(statusLabel(m.status||"new"))+'</span></td><td><button class="fa-view" type="button" data-message-view="'+esc(m.id)+'">Open ↗</button></td></tr>').join("");
+ $("fa-message-empty").hidden=rows.length!==0;$("fa-message-rows").parentElement.hidden=rows.length===0;
+}
+async function loadMessages(){
+ alertBox("");
+ try{const result=await adminRequest({operation:"messages"});messages=Array.isArray(result.messages)?result.messages:[];messagesLoaded=true;renderMessages();}
+ catch(error){alertBox(error.message);}
+}
 function showTab(tab){
  activeTab=tab;
- const ordersTab=$("fa-orders-tab"),productsTab=$("fa-products-tab");
- const ordersPanel=$("fa-orders-panel"),productsPanel=$("fa-products-panel");
- const isOrders=tab==="orders";
- ordersTab.classList.toggle("active",isOrders);ordersTab.setAttribute("aria-selected",String(isOrders));
- productsTab.classList.toggle("active",!isOrders);productsTab.setAttribute("aria-selected",String(!isOrders));
- ordersPanel.hidden=!isOrders;productsPanel.hidden=isOrders;
- if(!isOrders&&!productsLoaded)void loadProducts();
+ const tabs={orders:$("fa-orders-tab"),products:$("fa-products-tab"),messages:$("fa-messages-tab")};
+ const panels={orders:$("fa-orders-panel"),products:$("fa-products-panel"),messages:$("fa-messages-panel")};
+ Object.keys(tabs).forEach(key=>{const active=key===tab;tabs[key].classList.toggle("active",active);tabs[key].setAttribute("aria-selected",String(active));panels[key].hidden=!active;});
+ if(tab==="products"&&!productsLoaded)void loadProducts();
+ if(tab==="messages"&&!messagesLoaded)void loadMessages();
+}
+function openMessage(id){
+ selectedMessage=messages.find(m=>m.id===id);if(!selectedMessage)return;
+ const m=selectedMessage;
+ $("fa-detail-title").textContent="Customer message";
+ $("fa-detail-content").innerHTML=
+  '<div class="fa-detail-grid"><article class="fa-detail-card"><span>Customer</span><strong>'+esc(m.name)+'</strong><p>'+esc(m.phone||"")+'</p><p>'+esc(m.email||"")+'</p></article>'+
+  '<article class="fa-detail-card"><span>Received</span><strong>'+esc(date(m.created_at))+'</strong><p>'+esc(m.subject)+'</p></article></div>'+
+  '<section class="fa-detail-section"><h3>Message</h3><p class="fa-message-body">'+esc(m.message)+'</p></section>'+
+  '<section class="fa-detail-section"><h3>Follow-up status</h3><form id="fa-message-edit-form" class="fa-edit-grid"><label>Status<select name="status">'+[["new","New"],["in_progress","In progress"],["resolved","Resolved"],["spam","Spam"]].map(([v,l])=>option(v,m.status||"new",l)).join("")+'</select></label><div class="fa-save-row"><button class="fa-primary" type="submit">Save status <span>↗</span></button></div><p id="fa-message-edit-message" class="fa-message wide" role="status" aria-live="polite"></p></form></section>';
+ $("fa-modal").hidden=false;document.body.style.overflow="hidden";
 }
 function openProduct(id){
  selectedProduct=products.find(p=>p.id===id);
@@ -132,12 +155,25 @@ function openOrder(id){
 function closeOrder(){$("fa-modal").hidden=true;document.body.style.overflow="";}
 $("fa-login-form").addEventListener("submit",async e=>{e.preventDefault();const form=e.currentTarget,data=new FormData(form),button=form.querySelector("button[type=submit]");button.disabled=true;message("fa-login-message","Checking your access…",false);try{const email=String(data.get("email")||"").trim().toLowerCase();if(email!==ADMIN_EMAIL)throw new Error("Only the authorised owner email can sign in.");const session=await adminRequest({operation:"login",email,password:String(data.get("password")||"")});saveSession(session);form.reset();message("fa-login-message","",true);showDashboard();void loadOrders();}catch(err){clearSession();showAuth();message("fa-login-message",err.message,false);}finally{button.disabled=false;}});
 
-$("fa-refresh").addEventListener("click",()=>activeTab==="orders"?loadOrders():loadProducts());$("fa-search").addEventListener("input",renderOrders);$("fa-filter").addEventListener("change",renderOrders);
-$("fa-orders-tab").addEventListener("click",()=>showTab("orders"));$("fa-products-tab").addEventListener("click",()=>showTab("products"));
+$("fa-refresh").addEventListener("click",()=>activeTab==="orders"?loadOrders():activeTab==="products"?loadProducts():loadMessages());$("fa-search").addEventListener("input",renderOrders);$("fa-filter").addEventListener("change",renderOrders);
+$("fa-orders-tab").addEventListener("click",()=>showTab("orders"));$("fa-products-tab").addEventListener("click",()=>showTab("products"));$("fa-messages-tab").addEventListener("click",()=>showTab("messages"));
 $("fa-product-search").addEventListener("input",renderProducts);$("fa-product-filter").addEventListener("change",renderProducts);
+$("fa-message-search").addEventListener("input",renderMessages);$("fa-message-filter").addEventListener("change",renderMessages);
+$("fa-message-rows").addEventListener("click",e=>{const btn=e.target.closest("[data-message-view]");if(btn)openMessage(btn.dataset.messageView);});
 $("fa-product-rows").addEventListener("click",e=>{const btn=e.target.closest("[data-product-edit]");if(btn)openProduct(btn.dataset.productEdit);});
 $("fa-order-rows").addEventListener("click",e=>{const btn=e.target.closest("[data-view]");if(btn)openOrder(btn.dataset.view);});
 $("fa-modal").addEventListener("click",e=>{if(e.target.closest("[data-close-modal]"))closeOrder();});
+$("fa-detail-content").addEventListener("submit",async e=>{
+ if(e.target.id!=="fa-message-edit-form")return;
+ e.preventDefault();if(!selectedMessage)return;
+ const form=e.target,status=String(new FormData(form).get("status")||"new"),button=form.querySelector('button[type="submit"]');
+ button.disabled=true;message("fa-message-edit-message","Saving message status…",false);
+ try{
+  const result=await adminRequest({operation:"message-update",message_id:selectedMessage.id,status});
+  messages=messages.map(m=>m.id===selectedMessage.id?{...m,...result.message}:m);selectedMessage=result.message;renderMessages();message("fa-message-edit-message","Message status updated.",true);
+ }catch(err){message("fa-message-edit-message",err.message,false);}
+ finally{button.disabled=false;}
+});
 $("fa-detail-content").addEventListener("submit",async e=>{
  if(e.target.id!=="fa-product-edit-form")return;
  e.preventDefault();if(!selectedProduct)return;
