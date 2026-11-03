@@ -27,7 +27,7 @@ FORME is an editorial-style fashion storefront for Bangladesh. The site is publi
 
 ## Current pilot limitations
 
-The public catalogue contains sample product records. Names, images, listed prices, variants and stock are not yet verified as a final sellable inventory. All seeded products are marked as requiring store confirmation. The live database currently has 212 active product records, none marked as verified or in stock, and its database categories currently focus on Men's apparel and accessories. An online checkout submission creates an **order request** only, not a confirmed order or payment transaction.
+The public catalogue contains pilot product records. Names, images, listed prices, variants and stock are not yet verified as a final sellable inventory. All seeded products remain marked as requiring store confirmation; no product is approved as in stock. The live database has 212 active product records. Explicit source provenance allows 210 records to have a verified audience segment (Men or Women), but this does not verify their price, stock, size, colour or seasonal suitability. Product Intelligence fields are now available for audience, season, size, colour, SKU, stock quantity, material, fit, pattern and search keywords; unknown values remain blank until the store team checks them. An online checkout submission creates an **order request** only, not a confirmed order or payment transaction.
 
 The store team must contact the customer to confirm:
 1. The exact product, size/variant and availability.
@@ -38,6 +38,12 @@ The store team must contact the customer to confirm:
 No online payment gateway or live courier booking/tracking integration is connected. Do not request or collect card numbers, PINs, passwords or OTPs through this site. FORME AI Shopping Assistant is connected to the live public product catalogue using Gemini function calling. It can search products, display image cards, read product details and prepare an in-chat order request form. The customer must submit the form themselves; the server calculates prices and creates only a pending_review order request. The AI cannot directly confirm orders, reserve inventory, collect payment or book couriers.
 
 Before accepting confirmed commercial orders, complete the product catalogue with real SKU data and stock, add verified merchant legal identity and official contact details, publish agreed delivery rates and service levels, integrate a Bangladesh-supported payment gateway and courier workflow, and obtain legal review of the policies.
+
+## Product Intelligence layer
+
+The product table now has structured fields for audience and seasonal classification, size and colour options, SKU, stock quantity, material, fit, pattern, and search keywords. Audience, season, attributes and price each have independent verification flags. Men/Women segmentation uses verified catalogue metadata rather than guessing from IDs or product names. Winter listings appear only after season tags are checked and marked verified.
+
+The private admin product editor and CSV import/export can maintain these fields. In CSV array fields (season_tags, size_options, color_options and search_keywords) use semicolon-separated values. Leave stock_quantity blank when the count is unknown; do not enter 0 to mean "not checked".
 
 ## Admin password and access
 
