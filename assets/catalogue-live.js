@@ -95,23 +95,37 @@
 
   function lockCards(message) {
     document.querySelectorAll(".f-product[data-id], .f-static-product[data-id]").forEach(card => {
-      if (!card.querySelector("[data-f-add], [data-f-buy-now]")) return;
-      card.querySelectorAll("[data-f-add], [data-f-buy-now]").forEach(button => {
-        button.disabled = true;
-        button.title = "Live product information is temporarily unavailable. Please refresh and try again.";
+      const buttons = card.querySelectorAll("[data-f-add], [data-f-buy-now]");
+      if (!buttons.length) return;
+      const hasSafeLocalDetails = Boolean(card.dataset.id && card.dataset.name && Number(card.dataset.price) > 0);
+      buttons.forEach(button => {
+        button.disabled = !hasSafeLocalDetails;
+        button.title = hasSafeLocalDetails
+          ? "Live details are temporarily unavailable. The server will re-check this item at checkout."
+          : "Product details are not available yet.";
       });
-      setNote(card, {}, message || "Live price and availability check is temporarily unavailable. Please refresh.");
+      setNote(card, {}, message || "Could not reach the live catalogue. You can save this item to your bag; the server will verify it again at checkout.");
     });
   }
 
   async function load() {
-    lockCards("Checking the latest price and availability…");
+    document.querySelectorAll(".f-product[data-id], .f-static-product[data-id]").forEach(card => {
+      if (card.querySelector("[data-f-add], [data-f-buy-now]")) setNote(card, {}, "Checking the latest price and availability…");
+    });
     try {
-      const response = await fetch(API + "?action=products", {
-        method: "GET",
-        cache: "no-store",
-        headers: { "apikey": KEY, "Accept": "application/json" }
-      });
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 12000);
+      let response;
+      try {
+        response = await fetch(API + "?action=products", {
+          method: "GET",
+          cache: "no-store",
+          headers: { "apikey": KEY, "Accept": "application/json" },
+          signal: controller.signal
+        });
+      } finally {
+        clearTimeout(timeout);
+      }
       const payload = await response.json().catch(() => ({}));
       if (!response.ok || !payload.ok || !Array.isArray(payload.products)) {
         throw new Error(payload.error || "Catalogue unavailable");
