@@ -26,6 +26,7 @@ type Product = {
   color_options: string[];
   sku: string | null;
   stock_quantity: number | null;
+  stock_checked_at: string | null;
   material: string | null;
   fit: string | null;
   pattern: string | null;
@@ -169,6 +170,7 @@ function mapProduct(row: Record<string, unknown>): Product {
     color_options: safeTextArray(row.color_options, 40, 50),
     sku: row.sku === null ? null : clean(row.sku, 80) || null,
     stock_quantity: row.stock_quantity === null || row.stock_quantity === undefined ? null : Number(row.stock_quantity),
+    stock_checked_at: clean(row.stock_checked_at, 50) || null,
     material: row.material === null ? null : clean(row.material, 120) || null,
     fit: row.fit === null ? null : clean(row.fit, 80) || null,
     pattern: row.pattern === null ? null : clean(row.pattern, 80) || null,
@@ -451,7 +453,7 @@ Deno.serve(async (req: Request) => {
       if (filterError) return json({ error: filterError, code: "UNSUPPORTED_SEGMENT_FILTER" }, 422, requestId);
       const query = clean(body.query, 160);
       const category = clean(body.category, 100);
-      if ((!query || query.length < 2) && !category) return json({ error: "Provide query or category." }, 400, requestId);
+      if ((!query || query.length < 2) && !category && !clean(body.audience, 20) && !clean(body.season, 20)) return json({ error: "Provide query, category, audience or season." }, 400, requestId);
       const products = await loadProducts();
       const matches = searchProducts(products, body);
       return json({
