@@ -57,7 +57,7 @@ jobs:
               assert add_ids == expected, f"Add to Cart IDs do not match database products: {c['slug']}"
               assert buy_ids == expected, f"Buy Now IDs do not match database products: {c['slug']}"
               assert body.count('class="f-product f-static-product"') == len(products), c["slug"]
-              assert 'assets/commerce-pages.js' in body, f"Missing commerce runtime: {c['slug']}"
+              assert 'assets/commerce-actions.js' in body, f"Missing commerce runtime: {c['slug']}"
               assert 'assets/image-viewer.js' in body and 'assets/image-viewer.css' in body, f"Missing image viewer: {c['slug']}"
               all_ids.extend(expected)
               total += len(products)
@@ -198,7 +198,7 @@ jobs:
           node --check assets/catalogue-orders.js
           node --check assets/reviews.js
           node --check assets/site-forms.js
-          node --check assets/commerce-pages.js
+          node --check assets/commerce-actions.js
           node --check assets/customer-care.js
           python3 - <<'PY'
           import json
@@ -220,6 +220,8 @@ jobs:
               "assets/catalogue-order-page.js",
               "assets/catalogue-live.js",
               "assets/catalogue-live.css",
+              "assets/commerce-actions.js",
+              "assets/commerce-actions.css",
               "assets/reviews.js",
               "pages/about.html",
               "pages/shipping-delivery.html",
@@ -348,6 +350,8 @@ jobs:
           assert "catalogue-orders.js" in home and "catalogue-orders.css" in home, "Homepage catalogue requests are not connected"
           assert "data-catalogue-order" in home, "Homepage preview items are missing an Order Now control"
           assert "assets/catalogue-live.js" in home and "assets/catalogue-live.css" in home, "Homepage is missing live product catalogue sync"
+          assert "assets/commerce-actions.js" in home and "assets/commerce-actions.css" in home, "Homepage is missing the shared cart runtime"
+          assert "FORME_CART_API" in home, "Homepage cart is not connected to the shared runtime"
           assert "catalogue-live.js" in Path("scripts/build_men_catalog.py").read_text(), "Men pages are missing live product catalogue sync"
           admin_html = Path("admin/index.html").read_text()
           admin_js = Path("assets/admin.js").read_text()
@@ -367,9 +371,10 @@ jobs:
 
           men_builder = Path("scripts/build_men_catalog.py").read_text()
           collection_builder = Path("scripts/build_collection_pages.py").read_text()
-          assert "data-f-add" in men_builder and "data-f-buy-now" in men_builder and "commerce-pages.js" in men_builder
+          assert "data-f-add" in men_builder and "data-f-buy-now" in men_builder and "commerce-actions.js" in men_builder
           assert "customer-care.js" in men_builder
           assert "customer-care.js" in collection_builder
+          assert "commerce-actions.js" in collection_builder and "commerce-actions.css" in collection_builder
           assert "assets/blog.css" in men_builder and '<strong>Blog</strong>' in men_builder, "Men pages need a dedicated Blog footer"
           assert "assets/blog.css" in collection_builder and '<strong>Blog</strong>' in collection_builder, "Collection pages need a dedicated Blog footer"
           assert "<h3>Blog</h3>" in Path("scripts/build_store_content.py").read_text(), "Information page footer Blog section is missing"
