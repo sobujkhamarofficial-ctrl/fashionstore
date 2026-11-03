@@ -97,16 +97,12 @@ def header() -> str:
 </nav></div></header>'''
 
 def footer(articles: list[dict]) -> str:
-    links = "".join(
-        f'<a href="{BASE}blog/{esc(a["slug"])}.html">{esc(a["title"])}</a>'
-        for a in articles
-    )
     return f'''<footer class="fc-footer"><div class="fc-foot-inner">
 <div class="fc-foot-grid">
 <div><a class="fc-logo" style="color:#fff" href="{BASE}">FORME<small style="color:#d8ded8">EVERYDAY, REFINED</small></a>
 <p>Considered clothing and modern everyday essentials. A Bangladesh-focused fashion storefront.</p></div>
 <div><h3>Explore</h3><a href="{BASE}">Shop all</a><a href="{BASE}men/">Men</a><a href="{BASE}women/">Women</a></div>
-<div><h3>Blog</h3><a href="{BASE}blog/">সব ব্লগ পোস্ট</a><div class="fb-footer-blog">{links}</div></div>
+<div><h3>Blog</h3><a href="{BASE}blog/">সব ব্লগ পোস্ট</a></div>
 <div><h3>Customer care</h3><a href="{BASE}pages/shipping-delivery.html">Shipping &amp; delivery</a><a href="{BASE}pages/returns-refunds.html">Returns &amp; refunds</a><a href="{BASE}pages/cancellations.html">Cancellations</a><a href="{BASE}pages/size-guide.html">Size guide</a><a href="{BASE}pages/reviews.html">Customer reviews</a><a href="{BASE}pages/faq.html">FAQs</a><a href="{BASE}pages/order-tracking.html">Track an order</a></div>
 <div><h3>Information</h3><a href="{BASE}pages/about.html">About FORME</a><a href="{BASE}pages/contact.html">Contact</a><a href="{BASE}pages/payment.html">Payment policy</a><a href="{BASE}pages/privacy.html">Privacy policy</a><a href="{BASE}pages/terms.html">Terms &amp; conditions</a></div>
 </div><div class="fc-footer-bottom"><span>© 2026 FORME. All rights reserved.</span><span>Bangladesh · Pilot storefront</span></div>

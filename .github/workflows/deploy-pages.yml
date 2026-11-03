@@ -74,7 +74,7 @@ jobs:
         run: python3 scripts/build_collection_pages.py
       - name: Build FORME policy, information and journal pages
         run: python3 scripts/build_store_content.py
-      - name: Build ten long-form Bengali Blog articles
+      - name: Build long-form Bengali Blog articles
         run: python3 scripts/build_blog.py
       - name: Verify five-level category hierarchy pages
         run: |
@@ -231,11 +231,23 @@ jobs:
               "blog/clothing-care-wash-store.html",
               "blog/online-fashion-shopping-checklist.html",
               "blog/buy-better-responsible-wardrobe.html",
+              "blog/tshirt-fit-neckline-style-guide.html",
+              "blog/panjabi-fit-fabric-occasion-guide.html",
+              "blog/kurti-salwar-kameez-fit-style-guide.html",
+              "blog/saree-fabric-drape-blouse-style-guide.html",
+              "blog/monsoon-clothing-layering-care-bangladesh.html",
+              "blog/office-workwear-capsule-style-guide.html",
+              "blog/activewear-fit-fabric-training-clothing-guide.html",
+              "blog/fashion-accessories-bag-belt-scarf-style-guide.html",
+              "blog/kids-clothing-size-comfort-safety-care-guide.html",
+              "blog/shoe-size-fit-material-care-guide.html",
               "scripts/build_blog.py",
               "content/blog_posts_part1.json",
               "content/blog_posts_part2.json",
               "content/blog_posts_part3.json",
               "content/blog_posts_part4.json",
+              "content/blog_posts_part5.json",
+              "content/blog_posts_part6.json",
               "assets/blog.css",
               "assets/blog.js",
               "assets/content-pages.css",
@@ -334,7 +346,7 @@ jobs:
 
           for page in ["pages/shipping-delivery.html","pages/returns-refunds.html","pages/privacy.html","pages/terms.html","blog/index.html"]:
               assert "FORME" in Path(page).read_text()
-          print(f"Verified {len(required)} ecommerce assets/pages, ten 3,000–4,000-word Bengali blog articles, Blog search/filter, footer-only Blog navigation, checkout controls and site APIs.")
+          print(f"Verified {len(required)} ecommerce assets/pages, twenty 3,000–4,000-word Bengali blog articles, Blog search/filter, footer-only Blog navigation, checkout controls and site APIs.")
           PY
       - name: Smoke test Supabase order API and database connection
         run: |
