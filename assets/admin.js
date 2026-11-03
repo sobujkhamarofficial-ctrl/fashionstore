@@ -51,8 +51,10 @@ function renderProducts(){
  $("fa-product-count").textContent=rows.length+" of "+products.length+" products";
  $("fa-product-rows").innerHTML=rows.map(p=>{
   const status=String(p.availability_status||"needs_confirmation").replaceAll("_"," ");
-  const verification=p.details_verified?"Verified":"Needs verification";
-  return '<tr><td><strong>'+esc(p.name)+'</strong><small>'+esc(p.id)+'</small></td><td>'+esc(p.category)+'</td><td><strong>'+money(p.price_bdt)+'</strong></td><td><span class="fa-status '+esc(p.availability_status)+'">'+esc(status)+'</span></td><td><span class="fa-payment">'+esc(verification)+'</span></td><td><button class="fa-view" type="button" data-product-edit="'+esc(p.id)+'">Edit product ↗</button></td></tr>';
+  const verification=p.details_verified?"Details verified":"Details pending";
+  const audience=p.audience_verified?(p.audience||"—"):"Audience pending";
+  const seasons=p.season_verified?(Array.isArray(p.season_tags)?p.season_tags.join(", "):""):"Season pending";
+  return '<tr><td><strong>'+esc(p.name)+'</strong><small>'+esc(p.id)+'</small></td><td>'+esc(p.category)+'</td><td><strong>'+money(p.price_bdt)+'</strong></td><td><span class="fa-status '+esc(p.availability_status)+'">'+esc(status)+'</span></td><td><span class="fa-payment">'+esc(verification)+'</span><small>'+esc(audience)+' · '+esc(seasons)+'</small></td><td><button class="fa-view" type="button" data-product-edit="'+esc(p.id)+'">Edit product ↗</button></td></tr>';
  }).join("");
  $("fa-product-empty").hidden=rows.length!==0;
  $("fa-product-rows").parentElement.hidden=rows.length===0;
@@ -66,10 +68,13 @@ async function loadProducts(){
   renderProducts();
  }catch(error){alertBox(error.message);}
 }
-const PRODUCT_CSV_COLUMNS=["id","name","category","description","price_bdt","compare_at_price_bdt","image_url","availability_status","is_active","details_verified"];
+const PRODUCT_CSV_COLUMNS=["id","name","category","description","price_bdt","compare_at_price_bdt","image_url","availability_status","is_active","details_verified","price_verified","audience","audience_verified","season_tags","season_verified","size_options","color_options","sku","stock_quantity","material","fit","pattern","search_keywords","attributes_verified"];
 function csvCell(value){
- const textValue=value===null||value===undefined?"":String(value);
- return '"'+textValue.replace(/"/g,'""')+'"';
+ const normalized=Array.isArray(value)?value.join(";"):(value===null||value===undefined?"":String(value));
+ return '"'+normalized.replace(/"/g,'""')+'"';
+}
+function csvList(value){
+ return String(value||"").split(";").map(item=>item.trim()).filter(Boolean);
 }
 function exportProductsCsv(){
  if(!products.length){message("fa-product-import-status","Load the product catalogue before exporting.",false);return;}
@@ -133,11 +138,28 @@ async function importProductsCsv(file){
    const price=Number(priceText),compare=compareText===""?null:(/^\d+$/.test(compareText)?Number(compareText):NaN);
    if(compare!==null&&(!Number.isFinite(compare)||compare>5000000))throw new Error("Row "+line+": comparison price must be blank or a whole number.");
    const isActive=csvBoolean(get("is_active"),"is_active"),verified=csvBoolean(get("details_verified"),"details_verified");
+   const priceVerified=csvBoolean(get("price_verified"),"price_verified");
+   const audience=get("audience").toLowerCase()||null;
+   const audienceVerified=csvBoolean(get("audience_verified"),"audience_verified");
+   const seasonTags=csvList(get("season_tags")),seasonVerified=csvBoolean(get("season_verified"),"season_verified");
+   const sizes=csvList(get("size_options")),colors=csvList(get("color_options")),keywords=csvList(get("search_keywords"));
+   const sku=get("sku")||null,material=get("material")||null,fit=get("fit")||null,pattern=get("pattern")||null;
+   const stockText=get("stock_quantity"),stock=stockText===""?null:(/^\d+$/.test(stockText)?Number(stockText):NaN);
    if(!allowed.has(availability))throw new Error("Row "+line+": invalid availability status.");
+   if(audience!==null&&!["men","women","teens","kids","unisex"].includes(audience))throw new Error("Row "+line+": invalid audience.");
+   if(audienceVerified&&!audience)throw new Error("Row "+line+": choose an audience before verifying it.");
+   if(seasonTags.some(v=>!["spring","summer","autumn","winter","all_season"].includes(v))||(seasonTags.includes("all_season")&&seasonTags.length>1))throw new Error("Row "+line+": invalid season tags.");
+   if(seasonVerified&&!seasonTags.length)throw new Error("Row "+line+": add a season before verifying it.");
+   if(sizes.length>40||colors.length>40||keywords.length>40||[...sizes,...colors,...keywords].some(v=>v.length>80))throw new Error("Row "+line+": one or more attribute lists are too long.");
+   if(stock!==null&&(!Number.isFinite(stock)||stock>2000000))throw new Error("Row "+line+": stock must be blank or a whole number up to 2,000,000.");
+   if((sku&&sku.length>80)||(material&&material.length>120)||(fit&&fit.length>80)||(pattern&&pattern.length>80))throw new Error("Row "+line+": SKU or product attribute is too long.");
+   if(priceVerified&&price<=0)throw new Error("Row "+line+": a verified price must be positive.");
    if(verified&&(price<=0||availability==="needs_confirmation"||availability==="archived"))throw new Error("Row "+line+": a verified product needs a positive price and a final stock status.");
    if((availability==="in_stock"||availability==="preorder")&&!verified)throw new Error("Row "+line+": verify product details before choosing in_stock or preorder.");
    if(compare!==null&&compare>0&&compare<price)throw new Error("Row "+line+": comparison price cannot be below the current selling price.");
-   return {id,name,category,description,price_bdt:price,compare_at_price_bdt:compare,image_url:imageUrl,availability_status:availability,is_active:isActive,details_verified:verified};
+   return {id,name,category,description,price_bdt:price,compare_at_price_bdt:compare,image_url:imageUrl,availability_status:availability,is_active:isActive,details_verified:verified,
+    price_verified:priceVerified,audience,audience_verified:audienceVerified,season_tags:seasonTags,season_verified:seasonVerified,
+    size_options:sizes,color_options:colors,sku,stock_quantity:stock,material,fit,pattern,search_keywords:keywords,attributes_verified:csvBoolean(get("attributes_verified"),"attributes_verified")};
   });
   if(!updates.length)throw new Error("No valid product rows were found.");
   const count=updates.length;
@@ -229,8 +251,22 @@ function openProduct(id){
   '<label class="wide">Product image URL<input name="image_url" maxlength="1000" required value="'+esc(p.image_url||"")+'"><small>Use an Unsplash photo URL or a FORME-hosted product photo.</small></label>'+
   '<label class="wide">Description<textarea name="description" maxlength="2000" required>'+esc(p.description||"")+'</textarea></label>'+
   '<label>Availability<select name="availability_status">'+["needs_confirmation","in_stock","out_of_stock","preorder","archived"].map(v=>option(v,p.availability_status,v.replaceAll("_"," "))).join("")+'</select></label>'+
+  '<label>Audience<select name="audience">'+option("","", "Not assigned")+["men","women","teens","kids","unisex"].map(v=>option(v,p.audience,v[0].toUpperCase()+v.slice(1))).join("")+'</select></label>'+
+  '<label class="wide">Season tags (separate with semicolons)<input name="season_tags" maxlength="160" value="'+esc((p.season_tags||[]).join("; "))+'" placeholder="winter; autumn"></label>'+
+  '<label>Sizes (semicolon-separated)<input name="size_options" maxlength="300" value="'+esc((p.size_options||[]).join("; "))+'" placeholder="S; M; L; XL"></label>'+
+  '<label>Colours (semicolon-separated)<input name="color_options" maxlength="500" value="'+esc((p.color_options||[]).join("; "))+'" placeholder="Black; Navy; Beige"></label>'+
+  '<label>SKU<input name="sku" maxlength="80" value="'+esc(p.sku||"")+'"></label>'+
+  '<label>Physical stock quantity<input name="stock_quantity" type="number" min="0" max="2000000" step="1" value="'+esc(p.stock_quantity??"")+'" placeholder="Leave blank if unknown"></label>'+
+  '<label>Material<input name="material" maxlength="120" value="'+esc(p.material||"")+'"></label>'+
+  '<label>Fit<input name="fit" maxlength="80" value="'+esc(p.fit||"")+'"></label>'+
+  '<label>Pattern<input name="pattern" maxlength="80" value="'+esc(p.pattern||"")+'"></label>'+
+  '<label class="wide">Search keywords (semicolon-separated)<input name="search_keywords" maxlength="800" value="'+esc((p.search_keywords||[]).join("; "))+'"></label>'+
   '<label class="fa-checkline"><input type="checkbox" name="is_active" '+(p.is_active?"checked":"")+'> Visible in the catalogue</label>'+
   '<label class="fa-checkline"><input type="checkbox" name="details_verified" '+(p.details_verified?"checked":"")+'> Product details verified</label>'+
+  '<label class="fa-checkline"><input type="checkbox" name="price_verified" '+(p.price_verified?"checked":"")+'> Price physically checked</label>'+
+  '<label class="fa-checkline"><input type="checkbox" name="audience_verified" '+(p.audience_verified?"checked":"")+'> Audience verified</label>'+
+  '<label class="fa-checkline"><input type="checkbox" name="season_verified" '+(p.season_verified?"checked":"")+'> Season verified</label>'+
+  '<label class="fa-checkline"><input type="checkbox" name="attributes_verified" '+(p.attributes_verified?"checked":"")+'> Sizes, colours and attributes verified</label>'+
   '<div class="fa-save-row wide"><button class="fa-primary" type="submit">Save product <span>↗</span></button></div>'+
   '<p id="fa-product-edit-message" class="fa-message wide" role="status" aria-live="polite"></p></form></section>';
  $("fa-modal").hidden=false;document.body.style.overflow="hidden";
@@ -299,7 +335,15 @@ $("fa-detail-content").addEventListener("submit",async e=>{
   description:String(data.get("description")||"").trim(),price_bdt:Number(data.get("price_bdt")),
   compare_at_price_bdt:data.get("compare_at_price_bdt")===""?null:Number(data.get("compare_at_price_bdt")),
   image_url:String(data.get("image_url")||"").trim(),availability_status:String(data.get("availability_status")||"needs_confirmation"),
-  is_active:form.elements.is_active.checked,details_verified:form.elements.details_verified.checked
+  is_active:form.elements.is_active.checked,details_verified:form.elements.details_verified.checked,
+  price_verified:form.elements.price_verified.checked,
+  audience:String(data.get("audience")||"")||null,audience_verified:form.elements.audience_verified.checked,
+  season_tags:csvList(data.get("season_tags")),season_verified:form.elements.season_verified.checked,
+  size_options:csvList(data.get("size_options")),color_options:csvList(data.get("color_options")),
+  sku:String(data.get("sku")||"").trim()||null,stock_quantity:data.get("stock_quantity")===""?null:Number(data.get("stock_quantity")),
+  material:String(data.get("material")||"").trim()||null,fit:String(data.get("fit")||"").trim()||null,
+  pattern:String(data.get("pattern")||"").trim()||null,search_keywords:csvList(data.get("search_keywords")),
+  attributes_verified:form.elements.attributes_verified.checked
  };
  const button=form.querySelector('button[type="submit"]');button.disabled=true;message("fa-product-edit-message","Saving product changes…",false);
  try{
