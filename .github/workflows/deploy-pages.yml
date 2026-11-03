@@ -58,6 +58,7 @@ jobs:
               assert buy_ids == expected, f"Buy Now IDs do not match database products: {c['slug']}"
               assert body.count('class="f-product f-static-product"') == len(products), c["slug"]
               assert 'assets/commerce-pages.js' in body, f"Missing commerce runtime: {c['slug']}"
+              assert 'assets/image-viewer.js' in body and 'assets/image-viewer.css' in body, f"Missing image viewer: {c['slug']}"
               all_ids.extend(expected)
               total += len(products)
           assert len(all_ids) == len(set(all_ids)), "Duplicate database product IDs across Men categories"
@@ -113,6 +114,7 @@ jobs:
               assert 'visual-action' not in body, f"Old Explore/photo action remains in {key}"
               assert 'target="_blank"' not in body, f"Gallery page must stay on FORME: {key}"
               assert 'catalogue-orders.js' in body, f"Catalogue order runtime missing in {key}"
+              assert 'image-viewer.js' in body and 'image-viewer.css' in body, f"Image viewer missing in {key}"
               assert 'Continue exploring' not in body, f"Sibling loop navigation remains in {key}"
               for source in sources:
                   prefix = "/fashionstore/assets/fashion-photos/"
@@ -183,6 +185,8 @@ jobs:
           node --check assets/admin.js
           node --check assets/checkout.js
           node --check assets/catalogue-orders.js
+          node --check assets/cart-page.js
+          node --check assets/image-viewer.js
           node --check assets/order-tracking.js
           node --check assets/reviews.js
           node --check assets/site-forms.js
@@ -193,6 +197,11 @@ jobs:
 
           required = [
               "pages/checkout.html",
+              "pages/cart.html",
+              "assets/cart-page.js",
+              "assets/cart-page.css",
+              "assets/image-viewer.js",
+              "assets/image-viewer.css",
               "pages/order-tracking.html",
               "assets/order-tracking.js",
               "assets/reviews.js",
@@ -230,13 +239,17 @@ jobs:
               assert path.is_file() and path.stat().st_size > minimum_size, f"Missing/empty ecommerce asset: {item}"
 
           home = Path("index.html").read_text()
-          assert 'pages/checkout.html' in home, "Home cart does not lead to checkout"
+          assert 'pages/cart.html' in home, "Home bag does not lead to cart review"
           assert 'assets/site-forms.js' in home, "Home newsletter is not connected"
           assert 'blog/build-a-versatile-capsule-wardrobe.html' in home, "Home Journal preview is missing"
           assert 'assets/customer-care.js' in home, "AI chat bundle must load on the homepage"
           assert 'data-f-buy-now="f1"' in home and 'data-f-add="f1"' in home, "Featured product purchase controls are missing"
           assert 'data-f-buy-now="' in home, "Men product Buy Now template is missing"
 
+          cart_page = Path("pages/cart.html").read_text()
+          assert "forme-cart-v1" in Path("assets/cart-page.js").read_text()
+          assert "pages/checkout.html" in cart_page and "fc-bag-items" in cart_page
+          assert "forme-cart-v1" in Path("assets/checkout.js").read_text()
           checkout = Path("pages/checkout.html").read_text()
           assert "privacy_consent" in checkout and "terms_accepted" in checkout
           tracking = Path("pages/order-tracking.html").read_text()
