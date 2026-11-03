@@ -105,15 +105,15 @@ jobs:
               seen_paths.add(key)
               body = path.read_text()
               sources = re.findall(r'<img class="gallery-image" src="([^"]+)"', body)
-              links = re.findall(r'<a class="visual-image-link" href="([^"]+)"', body)
-              actions = re.findall(r'<a class="visual-action" href="([^"]+)"', body)
+              order_buttons = re.findall(r'class="visual-order-button"[^>]*data-catalogue-order', body)
               assert len(sources) == 6, f"Expected 6 gallery photos in {key}; found {len(sources)}"
               assert len(set(sources)) == 6, f"Expected six different photos in {key}"
-              assert len(links) == 6, f"Every gallery photo must be clickable in {key}"
-              assert len(actions) == 6, f"Every gallery photo must have an exploration action in {key}"
-              assert links == actions, f"Image and action destinations must match in {key}"
-              for destination in links:
-                  assert destination.startswith("/fashionstore/"), f"Unexpected visual destination in {key}: {destination}"
+              assert len(order_buttons) == 6, f"Every gallery photo must have an Order Now control in {key}"
+              assert 'visual-image-link' not in body, f"Gallery photo still navigates away in {key}"
+              assert 'visual-action' not in body, f"Old Explore/photo action remains in {key}"
+              assert 'target="_blank"' not in body, f"Gallery page must stay on FORME: {key}"
+              assert 'catalogue-orders.js' in body, f"Catalogue order runtime missing in {key}"
+              assert 'Continue exploring' not in body, f"Sibling loop navigation remains in {key}"
               for source in sources:
                   prefix = "/fashionstore/assets/fashion-photos/"
                   assert source.startswith(prefix), f"Unexpected image source in {key}: {source}"
@@ -182,6 +182,7 @@ jobs:
         run: |
           node --check assets/admin.js
           node --check assets/checkout.js
+          node --check assets/catalogue-orders.js
           node --check assets/order-tracking.js
           node --check assets/reviews.js
           node --check assets/site-forms.js
@@ -214,6 +215,7 @@ jobs:
               "blog/clothing-care-guide-bangla.html",
               "assets/content-pages.css",
               "assets/checkout.js",
+              "assets/catalogue-orders.js",
               "assets/site-forms.js",
               "assets/commerce-pages.js",
               "assets/customer-care.js",
@@ -244,6 +246,10 @@ jobs:
           assert "publication_consent" in reviews and "delivered" in reviews.lower()
           assert "assets/reviews.js" in reviews
           assert "No payment is collected" in checkout
+          catalogue_runtime = Path("assets/catalogue-orders.js").read_text()
+          assert "catalogue-order" in catalogue_runtime and "অর্ডার রিকোয়েস্ট পাঠান" in catalogue_runtime
+          assert "data-catalogue-order" in Path("scripts/build_collection_pages.py").read_text()
+          assert "catalogue-orders.js" in Path("scripts/build_collection_pages.py").read_text()
           commerce = Path("assets/checkout.js").read_text()
           assert "storefront-commerce-api" in commerce and "AQ." not in commerce
           forms = Path("assets/site-forms.js").read_text()
