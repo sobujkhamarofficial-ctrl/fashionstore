@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow,noarchive">
 <meta name="theme-color" content="#F7F5F0">
 <title>FORME Admin · Order Management</title>
-<link rel="stylesheet" href="/fashionstore/assets/admin.css?v=20261103-5">
+<link rel="stylesheet" href="/fashionstore/assets/admin.css?v=20261103-6">
 </head>
 <body class="fa-body">
 <div class="fa-shell">
@@ -48,6 +48,7 @@
         <button id="fa-orders-tab" class="fa-tab active" type="button" role="tab" aria-selected="true">Orders</button>
         <button id="fa-products-tab" class="fa-tab" type="button" role="tab" aria-selected="false">Products &amp; catalogue</button>
         <button id="fa-messages-tab" class="fa-tab" type="button" role="tab" aria-selected="false">Customer messages</button>
+        <button id="fa-feedback-tab" class="fa-tab" type="button" role="tab" aria-selected="false">AI insights</button>
       </div>
       <section id="fa-orders-panel" class="fa-orders-panel">
         <div class="fa-panel-head"><div><span class="fa-eyebrow">CUSTOMER REQUESTS</span><h2>Orders</h2></div><span id="fa-order-count" class="fa-count">0 records</span></div>
@@ -82,6 +83,19 @@
         <div class="fa-table-wrap"><table><thead><tr><th>Customer</th><th>Topic</th><th>Message</th><th>Received</th><th>Status</th><th></th></tr></thead><tbody id="fa-message-rows"><tr><td colspan="6" class="fa-empty-cell">Open this tab to load messages.</td></tr></tbody></table></div>
         <div id="fa-message-empty" class="fa-empty" hidden>No messages match this view.</div>
       </section>
+      <section id="fa-feedback-panel" class="fa-orders-panel" hidden>
+        <div class="fa-panel-head"><div><span class="fa-eyebrow">AI CUSTOMER EXPERIENCE</span><h2>Assistant insights</h2><p class="fa-panel-note">Anonymous ratings and basic technical metadata only. Raw chat messages and customer contact details are not recorded here.</p></div><span id="fa-feedback-count" class="fa-count">0 responses</span></div>
+        <div class="fa-feedback-stats">
+          <article><span>Total feedback</span><strong id="fa-feedback-total">—</strong></article>
+          <article><span>Helpful responses</span><strong id="fa-feedback-positive">—</strong></article>
+          <article><span>Needs improvement</span><strong id="fa-feedback-negative">—</strong></article>
+          <article><span>Angry / frustrated signals</span><strong id="fa-feedback-frustrated">—</strong></article>
+        </div>
+        <div class="fa-toolbar"><span class="fa-panel-note">Latest 200 responses · Session identifiers are hidden.</span></div>
+        <div class="fa-table-wrap"><table><thead><tr><th>Rating</th><th>Feedback reason</th><th>Conversation type</th><th>Signal</th><th>AI model</th><th>Response time</th><th>Received</th></tr></thead><tbody id="fa-feedback-rows"><tr><td colspan="7" class="fa-empty-cell">Open this tab to load AI feedback.</td></tr></tbody></table></div>
+        <div id="fa-feedback-empty" class="fa-empty" hidden>No feedback has been submitted yet.</div>
+        <p class="fa-footnote">Feedback is used for human review and prompt improvements. It does not automatically train or change the AI model.</p>
+      </section>
       <p class="fa-footnote">COD orders arrive as pending review. Verify product availability, requested size or variant, final price and delivery charge before confirming dispatch. Record payment only after it has actually been received.</p>
     </section>
   </main>
@@ -94,5 +108,5 @@
     <div id="fa-detail-content"></div>
   </section>
 </div>
-<script src="/fashionstore/assets/admin.js?v=20261103-6" defer></script>
+<script src="/fashionstore/assets/admin.js?v=20261103-7" defer></script>
 </body></html>
