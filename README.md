@@ -65,6 +65,21 @@ Use `store_product_reviews` to review new submissions. Change `publication_statu
 
 Public browser code uses only the Supabase publishable key. The Gemini and Supabase server secrets remain in Supabase Edge Function secrets and are not stored in this repository.
 
+## FORME AI customer experience
+
+The FORME Shopping Assistant includes:
+- Bilingual customer-care instructions with empathetic responses and honest objection handling.
+- Live catalogue search and a secure, customer-submitted COD order-request form.
+- Optional garment-photo search through a one-request image attachment. Uploaded image bytes are not persisted by the storefront application.
+- Optional browser speech-to-text and read-aloud controls where the customer's browser supports them.
+- Explicit opt-in device-only style memory that stores up to five selected public product IDs in local storage; no customer profile or contact information is saved.
+- Human support-ticket preparation and explicit submission into the private admin customer-message inbox.
+- Helpful / needs-improvement response ratings and an admin-only AI Insights view.
+
+AI feedback stores ratings, issue labels, intent/sentiment heuristics, model name, page path, response time and a hashed session identifier. It does not store full prompts, AI replies, customer phone numbers, addresses or uploaded images. Feedback is for human review; it does not automatically train or fine-tune the model.
+
+The public product catalogue remains a pilot dataset. Current price, product details and stock must be checked by the store team before an order is confirmed. Image matching and sentiment/intent signals are assistive estimates, not guarantees. Voice controls depend on browser support. Support tickets are reviewed from the admin inbox; they are not real-time live agent chat.
+
 ## Deployment
 
 GitHub Actions runs these build steps on pushes to `main`:
