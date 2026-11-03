@@ -50,7 +50,7 @@ def header(cats):
       + '<details class="f-native-mega" id="f-men-native-mega"><summary class="f-nav-men-toggle" aria-label="Open men categories"><span aria-hidden="true">⌄</span></summary>'+menu+'</details>'
       + other_nav
       + f'<a href="{BASE}winter/" class="f-winter-nav">Winter</a>'
-      + '</nav><div class="f-actions">'<a class="f-icon" href="'+BASE+'#f-new-in" aria-label="Browse new arrivals"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg></a></div>'
+      + '</nav><div class="f-actions"><a class="f-icon" href="'+BASE+'#f-new-in" aria-label="Browse new arrivals"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg></a></div>'
       + '</div></header>')
 def card(p,priority=False):
     badge=f'<span class="f-product-tag">{esc(p["badge"])}</span>' if p.get("badge") else ""
