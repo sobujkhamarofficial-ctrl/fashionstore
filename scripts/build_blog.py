@@ -11,12 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE = "/fashionstore/"
 BASE_URL = "https://sobujkhamarofficial-ctrl.github.io/fashionstore/"
 BLOG_DIR = ROOT / "blog"
-DATA_FILES = [
-    ROOT / "content" / "blog_posts_part1.json",
-    ROOT / "content" / "blog_posts_part2.json",
-    ROOT / "content" / "blog_posts_part3.json",
-    ROOT / "content" / "blog_posts_part4.json",
-]
+DATA_FILES = sorted((ROOT / "content").glob("blog_posts_part*.json"))
 COVER_ROOT = ROOT / "assets" / "fashion-photos"
 
 CATEGORY_FILTERS = [
@@ -70,8 +65,8 @@ def read_articles() -> list[dict]:
             raise ValueError(f"Blog source must be a JSON list: {path}")
         articles.extend(data)
 
-    if len(articles) != 10:
-        raise ValueError(f"Expected exactly 10 launch articles, found {len(articles)}")
+    if len(articles) not in (10, 20, 30):
+        raise ValueError(f"Expected 10, 20 or 30 published articles, found {len(articles)}")
     slugs = [a.get("slug", "") for a in articles]
     if len(set(slugs)) != len(slugs) or any(not re.fullmatch(r"[a-z0-9-]+", slug) for slug in slugs):
         raise ValueError("Blog article slugs must be unique lowercase URL-safe values")
@@ -245,7 +240,7 @@ def rebuild_sitemap() -> int:
         rel = html_file.relative_to(ROOT).as_posix()
         if rel.startswith(".github/") or rel == "404.html":
             continue
-        urls.add(BASE_URL if rel == "index.html" else BASE_URL + rel)
+        urls.add(BASE_URL if rel == "index.html" else BASE_URL + (rel[:-10] if rel.endswith("/index.html") else rel))
     sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n'
     sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
     for url in sorted(urls):
