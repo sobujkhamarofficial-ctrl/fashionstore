@@ -30,6 +30,10 @@ paths:
                 category: { type: string, maxLength: 100 }
                 audience: { type: string, enum: [men, women, teens, kids, unisex] }
                 season: { type: string, enum: [spring, summer, autumn, winter, all_season] }
+                size: { type: string, maxLength: 80, description: Exact size option. Requires attributes_verified=true. }
+                color: { type: string, maxLength: 80, description: Exact colour option. Requires attributes_verified=true. }
+                material: { type: string, maxLength: 80, description: Exact material value. Requires attributes_verified=true. }
+                fit: { type: string, maxLength: 80, description: Exact fit value. Requires attributes_verified=true. }
                 max_price_bdt: { type: integer, minimum: 0, description: Only products with price_verified=true are included. }
                 limit: { type: integer, minimum: 1, maximum: 30, default: 10 }
       responses:
