@@ -5,7 +5,7 @@ const KEY="sb_publishable_EWY6B3OF8lOQB7uB7jBZRA_3MwimKRy";
 const ADMIN_EMAIL="sobujkhamar.official@gmail.com";
 const ACCESS="forme-admin-access";
 const $=id=>document.getElementById(id);
-let orders=[],selected=null,products=[],selectedProduct=null,messages=[],selectedMessage=null,activeTab="orders",productsLoaded=false,messagesLoaded=false;
+let orders=[],selected=null,products=[],selectedProduct=null,messages=[],selectedMessage=null,feedback=[],activeTab="orders",productsLoaded=false,messagesLoaded=false,feedbackLoaded=false;
 const money=n=>"৳"+Number(n||0).toLocaleString("en-BD");
 const esc=value=>String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
 const token=()=>sessionStorage.getItem(ACCESS)||"";
@@ -167,13 +167,40 @@ async function loadMessages(){
  try{const result=await adminRequest({operation:"messages"});messages=Array.isArray(result.messages)?result.messages:[];messagesLoaded=true;renderMessages();}
  catch(error){alertBox(error.message);}
 }
+
+function renderFeedback(stats){
+ const rows=feedback;
+ $("fa-feedback-total").textContent=Number(stats.total||rows.length).toLocaleString("en-BD");
+ $("fa-feedback-positive").textContent=Number(stats.positive||0).toLocaleString("en-BD");
+ $("fa-feedback-negative").textContent=Number(stats.negative||0).toLocaleString("en-BD");
+ $("fa-feedback-frustrated").textContent=Number(stats.frustrated||0).toLocaleString("en-BD");
+ $("fa-feedback-count").textContent=rows.length+" responses";
+ const reasons={helpful:"Helpful",wrong_information:"Wrong information",irrelevant:"Not relevant",tone:"Tone",other:"Other"};
+ const intents={general:"General",order:"Order",delivery:"Delivery",returns:"Returns",product:"Product",size:"Size / fit",support:"Support"};
+ const sentiments={angry:"Angry",frustrated:"Frustrated",confused:"Confused",positive:"Positive",neutral:"Neutral",urgent:"Urgent"};
+ $("fa-feedback-rows").innerHTML=rows.map(row=>{
+  const time=Number.isFinite(Number(row.latency_ms))?Number(row.latency_ms)+" ms":"—";
+  return '<tr><td><strong>'+ (row.rating===1?'👍 Helpful':'👎 Needs review') +'</strong></td><td>'+esc(reasons[row.reason]||row.reason)+'</td><td>'+esc(intents[row.intent]||row.intent)+'</td><td>'+esc(sentiments[row.sentiment]||row.sentiment)+'</td><td>'+esc(row.model||"—")+'</td><td>'+esc(time)+'</td><td>'+esc(date(row.created_at))+'</td></tr>';
+ }).join("");
+ $("fa-feedback-empty").hidden=rows.length!==0;
+ $("fa-feedback-rows").parentElement.hidden=rows.length===0;
+}
+async function loadFeedback(){
+ alertBox("");
+ try{
+  const result=await adminRequest({operation:"ai-feedback"});
+  feedback=Array.isArray(result.feedback)?result.feedback:[];
+  feedbackLoaded=true;renderFeedback(result.stats||{});
+ }catch(error){alertBox(error.message);}
+}
+
 function showTab(tab){
  activeTab=tab;
- const tabs={orders:$("fa-orders-tab"),products:$("fa-products-tab"),messages:$("fa-messages-tab")};
- const panels={orders:$("fa-orders-panel"),products:$("fa-products-panel"),messages:$("fa-messages-panel")};
+ const tabs={orders:$("fa-orders-tab"),products:$("fa-products-tab"),messages:$("fa-messages-tab"),feedback:$("fa-feedback-tab")};
+ const panels={orders:$("fa-orders-panel"),products:$("fa-products-panel"),messages:$("fa-messages-panel"),feedback:$("fa-feedback-panel")};
  Object.keys(tabs).forEach(key=>{const active=key===tab;tabs[key].classList.toggle("active",active);tabs[key].setAttribute("aria-selected",String(active));panels[key].hidden=!active;});
  if(tab==="products"&&!productsLoaded)void loadProducts();
- if(tab==="messages"&&!messagesLoaded)void loadMessages();
+ if(tab==="messages"&&!messagesLoaded)void loadMessages();\n if(tab==="feedback"&&!feedbackLoaded)void loadFeedback();
 }
 function openMessage(id){
  selectedMessage=messages.find(m=>m.id===id);if(!selectedMessage)return;
@@ -242,8 +269,8 @@ function openOrder(id){
 function closeOrder(){$("fa-modal").hidden=true;document.body.style.overflow="";}
 $("fa-login-form").addEventListener("submit",async e=>{e.preventDefault();const form=e.currentTarget,data=new FormData(form),button=form.querySelector("button[type=submit]");button.disabled=true;message("fa-login-message","Checking your access…",false);try{const email=String(data.get("email")||"").trim().toLowerCase();if(email!==ADMIN_EMAIL)throw new Error("Only the authorised owner email can sign in.");const session=await adminRequest({operation:"login",email,password:String(data.get("password")||"")});saveSession(session);form.reset();message("fa-login-message","",true);showDashboard();void loadOrders();}catch(err){clearSession();showAuth();message("fa-login-message",err.message,false);}finally{button.disabled=false;}});
 
-$("fa-refresh").addEventListener("click",()=>activeTab==="orders"?loadOrders():activeTab==="products"?loadProducts():loadMessages());$("fa-search").addEventListener("input",renderOrders);$("fa-filter").addEventListener("change",renderOrders);
-$("fa-orders-tab").addEventListener("click",()=>showTab("orders"));$("fa-products-tab").addEventListener("click",()=>showTab("products"));$("fa-messages-tab").addEventListener("click",()=>showTab("messages"));
+$("fa-refresh").addEventListener("click",()=>activeTab==="orders"?loadOrders():activeTab==="products"?loadProducts():activeTab==="messages"?loadMessages():loadFeedback());$("fa-search").addEventListener("input",renderOrders);$("fa-filter").addEventListener("change",renderOrders);
+$("fa-orders-tab").addEventListener("click",()=>showTab("orders"));$("fa-products-tab").addEventListener("click",()=>showTab("products"));$("fa-messages-tab").addEventListener("click",()=>showTab("messages"));$("fa-feedback-tab").addEventListener("click",()=>showTab("feedback"));
 $("fa-product-search").addEventListener("input",renderProducts);$("fa-product-filter").addEventListener("change",renderProducts);
 $("fa-product-export").addEventListener("click",exportProductsCsv);$("fa-product-import").addEventListener("change",async e=>{const file=e.currentTarget.files&&e.currentTarget.files[0];if(file)await importProductsCsv(file);e.currentTarget.value="";});
 $("fa-message-search").addEventListener("input",renderMessages);$("fa-message-filter").addEventListener("change",renderMessages);
