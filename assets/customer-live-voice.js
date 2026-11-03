@@ -2,7 +2,7 @@
 "use strict";
 const TOKEN_API="https://zfgcovvfczjiqagrnfjr.supabase.co/functions/v1/fashion-live-voice-token";
 const TOOL_API="https://zfgcovvfczjiqagrnfjr.supabase.co/functions/v1/fashion-customer-care";
-const MODEL="models/gemini-3.1-flash-live-preview";
+const MODEL="models/gemini-3.8-live";
 const WS_URL="wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent";
 const TOOLS=[{functionDeclarations:[
 {name:"search_products",description:"Search the live FORME catalogue before all product recommendations, comparisons or product-specific prices. Translate spoken Bengali into English keywords. Never invent matches.",parameters:{type:"OBJECT",properties:{query:{type:"STRING"},category:{type:"STRING"},budget_max:{type:"INTEGER"}},required:["query"]}},
