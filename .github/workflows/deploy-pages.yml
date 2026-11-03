@@ -82,6 +82,8 @@ jobs:
           policy = Path("pages/privacy.html").read_text(encoding="utf-8")
           home = Path("index.html").read_text(encoding="utf-8")
           checkout = Path("pages/checkout.html").read_text(encoding="utf-8")
+          care = Path("assets/customer-care.js").read_text(encoding="utf-8")
+          builder = Path("scripts/build_store_content.py").read_text(encoding="utf-8")
           required = [
               "Personal Data Protection Act, 2026",
               "Order, delivery and transaction records",
@@ -95,7 +97,10 @@ jobs:
           assert not missing, f"Privacy Policy is incomplete: {missing}"
           assert 'href="/fashionstore/pages/privacy.html">Privacy Policy</a>' in home, "Home footer is missing the Privacy Policy link"
           assert 'href="/fashionstore/pages/privacy.html"' in checkout, "Checkout is missing the Privacy Policy link"
-          print("Verified full Privacy Policy, footer link, and checkout privacy notice.")
+          assert "Google Gemini" in care and "বাংলাদেশের বাইরে" in care, "AI chat/voice transfer notice is missing"
+          assert "customer-care.js?v=20261103-7" in home, "Homepage is using an old AI disclosure script"
+          assert 'if filename == "privacy.html" and out.is_file():' in builder, "Policy builder can overwrite the full Privacy Policy"
+          print("Verified full Privacy Policy, point-of-use AI notice, footer link, and checkout privacy notice.")
           PY
       - name: Build long-form Bengali Blog articles
         run: python3 scripts/build_blog.py
