@@ -62,7 +62,7 @@
           <button id="fa-product-export" class="fa-secondary" type="button">Download product CSV</button>
           <label class="fa-file-button" for="fa-product-import">Import edited CSV</label>
           <input id="fa-product-import" type="file" accept=".csv,text/csv" hidden>
-          <p id="fa-product-import-status" class="fa-message" role="status" aria-live="polite">Export the catalogue, update verified product details, then import the file. Up to 250 products per import.</p>
+          <p id="fa-product-import-status" class="fa-message" role="status" aria-live="polite">Export, edit and re-import up to 250 products. For list fields use semicolons (for example: S; M; L). Leave stock quantity blank when unknown. Verify each segment and attribute before checking its verification box.</p>
         </div>
         <div class="fa-toolbar">
           <label class="fa-search">⌕ <input id="fa-product-search" type="search" placeholder="Search product name, ID or category"></label>
@@ -70,9 +70,9 @@
             <option value="all">All products</option><option value="needs_confirmation">Needs verification</option><option value="in_stock">In stock</option><option value="out_of_stock">Out of stock</option><option value="preorder">Preorder</option><option value="archived">Archived</option>
           </select>
         </div>
-        <div class="fa-table-wrap"><table><thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Availability</th><th>Details</th><th></th></tr></thead><tbody id="fa-product-rows"><tr><td colspan="6" class="fa-empty-cell">Open this tab to load products.</td></tr></tbody></table></div>
+        <div class="fa-table-wrap"><table><thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Availability</th><th>Verified metadata</th><th></th></tr></thead><tbody id="fa-product-rows"><tr><td colspan="6" class="fa-empty-cell">Open this tab to load products.</td></tr></tbody></table></div>
         <div id="fa-product-empty" class="fa-empty" hidden>No products match this view.</div>
-        <p class="fa-footnote">A product should only be marked verified after its actual photograph, description, selling price, size/colour options and physical stock have been checked. “In stock” and “Preorder” require verified details.</p>
+        <p class="fa-footnote">Audience and season have separate verification controls. Verify sizes, colours, material, fit and pattern only after checking the real item. Leave stock quantity blank when unknown; do not use zero to mean unknown. A recorded stock number should reflect a physical inventory check. “In stock” and “Preorder” still require the existing product-detail verification.</p>
       </section>
       <section id="fa-messages-panel" class="fa-orders-panel" hidden>
         <div class="fa-panel-head"><div><span class="fa-eyebrow">CUSTOMER CARE</span><h2>Messages</h2><p class="fa-panel-note">Enquiries submitted through the public contact form. Reply using the customer's supplied contact channel.</p></div><span id="fa-message-count" class="fa-count">0 messages</span></div>
