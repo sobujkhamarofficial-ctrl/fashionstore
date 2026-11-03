@@ -131,6 +131,25 @@
     subtotalNode.textContent = money(subtotal());
   }
 
+  async function restoreDirectProduct() {
+    const productId = new URLSearchParams(window.location.search).get("product");
+    if (!productId || cart.length) return;
+    try {
+      const response = await fetch(API + "?action=products", {
+        method: "GET", cache: "no-store",
+        headers: { "apikey": KEY, "Accept": "application/json" }
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok || !payload.ok || !Array.isArray(payload.products)) throw new Error(payload.error || "The product could not be loaded. Please try again.");
+      const product = payload.products.find(item => String(item.id) === productId);
+      if (!product || !product.is_active || !Number(product.price_bdt)) throw new Error("This product is not currently available for a checkout request.");
+      cart = [{ id:String(product.id), name:String(product.name || ""), price:Number(product.price_bdt), image:String(product.image_url || ""), qty:1, variant:"" }];
+      saveCart();
+    } catch (error) {
+      status.textContent = error && error.message ? error.message : "The product could not be loaded. Please try again.";
+    }
+  }
+
   items.addEventListener("click", event => {
     const button = event.target.closest("[data-cart-action]");
     if (!button || busy) return;
@@ -145,7 +164,7 @@
     render();
   });
 
-  render();
+  void restoreDirectProduct().finally(render);
   form.addEventListener("submit", async event => {
     event.preventDefault();
     if (busy || !cart.length) return;
@@ -195,31 +214,10 @@
       shell.hidden = true;
       empty.hidden = true;
       success.hidden = false;
-      success.replaceChildren();
-
-      const heading = document.createElement("h2");
-      heading.textContent = "Your COD order request has been received";
-      const reference = document.createElement("p");
-      reference.textContent = "Order number: " + (payload.order.order_number || "Received");
-      const total = document.createElement("p");
-      total.textContent = "Catalogue item subtotal: " + money(payload.order.subtotal_bdt);
-      const payment = document.createElement("p");
-      payment.textContent = "Payment method: Cash on delivery. No online payment has been collected.";
-      const note = document.createElement("p");
-      note.textContent = "Your order is pending review. The team will verify product details, requested size or variant, stock, final price and delivery charge, then contact you before dispatch. Pay only the agreed amount to the identified delivery person when the parcel is delivered. Do not send advance money.";
-      const links = document.createElement("p");
-      const tracking = document.createElement("a");
-      tracking.href = "/fashionstore/pages/order-tracking.html";
-      tracking.textContent = "Track this order";
-      const home = document.createElement("a");
-      home.href = "/fashionstore/";
-      home.textContent = "Continue browsing";
-      const contact = document.createElement("a");
-      contact.href = "/fashionstore/pages/contact.html";
-      contact.textContent = "Contact customer care";
-      links.append(tracking, document.createTextNode(" · "), home, document.createTextNode(" · "), contact);
-      success.append(heading, reference, total, payment, note, links);
-      status.textContent = "COD order request saved successfully.";
+      const orderReference = String(payload.order.order_number || "").trim();
+      if (!/^FRM-[0-9]{6}-[A-Z0-9]{6}$/.test(orderReference)) throw new Error("The server did not return a valid order reference. Please contact support before submitting again.");
+      window.location.assign("/fashionstore/pages/order-confirmation.html?ref=" + encodeURIComponent(orderReference));
+      return;
     } catch (error) {
       status.textContent = error && error.message ? error.message : "Something went wrong. Please try again.";
     } finally {
