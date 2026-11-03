@@ -92,7 +92,7 @@ def make_page(title,desc,cats,selected=None):
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#F7F5F0"><meta name="description" content="{esc(desc)}">
-<title>{esc(page_title)} | FORME</title><link rel="stylesheet" href="{BASE}men/men-pages.css"><link rel="stylesheet" href="{BASE}assets/customer-care.css?v=20261102-3"><link rel="stylesheet" href="{BASE}assets/image-viewer.css?v=20261103-1"><link rel="stylesheet" href="{BASE}assets/blog.css?v=20261103-1"><link rel="stylesheet" href="{BASE}assets/catalogue-live.css?v=20261103-1"></head>
+<title>{esc(page_title)} | FORME</title><link rel="stylesheet" href="{BASE}men/men-pages.css"><link rel="stylesheet" href="{BASE}assets/customer-care.css?v=20261102-3"><link rel="stylesheet" href="{BASE}assets/image-viewer.css?v=20261103-1"><link rel="stylesheet" href="{BASE}assets/blog.css?v=20261103-1"><link rel="stylesheet" href="{BASE}assets/catalogue-live.css?v=20261103-2"></head>
 <body><div id="forme-storefront">{header(cats)}
 <main class="f-static-main"><div class="f-container"><div class="f-static-crumb">{crumb}</div>
 <section class="f-static-intro"><span class="f-kicker">{"The men's wardrobe" if main else esc(selected["group"])}</span><h1>{esc(page_title)}</h1><p>{esc(desc)}</p></section>
