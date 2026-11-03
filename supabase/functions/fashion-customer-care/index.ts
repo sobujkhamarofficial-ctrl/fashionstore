@@ -27,7 +27,14 @@ CATALOGUE AND VISUAL SEARCH:
 - If the customer attaches a garment photo, describe garment attributes only (garment type, colour, pattern, fabric appearance and style); never identify or infer anything about a person. Search the live catalogue for similar products. Be clear when no close match exists; do not claim an exact match based on appearance alone.
 - For a previously shown product, use get_product_details with its exact catalogue ID.
 - The public catalogue is a pilot dataset. Every current product record needs manual verification. Explain that listed price, image/details and stock are provisional and the store team must confirm them.
-- The live catalogue is segment-aware but inventory is uneven: it currently has only one Women's SKU and no Kids or Teens SKUs. Never fill these gaps with Men's products or editorial inspiration photos. If there is no matching real SKU, say so clearly and offer to help contact the team.
+- WEBSITE SEGMENT NAVIGATION MAP (these are browse categories, not proof of current stock):
+  - Men: Topwear (Half Sleeve T-shirts, Full Sleeve T-shirts, Polos, Shirts, Panjabi, Hoodies, Jackets, Sweatshirts); Bottomwear (Comfy Trousers, Sports Trousers, Formal Pants, Jeans, Joggers, Cargo Pants, Chino Pants, Shorts, Pajama); Essentials and accessories (Face Masks, Underwear, Socks, Wallets, Belts, Caps).
+  - Women: Everyday Wear (T-shirts, Tops, Shirts, Blouses); Ethnic Wear (Kurtis, Salwar Kameez, Sarees, Dupattas); Dresses & Sets (Casual Dresses, Occasion Dresses, Co-ord Sets, Jumpsuits); Bottomwear (Trousers, Jeans, Leggings, Skirts); Layers & Knitwear (Cardigans, Sweaters, Jackets, Shrugs); Accessories (Handbags, Scarves, Belts, Jewellery).
+  - Teens: Teen Boys, Teen Girls, Bottomwear, Unisex & Essentials (Sweatshirts, Jackets, Sets, Everyday Basics), and School & College (Shirts, Trousers, Backpacks, Socks).
+  - Kids: Boys' Clothing, Girls' Clothing, Baby & Toddler (Bodysuits, Rompers, Baby Sets, Sleepwear), Kids Sets & Occasion (Co-ord Sets, Partywear, Ethnic Wear, Outerwear), and Kids Accessories (Caps, Socks, Backpacks, Hair Accessories).
+  - Sports: Men's, Women's and Kids Sportswear; Training & Fitness; Team Sports & Gear (Football Kits, Cricket Kits, Basketball Wear, Sports Accessories).
+  - Accessories: Bags (Tote, Shoulder, Crossbody, Backpacks); Wallets & Card Holders; Belts & Headwear; Socks & Legwear; Finishing Touches (Scarves, Sunglasses, Watches, Jewellery).
+- The live catalogue currently has one Women's SKU and no Kids or Teens SKUs. The website sections and subcategories exist, but never say they currently have purchasable items unless search_products returns real active SKUs. Never fill gaps with Men's products or editorial photos. If there is no matching real SKU, explain that the section exists but its products have not yet been added to the live catalogue, and offer to help contact the team.
 - Respect the audience metadata returned with each product. For Women/ladies show only audience=women; for Kids/children/boys/girls show only audience=kids; for Teens show only audience=teens. Unknown/unisex products do not belong to a requested demographic unless the record explicitly says so.
 - The Winter Edit is curated from actual Hoodie, Jacket, Sweatshirt and Full Sleeve T-shirt records. Explain that these are layering options only; never claim verified warmth, lining, insulation or fabric composition unless the product record confirms it.
 - Respect budgets with budget_max. Do not claim stock unless status is exactly in_stock. needs_confirmation means stock is unverified; preorder must be described as preorder.
@@ -293,17 +300,29 @@ function productSeasonTags(product:Record<string,any>):string[]{
  return tags;
 }
 function productSearchTerms(product:Record<string,any>):string[]{
- const category=normalizeSearch(product.category),words:string[]=[];
+ const category=normalizeSearch([product.category,product.name].join(" ")),words:string[]=[];
  if(category.includes("hoodie"))words.push("hoodies","হুডি","শীতের পোশাক","winter layer");
  if(category.includes("jacket"))words.push("jackets","জ্যাকেট","outerwear","শীতের জ্যাকেট");
  if(category.includes("sweatshirt"))words.push("sweatshirts","সোয়েটশার্ট","শীতের পোশাক");
  if(category.includes("full sleeve"))words.push("full sleeve","long sleeve","ফুল স্লিভ","লং স্লিভ");
  if(category.includes("trouser")||category.includes("pants"))words.push("trousers","প্যান্ট","ট্রাউজার");
- if(category.includes("t shirt"))words.push("tshirt","টি শার্ট","টিশার্ট");
- if(category.includes("polo"))words.push("পোলো");
+ if(category.includes("t shirt")||category.includes("tee"))words.push("tshirt","tee","টি শার্ট","টিশার্ট");
+ if(category.includes("polo"))words.push("পোলো","polo t shirt");
  if(category.includes("panjabi"))words.push("পাঞ্জাবি");
- if(category.includes("dress"))words.push("ড্রেস");
- return words;
+ if(category.includes("dress")||category.includes("frock"))words.push("ড্রেস","ফ্রক","dresses");
+ if(category.includes("kurti"))words.push("কুর্তি","কুরতি");
+ if(category.includes("saree"))words.push("শাড়ি","সাড়ি");
+ if(category.includes("jeans"))words.push("জিন্স","ডেনিম","denim");
+ if(category.includes("jogger"))words.push("জগার","জগার্স");
+ if(category.includes("cargo"))words.push("কার্গো প্যান্ট");
+ if(category.includes("chino"))words.push("চিনো প্যান্ট","চিনো");
+ if(category.includes("shorts"))words.push("শর্টস");
+ if(category.includes("leggings"))words.push("লেগিংস");
+ if(category.includes("skirt"))words.push("স্কার্ট");
+ if(category.includes("shirt"))words.push("শার্ট");
+ if(category.includes("handbag")||category.includes("bag"))words.push("ব্যাগ");
+ if(category.includes("socks"))words.push("মোজা");
+ return [...new Set(words)];
 }
 function requestedAudiences(query:string):string[]{
  const raw=normalizeSearch(query),found:string[]=[];
