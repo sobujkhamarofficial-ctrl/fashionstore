@@ -60,7 +60,7 @@ def card(p,priority=False):
       f' data-id="{esc(product_id)}" data-name="{esc(p["name"])}" data-price="{int(p["price"])}" data-image="{esc(p["image"])}">'
       '<div class="f-product-photo">'
       f'<img src="{esc(p["image"])}" alt="{esc(p["name"])}" loading="{loading}"{high} data-fallback="f-photo-missing" onerror="this.hidden=true;this.parentElement.classList.add(this.dataset.fallback)">{badge}'
-      f'<div class="f-product-actions"><button class="f-add" type="button" data-f-add="{esc(product_id)}">Add to Cart</button><button class="f-buy-now" type="button" data-f-buy-now="{esc(product_id)}">Buy Now</button></div></div>'
+      f'<div class="f-product-actions"><button class="f-add" type="button" data-f-add="{esc(product_id)}">Add to Cart</button><button class="f-buy-now" type="button" data-f-buy-now="{esc(product_id)}">অর্ডার নাও</button></div></div>'
       '<div class="f-product-info">'
       f'<span class="f-product-name">{esc(p["name"])}</span><span class="f-men-savings">{esc(p["description"])}</span>'
       f'<div class="f-men-price-row"><strong>৳{int(p["price"]):,}</strong></div>'
