@@ -475,7 +475,10 @@ Deno.serve(async (req: Request) => {
       if (filterError) return json({ error: filterError, code: "UNSUPPORTED_SEGMENT_FILTER" }, 422, requestId);
       const query = clean(body.query, 160);
       const category = clean(body.category, 100);
-      if ((!query || query.length < 2) && !category && !clean(body.audience, 20) && !clean(body.season, 20)) return json({ error: "Provide query, category, audience or season." }, 400, requestId);
+      if ((!query || query.length < 2) && !category && !clean(body.audience, 20) && !clean(body.season, 20)
+        && !clean(body.size, 80) && !clean(body.color, 80) && !clean(body.material, 80) && !clean(body.fit, 80)) {
+        return json({ error: "Provide query, category, audience, season, size, color, material or fit." }, 400, requestId);
+      }
       const products = await loadProducts();
       const matches = searchProducts(products, body);
       return json({
