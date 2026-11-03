@@ -193,6 +193,7 @@ jobs:
           node --check assets/order-tracking.js
           node --check assets/order-confirmation.js
           node --check assets/catalogue-order-page.js
+          node --check assets/catalogue-live.js
           node --check assets/catalogue-orders.js
           node --check assets/reviews.js
           node --check assets/site-forms.js
@@ -216,6 +217,8 @@ jobs:
               "assets/order-tracking.js",
               "assets/order-confirmation.js",
               "assets/catalogue-order-page.js",
+              "assets/catalogue-live.js",
+              "assets/catalogue-live.css",
               "assets/reviews.js",
               "pages/about.html",
               "pages/shipping-delivery.html",
@@ -343,6 +346,8 @@ jobs:
           assert "catalogue-orders.js" in Path("scripts/build_collection_pages.py").read_text()
           assert "catalogue-orders.js" in home and "catalogue-orders.css" in home, "Homepage catalogue requests are not connected"
           assert "data-catalogue-order" in home, "Homepage preview items are missing an Order Now control"
+          assert "assets/catalogue-live.js" in home and "assets/catalogue-live.css" in home, "Homepage is missing live product catalogue sync"
+          assert "catalogue-live.js" in Path("scripts/build_men_catalog.py").read_text(), "Men pages are missing live product catalogue sync"
           assert Path("assets/catalogue-orders.css").is_file(), "Catalogue order modal styles are missing"
           commerce = Path("assets/checkout.js").read_text()
           assert "storefront-commerce-api" in commerce and "AQ." not in commerce
