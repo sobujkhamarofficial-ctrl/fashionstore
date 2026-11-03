@@ -66,6 +66,93 @@ async function loadProducts(){
   renderProducts();
  }catch(error){alertBox(error.message);}
 }
+const PRODUCT_CSV_COLUMNS=["id","name","category","description","price_bdt","compare_at_price_bdt","image_url","availability_status","is_active","details_verified"];
+function csvCell(value){
+ const textValue=value===null||value===undefined?"":String(value);
+ return '"'+textValue.replace(/"/g,'""')+'"';
+}
+function exportProductsCsv(){
+ if(!products.length){message("fa-product-import-status","Load the product catalogue before exporting.",false);return;}
+ const rows=[PRODUCT_CSV_COLUMNS.join(","),...products.map(p=>PRODUCT_CSV_COLUMNS.map(key=>csvCell(p[key])).join(","))];
+ const blob=new Blob(["\uFEFF"+rows.join("\r\n")],{type:"text/csv;charset=utf-8"});
+ const url=URL.createObjectURL(blob),link=document.createElement("a");
+ link.href=url;link.download="forme-product-catalogue.csv";document.body.appendChild(link);link.click();link.remove();URL.revokeObjectURL(url);
+ message("fa-product-import-status","CSV exported: "+products.length+" products. Keep IDs unchanged and only mark real, physically checked products as verified.",true);
+}
+function parseCsv(source){
+ const rows=[];let row=[],field="",quoted=false;
+ for(let i=0;i<source.length;i++){
+  const ch=source[i];
+  if(quoted){
+   if(ch==='"'){if(source[i+1]==='"'){field+='"';i++;}else quoted=false;}
+   else field+=ch;
+  }else if(ch==='"'&&field.length===0){quoted=true;}
+  else if(ch===","){row.push(field);field="";}
+  else if(ch==="\n"||ch==="\r"){
+   if(ch==="\r"&&source[i+1]==="\n")i++;
+   row.push(field);field="";
+   if(row.some(value=>value.trim()!==""))rows.push(row);
+   row=[];
+  }else field+=ch;
+ }
+ if(quoted)throw new Error("The CSV file contains an unfinished quoted field.");
+ row.push(field);if(row.some(value=>value.trim()!==""))rows.push(row);
+ return rows;
+}
+function csvBoolean(value,label){
+ const normalized=String(value||"").trim().toLowerCase();
+ if(["true","1","yes"].includes(normalized))return true;
+ if(["false","0","no"].includes(normalized))return false;
+ throw new Error("Use true or false in the "+label+" column.");
+}
+async function importProductsCsv(file){
+ const status=$("fa-product-import-status");
+ try{
+  if(file.size>2_000_000)throw new Error("CSV file is too large. Keep it under 2 MB.");
+  const rows=parseCsv((await file.text()).replace(/^\uFEFF/,""));
+  if(rows.length<2)throw new Error("The CSV file has no product rows.");
+  if(rows.length-1>250)throw new Error("Import up to 250 product rows at a time.");
+  const headers=rows[0].map(value=>value.trim());
+  const missing=PRODUCT_CSV_COLUMNS.filter(key=>!headers.includes(key));
+  if(missing.length)throw new Error("Missing CSV columns: "+missing.join(", "));
+  const index=Object.fromEntries(headers.map((key,i)=>[key,i]));
+  const known=new Set(products.map(p=>String(p.id))),seen=new Set();
+  const imagePattern=/^https:\/\/images\.unsplash\.com\/photo-[A-Za-z0-9-]+(?:\?[A-Za-z0-9_=&%.,-]*)?$|^\/fashionstore\/assets\/fashion-photos\/[a-z0-9-]+\.jpg$/i;
+  const allowed=new Set(["needs_confirmation","in_stock","out_of_stock","preorder","archived"]);
+  const updates=rows.slice(1).map((cells,rowIndex)=>{
+   const line=rowIndex+2,get=key=>String(cells[index[key]]??"").trim();
+   const id=get("id");
+   if(!id||!known.has(id))throw new Error("Row "+line+": unknown product ID.");
+   if(seen.has(id))throw new Error("Row "+line+": duplicate product ID "+id+".");
+   seen.add(id);
+   const name=get("name"),category=get("category"),description=get("description"),imageUrl=get("image_url");
+   const priceText=get("price_bdt"),compareText=get("compare_at_price_bdt"),availability=get("availability_status");
+   if(!name||name.length>180||!category||category.length>120||!description||description.length>2000)throw new Error("Row "+line+": name, category and description are required.");
+   if(!imagePattern.test(imageUrl))throw new Error("Row "+line+": use an Unsplash image URL or a FORME-hosted .jpg image.");
+   if(!/^\d+$/.test(priceText)||Number(priceText)>5000000)throw new Error("Row "+line+": enter a whole-number BDT price.");
+   const price=Number(priceText),compare=compareText===""?null:(/^\d+$/.test(compareText)?Number(compareText):NaN);
+   if(compare!==null&&(!Number.isFinite(compare)||compare>5000000))throw new Error("Row "+line+": comparison price must be blank or a whole number.");
+   const isActive=csvBoolean(get("is_active"),"is_active"),verified=csvBoolean(get("details_verified"),"details_verified");
+   if(!allowed.has(availability))throw new Error("Row "+line+": invalid availability status.");
+   if(verified&&(price<=0||availability==="needs_confirmation"||availability==="archived"))throw new Error("Row "+line+": a verified product needs a positive price and a final stock status.");
+   if((availability==="in_stock"||availability==="preorder")&&!verified)throw new Error("Row "+line+": verify product details before choosing in_stock or preorder.");
+   if(compare!==null&&compare>0&&compare<price)throw new Error("Row "+line+": comparison price cannot be below the current selling price.");
+   return {id,name,category,description,price_bdt:price,compare_at_price_bdt:compare,image_url:imageUrl,availability_status:availability,is_active:isActive,details_verified:verified};
+  });
+  if(!updates.length)throw new Error("No valid product rows were found.");
+  const count=updates.length;
+  if(!window.confirm("Import changes for "+count+" products? This updates live names, prices, images and availability. Only mark a product verified after checking the actual item and stock."))return;
+  const button=$("fa-product-export");button.disabled=true;$("fa-product-import").disabled=true;
+  status.textContent="Saving "+count+" catalogue updates…";
+  try{
+   const result=await adminRequest({operation:"product-bulk-update",products:updates});
+   await loadProducts();
+   message("fa-product-import-status","Successfully updated "+Number(result.updated_count||count)+" products. The storefront now reads the latest catalogue values.",true);
+  }finally{button.disabled=false;$("fa-product-import").disabled=false;}
+ }catch(error){
+  message("fa-product-import-status",error.message||"The CSV could not be imported.",false);
+ }
+}
 function visibleMessages(){
  const q=$("fa-message-search").value.trim().toLowerCase(),filter=$("fa-message-filter").value;
  return messages.filter(m=>(filter==="all"||m.status===filter)&&(!q||[m.name,m.email,m.phone,m.subject,m.message].some(v=>String(v||"").toLowerCase().includes(q))));
@@ -158,6 +245,7 @@ $("fa-login-form").addEventListener("submit",async e=>{e.preventDefault();const 
 $("fa-refresh").addEventListener("click",()=>activeTab==="orders"?loadOrders():activeTab==="products"?loadProducts():loadMessages());$("fa-search").addEventListener("input",renderOrders);$("fa-filter").addEventListener("change",renderOrders);
 $("fa-orders-tab").addEventListener("click",()=>showTab("orders"));$("fa-products-tab").addEventListener("click",()=>showTab("products"));$("fa-messages-tab").addEventListener("click",()=>showTab("messages"));
 $("fa-product-search").addEventListener("input",renderProducts);$("fa-product-filter").addEventListener("change",renderProducts);
+$("fa-product-export").addEventListener("click",exportProductsCsv);$("fa-product-import").addEventListener("change",async e=>{const file=e.currentTarget.files&&e.currentTarget.files[0];if(file)await importProductsCsv(file);e.currentTarget.value="";});
 $("fa-message-search").addEventListener("input",renderMessages);$("fa-message-filter").addEventListener("change",renderMessages);
 $("fa-message-rows").addEventListener("click",e=>{const btn=e.target.closest("[data-message-view]");if(btn)openMessage(btn.dataset.messageView);});
 $("fa-product-rows").addEventListener("click",e=>{const btn=e.target.closest("[data-product-edit]");if(btn)openProduct(btn.dataset.productEdit);});
