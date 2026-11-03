@@ -74,6 +74,8 @@ jobs:
         run: python3 scripts/build_collection_pages.py
       - name: Build FORME policy, information and journal pages
         run: python3 scripts/build_store_content.py
+      - name: Build ten long-form Bengali Blog articles
+        run: python3 scripts/build_blog.py
       - name: Verify five-level category hierarchy pages
         run: |
           python3 - <<'PY'
@@ -184,6 +186,7 @@ jobs:
         run: |
           node --check assets/admin.js
           node --check assets/checkout.js
+          node --check assets/blog.js
           node --check assets/catalogue-orders.js
           node --check assets/cart-page.js
           node --check assets/image-viewer.js
@@ -216,12 +219,23 @@ jobs:
               "pages/faq.html",
               "pages/contact.html",
               "blog/index.html",
-              "blog/build-a-versatile-capsule-wardrobe.html",
-              "blog/how-to-choose-the-right-shirt-fit.html",
-              "blog/care-for-your-clothes.html",
-              "blog/bangladesh-capsule-wardrobe-bangla.html",
-              "blog/shirt-fit-measurement-guide-bangla.html",
-              "blog/clothing-care-guide-bangla.html",
+              "blog/bangladesh-capsule-wardrobe-guide.html",
+              "blog/shirt-fit-size-measurement-bangladesh.html",
+              "blog/fabric-guide-hot-humid-weather.html",
+              "blog/mens-wardrobe-essentials-bangladesh.html",
+              "blog/womens-everyday-wardrobe-bangladesh.html",
+              "blog/jeans-trouser-fit-guide.html",
+              "blog/colour-coordination-outfit-guide.html",
+              "blog/clothing-care-wash-store.html",
+              "blog/online-fashion-shopping-checklist.html",
+              "blog/buy-better-responsible-wardrobe.html",
+              "scripts/build_blog.py",
+              "content/blog_posts_part1.json",
+              "content/blog_posts_part2.json",
+              "content/blog_posts_part3.json",
+              "content/blog_posts_part4.json",
+              "assets/blog.css",
+              "assets/blog.js",
               "assets/content-pages.css",
               "assets/checkout.js",
               "assets/catalogue-orders.js",
@@ -241,7 +255,32 @@ jobs:
           home = Path("index.html").read_text()
           assert 'pages/cart.html' in home, "Home bag does not lead to cart review"
           assert 'assets/site-forms.js' in home, "Home newsletter is not connected"
-          assert 'blog/build-a-versatile-capsule-wardrobe.html' in home, "Home Journal preview is missing"
+          assert 'blog/bangladesh-capsule-wardrobe-guide.html' in home, "Home Blog preview is missing"
+          assert '<b>Blog</b>' in home and 'Journal' not in home, "Homepage footer Blog section is missing or still named Journal"
+          header = home.split('</header>', 1)[0]
+          assert '/blog/' not in header, "Blog must not be added to the homepage header navigation"
+          blog_index = Path('blog/index.html').read_text()
+          assert blog_index.count('class="fb-card"') == 10, "Blog index must contain exactly ten launch articles"
+          assert 'fb-search' in blog_index and 'data-blog-filter' in blog_index, "Blog search and topic filters are missing"
+          assert 'FORME Blog' in blog_index, "Blog index title is missing"
+          posts = []
+          for source in ["content/blog_posts_part1.json", "content/blog_posts_part2.json", "content/blog_posts_part3.json", "content/blog_posts_part4.json"]:
+              posts.extend(json.loads(Path(source).read_text(encoding="utf-8")))
+          assert len(posts) == 10, f"Expected ten blog source articles, got {len(posts)}"
+          seen_slugs = set()
+          for post in posts:
+              assert post['slug'] not in seen_slugs, f"Duplicate blog slug: {post['slug']}"
+              seen_slugs.add(post['slug'])
+              body_text = " ".join([paragraph for section in post['sections'] for paragraph in section['p']] + [example[1] for example in post['examples']] + [answer for _, answer in post['faqs']])
+              word_count = len(re.findall(r"\\S+", body_text))
+              assert 3000 <= word_count <= 4000, f"{post['slug']} has {word_count} body words"
+              article_path = Path("blog") / (post['slug'] + ".html")
+              assert article_path.is_file(), f"Missing generated article: {article_path}"
+              article_html = article_path.read_text(encoding="utf-8")
+              assert 'application/ld+json' in article_html and 'fb-toc' in article_html and 'common-questions' in article_html, f"Article structure/SEO missing: {article_path}"
+          assert '<h3>Blog</h3>' in Path('pages/cart.html').read_text() and '<h3>Blog</h3>' in Path('pages/checkout.html').read_text(), "Cart and checkout footer Blog links are missing"
+          assert '/blog/' not in Path('pages/cart.html').read_text().split('</header>', 1)[0], "Blog must not be in cart header navigation"
+          assert '/blog/' not in Path('pages/checkout.html').read_text().split('</header>', 1)[0], "Blog must not be in checkout header navigation"
           assert 'assets/customer-care.js' in home, "AI chat bundle must load on the homepage"
           assert 'data-f-buy-now="f1"' in home and 'data-f-add="f1"' in home, "Featured product purchase controls are missing"
           assert 'data-f-buy-now="' in home, "Men product Buy Now template is missing"
@@ -284,10 +323,13 @@ jobs:
           assert "data-f-add" in men_builder and "data-f-buy-now" in men_builder and "commerce-pages.js" in men_builder
           assert "customer-care.js" in men_builder
           assert "customer-care.js" in collection_builder
+          assert "assets/blog.css" in men_builder and '<strong>Blog</strong>' in men_builder, "Men pages need a dedicated Blog footer"
+          assert "assets/blog.css" in collection_builder and '<strong>Blog</strong>' in collection_builder, "Collection pages need a dedicated Blog footer"
+          assert "<h3>Blog</h3>" in Path("scripts/build_store_content.py").read_text(), "Information page footer Blog section is missing"
 
           for page in ["pages/shipping-delivery.html","pages/returns-refunds.html","pages/privacy.html","pages/terms.html","blog/index.html"]:
               assert "FORME" in Path(page).read_text()
-          print(f"Verified {len(required)} ecommerce assets/pages, checkout controls, newsletter/contact API and Journal links.")
+          print(f"Verified {len(required)} ecommerce assets/pages, ten 3,000–4,000-word Bengali blog articles, Blog search/filter, footer-only Blog navigation, checkout controls and site APIs.")
           PY
       - name: Smoke test Supabase order API and database connection
         run: |
@@ -370,7 +412,7 @@ jobs:
           print("Order tracking API reached the database and safely rejected an unknown order.")
           PY
       - name: Validate Python build scripts
-        run: python3 -m py_compile scripts/build_collection_pages.py scripts/build_men_catalog.py scripts/download_fashion_photos.py scripts/build_store_content.py scripts/verify_storefront.py
+        run: python3 -m py_compile scripts/build_collection_pages.py scripts/build_men_catalog.py scripts/download_fashion_photos.py scripts/build_store_content.py scripts/build_blog.py scripts/verify_storefront.py
       - name: Verify branded not-found page and image fallbacks
         run: |
           python3 - <<'PY'
