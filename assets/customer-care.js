@@ -352,8 +352,12 @@ function mount(){
  '<div class="fa-prompts"><button class="fa-prompt" type="button" data-fa-prompt="Show me some shirts.">শার্ট দেখাও</button><button class="fa-prompt" type="button" data-fa-prompt="Show me polo T-shirts within ৳1500.">পোলো টি-শার্ট</button><button class="fa-prompt" type="button" data-fa-prompt="Help me choose the right clothing size and fit.">সাইজ ও ফিট</button></div>'+
  '<div class="fa-warning">চ্যাটে ফোন নম্বর বা ঠিকানা লিখবেন না। ছবি শুধু এই অনুরোধে বিশ্লেষণ হবে, সংরক্ষণ করা হবে না। <a href="'+BASE+'pages/order-tracking.html">Track an order</a>.</div>'+
  '<div class="fa-memory-toggle"><label><input type="checkbox" data-fa-memory> আমার স্টাইল পছন্দ এই ডিভাইসে মনে রাখুন</label><button type="button" data-fa-memory-reset>মুছুন</button></div>'+
- '<div class="fa-ai-tools"><button type="button" data-fa-photo>📷 ছবি দিয়ে খুঁজুন</button><button type="button" data-fa-voice>🎙 কথা বলে লিখুন</button><input type="file" data-fa-file accept="image/jpeg,image/png,image/webp" hidden></div>'+
- '<form class="fa-form"><textarea class="fa-input" rows="1" maxlength="1200" placeholder="কী পণ্য খুঁজছেন? লিখুন…" aria-label="Your message"></textarea><button class="fa-send" type="submit" aria-label="Send message"><svg viewBox="0 0 24 24"><path d="m21 3-7.5 18-3.7-7.8L2 9.5 21 3Z"/><path d="M9.8 13.2 14 9"/></svg></button></form>'+
+ '<form class="fa-form">'+
+ '<button class="fa-composer-tool fa-attach" type="button" data-fa-photo aria-label="ছবি দিয়ে পণ্য খুঁজুন" title="ছবি দিয়ে খুঁজুন"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>'+
+ '<input type="file" data-fa-file accept="image/jpeg,image/png,image/webp" hidden>'+
+ '<textarea class="fa-input" rows="1" maxlength="1200" placeholder="কী পণ্য খুঁজছেন? লিখুন…" aria-label="Your message"></textarea>'+
+ '<button class="fa-composer-tool fa-mic" type="button" data-fa-voice aria-label="কথা বলে লিখুন" title="কথা বলে লিখুন"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"/></svg></button>'+
+ '<button class="fa-send" type="submit" aria-label="Send message" title="পাঠান"><svg viewBox="0 0 24 24"><path d="m21 3-7.5 18-3.7-7.8L2 9.5 21 3Z"/><path d="M9.8 13.2 14 9"/></svg></button></form>'+
  '<div class="fa-foot">Pilot catalogue · stock and final price confirmed by FORME</div></section>'+
  '<button type="button" class="fa-launch" aria-expanded="false" aria-label="Open FORME chat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H5l1.7-3A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8 10h8M8 13.5h5"/></svg><span>SHOP WITH AI</span><i class="fa-launch-dot" aria-hidden="true"></i></button>';
  document.body.appendChild(root);
