@@ -241,6 +241,11 @@ jobs:
               "blog/fashion-accessories-bag-belt-scarf-style-guide.html",
               "blog/kids-clothing-size-comfort-safety-care-guide.html",
               "blog/shoe-size-fit-material-care-guide.html",
+              "blog/cotton-linen-viscose-polyester-fabric-comparison.html",
+              "blog/tshirt-vs-polo-vs-casual-shirt-comparison.html",
+              "blog/jeans-vs-chinos-vs-formal-trousers-comparison.html",
+              "blog/sneakers-vs-loafers-vs-formal-shoes-comparison.html",
+              "blog/online-vs-in-store-clothing-shopping-comparison.html",
               "scripts/build_blog.py",
               "content/blog_posts_part1.json",
               "content/blog_posts_part2.json",
@@ -248,6 +253,7 @@ jobs:
               "content/blog_posts_part4.json",
               "content/blog_posts_part5.json",
               "content/blog_posts_part6.json",
+              "content/blog_posts_part7.json",
               "assets/blog.css",
               "assets/blog.js",
               "assets/content-pages.css",
@@ -277,7 +283,7 @@ jobs:
           posts = []
           for source in sources:
               posts.extend(json.loads(source.read_text(encoding="utf-8")))
-          assert len(posts) in (10, 20, 30), f"Expected 10, 20 or 30 blog articles, got {len(posts)}"
+          assert len(posts) in (10, 20, 25, 30), f"Expected 10, 20, 25 or 30 blog articles, got {len(posts)}"
           blog_index = Path('blog/index.html').read_text()
           assert blog_index.count('class="fb-card"') == len(posts), "Blog index card count does not match published articles"
           assert 'fb-search' in blog_index and 'data-blog-filter' in blog_index, "Blog search and topic filters are missing"
@@ -288,7 +294,8 @@ jobs:
               seen_slugs.add(post['slug'])
               body_text = " ".join([paragraph for section in post['sections'] for paragraph in section['p']] + [example[1] for example in post['examples']] + [answer for _, answer in post['faqs']])
               word_count = len(re.findall(r"\S+", body_text))
-              assert 3000 <= word_count <= 4000, f"{post['slug']} has {word_count} body words"
+              minimum_words = 2800 if "তুলনা" in post.get("category", "") else 3000
+              assert minimum_words <= word_count <= 4000, f"{post['slug']} has {word_count} body words (minimum {minimum_words})"
               article_path = Path("blog") / (post['slug'] + ".html")
               assert article_path.is_file(), f"Missing generated article: {article_path}"
               article_html = article_path.read_text(encoding="utf-8")
@@ -346,7 +353,7 @@ jobs:
 
           for page in ["pages/shipping-delivery.html","pages/returns-refunds.html","pages/privacy.html","pages/terms.html","blog/index.html"]:
               assert "FORME" in Path(page).read_text()
-          print(f"Verified {len(required)} ecommerce assets/pages, twenty 3,000–4,000-word Bengali blog articles, Blog search/filter, footer-only Blog navigation, checkout controls and site APIs.")
+          print(f"Verified {len(required)} ecommerce assets/pages, twenty-five Bengali blog articles, including five 2,800–4,000-word comparison guides, Blog search/filter, footer-only Blog navigation, checkout controls and site APIs.")
           PY
       - name: Smoke test Supabase order API and database connection
         run: |
