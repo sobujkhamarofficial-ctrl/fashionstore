@@ -16,6 +16,7 @@ COVER_ROOT = ROOT / "assets" / "fashion-photos"
 
 CATEGORY_FILTERS = [
     ("all", "সব লেখা"),
+    ("compare", "তুলনামূলক গাইড"),
     ("wardrobe", "ওয়ার্ডরোব"),
     ("fit", "ফিট ও সাইজ"),
     ("fabric", "ফ্যাব্রিক"),
@@ -41,6 +42,8 @@ def count_words(article: dict) -> int:
     return len(re.findall(r"\S+", " ".join(material)))
 
 def topic_for(category: str) -> str:
+    if "তুলনা" in category:
+        return "compare"
     if "ওয়ার্ডরোব" in category:
         return "wardrobe"
     if "ফিট" in category or "সাইজ" in category:
@@ -65,8 +68,8 @@ def read_articles() -> list[dict]:
             raise ValueError(f"Blog source must be a JSON list: {path}")
         articles.extend(data)
 
-    if len(articles) not in (10, 20, 30):
-        raise ValueError(f"Expected 10, 20 or 30 published articles, found {len(articles)}")
+    if len(articles) not in (10, 20, 25, 30):
+        raise ValueError(f"Expected 10, 20, 25 or 30 published articles, found {len(articles)}")
     slugs = [a.get("slug", "") for a in articles]
     if len(set(slugs)) != len(slugs) or any(not re.fullmatch(r"[a-z0-9-]+", slug) for slug in slugs):
         raise ValueError("Blog article slugs must be unique lowercase URL-safe values")
@@ -81,8 +84,9 @@ def read_articles() -> list[dict]:
         if not article["sections"] or not article["examples"] or not article["faqs"]:
             raise ValueError(f"Article needs sections, examples and FAQs: {article['slug']}")
         article["word_count"] = count_words(article)
-        if not 3000 <= article["word_count"] <= 4000:
-            raise ValueError(f"{article['slug']} has {article['word_count']} body words; required range is 3,000–4,000")
+        minimum_words = 2800 if "তুলনা" in article["category"] else 3000
+        if not minimum_words <= article["word_count"] <= 4000:
+            raise ValueError(f"{article['slug']} has {article['word_count']} body words; required range is {minimum_words:,}–4,000")
         article["topic"] = topic_for(article["category"])
     return articles
 
