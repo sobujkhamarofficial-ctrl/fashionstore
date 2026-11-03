@@ -74,6 +74,29 @@ jobs:
         run: python3 scripts/build_collection_pages.py
       - name: Build FORME policy, information and journal pages
         run: python3 scripts/build_store_content.py
+      - name: Verify full Privacy Policy and public links
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          policy = Path("pages/privacy.html").read_text(encoding="utf-8")
+          home = Path("index.html").read_text(encoding="utf-8")
+          checkout = Path("pages/checkout.html").read_text(encoding="utf-8")
+          required = [
+              "Personal Data Protection Act, 2026",
+              "Order, delivery and transaction records",
+              "AI shopping assistant, images and live voice",
+              "International processing and transfers",
+              "Children and young customers",
+              "Privacy Request Form",
+              "official Bangladesh Gazette publication",
+          ]
+          missing = [item for item in required if item not in policy]
+          assert not missing, f"Privacy Policy is incomplete: {missing}"
+          assert 'href="/fashionstore/pages/privacy.html">Privacy Policy</a>' in home, "Home footer is missing the Privacy Policy link"
+          assert 'href="/fashionstore/pages/privacy.html"' in checkout, "Checkout is missing the Privacy Policy link"
+          print("Verified full Privacy Policy, footer link, and checkout privacy notice.")
+          PY
       - name: Build long-form Bengali Blog articles
         run: python3 scripts/build_blog.py
       - name: Verify five-level category hierarchy pages
