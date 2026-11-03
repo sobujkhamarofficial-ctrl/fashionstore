@@ -20,8 +20,8 @@
   let cart = readCart();
   const addButton = document.createElement("a");
   addButton.className = "fc-static-cart";
-  addButton.href = "/fashionstore/pages/checkout.html";
-  addButton.setAttribute("aria-label", "Review your bag and place a cash-on-delivery order");
+  addButton.href = "/fashionstore/pages/cart.html";
+  addButton.setAttribute("aria-label", "Review your bag and adjust quantities before COD checkout");
   document.body.appendChild(addButton);
 
   const toast = document.createElement("div");
@@ -33,7 +33,7 @@
   function render() {
     const count = cart.reduce((sum, item) => sum + Number(item.qty || 0), 0);
     const subtotal = cart.reduce((sum, item) => sum + Number(item.qty || 0) * Number(item.price || 0), 0);
-    addButton.textContent = count ? "Review bag · " + count + " · " + money(subtotal) : "Your bag is empty";
+    addButton.textContent = count ? "View bag · " + count + " · " + money(subtotal) : "Your bag is empty";
     addButton.classList.toggle("has-items", count > 0);
   }
   function cartQuantity() { return cart.reduce((sum, item) => sum + Number(item.qty || 0), 0); }
