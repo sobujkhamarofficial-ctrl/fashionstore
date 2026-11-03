@@ -248,7 +248,8 @@ jobs:
 
           cart_page = Path("pages/cart.html").read_text()
           assert "forme-cart-v1" in Path("assets/cart-page.js").read_text()
-          assert "pages/checkout.html" in cart_page and "fc-bag-items" in cart_page
+          assert "fc-bag-items" in cart_page and "fc-bag-checkout" in cart_page
+          assert "pages/checkout.html" in Path("assets/cart-page.js").read_text()
           assert "forme-cart-v1" in Path("assets/checkout.js").read_text()
           checkout = Path("pages/checkout.html").read_text()
           assert "privacy_consent" in checkout and "terms_accepted" in checkout
