@@ -193,7 +193,7 @@ tracking_body = """<p>Check the latest status of an order request using the refe
 </form>
 <div id="fc-track-result" class="fc-track-result" hidden></div>
 <section class="fc-content" lang="bn"><h2>বাংলা নির্দেশনা</h2><p>অর্ডার জমা দেওয়ার পর পাওয়া রেফারেন্স নম্বর এবং চেকআউটে দেওয়া মোবাইল নম্বর লিখে বর্তমান স্ট্যাটাস দেখুন। নিরাপত্তার জন্য দুটি তথ্যই অর্ডারের সঙ্গে মিলতে হবে। এখানে স্টোর টিম সর্বশেষ যে স্ট্যাটাস সংরক্ষণ করেছে সেটিই দেখা যাবে; এটি কুরিয়ারের লাইভ GPS ট্র্যাকিং নয়।</p></section>
-<script src="/fashionstore/assets/order-tracking.js?v=20261103-2" defer></script>"""
+<script src="/fashionstore/assets/order-tracking.js?v=20261103-3" defer></script>"""
 tracking_page = page("Track an order","ORDER UPDATES","Use your order reference and checkout phone number to view the latest saved order status.",tracking_body,canonical="https://sobujkhamarofficial-ctrl.github.io/fashionstore/pages/order-tracking.html")
 (ROOT/"pages"/"order-tracking.html").write_text(tracking_page,encoding="utf-8")
 
