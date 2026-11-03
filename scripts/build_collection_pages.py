@@ -161,9 +161,10 @@ def gallery_html(node, department, parts, ancestors):
 def live_products_html(department, parts, node):
     title = node["title"]
     terms = " ".join([department["slug"], *parts, title])
+    root_flag = "1" if not parts else "0"
     return (
         f'<section class="live-collection-section" data-collection-products '
-        f'data-department="{esc(department["slug"])}" data-terms="{esc(terms)}">'
+        f'data-root="{root_flag}" data-department="{esc(department["slug"])}" data-terms="{esc(terms)}">'
         '<div class="section-heading"><div><span class="eyebrow">Live FORME catalogue</span>'
         f'<h2>Available {esc(title)} products</h2></div>'
         '<span class="count-label" data-live-product-count>Checking live catalogue…</span></div>'
