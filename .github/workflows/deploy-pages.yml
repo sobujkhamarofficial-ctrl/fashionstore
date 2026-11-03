@@ -233,6 +233,7 @@ jobs:
               "assets/collection-products.css",
               "assets/product-card-links.js",
               "assets/product-detail.js",
+              "assets/collection-products.js",
               "assets/catalogue-live.css",
               "assets/commerce-actions.js",
               "assets/commerce-actions.css",
@@ -358,8 +359,10 @@ jobs:
           confirmation_page = Path("pages/order-confirmation.html").read_text()
           assert "fc-catalogue-order-form" in catalogue_page and "catalogue-order-page.js" in catalogue_page
           assert "fc-order-reference" in confirmation_page and "order-confirmation.js" in confirmation_page
-          assert "data-catalogue-order" in Path("scripts/build_collection_pages.py").read_text()
-          assert "catalogue-orders.js" in Path("scripts/build_collection_pages.py").read_text()
+          collection_builder_source = Path("scripts/build_collection_pages.py").read_text()
+          assert "data-catalogue-order" not in collection_builder_source, "Editorial images must not be treated as purchasable SKUs"
+          assert "visual-order-button" not in collection_builder_source, "Editorial gallery must not contain fake order buttons"
+          assert "data-collection-products" in collection_builder_source and "collection-products.js" in collection_builder_source, "Real collection catalogue integration is missing"
           assert "catalogue-orders.js" in home and "catalogue-orders.css" in home, "Homepage catalogue requests are not connected"
           assert "data-catalogue-order" in home, "Homepage preview items are missing an Order Now control"
           assert "assets/catalogue-live.js" in home and "assets/catalogue-live.css" in home, "Homepage is missing live product catalogue sync"
