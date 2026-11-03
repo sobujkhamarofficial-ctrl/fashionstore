@@ -215,7 +215,8 @@ jobs:
               "blog/clothing-care-guide-bangla.html",
               "assets/content-pages.css",
               "assets/checkout.js",
-              "assets/catalogue-orders.js",\n              "assets/catalogue-orders.css",
+              "assets/catalogue-orders.js",
+              "assets/catalogue-orders.css",
               "assets/site-forms.js",
               "assets/commerce-pages.js",
               "assets/customer-care.js",
@@ -249,7 +250,8 @@ jobs:
           catalogue_runtime = Path("assets/catalogue-orders.js").read_text()
           assert "catalogue-order" in catalogue_runtime and "অর্ডার রিকোয়েস্ট পাঠান" in catalogue_runtime
           assert "data-catalogue-order" in Path("scripts/build_collection_pages.py").read_text()
-          assert "catalogue-orders.js" in Path("scripts/build_collection_pages.py").read_text()\n          assert "catalogue-orders.js" in home and "catalogue-orders.css" in home, "Homepage catalogue requests are not connected"\n          assert "data-catalogue-order" in home, "Homepage preview items are missing an Order Now control"\n          assert Path("assets/catalogue-orders.css").is_file(), "Catalogue order modal styles are missing"
+          assert "catalogue-orders.js" in Path("scripts/build_collection_pages.py").read_text()
+          assert "catalogue-orders.js" in home and "catalogue-orders.css" in home, "Homepage catalogue requests are not connected"\n          assert "data-catalogue-order" in home, "Homepage preview items are missing an Order Now control"\n          assert Path("assets/catalogue-orders.css").is_file(), "Catalogue order modal styles are missing"
           commerce = Path("assets/checkout.js").read_text()
           assert "storefront-commerce-api" in commerce and "AQ." not in commerce
           forms = Path("assets/site-forms.js").read_text()
