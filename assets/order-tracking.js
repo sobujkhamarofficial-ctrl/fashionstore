@@ -79,6 +79,12 @@
   }
 
   if(form){
+    const reference = new URLSearchParams(window.location.search).get("ref");
+    const orderInput = form.querySelector('[name="order_number"]');
+    if (reference && orderInput && /^FRM-[0-9]{6}-[A-Z0-9]{6}$/i.test(reference)) {
+      orderInput.value = reference.toUpperCase();
+      document.getElementById("fc-track-phone")?.focus();
+    }
     form.addEventListener("submit",async event=>{
       event.preventDefault();
       result.hidden=true;
