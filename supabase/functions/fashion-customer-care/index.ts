@@ -308,8 +308,8 @@ function productSearchTerms(product:Record<string,any>):string[]{
 function requestedAudiences(query:string):string[]{
  const raw=normalizeSearch(query),found:string[]=[];
  if(/\b(women|womens|woman|ladies|female)\b/.test(raw)||/নারী|মহিলা/.test(raw))found.push("women");
- if(/\b(kids?|children|child|boys?|girls?|toddlers?)\b/.test(raw)||/শিশু|বাচ্চা|কিশোরী|কিশোর/.test(raw))found.push("kids");
- if(/\b(teens?|teenager)\b/.test(raw))found.push("teens");
+ if(/\b(kids?|children|child|boys?|girls?|toddlers?)\b/.test(raw)||/শিশু|বাচ্চা/.test(raw))found.push("kids");
+ if(/\b(teens?|teenager)\b/.test(raw)||/কিশোরী|কিশোর/.test(raw))found.push("teens");
  if(/\b(men|mens|male)\b/.test(raw)||/পুরুষদের|ছেলেদের/.test(raw))found.push("men");
  return [...new Set(found)];
 }
