@@ -352,7 +352,7 @@ function mount(){
  '<button type="button" class="fa-live-banner" data-fa-live-open aria-label="লাইভ ভয়েস মোড চালু করুন"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3Z"/><path d="M5 10a7 7 0 0 0 14 0M12 18v3M9 21h6"/></svg><span><strong>লাইভ ভয়েসে কথা বলুন</strong><small>সরাসরি কথা বলুন, কণ্ঠে উত্তর শুনুন</small></span><b>শুরু করুন <i aria-hidden="true">→</i></b></button>'+
  '<div class="fa-chat" aria-live="polite" aria-label="Conversation"></div>'+
  '<div class="fa-prompts"><button class="fa-prompt" type="button" data-fa-prompt="Show me some shirts.">শার্ট দেখাও</button><button class="fa-prompt" type="button" data-fa-prompt="Show me polo T-shirts within ৳1500.">পোলো টি-শার্ট</button><button class="fa-prompt" type="button" data-fa-prompt="Help me choose the right clothing size and fit.">সাইজ ও ফিট</button></div>'+
- '<div class="fa-warning">চ্যাটে ফোন নম্বর বা ঠিকানা লিখবেন না। ছবি শুধু এই অনুরোধে বিশ্লেষণ হবে, সংরক্ষণ করা হবে না। <a href="'+BASE+'pages/order-tracking.html">Track an order</a>.</div>'+
+ '<div class="fa-warning">চ্যাটে ফোন নম্বর, ঠিকানা বা পেমেন্ট তথ্য লিখবেন না। আপনি মেসেজ বা ছবি পাঠালে তা FORME-এর সার্ভারের মাধ্যমে Google Gemini-তে উত্তর তৈরির জন্য পাঠানো হয় এবং বাংলাদেশের বাইরে প্রক্রিয়াকৃত হতে পারে। <a href="'+BASE+'pages/privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a> দেখুন।</div>'+
  '<div class="fa-memory-toggle"><label><input type="checkbox" data-fa-memory> আমার স্টাইল পছন্দ এই ডিভাইসে মনে রাখুন</label><button type="button" data-fa-memory-reset>মুছুন</button></div>'+
  '<form class="fa-form">'+
  '<button class="fa-composer-tool fa-attach" type="button" data-fa-photo aria-label="ছবি দিয়ে পণ্য খুঁজুন" title="ছবি দিয়ে খুঁজুন"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>'+
@@ -370,7 +370,7 @@ function mount(){
  '<div class="fa-live-products" data-fa-live-products></div>'+
  '<div class="fa-live-controls"><button type="button" class="fa-live-start" data-fa-live-start>কথা শুরু করুন</button><button type="button" class="fa-live-stop" data-fa-live-stop disabled>কল শেষ করুন</button></div>'+
  '<button type="button" class="fa-live-view-chat" data-fa-live-view-chat hidden>চ্যাটে পণ্য / ফর্ম দেখুন</button>'+
- '<small class="fa-live-privacy">মাইক্রোফোন চালু করতে অনুমতি লাগবে। কল শেষ করলে মাইক্রোফোন বন্ধ হবে। অর্ডার বা সাপোর্ট অনুরোধ জমা দিতে ওয়েবসাইটের ফর্ম পূরণ করতে হবে।</small>'+
+ '<small class="fa-live-privacy">লাইভ ভয়েস শুরু করলে আপনার মাইক্রোফোনের অডিও ও কথার ট্রান্সক্রিপশন Google Gemini-তে রিয়েল-টাইম প্রক্রিয়াকরণের জন্য পাঠানো হয় এবং বাংলাদেশের বাইরে প্রক্রিয়াকৃত হতে পারে। মাইক্রোফোনের অনুমতি প্রয়োজন; কল শেষ করলে মাইক্রোফোন বন্ধ হবে। ফোন নম্বর, ঠিকানা বা পেমেন্ট তথ্য বলবেন না। <a href="'+BASE+'pages/privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a></small>'+
  '</section></div>'+'<div class="fa-foot">Pilot catalogue · stock and final price confirmed by FORME</div></section>'+
  '<button type="button" class="fa-launch" aria-expanded="false" aria-label="Open FORME chat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H5l1.7-3A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8 10h8M8 13.5h5"/></svg><span>SHOP WITH AI</span><i class="fa-launch-dot" aria-hidden="true"></i></button>';
  document.body.appendChild(root);
