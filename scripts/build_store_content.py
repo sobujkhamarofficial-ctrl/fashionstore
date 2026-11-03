@@ -45,7 +45,7 @@ def page(title, kicker, lede, body, description=None, canonical=None):
 <span class="fc-kicker">{e(kicker)}</span><h1>{e(title)}</h1><p class="fc-lede">{e(lede)}</p>
 <p class="fc-meta">Updated 2 November 2026 · FORME Bangladesh</p>
 <div class="fc-content">{body}</div>
-</main>{footer()}<script src="{BASE}assets/customer-care.js?v=20261103-6" defer></script><script src="{BASE}assets/customer-live-voice.js?v=20261103-3" defer></script></body></html>'''
+</main>{footer()}<script src="{BASE}assets/customer-care.js?v=20261103-7" defer></script><script src="{BASE}assets/customer-live-voice.js?v=20261103-3" defer></script></body></html>'''
 
 pages = {
 "about.html": (
