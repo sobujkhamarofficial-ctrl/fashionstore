@@ -133,6 +133,7 @@ def gallery_photo_path(kind, index):
 def gallery_html(node, department, parts, ancestors):
     title = node["title"]
     children = node_children(node)
+    category_path = " / ".join([department["title"], *(item[0] for item in ancestors), title])
     images = []
     for index in range(6):
         kind = image_kind(department, node, ancestors, index)
@@ -140,32 +141,28 @@ def gallery_html(node, department, parts, ancestors):
         alt = f"{title} fashion photograph {index + 1}"
         child = children[index % len(children)] if children else None
         if child:
-            destination = page_url(department, list(parts) + [child["slug"]])
-            action_label = f'Explore {esc(child["title"])}'
-            caption_title = f'{esc(child["title"])} · Look {index + 1:02d}'
-            destination_attrs = ""
-            action_kind = "category"
+            caption_title = f'{child["title"]} · Look {index + 1:02d}'
+            caption_note = "Style reference · request for this look"
         else:
-            destination = src
-            action_label = "View full photo"
-            caption_title = f'{esc(title)} · Look {index + 1:02d}'
-            destination_attrs = ' target="_blank" rel="noopener"'
-            action_kind = "photo"
+            caption_title = f'{title} · Look {index + 1:02d}'
+            caption_note = "Style reference · price and availability to be confirmed"
         images.append(
-            f'<figure class="visual-card" data-visual-kind="{action_kind}">'
+            f'<figure class="visual-card" data-visual-kind="catalogue-request">'
             f'<div class="visual-image-wrap">'
-            f'<a class="visual-image-link" href="{destination}"{destination_attrs} aria-label="{action_label}">'
             f'<img class="gallery-image" src="{src}" alt="{esc(alt)}" loading="lazy" decoding="async" data-fallback="visual-image-missing" onerror="this.hidden=true;this.parentElement.classList.add(this.dataset.fallback)">'
-            f'</a><span class="visual-number">{index + 1:02d}</span></div>'
-            f'<figcaption><strong>{caption_title}</strong>'
-            f'<span>{("Next category" if child else "Inspiration photo")}</span>'
-            f'<a class="visual-action" href="{destination}"{destination_attrs}>{action_label} ↗</a></figcaption></figure>'
+            f'<span class="visual-number">{index + 1:02d}</span></div>'
+            f'<figcaption><strong>{esc(caption_title)}</strong>'
+            f'<span>{esc(caption_note)}</span>'
+            f'<button class="visual-order-button" type="button" data-catalogue-order '
+            f'data-product-name="{esc(caption_title)}" data-product-category="{esc(category_path)}" '
+            f'data-image-url="{esc(src)}" data-source-path="{esc(page_url(department, parts))}" '
+            f'aria-label="অর্ডার নাও: {esc(caption_title)}">অর্ডার নাও</button></figcaption></figure>'
         )
     return (
         '<section class="visual-gallery">'
         '<div class="section-heading"><div><span class="eyebrow">FORME photo edit</span>'
-        f'<h2>Explore the {esc(title)} styles</h2></div>'
-        '<span class="count-label">6 clickable style photographs</span></div>'
+        f'<h2>Choose a style to request from {esc(title)}</h2></div>'
+        '<span class="count-label">6 style references · order request available</span></div>'
         f'<div class="visual-grid">{"".join(images)}</div></section>'
     )
 
@@ -222,16 +219,6 @@ def build_page(node, department, parts, ancestors, siblings, is_department=False
         leaf_note = "This is the most specific level in the current category structure."
 
     sibling_links = ""
-    other_siblings = [item for item in siblings if item["slug"] != node["slug"]]
-    if other_siblings:
-        sibling_cards = "".join(
-            f'<a href="{page_url(department, parts[:-1] + [item["slug"]])}">{esc(item["title"])} <span>↗</span></a>'
-            for item in other_siblings
-        )
-        sibling_links = (
-            '<section class="sibling-section"><span class="eyebrow">Continue exploring</span>'
-            f'<div class="sibling-links">{sibling_cards}</div></section>'
-        )
 
     parent_label_html = (
         f'<a class="back-link" href="{parent_url}">← Back to {esc(parent_label)}</a>'
@@ -268,7 +255,7 @@ def build_page(node, department, parts, ancestors, siblings, is_department=False
 <p>{esc(description)}</p>
 <div class="structure-meta">{esc(hierarchy_note)}</div>
 </section>
-<div class="stage-note"><strong>Clickable style gallery.</strong> Tap a photograph to explore the next category level. At the deepest level, the photograph opens full size. These inspiration images are not sellable products; Add to Cart and Buy Now appear only on actual product listings with a product record and price.</div>
+<div class="stage-note"><strong>Request a style.</strong> Select “অর্ডার নাও” on any photograph to send a request for that look. These are representative style references; the store will confirm the exact product, price, size and stock before accepting the order. No advance payment is collected.</div>
 {child_section}
 {gallery}
 {sibling_links}
@@ -276,6 +263,7 @@ def build_page(node, department, parts, ancestors, siblings, is_department=False
 </div>
 </main>
 <footer class="site-footer"><div class="page-container"><a class="site-logo" href="{BASE}">FORME<span>EVERYDAY, REFINED</span></a><p>Curated fashion photography · Explore the FORME catalogue.</p><a href="{BASE}blog/">Journal</a> · <a href="{BASE}pages/shipping-delivery.html">Shipping</a> · <a href="{BASE}pages/returns-refunds.html">Returns</a> · <a href="{BASE}pages/reviews.html">Reviews</a> · <a href="{BASE}pages/order-tracking.html">Track order</a> · <a href="{BASE}pages/privacy.html">Privacy</a> · <a href="{BASE}pages/terms.html">Terms</a> · <a href="{BASE}pages/contact.html">Contact</a><p><a href="{BASE}">Return to FORME home ↗</a></p></div></footer>
+<script src="{BASE}assets/catalogue-orders.js?v=20261103-1" defer></script>
 <script src="{BASE}assets/customer-care.js?v=20261102-3" defer></script>
 </body>
 </html>
