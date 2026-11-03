@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: FORME AI Control API
   version: 1.0.0
-  description: Private server-to-server API for authorised FORME AI agents. V1 supports catalogue reads and unpublished AI content drafts only.
+  description: Private server-to-server API for authorised FORME AI agents. V1 supports structured catalogue reads and unpublished AI content drafts only.
 servers:
   - url: https://zfgcovvfczjiqagrnfjr.supabase.co/functions/v1/forme-ai-api
 security:
@@ -28,12 +28,14 @@ paths:
               properties:
                 query: { type: string, minLength: 2, maxLength: 160 }
                 category: { type: string, maxLength: 100 }
-                max_price_bdt: { type: integer, minimum: 0 }
+                audience: { type: string, enum: [men, women, teens, kids, unisex] }
+                season: { type: string, enum: [spring, summer, autumn, winter, all_season] }
+                max_price_bdt: { type: integer, minimum: 0, description: Only products with price_verified=true are included. }
                 limit: { type: integer, minimum: 1, maximum: 30, default: 10 }
       responses:
         "200": { description: Matching products with verification flags }
         "401": { description: Missing or invalid agent key }
-        "422": { description: Audience or season filters are not supported yet }
+        "422": { description: Invalid audience or season filter }
   /v1/catalogue/product:
     post:
       summary: Retrieve one active catalogue product
