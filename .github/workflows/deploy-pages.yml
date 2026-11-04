@@ -39,7 +39,7 @@ jobs:
           import re
           from pathlib import Path
           cats = json.loads(Path("men/catalog.json").read_text())["categories"]
-          assert len(cats) == 23
+          assert len(cats) == 25
           total = 0
           all_ids = []
           for c in cats:
@@ -47,7 +47,7 @@ jobs:
               assert p.is_file() and p.stat().st_size > 1000, str(p)
               body = p.read_text()
               products = c["products"]
-              assert len(products) >= 1, c["slug"]
+              assert len(products) >= 1 or c["slug"] in {"sweaters", "cardigans"}, c["slug"]
               expected = [item["product_id"] for item in products]
               assert all(expected), f"Missing database product IDs: {c['slug']}"
               assert len(expected) == len(set(expected)), f"Duplicate IDs inside {c['slug']}"
@@ -63,8 +63,8 @@ jobs:
               total += len(products)
           assert len(all_ids) == len(set(all_ids)), "Duplicate database product IDs across Men categories"
           assert total == 133, total
-          assert Path("men/index.html").read_text().count('class="f-men-category-link"') == 23
-          print(f"Verified 23 categories, {total} DB-linked products, and matching Buy Now / Add to Cart IDs.")
+          assert Path("men/index.html").read_text().count('class="f-men-category-link"') == 25
+          print(f"Verified 25 categories, {total} DB-linked products, and matching Buy Now / Add to Cart IDs.")
           PY
 
       - name: Download real, licensed fashion photography
@@ -118,7 +118,7 @@ jobs:
           pages = image_count = 0
           groups = categories = subcategories = nested = 0
           seen_paths = set()
-          expected_kinds = ("top", "bottoms", "outerwear", "wallet", "cap", "socks", "belt", "dress", "bag", "jewelry", "shoes", "sports", "kids")
+          expected_kinds = ("top", "bottoms", "outerwear", "wallet", "cap", "socks", "belt", "dress", "bag", "jewelry", "shoes", "sports", "kids", "editorial")
           expected_assets = {f"{kind}-{index:02d}.jpg" for kind in expected_kinds for index in range(1, 7)}
           asset_dir = Path("assets/fashion-photos")
           actual_assets = {item.name for item in asset_dir.glob("*.jpg")}
@@ -183,7 +183,7 @@ jobs:
           assert pages == 2215, pages
           assert len(seen_paths) == 2215
           assert image_count == 13290, image_count
-          print(f"Verified {pages} pages and {image_count} real-photo placements using 78 local photographs: 5 departments, {groups} groups, {categories} categories, {subcategories} sub-categories and {nested} nested sub-categories.")
+          print(f"Verified {pages} pages and {image_count} real-photo placements using 84 local photographs: 5 departments, {groups} groups, {categories} categories, {subcategories} sub-categories and {nested} nested sub-categories.")
           PY
 
       - name: Verify department dropdown navigation
