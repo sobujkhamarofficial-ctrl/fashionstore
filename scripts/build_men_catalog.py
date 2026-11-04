@@ -70,7 +70,7 @@ def directory(cats):
     groups=[]
     for group in ("Topwear","Bottomwear","Accessories"):
         items=[c for c in cats if c["group"]==group]
-        links="".join(f'<a class="f-men-category-link" href="{href(c["slug"])}"><b>{esc(c["title"])}</b><small>{len(c["products"])} listings to explore</small></a>' for c in items)
+        links="".join((f'<a class="f-men-category-link" href="{href(c["slug"])}"><b>{esc(c["title"])}</b><small>{len(c["products"])} listings to explore</small></a>' if c["products"] else f'<a class="f-men-category-link f-coming-soon-link" href="{href(c["slug"])}"><b>{esc(c["title"])}</b><small>Coming soon · inventory pending</small></a>') for c in items)
         groups.append(f'<section class="f-men-category-group"><div class="f-men-category-group-title"><b>{group}</b><small>{len(items)} categories</small></div><div class="f-men-category-links">{links}</div></section>')
     return ('<section class="f-static-categories"><div class="f-men-category-top"><div><b>Explore men\'s categories</b><small>Every category has its own collection page with catalogue listings.</small></div>'
       f'<span>{len(cats)} categories</span></div>'+''.join(groups)+'</section>')
@@ -83,30 +83,33 @@ def make_page(title,desc,cats,selected=None):
     crumb='<a href="'+BASE+'">Home</a> / Men' if main else f'<a href="{BASE}">Home</a> / <a href="{href("men")}">Men</a> / {esc(title)}'
     listing=directory(cats) if main else category_nav(cats,slug)
     if main:
-        featured=[c["products"][0] for c in cats][:12]
-        products_label="12 featured catalogue listings"; section_title="Featured men's pieces"
+        featured=[c["products"][0] for c in cats if c["products"]][:12]
+        products_label=f"{len(featured)} featured catalogue listings"; section_title="Featured men's pieces"
     else:
-        featured=selected["products"]; products_label=f'{len(featured)} catalogue listing{"s" if len(featured) != 1 else ""}'; section_title=f'{esc(title)} collection'
+        featured=selected["products"]; products_label=(f'{len(featured)} catalogue listing{"s" if len(featured) != 1 else ""}' if featured else "Coming soon"); section_title=f'{esc(title)} collection'
     cards="".join(card(p,i==0) for i,p in enumerate(featured))
+    if not main and not featured:
+        cards=f'<div class="f-coming-soon-panel"><span class="f-coming-soon-kicker">FORME · NEW CATEGORY</span><strong>{esc(title)} are coming soon</strong><p>We are preparing this collection. Products will appear here only after real inventory, product photography, sizes, prices and availability have been verified.</p><a href="{BASE}winter/">Explore the Winter Edit ↗</a></div>'
     warning='<p class="f-catalog-note">FORME pilot catalogue · product names and listed prices are database-backed; photographs are representative catalogue imagery. Stock, sizes, variants and final delivery charges require confirmation. Buy Now creates a pending COD order request, not a confirmed dispatch.</p>'
     page_title="Men's Collection" if main else title
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#F7F5F0"><meta name="description" content="{esc(desc)}">
-<title>{esc(page_title)} | FORME</title><link rel="stylesheet" href="{BASE}men/men-pages.css"><link rel="stylesheet" href="{BASE}assets/customer-care.css?v=20261103-5"><link rel="stylesheet" href="{BASE}assets/image-viewer.css?v=20261103-1"><link rel="stylesheet" href="{BASE}assets/blog.css?v=20261103-1"><link rel="stylesheet" href="{BASE}assets/catalogue-live.css?v=20261103-3"><link rel="stylesheet" href="{BASE}assets/commerce-actions.css?v=20261103-1"></head>
+<title>{esc(page_title)} | FORME</title><link rel="stylesheet" href="{BASE}men/men-pages.css"><link rel="stylesheet" href="{BASE}assets/customer-care.css?v=20261103-5"><link rel="stylesheet" href="{BASE}assets/image-viewer.css?v=20261103-1"><link rel="stylesheet" href="{BASE}assets/blog.css?v=20261103-1"><link rel="stylesheet" href="{BASE}assets/catalogue-live.css?v=20261103-3"><link rel="stylesheet" href="{BASE}assets/commerce-actions.css?v=20261103-1"><link rel="stylesheet" href="{BASE}assets/image-resilience.css?v=20261104-1"></head>
 <body><div id="forme-storefront">{header(cats)}
 <main class="f-static-main"><div class="f-container"><div class="f-static-crumb">{crumb}</div>
 <section class="f-static-intro"><span class="f-kicker">{"The men's wardrobe" if main else esc(selected["group"])}</span><h1>{esc(page_title)}</h1><p>{esc(desc)}</p></section>
 {listing}<section class="f-static-products"><div class="f-section-head"><div><span class="f-kicker">The collection</span><h2>{section_title}</h2></div><span class="f-men-total">{products_label}</span></div>
 {warning}<div class="f-static-product-grid">{cards}</div></section>
 <a class="f-static-back" href="{href("men")}">← Back to Men's Collection</a></div></main>
-<footer class="f-static-footer"><div class="f-container"><strong class="f-logo">FORME<small>EVERYDAY, REFINED</small></strong><small>Pilot catalogue · stock, variants and final delivery details are confirmed by the store before dispatch</small><nav class="f-static-legal"><a href="{BASE}pages/shipping-delivery.html">Shipping</a><a href="{BASE}pages/returns-refunds.html">Returns</a><a href="{BASE}pages/reviews.html">Reviews</a><a href="{BASE}pages/order-tracking.html">Track order</a><a href="{BASE}pages/privacy.html">Privacy</a><a href="{BASE}pages/terms.html">Terms</a><a href="{BASE}pages/contact.html">Contact</a></nav><div class="fb-footer-blog"><strong>Blog</strong><a href="{BASE}blog/">সব ব্লগ পোস্ট</a></div><a href="{BASE}" style="font-size:10px;color:#fff">Home ↗</a></div></footer></div><script src="{BASE}assets/product-card-links.js?v=20261103-1" defer></script><script src="{BASE}assets/commerce-actions.js?v=20261103-1" defer></script><script src="{BASE}assets/catalogue-live.js?v=20261103-4" defer></script><script src="{BASE}assets/image-viewer.js?v=20261103-1" defer></script><script src="{BASE}assets/customer-care.js?v=20261103-6" defer></script><script src="{BASE}assets/customer-live-voice.js?v=20261103-3" defer></script></body></html>'''
+<footer class="f-static-footer"><div class="f-container"><strong class="f-logo">FORME<small>EVERYDAY, REFINED</small></strong><small>Pilot catalogue · stock, variants and final delivery details are confirmed by the store before dispatch</small><nav class="f-static-legal"><a href="{BASE}pages/shipping-delivery.html">Shipping</a><a href="{BASE}pages/returns-refunds.html">Returns</a><a href="{BASE}pages/reviews.html">Reviews</a><a href="{BASE}pages/order-tracking.html">Track order</a><a href="{BASE}pages/privacy.html">Privacy</a><a href="{BASE}pages/terms.html">Terms</a><a href="{BASE}pages/contact.html">Contact</a></nav><div class="fb-footer-blog"><strong>Blog</strong><a href="{BASE}blog/">সব ব্লগ পোস্ট</a></div><a href="{BASE}" style="font-size:10px;color:#fff">Home ↗</a></div></footer></div><script src="{BASE}assets/product-card-links.js?v=20261103-1" defer></script><script src="{BASE}assets/commerce-actions.js?v=20261103-1" defer></script><script src="{BASE}assets/catalogue-live.js?v=20261103-4" defer></script><script src="{BASE}assets/image-viewer.js?v=20261103-1" defer></script><script src="{BASE}assets/image-resilience.js?v=20261104-1" defer></script><script src="{BASE}assets/customer-care.js?v=20261103-6" defer></script><script src="{BASE}assets/customer-live-voice.js?v=20261103-3" defer></script></body></html>'''
 def main():
     data=json.loads((OUT/"catalog.json").read_text(encoding="utf-8"))
     cats=data["categories"]
-    assert len(cats)==23 and all(len(c["products"])>=1 for c in cats)
+    coming_soon={"sweaters","cardigans"}
+    assert len(cats)==25 and all(c["products"] or c["slug"] in coming_soon for c in cats)
     OUT.mkdir(parents=True,exist_ok=True)
-    (OUT/"index.html").write_text(make_page("Men's Collection","Explore men's everyday essentials, considered fits and modern classics. Browse all 23 categories and discover database-linked catalogue listings.",cats),encoding="utf-8")
+    (OUT/"index.html").write_text(make_page("Men's Collection","Explore men's everyday essentials, considered fits and modern classics. Browse all 25 categories and discover database-linked catalogue listings.",cats),encoding="utf-8")
     for c in cats:
         folder=OUT/c["slug"]; folder.mkdir(parents=True,exist_ok=True)
         desc=f'Explore the FORME {c["title"]} collection. Browse the catalogue listings in this category.'
