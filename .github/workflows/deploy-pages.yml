@@ -63,7 +63,7 @@ jobs:
               total += len(products)
           assert len(all_ids) == len(set(all_ids)), "Duplicate database product IDs across Men categories"
           assert total == 133, total
-          assert Path("men/index.html").read_text().count('class="f-men-category-link"') == 25
+          assert Path("men/index.html").read_text().count('f-men-category-link') == 25
           print(f"Verified 25 categories, {total} DB-linked products, and matching Buy Now / Add to Cart IDs.")
           PY
 
