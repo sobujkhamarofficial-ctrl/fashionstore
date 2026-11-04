@@ -946,6 +946,7 @@ async function adminAction(body: Record<string, unknown>, req: Request, origin: 
         return json({ error: "Some products could not be updated. " + updated + " rows were saved before the error; refresh the catalogue and retry the remaining rows.", updated_count: updated }, 502, origin);
       }
     }
+    await recordAdminAudit(String(user.email || ADMIN_EMAIL), "product.bulk_update", "product_catalog", null, "Imported " + updated + " product catalogue rows; stock quantities were not changed.", null, { updated_count: updated });
     return json({ ok: true, updated_count: updated }, 200, origin);
   }
 
