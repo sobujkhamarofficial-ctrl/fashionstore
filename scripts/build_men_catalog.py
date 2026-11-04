@@ -90,7 +90,7 @@ def make_page(title,desc,cats,selected=None):
     cards="".join(card(p,i==0) for i,p in enumerate(featured))
     if not main and not featured:
         cards=f'<div class="f-coming-soon-panel"><span class="f-coming-soon-kicker">FORME · NEW CATEGORY</span><strong>{esc(title)} are coming soon</strong><p>We are preparing this collection. Products will appear here only after real inventory, product photography, sizes, prices and availability have been verified.</p><a href="{BASE}winter/">Explore the Winter Edit ↗</a></div>'
-    warning='<p class="f-catalog-note">FORME pilot catalogue · product names and listed prices are database-backed; photographs are representative catalogue imagery. Stock, sizes, variants and final delivery charges require confirmation. Buy Now creates a pending COD order request, not a confirmed dispatch.</p>'
+    warning=('<p class="f-catalog-note">FORME pilot catalogue · product names and listed prices are database-backed; photographs are representative catalogue imagery. Stock, sizes, variants and final delivery charges require confirmation. Buy Now creates a pending COD order request, not a confirmed dispatch.</p>' if featured else '<p class="f-catalog-note">This collection is being prepared. No products are currently published here. Listings will appear only after real inventory, images, sizes, prices and availability are verified.</p>')
     page_title="Men's Collection" if main else title
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
