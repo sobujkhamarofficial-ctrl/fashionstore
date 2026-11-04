@@ -248,37 +248,74 @@ function toast(textValue,isError=false){
 function setText(id,value){const el=$(id);if(el)el.textContent=value;}
 function setBar(id,value,total){const el=$(id);if(el)el.style.width=(total>0?Math.max(0,Math.min(100,Number(value)/total*100)):0)+"%";}
 async function loadOverview(){
- try{overviewData=await adminRequest({operation:"overview"});overviewLoaded=true;renderOverview();}
- catch(error){alertBox(error.message||"Business overview could not be loaded.");}
+ try{alertBox("");overviewData=await adminRequest({operation:"overview"});overviewLoaded=true;renderOverview();}
+ catch(error){overviewLoaded=false;alertBox(error.message||"Business overview could not be loaded.");}
+}
+function overviewDelta(current,previous,asMoney=false){
+ const c=Number(current||0),p=Number(previous||0);
+ if(p===0)return c===0?"No activity in either 30-day period":"No previous-period baseline";
+ const delta=c-p,pct=Math.round(delta/p*100),sign=delta>0?"+":"";
+ return asMoney?sign+money(delta)+" ("+sign+pct+"%) vs previous 30 days":sign+delta.toLocaleString("en-BD")+" ("+sign+pct+"%) vs previous 30 days";
 }
 function renderOverview(){
  if(!overviewData)return;
- const s=overviewData.stats||{};
- setText("fa-kpi-orders",Number(s.orderRequests||0).toLocaleString("en-BD"));
- setText("fa-kpi-pending",Number(s.pendingOrders||0).toLocaleString("en-BD"));
+ const s=overviewData.stats||{},period=overviewData.period||{};
+ const count=value=>Number(value||0);
+ setText("fa-kpi-orders",count(s.orderRequests).toLocaleString("en-BD"));
+ setText("fa-kpi-pending",count(s.awaitingReviewOrders).toLocaleString("en-BD"));
  setText("fa-kpi-revenue",money(s.collectedRevenueBdt||0));
- setText("fa-kpi-paid",Number(s.paidOrders||0)+" paid orders · verified collection");
- setText("fa-kpi-products",Number(s.activeProducts||0).toLocaleString("en-BD"));
- setText("fa-kpi-unverified",Number(s.needsVerification||0)+" need verification");
- setText("fa-kpi-stock",Number((s.unknownStock||0)+(s.lowStock||0)).toLocaleString("en-BD"));
- setText("fa-kpi-unknown",Number(s.unknownStock||0)+" quantities not counted · "+Number(s.lowStock||0)+" low stock");
- setText("fa-nav-pending",Number(s.pendingOrders||0).toLocaleString("en-BD"));
- setText("fa-status-pending",Number(s.pendingOrders||0));setText("fa-status-active",Number(s.activeOrders||0));setText("fa-status-delivered",Number(s.deliveredOrders||0));
- const max=Math.max(1,Number(s.pendingOrders||0),Number(s.activeOrders||0),Number(s.deliveredOrders||0));
- setBar("fa-bar-pending",s.pendingOrders,max);setBar("fa-bar-active",s.activeOrders,max);setBar("fa-bar-delivered",s.deliveredOrders,max);
- setText("fa-overview-collections",Number(s.activeCategories||0)+" categories active · "+Number(s.activeCollections||0)+" collections live");
- setText("fa-overview-messages",Number(s.newMessages||0)+" new messages · "+Number(s.pendingReviews||0)+" reviews to check");
+ setText("fa-kpi-paid",count(s.paidOrders).toLocaleString("en-BD")+" paid orders");
+ setText("fa-kpi-products",count(s.activeProducts).toLocaleString("en-BD"));
+ setText("fa-kpi-unverified",count(s.needsVerification).toLocaleString("en-BD")+" need product or attribute verification");
+ setText("fa-kpi-stock",count(s.stockAttention).toLocaleString("en-BD"));
+ setText("fa-kpi-unknown",count(s.unknownStock)+" not counted · "+count(s.lowStock)+" low · "+count(s.outOfStock)+" out of stock");
+ setText("fa-nav-pending",count(s.awaitingReviewOrders).toLocaleString("en-BD"));
+
+ const total=count(s.orderRequests);
+ const statuses=[["pending",s.awaitingReviewOrders],["contacted",s.contactedOrders],["active",s.activeOrders],["delivered",s.deliveredOrders],["closed",s.closedOrders]];
+ setText("fa-status-pending",count(s.awaitingReviewOrders));
+ setText("fa-status-contacted",count(s.contactedOrders));
+ setText("fa-status-active",count(s.activeOrders));
+ setText("fa-status-delivered",count(s.deliveredOrders));
+ setText("fa-status-closed",count(s.closedOrders));
+ statuses.forEach(([key,value])=>setBar("fa-bar-"+key,value,total));
+ setText("fa-overview-collections",count(s.activeCategories)+" categories active · "+count(s.activeCollections)+" collections live");
+ setText("fa-overview-messages",count(s.newMessages)+" new messages · "+count(s.pendingReviews)+" reviews to check");
+
  const dt=$("fa-current-date");if(dt)dt.textContent=new Date().toLocaleDateString("en-BD",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
- const tasks=[],add=(count,title,desc,tab,icon)=>{if(Number(count)>0)tasks.push({count:Number(count),title,desc,tab,icon});};
- add(s.pendingOrders,"Order requests awaiting review","Check product, variant, price and delivery before confirming.","orders","▤");
- add(s.needsVerification,"Products need verification","Check real product details and selling price.","products","▣");
- add(s.unknownStock,"Inventory counts are missing","Record a physical count; unknown is not zero.","inventory","▦");
- add(s.lowStock,"Products are low on stock","Review items with five or fewer recorded units.","inventory","!");
+ setText("fa-last-refreshed","Last refreshed "+date(overviewData.generatedAt));
+ setText("fa-period-orders",count(period.orders).toLocaleString("en-BD"));
+ setText("fa-period-orders-note",overviewDelta(period.orders,period.previousOrders));
+ setText("fa-period-revenue",money(period.paidRevenueBdt||0));
+ setText("fa-period-revenue-note",overviewDelta(period.paidRevenueBdt,period.previousPaidRevenueBdt,true));
+ setText("fa-period-delivered",count(period.deliveredOrders).toLocaleString("en-BD"));
+ setText("fa-period-delivered-note",count(period.orders)?"Orders placed in this 30-day window":"No orders in this 30-day window");
+ setText("fa-period-average",money(period.averagePaidOrderBdt||0));
+ setText("fa-period-average-note",count(period.paidOrders)+" paid orders in this window");
+
+ const tasks=[],add=(n,title,desc,tab,icon)=>{if(count(n)>0)tasks.push({count:count(n),title,desc,tab,icon});};
+ add(s.awaitingReviewOrders,"Orders awaiting first review","Confirm item, variant, price and delivery before accepting.","orders","▤");
+ add(s.needsVerification,"Product records need verification","Check details, price, audience, season and product attributes.","products","▣");
+ add(s.unknownStock,"Inventory quantities are not recorded","Enter a physical count; unknown is not the same as zero.","inventory","▦");
+ add(s.lowStock,"Inventory lines are running low","Review lines with one to five recorded units.","inventory","!");
+ add(s.outOfStock,"Inventory lines are out of stock","Check availability and replenish or update the catalogue.","inventory","×");
  add(s.newMessages,"New customer messages","Review incoming customer enquiries.","messages","✉");
  add(s.pendingReviews,"Reviews awaiting moderation","Check purchase and publication consent.","reviews","☆");
  $("fa-attention-list").innerHTML=tasks.length?tasks.slice(0,7).map(t=>'<div class="os-attention-item"><span class="os-attention-icon">'+esc(t.icon)+'</span><div class="os-attention-copy"><b>'+esc(t.count.toLocaleString("en-BD"))+" · "+esc(t.title)+'</b><small>'+esc(t.desc)+'</small></div><button type="button" data-os-goto="'+esc(t.tab)+'">Review ↗</button></div>').join(""):'<div class="os-empty-attention">No urgent actions from the current records.</div>';
+
  const recent=Array.isArray(overviewData.recentOrders)?overviewData.recentOrders:[];
  $("fa-overview-orders").innerHTML=recent.length?recent.map(o=>'<tr><td><strong>'+esc(o.order_number)+'</strong><small>'+esc(date(o.created_at))+'</small></td><td><strong>'+esc(o.customer_name)+'</strong><small>'+esc(o.customer_phone)+'</small></td><td>'+esc(date(o.created_at))+'</td><td>'+esc(String(o.payment_status||"not collected").replaceAll("_"," "))+'</td><td><span class="fa-status '+esc(o.status)+'">'+esc(statusLabel(o.status))+'</span></td><td><button class="fa-view" type="button" data-overview-order="'+esc(o.id)+'">Open ↗</button></td></tr>').join(""):'<tr><td colspan="6" class="fa-empty-cell">No order requests have been received yet.</td></tr>';
+
+ const activity=Array.isArray(overviewData.recentActivity)?overviewData.recentActivity:[];
+ $("fa-overview-activity").innerHTML=activity.length?activity.slice(0,6).map(item=>'<article class="os-overview-activity-row"><span class="os-activity-mark">↳</span><div><b>'+esc(String(item.summary||item.action||"Workspace update"))+'</b><small>'+esc(String(item.entity_type||"record").replaceAll("_"," "))+" · "+esc(String(item.action||"").replaceAll("."," ").replaceAll("_"," "))+'</small></div><time>'+esc(date(item.created_at))+'</time></article>').join(""):'<div class="os-empty-attention">No admin changes have been recorded yet.</div>';
+
+ const limits=overviewData.dataLimits||{},warnings=[];
+ if(limits.ordersMayBeTruncated)warnings.push("Orders reached the "+count(limits.ordersLimit).toLocaleString("en-BD")+"-record fetch limit.");
+ if(limits.productsMayBeTruncated)warnings.push("Products reached the "+count(limits.productsLimit).toLocaleString("en-BD")+"-record fetch limit.");
+ if(limits.variantsMayBeTruncated)warnings.push("Variants reached the "+count(limits.variantsLimit).toLocaleString("en-BD")+"-record fetch limit.");
+ if(limits.messagesMayBeTruncated||limits.reviewsMayBeTruncated)warnings.push("Messages or reviews reached their fetch limit.");
+ const limitNote=$("fa-overview-limit-note");
+ if(limitNote){limitNote.textContent=warnings.length?"Data coverage notice: "+warnings.join(" ")+" Some totals may be partial; review the relevant section before making decisions.":"";limitNote.hidden=!warnings.length;}
 }
 async function loadInventory(){
  try{const d=await adminRequest({operation:"inventory"});inventoryProducts=d.products||[];inventoryVariants=d.variants||[];inventoryMovements=d.movements||[];inventoryLoaded=true;renderInventory();}
@@ -480,7 +517,7 @@ function openOrder(id){
 function closeOrder(){$("fa-modal").hidden=true;document.body.style.overflow="";}
 $("fa-login-form").addEventListener("submit",async e=>{e.preventDefault();const form=e.currentTarget,data=new FormData(form),button=form.querySelector("button[type=submit]");button.disabled=true;message("fa-login-message","Checking your access…",false);try{const email=String(data.get("email")||"").trim().toLowerCase();if(email!==ADMIN_EMAIL)throw new Error("Only the authorised owner email can sign in.");const session=await adminRequest({operation:"login",email,password:String(data.get("password")||"")});saveSession(session);form.reset();message("fa-login-message","",true);showDashboard();void loadOrders();void loadOverview();}catch(err){clearSession();showAuth();message("fa-login-message",err.message,false);}finally{button.disabled=false;}});
 
-$("fa-refresh").addEventListener("click",()=>{overviewLoaded=inventoryLoaded=customersLoaded=categoriesLoaded=reviewsLoaded=activityLoaded=false;productsLoaded=messagesLoaded=feedbackLoaded=false;if(activeTab==="orders")void loadOrders();showTab(activeTab);});$("fa-search").addEventListener("input",renderOrders);$("fa-filter").addEventListener("change",renderOrders);
+$("fa-refresh").addEventListener("click",()=>{overviewLoaded=inventoryLoaded=customersLoaded=categoriesLoaded=reviewsLoaded=activityLoaded=false;productsLoaded=messagesLoaded=feedbackLoaded=false;if(activeTab==="orders")void loadOrders();showTab(activeTab);if(activeTab!=="overview")void loadOverview();});$("fa-search").addEventListener("input",renderOrders);$("fa-filter").addEventListener("change",renderOrders);
 $("fa-orders-tab").addEventListener("click",()=>showTab("orders"));$("fa-products-tab").addEventListener("click",()=>showTab("products"));$("fa-messages-tab").addEventListener("click",()=>showTab("messages"));$("fa-feedback-tab").addEventListener("click",()=>showTab("feedback"));
 $("fa-product-search").addEventListener("input",renderProducts);$("fa-product-filter").addEventListener("change",renderProducts);
 $("fa-product-export").addEventListener("click",exportProductsCsv);$("fa-product-import").addEventListener("change",async e=>{const file=e.currentTarget.files&&e.currentTarget.files[0];if(file)await importProductsCsv(file);e.currentTarget.value="";});
@@ -496,7 +533,7 @@ $("fa-detail-content").addEventListener("submit",async e=>{
  button.disabled=true;message("fa-message-edit-message","Saving message status…",false);
  try{
   const result=await adminRequest({operation:"message-update",message_id:selectedMessage.id,status});
-  messages=messages.map(m=>m.id===selectedMessage.id?{...m,...result.message}:m);selectedMessage=result.message;renderMessages();message("fa-message-edit-message","Message status updated.",true);
+  messages=messages.map(m=>m.id===selectedMessage.id?{...m,...result.message}:m);selectedMessage=result.message;renderMessages();message("fa-message-edit-message","Message status updated.",true);overviewLoaded=false;void loadOverview();
  }catch(err){message("fa-message-edit-message",err.message,false);}
  finally{button.disabled=false;}
 });
@@ -523,11 +560,11 @@ $("fa-detail-content").addEventListener("submit",async e=>{
  try{
   const result=await adminRequest({operation:"product-update",product_id:selectedProduct.id,fields});
   products=products.map(p=>p.id===selectedProduct.id?{...p,...result.product}:p);selectedProduct=result.product;renderProducts();
-  message("fa-product-edit-message","Product updated successfully.",true);
+  message("fa-product-edit-message","Product updated successfully.",true);overviewLoaded=false;void loadOverview();
  }catch(err){message("fa-product-edit-message",err.message,false);}
  finally{button.disabled=false;}
 });
-$("fa-detail-content").addEventListener("submit",async e=>{if(e.target.id!=="fa-edit-form")return;e.preventDefault();if(!selected)return;const form=e.target,data=new FormData(form),fields={};for(const key of ["status","price_verification","payment_method","payment_status","courier_name","courier_tracking_number","internal_note"])fields[key]=String(data.get(key)||"").trim()||null;for(const key of ["delivery_charge_bdt","final_total_bdt"])fields[key]=data.get(key)===""?null:Number(data.get(key));const delivery=data.get("estimated_delivery_at");fields.estimated_delivery_at=delivery?new Date(delivery).toISOString():null;const button=form.querySelector("button[type=submit]");button.disabled=true;message("fa-edit-message","Saving order changes…",false);try{const result=await adminRequest({operation:"update",order_id:selected.id,fields});orders=orders.map(o=>o.id===selected.id?{...o,...result.order}:o);renderOrders();renderStats(await adminRequest({operation:"list"}).then(d=>d.stats||{}));selected=orders.find(o=>o.id===selected.id);openOrder(selected.id);message("fa-edit-message","Order updated successfully.",true);}catch(err){message("fa-edit-message",err.message,false);}finally{button.disabled=false;}});
+$("fa-detail-content").addEventListener("submit",async e=>{if(e.target.id!=="fa-edit-form")return;e.preventDefault();if(!selected)return;const form=e.target,data=new FormData(form),fields={};for(const key of ["status","price_verification","payment_method","payment_status","courier_name","courier_tracking_number","internal_note"])fields[key]=String(data.get(key)||"").trim()||null;for(const key of ["delivery_charge_bdt","final_total_bdt"])fields[key]=data.get(key)===""?null:Number(data.get(key));const delivery=data.get("estimated_delivery_at");fields.estimated_delivery_at=delivery?new Date(delivery).toISOString():null;const button=form.querySelector("button[type=submit]");button.disabled=true;message("fa-edit-message","Saving order changes…",false);try{const result=await adminRequest({operation:"update",order_id:selected.id,fields});orders=orders.map(o=>o.id===selected.id?{...o,...result.order}:o);renderOrders();renderStats(await adminRequest({operation:"list"}).then(d=>d.stats||{}));selected=orders.find(o=>o.id===selected.id);openOrder(selected.id);message("fa-edit-message","Order updated successfully.",true);overviewLoaded=false;void loadOverview();}catch(err){message("fa-edit-message",err.message,false);}finally{button.disabled=false;}});
 $("fa-logout").addEventListener("click",async()=>{try{if(token())await adminRequest({operation:"logout"});}catch(_){}clearSession();orders=[];products=[];productsLoaded=false;closeOrder();showTab("orders");showAuth();$("fa-login-form").reset();});
 
 $("fa-inventory-search").addEventListener("input",renderInventory);
@@ -575,12 +612,12 @@ $("fa-detail-content").addEventListener("submit",async e=>{
  }
  if(form.id==="fa-variant-create-form"){
   e.preventDefault();const d=new FormData(form),button=form.querySelector('button[type="submit"]');button.disabled=true;message("fa-variant-message","Creating variant…",false);
-  try{await adminRequest({operation:"variant-create",product_id:String(d.get("product_id")),size:String(d.get("size")||"").trim(),color:String(d.get("color")||"").trim(),sku:String(d.get("sku")||"").trim()||null,price_bdt:d.get("price_bdt")===""?null:Number(d.get("price_bdt"))});toast("Variant created. Record physical stock separately.");closeOrder();inventoryLoaded=false;void loadInventory();}
+  try{await adminRequest({operation:"variant-create",product_id:String(d.get("product_id")),size:String(d.get("size")||"").trim(),color:String(d.get("color")||"").trim(),sku:String(d.get("sku")||"").trim()||null,price_bdt:d.get("price_bdt")===""?null:Number(d.get("price_bdt"))});toast("Variant created. Record physical stock separately.");closeOrder();inventoryLoaded=false;void loadInventory();overviewLoaded=false;void loadOverview();}
   catch(error){message("fa-variant-message",error.message,false);button.disabled=false;}return;
  }
  if(form.id==="fa-variant-edit-form"){
   e.preventDefault();const d=new FormData(form),button=form.querySelector('button[type="submit"]');button.disabled=true;message("fa-variant-edit-message","Saving variant…",false);
-  try{await adminRequest({operation:"variant-update",variant_id:String(d.get("variant_id")),fields:{size:String(d.get("size")||"").trim(),color:String(d.get("color")||"").trim(),sku:String(d.get("sku")||"").trim()||null,price_bdt:d.get("price_bdt")===""?null:Number(d.get("price_bdt")),is_active:form.elements.is_active.checked}});toast("Variant updated.");closeOrder();inventoryLoaded=false;void loadInventory();}
+  try{await adminRequest({operation:"variant-update",variant_id:String(d.get("variant_id")),fields:{size:String(d.get("size")||"").trim(),color:String(d.get("color")||"").trim(),sku:String(d.get("sku")||"").trim()||null,price_bdt:d.get("price_bdt")===""?null:Number(d.get("price_bdt")),is_active:form.elements.is_active.checked}});toast("Variant updated.");closeOrder();inventoryLoaded=false;void loadInventory();overviewLoaded=false;void loadOverview();}
   catch(error){message("fa-variant-edit-message",error.message,false);button.disabled=false;}return;
  }
  if(form.id==="fa-category-edit-form"){
@@ -592,7 +629,7 @@ $("fa-detail-content").addEventListener("submit",async e=>{
  if(form.id==="fa-collection-edit-form"){
   e.preventDefault();const d=new FormData(form),button=form.querySelector('button[type="submit"]'),collection={id:String(d.get("id")||"")||undefined,name:String(d.get("name")||"").trim(),slug:String(d.get("slug")||"").trim(),status:String(d.get("status")||"draft"),audience:String(d.get("audience")||"")||null,season:String(d.get("season")||"")||null,description:String(d.get("description")||"").trim(),image_url:String(d.get("image_url")||"").trim()||null},ids=String(d.get("product_ids")||"").split(/[;,]/).map(v=>v.trim()).filter(Boolean);
   button.disabled=true;message("fa-collection-message","Saving collection…",false);
-  try{const r=await adminRequest({operation:"collection-save",collection});if(ids.length)await adminRequest({operation:"collection-products-save",collection_id:r.collection.id,product_ids:ids});toast("Collection saved.");closeOrder();categoriesLoaded=false;void loadCategories();}
+  try{const r=await adminRequest({operation:"collection-save",collection});if(ids.length)await adminRequest({operation:"collection-products-save",collection_id:r.collection.id,product_ids:ids});toast("Collection saved.");closeOrder();categoriesLoaded=false;void loadCategories();overviewLoaded=false;void loadOverview();}
   catch(error){message("fa-collection-message",error.message,false);button.disabled=false;}return;
  }
 });
