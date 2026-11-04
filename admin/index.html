@@ -1,112 +1,161 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow,noarchive">
-<meta name="theme-color" content="#F7F5F0">
-<title>FORME Admin · Order Management</title>
-<link rel="stylesheet" href="/fashionstore/assets/admin.css?v=20261103-6">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive"><meta name="theme-color" content="#263B32">
+<title>FORME Business OS · Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/fashionstore/assets/admin-os.css?v=20261104-1">
 </head>
-<body class="fa-body">
-<div class="fa-shell">
-  <header class="fa-top"><a class="fa-brand" href="/fashionstore/">FORME<span>ADMIN CONSOLE</span></a><span class="fa-private"><i></i> PRIVATE WORKSPACE</span></header>
-  <main>
-    <section id="fa-auth" class="fa-auth-layout">
-      <div class="fa-auth-intro">
-        <span class="fa-eyebrow">FORME · OPERATIONS</span>
-        <h1>Orders, handled<br><em>with intention.</em></h1>
-        <p>A private workspace for reviewing customer requests, confirming pricing and managing delivery.</p>
-        <div class="fa-auth-points"><span>01 · Protected admin access</span><span>02 · Centralised order records</span><span>03 · Clear fulfilment tracking</span></div>
+<body class="os-body">
+<div class="os-shell">
+  <section id="fa-auth" class="os-auth">
+    <div class="os-auth-brand">
+      <div class="os-brand-mark">F.</div><span>FORME BUSINESS OS</span>
+      <div class="os-auth-copy"><p class="os-eyebrow">PRIVATE BUSINESS WORKSPACE</p><h1>Run your store<br><em>with clarity.</em></h1><p>One considered workspace for orders, products, inventory and the everyday decisions behind your business.</p><div class="os-auth-trust"><span><i></i> Protected owner access</span><span>Private operations · Bangladesh</span></div></div>
+      <div class="os-auth-bottom">FORME · EVERYDAY, REFINED</div>
+    </div>
+    <div class="os-auth-side">
+      <form id="fa-login-form" class="os-login-card"><span class="os-eyebrow">OWNER SIGN IN</span><h2>Welcome back.</h2><p class="os-muted">Sign in to manage your FORME business.</p>
+        <label>Authorised email<input name="email" type="email" value="sobujkhamar.official@gmail.com" autocomplete="username" readonly aria-readonly="true" required></label>
+        <label>Password<input name="password" type="password" autocomplete="current-password" minlength="16" maxlength="200" placeholder="Enter your server password" required></label>
+        <button class="os-button os-button-primary os-button-full" type="submit">Sign in securely <span>↗</span></button>
+        <p id="fa-login-message" class="fa-message" role="status" aria-live="polite"></p>
+        <div class="os-login-foot"><span class="os-lock">⌑</span> Password verification happens on the private server. No password is stored in this website.</div>
+      </form><span class="os-copyright">© FORME · PRIVATE ADMINISTRATION</span>
+    </div>
+  </section>
+
+  <section id="fa-dashboard" class="os-app" hidden>
+    <aside class="os-sidebar" id="fa-sidebar">
+      <a href="/fashionstore/" class="os-sidebar-brand"><span class="os-brand-mark">F.</span><span><b>FORME</b><small>BUSINESS OS</small></span></a>
+      <div class="os-sidebar-scroll">
+        <p class="os-nav-label">WORKSPACE</p>
+        <nav class="os-nav" aria-label="Business workspace">
+          <button id="fa-overview-tab" class="os-nav-item active" data-os-tab="overview" type="button"><span class="os-nav-icon">⌂</span><span>Overview</span></button>
+          <button id="fa-orders-tab" class="os-nav-item" data-os-tab="orders" type="button"><span class="os-nav-icon">▤</span><span>Orders</span><small id="fa-nav-pending">—</small></button>
+          <button id="fa-products-tab" class="os-nav-item" data-os-tab="products" type="button"><span class="os-nav-icon">▣</span><span>Products</span></button>
+          <button id="fa-inventory-tab" class="os-nav-item" data-os-tab="inventory" type="button"><span class="os-nav-icon">▦</span><span>Inventory</span></button>
+          <button id="fa-customers-tab" class="os-nav-item" data-os-tab="customers" type="button"><span class="os-nav-icon">♧</span><span>Customers</span></button>
+          <button id="fa-categories-tab" class="os-nav-item" data-os-tab="categories" type="button"><span class="os-nav-icon">◇</span><span>Categories & collections</span></button>
+        </nav>
+        <p class="os-nav-label os-nav-label-spaced">CUSTOMER EXPERIENCE</p>
+        <nav class="os-nav" aria-label="Customer experience">
+          <button id="fa-messages-tab" class="os-nav-item" data-os-tab="messages" type="button"><span class="os-nav-icon">✉</span><span>Messages</span></button>
+          <button id="fa-reviews-tab" class="os-nav-item" data-os-tab="reviews" type="button"><span class="os-nav-icon">☆</span><span>Reviews</span></button>
+        </nav>
+        <p class="os-nav-label os-nav-label-spaced">CONTROL & OVERSIGHT</p>
+        <nav class="os-nav" aria-label="Control and oversight">
+          <button id="fa-feedback-tab" class="os-nav-item" data-os-tab="feedback" type="button"><span class="os-nav-icon">◉</span><span>AI insights</span></button>
+          <button id="fa-activity-tab" class="os-nav-item" data-os-tab="activity" type="button"><span class="os-nav-icon">◷</span><span>Activity log</span></button>
+        </nav>
       </div>
-      <section class="fa-auth-card">
-        
-        <form id="fa-login-form" class="fa-form">
-          <span class="fa-eyebrow">PRIVATE OWNER ACCESS</span><h2>Admin sign in</h2>
-          <label>Authorised admin email<input name="email" type="email" value="sobujkhamar.official@gmail.com" autocomplete="username" inputmode="email" maxlength="254" readonly aria-readonly="true" required></label>
-          <label>Admin password<input name="password" type="password" autocomplete="current-password" minlength="16" maxlength="200" placeholder="Enter your server password" required></label>
-          <button class="fa-primary" type="submit">Sign in securely <span>↗</span></button>
-          <p id="fa-login-message" class="fa-message" role="status" aria-live="polite"></p>
-          <p class="fa-login-note">The password is checked only against the private server secret. It is never stored in this page or in the public repository.</p>
-        </form>
-      </section>
-    </section>
-    <section id="fa-dashboard" hidden>
-      <div class="fa-dash-head">
-        <div><span class="fa-eyebrow">STORE OPERATIONS</span><h1>Order overview</h1><p id="fa-welcome">Your private FORME workspace.</p></div>
-        <div class="fa-dash-actions"><button id="fa-refresh" class="fa-secondary" type="button">↻ Refresh</button><button id="fa-logout" class="fa-logout" type="button">Sign out</button></div>
+      <div class="os-sidebar-bottom"><div class="os-sidebar-status"><i></i><span><b>Store services</b><small>Admin workspace connected</small></span></div><a href="/fashionstore/" class="os-store-link">View live storefront <span>↗</span></a></div>
+    </aside>
+
+    <main class="os-main">
+      <header class="os-topbar">
+        <div class="os-topbar-left"><button class="os-mobile-menu" id="fa-mobile-menu" type="button" aria-label="Toggle navigation">☰</button><div class="os-crumb"><span>FORME</span><b>/</b><strong id="fa-page-title">Overview</strong></div></div>
+        <div class="os-topbar-actions">
+          <label class="os-global-search"><span>⌕</span><input id="fa-global-search" type="search" placeholder="Search this workspace..." aria-label="Search this workspace"><kbd>⌘ K</kbd></label>
+          <button id="fa-refresh" class="os-icon-button" type="button" title="Refresh data" aria-label="Refresh data">↻</button><span class="os-topbar-divider"></span>
+          <div class="os-user-chip"><span class="os-avatar">F</span><span><b>Store owner</b><small id="fa-welcome">Private workspace</small></span></div><button id="fa-logout" class="os-logout" type="button">Sign out</button>
+        </div>
+      </header>
+
+      <div class="os-content">
+        <div id="fa-alert" class="fa-alert os-alert" hidden role="status"></div>
+
+        <section id="fa-overview-panel" class="os-panel">
+          <div class="os-page-intro"><div><p class="os-eyebrow">BUSINESS AT A GLANCE</p><h1>Good to see you.</h1><p class="os-muted">A clear view of what needs attention across your store today.</p></div><div class="os-date-chip"><span>◷</span><span id="fa-current-date">Store overview</span></div></div>
+          <div class="os-stat-grid">
+            <article class="os-stat-card"><div class="os-stat-top"><span>Order requests</span><span class="os-stat-icon">▤</span></div><strong id="fa-kpi-orders">—</strong><small><span id="fa-kpi-pending">—</span> awaiting review</small></article>
+            <article class="os-stat-card"><div class="os-stat-top"><span>Collected revenue</span><span class="os-stat-icon">৳</span></div><strong id="fa-kpi-revenue">—</strong><small id="fa-kpi-paid">Verified paid orders only</small></article>
+            <article class="os-stat-card"><div class="os-stat-top"><span>Active products</span><span class="os-stat-icon">▣</span></div><strong id="fa-kpi-products">—</strong><small id="fa-kpi-unverified">Product verification</small></article>
+            <article class="os-stat-card"><div class="os-stat-top"><span>Stock attention</span><span class="os-stat-icon">▦</span></div><strong id="fa-kpi-stock">—</strong><small id="fa-kpi-unknown">Stock counts not recorded</small></article>
+          </div>
+          <div class="os-overview-grid">
+            <section class="os-card os-attention-card"><div class="os-card-head"><div><p class="os-eyebrow">PRIORITY QUEUE</p><h2>Needs attention</h2></div><span class="os-live-dot">LIVE DATA</span></div><div id="fa-attention-list" class="os-attention-list"><div class="os-skeleton-row">Loading business priorities…</div></div></section>
+            <section class="os-card os-operations-card"><div class="os-card-head"><div><p class="os-eyebrow">OPERATIONS</p><h2>Order status</h2></div><button class="os-text-button" type="button" data-os-goto="orders">View orders ↗</button></div>
+              <div class="os-status-bars"><div><span>Awaiting review</span><b id="fa-status-pending">—</b><i><em id="fa-bar-pending"></em></i></div><div><span>In progress</span><b id="fa-status-active">—</b><i><em id="fa-bar-active"></em></i></div><div><span>Delivered</span><b id="fa-status-delivered">—</b><i><em id="fa-bar-delivered"></em></i></div></div>
+              <div class="os-operations-foot"><span id="fa-overview-collections">— categories active</span><span id="fa-overview-messages">— new messages</span></div>
+            </section>
+          </div>
+          <section class="os-card os-recent-card"><div class="os-card-head"><div><p class="os-eyebrow">LATEST ACTIVITY</p><h2>Recent order requests</h2></div><button class="os-text-button" type="button" data-os-goto="orders">All orders ↗</button></div><div class="os-table-wrap"><table class="os-table"><thead><tr><th>ORDER</th><th>CUSTOMER</th><th>DATE</th><th>PAYMENT</th><th>STATUS</th><th></th></tr></thead><tbody id="fa-overview-orders"><tr><td colspan="6" class="fa-empty-cell">Loading orders…</td></tr></tbody></table></div></section>
+          <p class="os-data-note">Revenue includes only orders recorded as paid. Order requests are not counted as sales, and unknown inventory is never treated as zero.</p>
+        </section>
+
+        <section id="fa-orders-panel" class="os-panel os-card" hidden>
+          <div class="os-page-intro os-page-intro-compact"><div><p class="os-eyebrow">COMMERCE OPERATIONS</p><h1>Orders</h1><p class="os-muted">Review customer requests, verify the final amount and manage fulfilment.</p></div><span id="fa-order-count" class="os-record-count">0 records</span></div>
+          <div class="os-toolbar"><label class="os-search">⌕ <input id="fa-search" type="search" placeholder="Search order reference, name or phone"></label><select id="fa-filter" aria-label="Filter orders"><option value="all">All statuses</option><option value="pending_review">Pending review</option><option value="contacted">Contacted</option><option value="confirmed">Confirmed</option><option value="processing">Processing</option><option value="shipped">Shipped</option><option value="delivered">Delivered</option><option value="cancelled">Cancelled</option><option value="rejected">Rejected</option></select></div>
+          <div class="os-table-wrap"><table class="os-table"><thead><tr><th>ORDER</th><th>CUSTOMER</th><th>DATE</th><th>ITEMS</th><th>SUBTOTAL</th><th>PAYMENT</th><th>STATUS</th><th></th></tr></thead><tbody id="fa-order-rows"><tr><td colspan="8" class="fa-empty-cell">Loading orders…</td></tr></tbody></table></div><div id="fa-empty" class="fa-empty" hidden>No orders match this view.</div>
+          <p class="os-data-note">Orders are customer requests until stock, size, price and delivery have been confirmed with the customer.</p>
+        </section>
+
+        <section id="fa-products-panel" class="os-panel os-card" hidden>
+          <div class="os-page-intro os-page-intro-compact"><div><p class="os-eyebrow">CATALOGUE CONTROL</p><h1>Products</h1><p class="os-muted">Maintain product information, attributes, verification and catalogue visibility.</p></div><button id="fa-product-create" class="os-button os-button-primary" type="button">＋ Add product</button></div>
+          <div class="os-product-tools"><button id="fa-product-export" class="os-button os-button-secondary" type="button">↓ Export CSV</button><label class="os-button os-button-secondary" for="fa-product-import">↑ Import CSV</label><input id="fa-product-import" type="file" accept=".csv,text/csv" hidden><span id="fa-product-import-status" class="fa-message os-inline-message" role="status" aria-live="polite">CSV import supports up to 250 products per batch. Keep IDs unchanged; stock remains blank when unknown.</span></div>
+          <div class="os-toolbar"><label class="os-search">⌕ <input id="fa-product-search" type="search" placeholder="Search product name, ID or category"></label><select id="fa-product-filter" aria-label="Filter products"><option value="all">All products</option><option value="needs_confirmation">Needs verification</option><option value="in_stock">In stock</option><option value="out_of_stock">Out of stock</option><option value="preorder">Preorder</option><option value="archived">Archived</option></select><span id="fa-product-count" class="os-record-count">0 products</span></div>
+          <div class="os-table-wrap"><table class="os-table"><thead><tr><th>PRODUCT</th><th>CATEGORY</th><th>PRICE</th><th>AVAILABILITY</th><th>VERIFICATION</th><th></th></tr></thead><tbody id="fa-product-rows"><tr><td colspan="6" class="fa-empty-cell">Open this tab to load products.</td></tr></tbody></table></div><div id="fa-product-empty" class="fa-empty" hidden>No products match this view.</div>
+          <p class="os-data-note">Product records are pilot catalogue entries. Confirm the real product, price and physical inventory before marking them verified or in stock.</p>
+        </section>
+
+        <section id="fa-inventory-panel" class="os-panel os-card" hidden>
+          <div class="os-page-intro os-page-intro-compact"><div><p class="os-eyebrow">STOCK CONTROL</p><h1>Inventory</h1><p class="os-muted">Record physical counts, manage size/colour variants and review stock changes.</p></div><span class="os-inventory-chip">Main stock location</span></div>
+          <div class="os-inventory-summary"><article><span>Products tracked</span><b id="fa-inv-tracked">—</b></article><article><span>Unknown quantities</span><b id="fa-inv-unknown">—</b></article><article><span>Low stock ≤ 5</span><b id="fa-inv-low">—</b></article><article><span>Active variants</span><b id="fa-inv-variants">—</b></article></div>
+          <div class="os-toolbar"><label class="os-search">⌕ <input id="fa-inventory-search" type="search" placeholder="Search product, SKU or variant"></label><select id="fa-inventory-filter" aria-label="Filter inventory"><option value="all">All inventory</option><option value="unknown">Count not recorded</option><option value="low">Low stock ≤ 5</option><option value="zero">Out of stock</option><option value="tracked">Stock recorded</option></select></div>
+          <div class="os-table-wrap"><table class="os-table"><thead><tr><th>PRODUCT / VARIANT</th><th>SKU</th><th>SIZE / COLOUR</th><th>QUANTITY</th><th>LAST CHECKED</th><th></th></tr></thead><tbody id="fa-inventory-rows"><tr><td colspan="6" class="fa-empty-cell">Open this tab to load inventory.</td></tr></tbody></table></div>
+          <div class="os-subsection-head"><div><p class="os-eyebrow">STOCK HISTORY</p><h2>Recent inventory movements</h2></div></div>
+          <div class="os-table-wrap"><table class="os-table"><thead><tr><th>DATE</th><th>PRODUCT</th><th>CHANGE TYPE</th><th>BEFORE</th><th>AFTER</th><th>REASON</th><th>RECORDED BY</th></tr></thead><tbody id="fa-inventory-movements"><tr><td colspan="7" class="fa-empty-cell">No stock movement loaded.</td></tr></tbody></table></div>
+          <p class="os-data-note">Unknown stock is shown as “Not counted”, never as zero. Variant stock totals remain unknown until every active variant has a physical count.</p>
+        </section>
+
+        <section id="fa-customers-panel" class="os-panel os-card" hidden>
+          <div class="os-page-intro os-page-intro-compact"><div><p class="os-eyebrow">CUSTOMER RELATIONSHIPS</p><h1>Customers</h1><p class="os-muted">A privacy-conscious customer directory derived from submitted order records.</p></div><span id="fa-customer-count" class="os-record-count">0 customers</span></div>
+          <div class="os-toolbar"><label class="os-search">⌕ <input id="fa-customer-search" type="search" placeholder="Search customer, phone or email"></label><span id="fa-customer-note" class="os-toolbar-note">Based on order history</span></div>
+          <div class="os-table-wrap"><table class="os-table"><thead><tr><th>CUSTOMER</th><th>PHONE</th><th>EMAIL</th><th>ORDERS</th><th>DELIVERED</th><th>COLLECTED SPEND</th><th>LAST ORDER</th></tr></thead><tbody id="fa-customer-rows"><tr><td colspan="7" class="fa-empty-cell">Open this tab to load customer records.</td></tr></tbody></table></div>
+          <p class="os-data-note">Customer profiles are currently calculated from order history. Contact data is not copied into a second customer database in this release.</p>
+        </section>
+
+        <section id="fa-categories-panel" class="os-panel os-card" hidden>
+          <div class="os-page-intro os-page-intro-compact"><div><p class="os-eyebrow">CATALOGUE STRUCTURE</p><h1>Categories & collections</h1><p class="os-muted">Manage the category registry and curated product groups used by store operations.</p></div></div>
+          <div class="os-manage-grid">
+            <div class="os-manage-card"><div class="os-subsection-head"><div><p class="os-eyebrow">CATEGORY REGISTRY</p><h2>Categories</h2></div><button id="fa-add-category" class="os-button os-button-secondary" type="button">＋ New category</button></div><div class="os-table-wrap"><table class="os-table"><thead><tr><th>NAME</th><th>AUDIENCE</th><th>PRODUCTS</th><th>STATUS</th><th></th></tr></thead><tbody id="fa-category-rows"><tr><td colspan="5" class="fa-empty-cell">Open this tab to load categories.</td></tr></tbody></table></div></div>
+            <div class="os-manage-card"><div class="os-subsection-head"><div><p class="os-eyebrow">CURATED MERCHANDISING</p><h2>Collections</h2></div><button id="fa-add-collection" class="os-button os-button-secondary" type="button">＋ New collection</button></div><div class="os-table-wrap"><table class="os-table"><thead><tr><th>COLLECTION</th><th>AUDIENCE</th><th>SEASON</th><th>STATUS</th><th></th></tr></thead><tbody id="fa-collection-rows"><tr><td colspan="5" class="fa-empty-cell">Open this tab to load collections.</td></tr></tbody></table></div></div>
+          </div><p class="os-data-note">This release establishes the category and collection registry. Publishing changes into public navigation and homepage merchandising is part of Part 2 Website Control.</p>
+        </section>
+
+        <section id="fa-messages-panel" class="os-panel os-card" hidden>
+          <div class="os-page-intro os-page-intro-compact"><div><p class="os-eyebrow">CUSTOMER CARE</p><h1>Messages</h1><p class="os-muted">Review customer enquiries submitted through the storefront contact form.</p></div><span id="fa-message-count" class="os-record-count">0 messages</span></div>
+          <div class="os-toolbar"><label class="os-search">⌕ <input id="fa-message-search" type="search" placeholder="Search name, subject or message"></label><select id="fa-message-filter" aria-label="Filter messages"><option value="all">All messages</option><option value="new">New</option><option value="in_progress">In progress</option><option value="resolved">Resolved</option><option value="spam">Spam</option></select></div>
+          <div class="os-table-wrap"><table class="os-table"><thead><tr><th>CUSTOMER</th><th>TOPIC</th><th>MESSAGE</th><th>RECEIVED</th><th>STATUS</th><th></th></tr></thead><tbody id="fa-message-rows"><tr><td colspan="6" class="fa-empty-cell">Open this tab to load messages.</td></tr></tbody></table></div><div id="fa-message-empty" class="fa-empty" hidden>No messages match this view.</div>
+        </section>
+
+        <section id="fa-reviews-panel" class="os-panel os-card" hidden>
+          <div class="os-page-intro os-page-intro-compact"><div><p class="os-eyebrow">CUSTOMER TRUST</p><h1>Product reviews</h1><p class="os-muted">Moderate verified-purchase reviews with clear publication consent.</p></div><span id="fa-review-count" class="os-record-count">0 reviews</span></div>
+          <div class="os-toolbar"><select id="fa-review-filter" aria-label="Filter reviews"><option value="all">All reviews</option><option value="pending_review">Pending review</option><option value="published">Published</option><option value="hidden_for_policy">Hidden for policy</option></select></div>
+          <div class="os-table-wrap"><table class="os-table"><thead><tr><th>REVIEWER</th><th>PRODUCT</th><th>RATING</th><th>REVIEW</th><th>DATE</th><th>STATUS</th><th></th></tr></thead><tbody id="fa-review-rows"><tr><td colspan="7" class="fa-empty-cell">Open this tab to load reviews.</td></tr></tbody></table></div>
+          <p class="os-data-note">Only reviews with publication consent can be published. Genuine negative reviews must not be hidden merely because they are negative.</p>
+        </section>
+
+        <section id="fa-feedback-panel" class="os-panel os-card" hidden>
+          <div class="os-page-intro os-page-intro-compact"><div><p class="os-eyebrow">AI CUSTOMER EXPERIENCE</p><h1>Assistant insights</h1><p class="os-muted">Anonymous feedback and technical response information for human review.</p></div><span id="fa-feedback-count" class="os-record-count">0 responses</span></div>
+          <div class="os-feedback-stats"><article><span>Total feedback</span><strong id="fa-feedback-total">—</strong></article><article><span>Helpful responses</span><strong id="fa-feedback-positive">—</strong></article><article><span>Needs improvement</span><strong id="fa-feedback-negative">—</strong></article><article><span>Angry / frustrated signals</span><strong id="fa-feedback-frustrated">—</strong></article></div>
+          <div class="os-table-wrap"><table class="os-table"><thead><tr><th>RATING</th><th>REASON</th><th>CONVERSATION</th><th>SIGNAL</th><th>AI MODEL</th><th>RESPONSE TIME</th><th>RECEIVED</th></tr></thead><tbody id="fa-feedback-rows"><tr><td colspan="7" class="fa-empty-cell">Open this tab to load AI feedback.</td></tr></tbody></table></div><div id="fa-feedback-empty" class="fa-empty" hidden>No feedback has been submitted yet.</div><p class="os-data-note">Feedback does not automatically train or fine-tune the AI model.</p>
+        </section>
+
+        <section id="fa-activity-panel" class="os-panel os-card" hidden>
+          <div class="os-page-intro os-page-intro-compact"><div><p class="os-eyebrow">ACCOUNTABILITY</p><h1>Activity log</h1><p class="os-muted">A chronological record of admin changes and order status transitions.</p></div><span id="fa-activity-count" class="os-record-count">0 events</span></div>
+          <div class="os-table-wrap"><table class="os-table"><thead><tr><th>TIME</th><th>ACTOR</th><th>ACTION</th><th>RESOURCE</th><th>DETAIL</th></tr></thead><tbody id="fa-activity-rows"><tr><td colspan="5" class="fa-empty-cell">Open this tab to load activity.</td></tr></tbody></table></div>
+          <p class="os-data-note">Activity history is server-recorded. It excludes customer message bodies and other unnecessary personal details.</p>
+        </section>
+        <footer class="os-footer"><span>FORME BUSINESS OS</span><span>Private owner workspace · All times shown in local browser time</span><a href="/fashionstore/">Return to storefront ↗</a></footer>
       </div>
-      <div id="fa-alert" class="fa-alert" hidden role="status"></div>
-      <div class="fa-stats">
-        <article><span>Total orders</span><strong id="fa-stat-total">—</strong><small>Latest 1,000 records</small></article>
-        <article><span>Need attention</span><strong id="fa-stat-awaiting">—</strong><small>Review or contact customer</small></article>
-        <article><span>In progress</span><strong id="fa-stat-active">—</strong><small>Confirmed through dispatch</small></article>
-        <article><span>Delivered</span><strong id="fa-stat-delivered">—</strong><small>Completed deliveries</small></article>
-        <article><span>Payments received</span><strong id="fa-stat-paid">—</strong><small>Recorded as paid</small></article>
-      </div>
-      <div class="fa-tabbar" role="tablist" aria-label="Store management">
-        <button id="fa-orders-tab" class="fa-tab active" type="button" role="tab" aria-selected="true">Orders</button>
-        <button id="fa-products-tab" class="fa-tab" type="button" role="tab" aria-selected="false">Products &amp; catalogue</button>
-        <button id="fa-messages-tab" class="fa-tab" type="button" role="tab" aria-selected="false">Customer messages</button>
-        <button id="fa-feedback-tab" class="fa-tab" type="button" role="tab" aria-selected="false">AI insights</button>
-      </div>
-      <section id="fa-orders-panel" class="fa-orders-panel">
-        <div class="fa-panel-head"><div><span class="fa-eyebrow">CUSTOMER REQUESTS</span><h2>Orders</h2></div><span id="fa-order-count" class="fa-count">0 records</span></div>
-        <div class="fa-toolbar"><label class="fa-search">⌕ <input id="fa-search" type="search" placeholder="Search reference, name or phone"></label><select id="fa-filter" aria-label="Filter orders"><option value="all">All statuses</option><option value="pending_review">Pending review</option><option value="contacted">Contacted</option><option value="confirmed">Confirmed</option><option value="processing">Processing</option><option value="shipped">Shipped</option><option value="delivered">Delivered</option><option value="cancelled">Cancelled</option><option value="rejected">Rejected</option></select></div>
-        <div class="fa-table-wrap"><table><thead><tr><th>Order</th><th>Customer</th><th>Placed</th><th>Items</th><th>Subtotal</th><th>Payment</th><th>Status</th><th></th></tr></thead><tbody id="fa-order-rows"><tr><td colspan="8" class="fa-empty-cell">Loading orders…</td></tr></tbody></table></div>
-        <div id="fa-empty" class="fa-empty" hidden>No orders match this view.</div>
-      </section>
-      <section id="fa-products-panel" class="fa-orders-panel" hidden>
-        <div class="fa-panel-head"><div><span class="fa-eyebrow">CATALOGUE CONTROL</span><h2>Products</h2><p class="fa-panel-note">Review the real product details before marking an item verified or in stock.</p></div><span id="fa-product-count" class="fa-count">0 products</span></div>
-        <div class="fa-product-tools">
-          <button id="fa-product-export" class="fa-secondary" type="button">Download product CSV</button>
-          <label class="fa-file-button" for="fa-product-import">Import edited CSV</label>
-          <input id="fa-product-import" type="file" accept=".csv,text/csv" hidden>
-          <p id="fa-product-import-status" class="fa-message" role="status" aria-live="polite">Export, edit and re-import up to 250 products. For list fields use semicolons (for example: S; M; L). Leave stock quantity blank when unknown. Verify each segment and attribute before checking its verification box.</p>
-        </div>
-        <div class="fa-toolbar">
-          <label class="fa-search">⌕ <input id="fa-product-search" type="search" placeholder="Search product name, ID or category"></label>
-          <select id="fa-product-filter" aria-label="Filter products">
-            <option value="all">All products</option><option value="needs_confirmation">Needs verification</option><option value="in_stock">In stock</option><option value="out_of_stock">Out of stock</option><option value="preorder">Preorder</option><option value="archived">Archived</option>
-          </select>
-        </div>
-        <div class="fa-table-wrap"><table><thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Availability</th><th>Verified metadata</th><th></th></tr></thead><tbody id="fa-product-rows"><tr><td colspan="6" class="fa-empty-cell">Open this tab to load products.</td></tr></tbody></table></div>
-        <div id="fa-product-empty" class="fa-empty" hidden>No products match this view.</div>
-        <p class="fa-footnote">Audience and season have separate verification controls. Verify sizes, colours, material, fit and pattern only after checking the real item. Leave stock quantity blank when unknown; do not use zero to mean unknown. A recorded stock number should reflect a physical inventory check. “In stock” and “Preorder” still require the existing product-detail verification.</p>
-      </section>
-      <section id="fa-messages-panel" class="fa-orders-panel" hidden>
-        <div class="fa-panel-head"><div><span class="fa-eyebrow">CUSTOMER CARE</span><h2>Messages</h2><p class="fa-panel-note">Enquiries submitted through the public contact form. Reply using the customer's supplied contact channel.</p></div><span id="fa-message-count" class="fa-count">0 messages</span></div>
-        <div class="fa-toolbar">
-          <label class="fa-search">⌕ <input id="fa-message-search" type="search" placeholder="Search name, subject or message"></label>
-          <select id="fa-message-filter" aria-label="Filter messages"><option value="all">All messages</option><option value="new">New</option><option value="in_progress">In progress</option><option value="resolved">Resolved</option><option value="spam">Spam</option></select>
-        </div>
-        <div class="fa-table-wrap"><table><thead><tr><th>Customer</th><th>Topic</th><th>Message</th><th>Received</th><th>Status</th><th></th></tr></thead><tbody id="fa-message-rows"><tr><td colspan="6" class="fa-empty-cell">Open this tab to load messages.</td></tr></tbody></table></div>
-        <div id="fa-message-empty" class="fa-empty" hidden>No messages match this view.</div>
-      </section>
-      <section id="fa-feedback-panel" class="fa-orders-panel" hidden>
-        <div class="fa-panel-head"><div><span class="fa-eyebrow">AI CUSTOMER EXPERIENCE</span><h2>Assistant insights</h2><p class="fa-panel-note">Anonymous ratings and basic technical metadata only. Raw chat messages and customer contact details are not recorded here.</p></div><span id="fa-feedback-count" class="fa-count">0 responses</span></div>
-        <div class="fa-feedback-stats">
-          <article><span>Total feedback</span><strong id="fa-feedback-total">—</strong></article>
-          <article><span>Helpful responses</span><strong id="fa-feedback-positive">—</strong></article>
-          <article><span>Needs improvement</span><strong id="fa-feedback-negative">—</strong></article>
-          <article><span>Angry / frustrated signals</span><strong id="fa-feedback-frustrated">—</strong></article>
-        </div>
-        <div class="fa-toolbar"><span class="fa-panel-note">Latest 200 responses · Session identifiers are hidden.</span></div>
-        <div class="fa-table-wrap"><table><thead><tr><th>Rating</th><th>Feedback reason</th><th>Conversation type</th><th>Signal</th><th>AI model</th><th>Response time</th><th>Received</th></tr></thead><tbody id="fa-feedback-rows"><tr><td colspan="7" class="fa-empty-cell">Open this tab to load AI feedback.</td></tr></tbody></table></div>
-        <div id="fa-feedback-empty" class="fa-empty" hidden>No feedback has been submitted yet.</div>
-        <p class="fa-footnote">Feedback is used for human review and prompt improvements. It does not automatically train or change the AI model.</p>
-      </section>
-      <p class="fa-footnote">COD orders arrive as pending review. Verify product availability, requested size or variant, final price and delivery charge before confirming dispatch. Record payment only after it has actually been received.</p>
-    </section>
-  </main>
-  <footer class="fa-footer"><span>FORME · PRIVATE ADMIN</span><a href="/fashionstore/">Return to storefront ↗</a></footer>
-</div>
-<div id="fa-modal" class="fa-modal" hidden>
-  <button class="fa-modal-backdrop" data-close-modal aria-label="Close order details"></button>
-  <section class="fa-drawer" role="dialog" aria-modal="true" aria-labelledby="fa-detail-title">
-    <div class="fa-drawer-head"><div><span class="fa-eyebrow">ORDER DETAIL</span><h2 id="fa-detail-title">Order</h2></div><button type="button" class="fa-close" data-close-modal aria-label="Close">×</button></div>
-    <div id="fa-detail-content"></div>
+    </main>
   </section>
 </div>
-<script src="/fashionstore/assets/admin.js?v=20261103-8" defer></script>
+<div id="fa-modal" class="fa-modal os-modal" hidden><button class="fa-modal-backdrop" data-close-modal aria-label="Close details"></button><section class="fa-drawer os-drawer" role="dialog" aria-modal="true" aria-labelledby="fa-detail-title"><div class="fa-drawer-head os-drawer-head"><div><span class="os-eyebrow">FORME WORKSPACE</span><h2 id="fa-detail-title">Details</h2></div><button type="button" class="fa-close" data-close-modal aria-label="Close">×</button></div><div id="fa-detail-content"></div></section></div>
+<div id="os-toast" class="os-toast" role="status" aria-live="polite"></div>
+<script src="/fashionstore/assets/admin-os.js?v=20261104-1" defer></script>
 </body></html>
