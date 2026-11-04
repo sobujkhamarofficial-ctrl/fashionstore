@@ -226,6 +226,7 @@ jobs:
           node --check assets/catalogue-orders.js
           node --check assets/cart-page.js
           node --check assets/image-viewer.js
+          node --check assets/image-resilience.js
           node --check assets/order-tracking.js
           node --check assets/order-confirmation.js
           node --check assets/catalogue-order-page.js
@@ -251,6 +252,8 @@ jobs:
               "assets/cart-page.css",
               "assets/image-viewer.js",
               "assets/image-viewer.css",
+              "assets/image-resilience.js",
+              "assets/image-resilience.css",
               "pages/order-tracking.html",
               "pages/order-confirmation.html",
               "pages/catalogue-order.html",
