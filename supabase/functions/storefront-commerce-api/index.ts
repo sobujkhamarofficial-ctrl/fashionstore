@@ -420,7 +420,16 @@ async function adminAction(body: Record<string, unknown>, req: Request, origin: 
     });
     const rows = await response.json().catch(() => []);
     if (!response.ok || !Array.isArray(rows) || !rows.length) return json({ error: "Variant could not be created. Check duplicate SKU or size/colour combination." }, 400, origin);
-    await recordAdminAudit(String(user.email || ADMIN_EMAIL), "variant.create", "product_variant", rows[0].id, "Created variant for " + productId, null, rows[0]);
+    const aggregateReset = await adminFetch("/rest/v1/store_products?id=eq." + encodeURIComponent(productId), {
+      method: "PATCH",
+      headers: { "Prefer": "return=minimal" },
+      body: JSON.stringify({ stock_quantity: null, stock_checked_at: null, updated_at: new Date().toISOString() }),
+    });
+    if (!aggregateReset.ok) {
+      await adminFetch("/rest/v1/store_product_variants?id=eq." + encodeURIComponent(rows[0].id), { method: "DELETE" });
+      return json({ error: "The product stock summary could not be reset; the new variant was rolled back. Please try again." }, 502, origin);
+    }
+    await recordAdminAudit(String(user.email || ADMIN_EMAIL), "variant.create", "product_variant", rows[0].id, "Created variant for " + productId + "; product-level stock awaits variant counts", null, rows[0]);
     return json({ ok: true, variant: rows[0] }, 201, origin);
   }
 
@@ -557,6 +566,13 @@ async function adminAction(body: Record<string, unknown>, req: Request, origin: 
     }
     const rows = await response.json().catch(() => []);
     if (!response.ok || !Array.isArray(rows) || !rows.length) return json({ error: "Category could not be saved. Check for a duplicate slug." }, 400, origin);
+    if (before && before.name !== rows[0].name) {
+      const renameProducts = await adminFetch("/rest/v1/store_products?category=eq." + encodeURIComponent(String(before.name)), {
+        method: "PATCH", headers: { "Prefer": "return=minimal" },
+        body: JSON.stringify({ category: rows[0].name, updated_at: new Date().toISOString() }),
+      });
+      if (!renameProducts.ok) console.error("Category saved but some product category names may need reconciliation:", renameProducts.status);
+    }
     await recordAdminAudit(String(user.email || ADMIN_EMAIL), id ? "category.update" : "category.create", "category", rows[0].id, "Saved category: " + name, before, rows[0]);
     return json({ ok: true, category: rows[0] }, 200, origin);
   }
@@ -681,6 +697,11 @@ async function adminAction(body: Record<string, unknown>, req: Request, origin: 
       || !["pending_review","published","hidden_for_policy"].includes(status)) return json({ error: "Invalid review update." }, 400, origin);
     const current = await adminReadRows("/rest/v1/store_product_reviews?id=eq." + encodeURIComponent(reviewId) + "&select=*&limit=1");
     if (!current.length) return json({ error: "Review not found." }, 404, origin);
+    if (status === "published") {
+      if (current[0].publication_consent !== true) return json({ error: "This review cannot be published because the customer did not give publication consent." }, 403, origin);
+      const purchase = await adminReadRows("/rest/v1/store_orders?id=eq." + encodeURIComponent(String(current[0].order_id)) + "&select=id,status&limit=1");
+      if (!purchase.length || purchase[0].status !== "delivered") return json({ error: "Only a review linked to a delivered order can be published." }, 409, origin);
+    }
     const response = await adminFetch("/rest/v1/store_product_reviews?id=eq." + encodeURIComponent(reviewId), {
       method: "PATCH", headers: { "Prefer": "return=representation" },
       body: JSON.stringify({ publication_status: status, updated_at: new Date().toISOString() }),
@@ -731,7 +752,7 @@ async function adminAction(body: Record<string, unknown>, req: Request, origin: 
     if (audience !== null && !["men","women","teens","kids","unisex"].includes(audience)) return json({ error: "Choose a valid audience." }, 400, origin);
     const payload = {
       id, name, category, description, image_url: imageUrl, price_bdt: Number(price),
-      compare_at_price_bdt: null, source: "admin", is_active: true,
+      compare_at_price_bdt: null, source: "admin", is_active: false,
       details_verified: false, availability_status: "needs_confirmation",
       audience, audience_verified: false, season_tags: [], season_verified: false,
       size_options: [], color_options: [], search_keywords: [],
