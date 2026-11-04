@@ -540,6 +540,16 @@ jobs:
         run: |
           test -s assets/admin-os.js
           node --check assets/admin-os.js
+          node --check assets/admin-os-part2.js
+          node --check assets/storefront-cms.js
+          node --check assets/journal.js
+          node --check assets/collections-public.js
+          test -s assets/admin-os-part2.css
+          test -s assets/storefront-cms.css
+          test -s assets/journal.css
+          test -s journal/index.html
+          test -s journal/article.html
+          test -s collections/index.html
       - name: Verify branded not-found page and image fallbacks
         run: |
           python3 - <<'PY'
