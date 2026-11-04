@@ -45,13 +45,29 @@ if "1,362" in home or "1362" in home:
     raise SystemExit("Homepage still contains an obsolete Men product total.")
 if "buildMenCategoryFilters" not in home:
     raise SystemExit("Homepage Men filters are not generated from the catalogue.")
+if "image-resilience.js" not in home or not (ROOT / "assets/image-resilience.js").is_file():
+    raise SystemExit("Shared broken-image recovery is missing.")
+if "image-resilience.css" not in home or not (ROOT / "assets/image-resilience.css").is_file():
+    raise SystemExit("Shared image fallback presentation is missing.")
+if "f-accessories-edit" not in home or home.count('class="f-accessory-feature"') != 2:
+    raise SystemExit("Homepage must contain the two image-led Bags and Accessories feature cards.")
+if "/fashionstore/men/sweaters/" not in home or "/fashionstore/men/cardigans/" not in home:
+    raise SystemExit("Homepage knitwear category links are missing.")
+if "images.unsplash.com" in home:
+    raise SystemExit("Homepage still contains direct Unsplash image dependencies.")
 if 'href="/fashionstore/winter/"' not in home:
     raise SystemExit("Homepage Winter Edit link is missing.")
-for required in ("pages/product.html", "winter/index.html", "assets/product-detail.js", "assets/collection-products.js", "assets/product-card-links.js"):
+for required in ("pages/product.html", "winter/index.html", "assets/product-detail.js", "assets/collection-products.js", "assets/product-card-links.js", "assets/image-resilience.css", "assets/image-resilience.js"):
     if not (ROOT / required).is_file():
         raise SystemExit(f"Missing product detail / Winter feature: {required}")
 if "Showing 23 sample products from 1,362" in home:
     raise SystemExit("Homepage contains an obsolete Men result summary.")
+
+winter_page = (ROOT / "winter/index.html").read_text(encoding="utf-8")
+if winter_page.count('class="category-card has-image"') != 6:
+    raise SystemExit("Winter Edit must contain six image-led layer cards.")
+if "/fashionstore/men/sweaters/" not in winter_page or "/fashionstore/men/cardigans/" not in winter_page:
+    raise SystemExit("Winter Edit knitwear links are missing.")
 
 html_files = sorted(p for p in ROOT.rglob("*.html") if ".git" not in p.parts)
 missing_links = []
