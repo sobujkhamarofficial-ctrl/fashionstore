@@ -445,3 +445,13 @@
 #forme-storefront .f-static-product .f-product-actions .f-add{left:10px;right:10px;bottom:10px;top:auto;width:auto}
 #forme-storefront .f-static-product .f-product-actions .f-buy-now{left:auto;right:10px;top:10px;bottom:auto;width:auto;min-width:104px;min-height:36px;padding:0 13px;border-radius:2px;box-shadow:0 3px 12px rgba(0,0,0,.18)}
 @media(max-width:420px){#forme-storefront .f-static-product .f-product-actions .f-buy-now{right:7px;top:7px;min-width:90px;min-height:34px;padding:0 9px;font-size:8px}#forme-storefront .f-static-product .f-product-actions .f-add{left:7px;right:7px;bottom:7px}}
+
+/* New Men knitwear categories: informative empty state, never fake product cards. */
+.f-coming-soon-link{border-style:dashed!important;background:#f4f0e9!important}
+.f-coming-soon-link small{color:#9a674d!important}
+.f-coming-soon-panel{grid-column:1/-1;display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:clamp(24px,4vw,42px);border:1px solid var(--f-line);background:linear-gradient(135deg,#f2eee6,#fffefa)}
+.f-coming-soon-kicker{color:var(--f-clay);font-size:9px;font-weight:700;letter-spacing:.18em}
+.f-coming-soon-panel strong{font:400 clamp(26px,3vw,36px)/1.15 var(--f-serif);color:var(--f-green)}
+.f-coming-soon-panel p{max-width:620px;margin:0;color:var(--f-muted);font-size:12px;line-height:1.8}
+.f-coming-soon-panel a{display:inline-flex;padding:12px 16px;background:var(--f-green);color:#fffefa;font-size:10px;font-weight:700;letter-spacing:.08em}
+@media(max-width:520px){.f-coming-soon-panel{padding:20px}.f-coming-soon-panel p{font-size:11px}}
