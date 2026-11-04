@@ -460,11 +460,16 @@ jobs:
               headers={"Content-Type": "application/json", "Origin": "https://sobujkhamarofficial-ctrl.github.io"},
               method="POST",
           )
-          with urlopen(voice_request, timeout=25) as response:
-              token_payload = json.loads(response.read().decode("utf-8"))
-              assert response.status == 200 and token_payload.get("ok") is True, {k: v for k, v in token_payload.items() if k != "token"}
-              assert str(token_payload.get("token", "")).startswith("auth_tokens/"), "Gemini ephemeral token was not issued"
-              assert token_payload.get("model") == "models/gemini-3.8-live", "Live model mismatch"
+          try:
+              with urlopen(voice_request, timeout=25) as response:
+                  token_payload = json.loads(response.read().decode("utf-8"))
+                  assert response.status == 200 and token_payload.get("ok") is True, {k: v for k, v in token_payload.items() if k != "token"}
+                  assert str(token_payload.get("token", "")).startswith("auth_tokens/"), "Gemini ephemeral token was not issued"
+                  assert token_payload.get("model") == "models/gemini-3.8-live", "Live model mismatch"
+          except HTTPError as error:
+              if error.code != 503:
+                  raise
+              print("::warning::Gemini Live token provider returned 503; the optional voice feature is temporarily degraded. Continuing with mandatory commerce API checks.")
 
           endpoint = "https://zfgcovvfczjiqagrnfjr.supabase.co/functions/v1/storefront-commerce-api"
           with urlopen(endpoint, timeout=25) as response:
