@@ -888,8 +888,7 @@ async function adminAction(body: Record<string, unknown>, req: Request, origin: 
           size_options: sizes,
           color_options: colors,
           sku,
-          stock_quantity: row.stock_quantity === "" || row.stock_quantity === null ? null : row.stock_quantity,
-          stock_checked_at: row.stock_quantity === "" || row.stock_quantity === null ? null : new Date().toISOString(),
+          // Stock columns in the CSV are informational only. Physical counts are written through adjust_store_inventory.
           material,
           fit,
           pattern,
@@ -1016,10 +1015,7 @@ async function adminAction(body: Record<string, unknown>, req: Request, origin: 
       }
     }
     if (input.stock_quantity !== undefined) {
-      const value = input.stock_quantity;
-      if (value !== null && (!Number.isInteger(value) || Number(value) < 0 || Number(value) > 2_000_000)) return json({ error: "Stock quantity must be blank or a whole number from 0 to 2,000,000." }, 400, origin);
-      fields.stock_quantity = value;
-      fields.stock_checked_at = value === null ? null : new Date().toISOString();
+      return json({ error: "Use the Inventory workspace to record physical stock counts. Product details cannot change inventory." }, 400, origin);
     }
     if (input.attributes_verified !== undefined) {
       if (typeof input.attributes_verified !== "boolean") return json({ error: "Attribute verification must be true or false." }, 400, origin);
