@@ -6,7 +6,7 @@
 <title>FORME Business OS · Admin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/fashionstore/assets/admin-os.css?v=20261104-2">
+<link rel="stylesheet" href="/fashionstore/assets/admin-os.css?v=20261104-overview-1">
 </head>
 <body class="os-body">
 <div class="os-shell">
@@ -76,22 +76,43 @@
         <div id="fa-alert" class="fa-alert os-alert" hidden role="status"></div>
 
         <section id="fa-overview-panel" class="os-panel">
-          <div class="os-page-intro"><div><p class="os-eyebrow">BUSINESS AT A GLANCE</p><h1>Good to see you.</h1><p class="os-muted">A clear view of what needs attention across your store today.</p></div><div class="os-date-chip"><span>◷</span><span id="fa-current-date">Store overview</span></div></div>
+          <div class="os-page-intro"><div><p class="os-eyebrow">BUSINESS AT A GLANCE</p><h1>Store overview</h1><p class="os-muted">A decision-ready view of orders, collections, catalogue readiness and stock.</p></div><div class="os-date-chip"><span>◷</span><span><b id="fa-current-date">Store overview</b><small id="fa-last-refreshed">Waiting for data</small></span></div></div>
           <div class="os-stat-grid">
             <article class="os-stat-card"><div class="os-stat-top"><span>Order requests</span><span class="os-stat-icon">▤</span></div><strong id="fa-kpi-orders">—</strong><small><span id="fa-kpi-pending">—</span> awaiting review</small></article>
-            <article class="os-stat-card"><div class="os-stat-top"><span>Collected revenue</span><span class="os-stat-icon">৳</span></div><strong id="fa-kpi-revenue">—</strong><small id="fa-kpi-paid">Verified paid orders only</small></article>
-            <article class="os-stat-card"><div class="os-stat-top"><span>Active products</span><span class="os-stat-icon">▣</span></div><strong id="fa-kpi-products">—</strong><small id="fa-kpi-unverified">Product verification</small></article>
-            <article class="os-stat-card"><div class="os-stat-top"><span>Stock attention</span><span class="os-stat-icon">▦</span></div><strong id="fa-kpi-stock">—</strong><small id="fa-kpi-unknown">Stock counts not recorded</small></article>
+            <article class="os-stat-card"><div class="os-stat-top"><span>Collected revenue</span><span class="os-stat-icon">৳</span></div><strong id="fa-kpi-revenue">—</strong><small id="fa-kpi-paid">Paid orders only</small></article>
+            <article class="os-stat-card"><div class="os-stat-top"><span>Active products</span><span class="os-stat-icon">▣</span></div><strong id="fa-kpi-products">—</strong><small id="fa-kpi-unverified">Verification status</small></article>
+            <article class="os-stat-card"><div class="os-stat-top"><span>Stock attention</span><span class="os-stat-icon">▦</span></div><strong id="fa-kpi-stock">—</strong><small id="fa-kpi-unknown">Not counted · low · out of stock</small></article>
           </div>
+
+          <section class="os-overview-period os-card">
+            <div class="os-overview-period-head"><div><p class="os-eyebrow">RECENT PERFORMANCE</p><h2>Last 30 days</h2></div><span id="fa-period-range-note">Compared with the previous 30 days</span></div>
+            <div class="os-period-grid">
+              <article class="os-period-metric"><span>Order requests</span><strong id="fa-period-orders">—</strong><small id="fa-period-orders-note">Previous-period comparison</small></article>
+              <article class="os-period-metric"><span>Paid revenue on these orders</span><strong id="fa-period-revenue">—</strong><small id="fa-period-revenue-note">Paid orders only</small></article>
+              <article class="os-period-metric"><span>Delivered orders</span><strong id="fa-period-delivered">—</strong><small id="fa-period-delivered-note">On orders placed in this window</small></article>
+              <article class="os-period-metric"><span>Average paid order</span><strong id="fa-period-average">—</strong><small id="fa-period-average-note">No paid orders yet</small></article>
+            </div>
+          </section>
+
           <div class="os-overview-grid">
-            <section class="os-card os-attention-card"><div class="os-card-head"><div><p class="os-eyebrow">PRIORITY QUEUE</p><h2>Needs attention</h2></div><span class="os-live-dot">LIVE DATA</span></div><div id="fa-attention-list" class="os-attention-list"><div class="os-skeleton-row">Loading business priorities…</div></div></section>
+            <section class="os-card os-attention-card"><div class="os-card-head"><div><p class="os-eyebrow">PRIORITY QUEUE</p><h2>Needs attention</h2></div><span class="os-live-dot">SERVER DATA</span></div><div id="fa-attention-list" class="os-attention-list"><div class="os-skeleton-row">Loading business priorities…</div></div></section>
             <section class="os-card os-operations-card"><div class="os-card-head"><div><p class="os-eyebrow">OPERATIONS</p><h2>Order status</h2></div><button class="os-text-button" type="button" data-os-goto="orders">View orders ↗</button></div>
-              <div class="os-status-bars"><div><span>Awaiting review</span><b id="fa-status-pending">—</b><i><em id="fa-bar-pending"></em></i></div><div><span>In progress</span><b id="fa-status-active">—</b><i><em id="fa-bar-active"></em></i></div><div><span>Delivered</span><b id="fa-status-delivered">—</b><i><em id="fa-bar-delivered"></em></i></div></div>
+              <div class="os-status-bars">
+                <div><span>Awaiting review</span><b id="fa-status-pending">—</b><i><em id="fa-bar-pending"></em></i></div>
+                <div><span>Contacted</span><b id="fa-status-contacted">—</b><i><em id="fa-bar-contacted"></em></i></div>
+                <div><span>In progress</span><b id="fa-status-active">—</b><i><em id="fa-bar-active"></em></i></div>
+                <div><span>Delivered</span><b id="fa-status-delivered">—</b><i><em id="fa-bar-delivered"></em></i></div>
+                <div><span>Cancelled / rejected</span><b id="fa-status-closed">—</b><i><em id="fa-bar-closed"></em></i></div>
+              </div>
               <div class="os-operations-foot"><span id="fa-overview-collections">— categories active</span><span id="fa-overview-messages">— new messages</span></div>
             </section>
           </div>
-          <section class="os-card os-recent-card"><div class="os-card-head"><div><p class="os-eyebrow">LATEST ACTIVITY</p><h2>Recent order requests</h2></div><button class="os-text-button" type="button" data-os-goto="orders">All orders ↗</button></div><div class="os-table-wrap"><table class="os-table"><thead><tr><th>ORDER</th><th>CUSTOMER</th><th>DATE</th><th>PAYMENT</th><th>STATUS</th><th></th></tr></thead><tbody id="fa-overview-orders"><tr><td colspan="6" class="fa-empty-cell">Loading orders…</td></tr></tbody></table></div></section>
-          <p class="os-data-note">Revenue includes only orders recorded as paid. Order requests are not counted as sales, and unknown inventory is never treated as zero.</p>
+
+          <section class="os-card os-recent-card"><div class="os-card-head"><div><p class="os-eyebrow">LATEST CUSTOMER ACTIVITY</p><h2>Recent order requests</h2></div><button class="os-text-button" type="button" data-os-goto="orders">All orders ↗</button></div><div class="os-table-wrap"><table class="os-table"><thead><tr><th>ORDER</th><th>CUSTOMER</th><th>DATE</th><th>PAYMENT</th><th>STATUS</th><th></th></tr></thead><tbody id="fa-overview-orders"><tr><td colspan="6" class="fa-empty-cell">Loading orders…</td></tr></tbody></table></div></section>
+
+          <section class="os-card os-recent-activity-card"><div class="os-card-head"><div><p class="os-eyebrow">WORKSPACE HISTORY</p><h2>Recent admin activity</h2></div><button class="os-text-button" type="button" data-os-goto="activity">Full activity log ↗</button></div><div id="fa-overview-activity" class="os-overview-activity"><div class="os-skeleton-row">Loading recent changes…</div></div></section>
+          <p id="fa-overview-limit-note" class="os-data-note os-data-warning" hidden></p>
+          <p class="os-data-note">Revenue includes only orders currently recorded as paid. The 30-day performance window is based on order creation date; payment reconciliation and manual cost entries remain in Finance. Inventory treats unknown quantities separately from zero stock.</p>
         </section>
 
         <section id="fa-orders-panel" class="os-panel os-card" hidden>
@@ -194,6 +215,6 @@
 </div>
 <div id="fa-modal" class="fa-modal os-modal" hidden><button class="fa-modal-backdrop" data-close-modal aria-label="Close details"></button><section class="fa-drawer os-drawer" role="dialog" aria-modal="true" aria-labelledby="fa-detail-title"><div class="fa-drawer-head os-drawer-head"><div><span class="os-eyebrow">FORME WORKSPACE</span><h2 id="fa-detail-title">Details</h2></div><button type="button" class="fa-close" data-close-modal aria-label="Close">×</button></div><div id="fa-detail-content"></div></section></div>
 <div id="os-toast" class="os-toast" role="status" aria-live="polite"></div>
-<script src="/fashionstore/assets/admin-os.js?v=20261104-2" defer></script>
+<script src="/fashionstore/assets/admin-os.js?v=20261104-overview-1" defer></script>
 <script src="/fashionstore/assets/admin-os-part2.js?v=20261104-1" defer></script>
 </body></html>
