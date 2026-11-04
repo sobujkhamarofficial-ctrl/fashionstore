@@ -232,6 +232,57 @@ function adminInputFields(input: unknown): Record<string, unknown> | null {
   return fields;
 }
 
+
+async function adminReadRows(path: string): Promise<Record<string, any>[]> {
+  const response = await adminFetch(path);
+  const rows = await response.json().catch(() => []);
+  if (!response.ok || !Array.isArray(rows)) throw new Error("The requested admin data could not be loaded.");
+  return rows as Record<string, any>[];
+}
+
+async function recordAdminAudit(
+  actor: string,
+  action: string,
+  entityType: string,
+  entityId: string | null,
+  summary: string,
+  beforeData: unknown = null,
+  afterData: unknown = null,
+): Promise<boolean> {
+  try {
+    const response = await adminFetch("/rest/v1/store_admin_audit_logs", {
+      method: "POST",
+      headers: { "Prefer": "return=minimal" },
+      body: JSON.stringify({
+        actor_email: actor,
+        action,
+        entity_type: entityType,
+        entity_id: entityId,
+        summary,
+        before_data: beforeData,
+        after_data: afterData,
+      }),
+    });
+    if (!response.ok) {
+      console.error("Admin audit record failed:", response.status);
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error("Admin audit record failed:", error instanceof Error ? error.message : "unknown error");
+    return false;
+  }
+}
+
+function adminSlug(value: unknown, max = 120): string {
+  return text(value, max).toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 100);
+}
+
 async function adminAction(body: Record<string, unknown>, req: Request, origin: string | null) {
   const operation = text(body.operation, 30);
   if (operation === "login") return await adminLogin(body, req, origin);
@@ -251,6 +302,450 @@ async function adminAction(body: Record<string, unknown>, req: Request, origin: 
     }
     return json({ ok: true }, 200, origin);
   }
+
+
+  if (operation === "overview") {
+    try {
+      const [orders, products, messages, reviews, categories, collections, activity] = await Promise.all([
+        adminReadRows("/rest/v1/store_orders?select=id,order_number,customer_name,customer_phone,status,payment_status,subtotal_bdt,final_total_bdt,created_at&order=created_at.desc&limit=2000"),
+        adminReadRows("/rest/v1/store_products?select=id,name,category,price_bdt,availability_status,details_verified,price_verified,audience_verified,season_verified,attributes_verified,stock_quantity,updated_at&order=updated_at.desc&limit=1000"),
+        adminReadRows("/rest/v1/store_contact_messages?select=id,status,created_at&order=created_at.desc&limit=1000"),
+        adminReadRows("/rest/v1/store_product_reviews?select=id,publication_status,created_at&order=created_at.desc&limit=1000"),
+        adminReadRows("/rest/v1/store_categories?select=id,is_active&limit=500"),
+        adminReadRows("/rest/v1/store_collections?select=id,status&limit=500"),
+        adminReadRows("/rest/v1/store_admin_audit_logs?select=id,actor_email,action,entity_type,entity_id,summary,created_at&order=created_at.desc&limit=8"),
+      ]);
+
+      const paidOrders = orders.filter((row) => row.payment_status === "paid");
+      const collectedRevenue = paidOrders.reduce((sum, row) => sum + Number(row.final_total_bdt ?? row.subtotal_bdt ?? 0), 0);
+      const knownStock = products.filter((row) => Number.isInteger(row.stock_quantity));
+      const lowStock = knownStock.filter((row) => Number(row.stock_quantity) <= 5);
+      const stats = {
+        orderRequests: orders.length,
+        pendingOrders: orders.filter((row) => ["pending_review","contacted"].includes(String(row.status))).length,
+        activeOrders: orders.filter((row) => ["confirmed","processing","shipped"].includes(String(row.status))).length,
+        deliveredOrders: orders.filter((row) => row.status === "delivered").length,
+        paidOrders: paidOrders.length,
+        collectedRevenueBdt: collectedRevenue,
+        totalProducts: products.length,
+        activeProducts: products.filter((row) => row.availability_status !== "archived").length,
+        needsVerification: products.filter((row) => row.details_verified !== true || row.price_verified !== true).length,
+        unknownStock: products.filter((row) => row.stock_quantity === null || row.stock_quantity === undefined).length,
+        lowStock: lowStock.length,
+        inStock: products.filter((row) => row.availability_status === "in_stock").length,
+        newMessages: messages.filter((row) => row.status === "new").length,
+        pendingReviews: reviews.filter((row) => row.publication_status === "pending_review").length,
+        activeCategories: categories.filter((row) => row.is_active === true).length,
+        activeCollections: collections.filter((row) => row.status === "active").length,
+      };
+      return json({
+        ok: true,
+        stats,
+        recentOrders: orders.slice(0, 8),
+        lowStockProducts: lowStock.slice(0, 8),
+        recentActivity: activity,
+        dataLimits: { ordersReturned: orders.length, productsReturned: products.length, ordersLimit: 2000, productsLimit: 1000 },
+      }, 200, origin);
+    } catch (error) {
+      console.error("Admin overview failed:", error instanceof Error ? error.message : "unknown error");
+      return json({ error: "Business overview could not be loaded. Please refresh." }, 502, origin);
+    }
+  }
+
+  if (operation === "inventory") {
+    try {
+      const [products, variants, movements] = await Promise.all([
+        adminReadRows("/rest/v1/store_products?select=id,name,category,sku,stock_quantity,stock_checked_at,availability_status,details_verified,is_active&order=name.asc&limit=1000"),
+        adminReadRows("/rest/v1/store_product_variants?select=id,product_id,sku,size,color,price_bdt,stock_quantity,stock_checked_at,is_active&order=product_id.asc,size.asc,color.asc&limit=2000"),
+        adminReadRows("/rest/v1/store_inventory_movements?select=id,product_id,variant_id,movement_type,stock_before,quantity_delta,stock_after,reason,actor_email,created_at&order=created_at.desc&limit=100"),
+      ]);
+      return json({ ok: true, products, variants, movements }, 200, origin);
+    } catch (error) {
+      console.error("Admin inventory load failed:", error instanceof Error ? error.message : "unknown error");
+      return json({ error: "Inventory could not be loaded. Please refresh." }, 502, origin);
+    }
+  }
+
+  if (operation === "inventory-adjust") {
+    const productId = text(body.product_id, 100);
+    const variantId = body.variant_id === null || body.variant_id === undefined || body.variant_id === "" ? null : text(body.variant_id, 36);
+    const quantity = body.new_quantity;
+    const reason = text(body.reason, 500);
+    if (!/^[a-z0-9][a-z0-9-]{0,99}$/i.test(productId)) return json({ error: "Invalid product reference." }, 400, origin);
+    if (variantId !== null && !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(variantId)) return json({ error: "Invalid product variant reference." }, 400, origin);
+    if (!Number.isInteger(quantity) || Number(quantity) < 0 || Number(quantity) > 2000000 || reason.length < 3) return json({ error: "Enter a valid physical stock count and explain the reason." }, 400, origin);
+    try {
+      const result = await callRpc("adjust_store_inventory", {
+        p_product_id: productId,
+        p_variant_id: variantId,
+        p_new_quantity: Number(quantity),
+        p_reason: reason,
+        p_actor_email: String(user.email || ADMIN_EMAIL),
+      });
+      await recordAdminAudit(String(user.email || ADMIN_EMAIL), "inventory.count", "product", productId, "Inventory count recorded: " + quantity, null, result);
+      return json({ ok: true, inventory: result }, 200, origin);
+    } catch (error) {
+      const detail = error instanceof Error ? error.message : "Inventory could not be updated.";
+      return json({ error: detail }, 400, origin);
+    }
+  }
+
+  if (operation === "variants") {
+    const productId = text(body.product_id, 100);
+    if (!/^[a-z0-9][a-z0-9-]{0,99}$/i.test(productId)) return json({ error: "Invalid product reference." }, 400, origin);
+    try {
+      const variants = await adminReadRows("/rest/v1/store_product_variants?select=*&product_id=eq." + encodeURIComponent(productId) + "&order=size.asc,color.asc&limit=200");
+      return json({ ok: true, variants }, 200, origin);
+    } catch (error) {
+      return json({ error: "Product variants could not be loaded." }, 502, origin);
+    }
+  }
+
+  if (operation === "variant-create") {
+    const productId = text(body.product_id, 100);
+    const size = text(body.size, 30) || null;
+    const color = text(body.color, 50) || null;
+    const sku = text(body.sku, 80) || null;
+    const price = body.price_bdt === null || body.price_bdt === undefined || body.price_bdt === "" ? null : Number(body.price_bdt);
+    if (!/^[a-z0-9][a-z0-9-]{0,99}$/i.test(productId) || (!size && !color)) return json({ error: "Select a product and enter at least a size or colour." }, 400, origin);
+    if (price !== null && (!Number.isInteger(price) || price < 0 || price > 5000000)) return json({ error: "Enter a valid variant price." }, 400, origin);
+    const productCheck = await adminFetch("/rest/v1/store_products?id=eq." + encodeURIComponent(productId) + "&select=id&limit=1");
+    const productRows = await productCheck.json().catch(() => []);
+    if (!productCheck.ok || !Array.isArray(productRows) || !productRows.length) return json({ error: "Product not found." }, 404, origin);
+    const payload = { product_id: productId, size, color, sku, price_bdt: price, stock_quantity: null, is_active: true };
+    const response = await adminFetch("/rest/v1/store_product_variants", {
+      method: "POST",
+      headers: { "Prefer": "return=representation" },
+      body: JSON.stringify(payload),
+    });
+    const rows = await response.json().catch(() => []);
+    if (!response.ok || !Array.isArray(rows) || !rows.length) return json({ error: "Variant could not be created. Check duplicate SKU or size/colour combination." }, 400, origin);
+    await recordAdminAudit(String(user.email || ADMIN_EMAIL), "variant.create", "product_variant", rows[0].id, "Created variant for " + productId, null, rows[0]);
+    return json({ ok: true, variant: rows[0] }, 201, origin);
+  }
+
+  if (operation === "variant-update") {
+    const variantId = text(body.variant_id, 36);
+    const fields = body.fields;
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(variantId)
+      || !fields || typeof fields !== "object" || Array.isArray(fields)) return json({ error: "Invalid variant update." }, 400, origin);
+    const allowed: Record<string, unknown> = {};
+    const input = fields as Record<string, unknown>;
+    for (const key of ["size","color","sku"] as const) {
+      if (input[key] !== undefined) {
+        const value = input[key] === null ? null : text(input[key], key === "color" ? 50 : 80);
+        if (value !== null && !value) return json({ error: "Variant fields cannot be blank." }, 400, origin);
+        allowed[key] = value;
+      }
+    }
+    if (input.price_bdt !== undefined) {
+      const v = input.price_bdt;
+      if (v !== null && (!Number.isInteger(v) || Number(v) < 0 || Number(v) > 5000000)) return json({ error: "Invalid variant price." }, 400, origin);
+      allowed.price_bdt = v;
+    }
+    if (input.is_active !== undefined) {
+      if (typeof input.is_active !== "boolean") return json({ error: "Variant active status must be true or false." }, 400, origin);
+      allowed.is_active = input.is_active;
+    }
+    if (!Object.keys(allowed).length) return json({ error: "No variant changes supplied." }, 400, origin);
+    const currentRows = await adminReadRows("/rest/v1/store_product_variants?id=eq." + encodeURIComponent(variantId) + "&select=*&limit=1");
+    if (!currentRows.length) return json({ error: "Variant not found." }, 404, origin);
+    const response = await adminFetch("/rest/v1/store_product_variants?id=eq." + encodeURIComponent(variantId), {
+      method: "PATCH", headers: { "Prefer": "return=representation" }, body: JSON.stringify({ ...allowed, updated_at: new Date().toISOString() }),
+    });
+    const rows = await response.json().catch(() => []);
+    if (!response.ok || !Array.isArray(rows) || !rows.length) return json({ error: "Variant could not be updated." }, 502, origin);
+    await recordAdminAudit(String(user.email || ADMIN_EMAIL), "variant.update", "product_variant", variantId, "Updated product variant", currentRows[0], rows[0]);
+    return json({ ok: true, variant: rows[0] }, 200, origin);
+  }
+
+  if (operation === "customers") {
+    try {
+      const orders = await adminReadRows("/rest/v1/store_orders?select=id,order_number,customer_name,customer_phone,customer_email,district,area,status,payment_status,subtotal_bdt,final_total_bdt,created_at&order=created_at.desc&limit=2000");
+      const customers = new Map<string, Record<string, any>>();
+      for (const order of orders) {
+        const phone = text(order.customer_phone, 30);
+        const email = text(order.customer_email, 254).toLowerCase();
+        const key = phone.replace(/\D/g, "") || email || ("name:" + text(order.customer_name, 100).toLowerCase());
+        if (!key) continue;
+        if (!customers.has(key)) {
+          customers.set(key, {
+            customer_key: key,
+            name: order.customer_name,
+            phone: phone || null,
+            email: email || null,
+            district: order.district || null,
+            area: order.area || null,
+            order_count: 0,
+            delivered_count: 0,
+            paid_order_count: 0,
+            collected_spend_bdt: 0,
+            latest_order_at: order.created_at,
+            latest_order_number: order.order_number,
+          });
+        }
+        const customer = customers.get(key)!;
+        customer.order_count += 1;
+        if (order.status === "delivered") customer.delivered_count += 1;
+        if (order.payment_status === "paid") {
+          customer.paid_order_count += 1;
+          customer.collected_spend_bdt += Number(order.final_total_bdt ?? order.subtotal_bdt ?? 0);
+        }
+      }
+      const list = Array.from(customers.values()).sort((a,b) => String(b.latest_order_at).localeCompare(String(a.latest_order_at)));
+      return json({ ok: true, customers: list, order_records: orders.length, limited: orders.length >= 2000 }, 200, origin);
+    } catch (error) {
+      console.error("Admin customer list failed:", error instanceof Error ? error.message : "unknown error");
+      return json({ error: "Customer records could not be loaded." }, 502, origin);
+    }
+  }
+
+  if (operation === "categories") {
+    try {
+      const [categories, collections, products] = await Promise.all([
+        adminReadRows("/rest/v1/store_categories?select=*&order=sort_order.asc,name.asc&limit=500"),
+        adminReadRows("/rest/v1/store_collections?select=*&order=sort_order.asc,name.asc&limit=500"),
+        adminReadRows("/rest/v1/store_products?select=id,category&limit=1000"),
+      ]);
+      const categoryCounts = new Map<string, number>();
+      for (const product of products) categoryCounts.set(String(product.category || ""), (categoryCounts.get(String(product.category || "")) || 0) + 1);
+      return json({
+        ok: true,
+        categories: categories.map((category) => ({ ...category, product_count: categoryCounts.get(String(category.name)) || 0 })),
+        collections,
+      }, 200, origin);
+    } catch (error) {
+      console.error("Admin category load failed:", error instanceof Error ? error.message : "unknown error");
+      return json({ error: "Categories and collections could not be loaded." }, 502, origin);
+    }
+  }
+
+  if (operation === "category-save") {
+    const input = body.category;
+    if (!input || typeof input !== "object" || Array.isArray(input)) return json({ error: "Category details are missing." }, 400, origin);
+    const category = input as Record<string, unknown>;
+    const name = text(category.name, 120);
+    const slug = adminSlug(category.slug || name);
+    const audience = category.audience === null || category.audience === "" || category.audience === undefined ? null : text(category.audience, 20).toLowerCase();
+    const allowedAudiences = new Set(["men","women","teens","kids","unisex"]);
+    if (!name || !slug || (audience !== null && !allowedAudiences.has(audience))) return json({ error: "Enter a valid category name, URL slug and audience." }, 400, origin);
+    const parentId = category.parent_id ? text(category.parent_id, 36) : null;
+    if (parentId && !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(parentId)) return json({ error: "Invalid parent category." }, 400, origin);
+    const payload = {
+      name, slug, parent_id: parentId, audience,
+      description: text(category.description, 1000) || null,
+      image_url: text(category.image_url, 1000) || null,
+      sort_order: Number.isInteger(category.sort_order) ? Number(category.sort_order) : 0,
+      is_active: typeof category.is_active === "boolean" ? category.is_active : true,
+      source: "admin",
+      updated_at: new Date().toISOString(),
+    };
+    const id = text(category.id, 36);
+    let response: Response;
+    let before: Record<string, any> | null = null;
+    if (id) {
+      const current = await adminReadRows("/rest/v1/store_categories?id=eq." + encodeURIComponent(id) + "&select=*&limit=1");
+      before = current[0] || null;
+      if (!before) return json({ error: "Category not found." }, 404, origin);
+      response = await adminFetch("/rest/v1/store_categories?id=eq." + encodeURIComponent(id), {
+        method: "PATCH", headers: { "Prefer": "return=representation" }, body: JSON.stringify(payload),
+      });
+    } else {
+      response = await adminFetch("/rest/v1/store_categories", {
+        method: "POST", headers: { "Prefer": "return=representation" }, body: JSON.stringify(payload),
+      });
+    }
+    const rows = await response.json().catch(() => []);
+    if (!response.ok || !Array.isArray(rows) || !rows.length) return json({ error: "Category could not be saved. Check for a duplicate slug." }, 400, origin);
+    await recordAdminAudit(String(user.email || ADMIN_EMAIL), id ? "category.update" : "category.create", "category", rows[0].id, "Saved category: " + name, before, rows[0]);
+    return json({ ok: true, category: rows[0] }, 200, origin);
+  }
+
+  if (operation === "collection-save") {
+    const input = body.collection;
+    if (!input || typeof input !== "object" || Array.isArray(input)) return json({ error: "Collection details are missing." }, 400, origin);
+    const collection = input as Record<string, unknown>;
+    const name = text(collection.name, 120);
+    const slug = adminSlug(collection.slug || name);
+    const audience = collection.audience === null || collection.audience === "" || collection.audience === undefined ? null : text(collection.audience, 20).toLowerCase();
+    const season = collection.season === null || collection.season === "" || collection.season === undefined ? null : text(collection.season, 20).toLowerCase();
+    const allowedAudiences = new Set(["men","women","teens","kids","unisex"]);
+    const allowedSeasons = new Set(["spring","summer","autumn","winter","all_season"]);
+    const status = text(collection.status, 20) || "draft";
+    if (!name || !slug || (audience !== null && !allowedAudiences.has(audience)) || (season !== null && !allowedSeasons.has(season)) || !["draft","active","archived"].includes(status)) {
+      return json({ error: "Enter valid collection details." }, 400, origin);
+    }
+    const payload = {
+      name, slug, description: text(collection.description, 1500) || null, audience, season,
+      image_url: text(collection.image_url, 1000) || null,
+      status, sort_order: Number.isInteger(collection.sort_order) ? Number(collection.sort_order) : 0,
+      updated_at: new Date().toISOString(),
+    };
+    const id = text(collection.id, 36);
+    let response: Response;
+    let before: Record<string, any> | null = null;
+    if (id) {
+      const current = await adminReadRows("/rest/v1/store_collections?id=eq." + encodeURIComponent(id) + "&select=*&limit=1");
+      before = current[0] || null;
+      if (!before) return json({ error: "Collection not found." }, 404, origin);
+      response = await adminFetch("/rest/v1/store_collections?id=eq." + encodeURIComponent(id), {
+        method: "PATCH", headers: { "Prefer": "return=representation" }, body: JSON.stringify(payload),
+      });
+    } else {
+      response = await adminFetch("/rest/v1/store_collections", {
+        method: "POST", headers: { "Prefer": "return=representation" }, body: JSON.stringify(payload),
+      });
+    }
+    const rows = await response.json().catch(() => []);
+    if (!response.ok || !Array.isArray(rows) || !rows.length) return json({ error: "Collection could not be saved. Check for a duplicate slug." }, 400, origin);
+    await recordAdminAudit(String(user.email || ADMIN_EMAIL), id ? "collection.update" : "collection.create", "collection", rows[0].id, "Saved collection: " + name, before, rows[0]);
+    return json({ ok: true, collection: rows[0] }, 200, origin);
+  }
+
+  if (operation === "collection-products-save") {
+    const collectionId = text(body.collection_id, 36);
+    const productIds = Array.isArray(body.product_ids) ? Array.from(new Set(body.product_ids.map((v) => text(v,100)).filter(Boolean))).slice(0,500) : [];
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(collectionId)) return json({ error: "Invalid collection reference." }, 400, origin);
+    const exists = await adminReadRows("/rest/v1/store_collections?id=eq." + encodeURIComponent(collectionId) + "&select=id&limit=1");
+    if (!exists.length) return json({ error: "Collection not found." }, 404, origin);
+    const deleteResponse = await adminFetch("/rest/v1/store_collection_products?collection_id=eq." + encodeURIComponent(collectionId), { method: "DELETE" });
+    if (!deleteResponse.ok) return json({ error: "Collection products could not be refreshed." }, 502, origin);
+    if (productIds.length) {
+      const insertResponse = await adminFetch("/rest/v1/store_collection_products", {
+        method: "POST", headers: { "Prefer": "return=minimal" },
+        body: JSON.stringify(productIds.map((productId, index) => ({ collection_id: collectionId, product_id: productId, sort_order: index }))),
+      });
+      if (!insertResponse.ok) return json({ error: "Some products could not be assigned to the collection." }, 400, origin);
+    }
+    await recordAdminAudit(String(user.email || ADMIN_EMAIL), "collection.products.update", "collection", collectionId, "Updated collection product assignments", null, { product_count: productIds.length });
+    return json({ ok: true, product_count: productIds.length }, 200, origin);
+  }
+
+  if (operation === "collections-products") {
+    const collectionId = text(body.collection_id, 36);
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(collectionId)) return json({ error: "Invalid collection reference." }, 400, origin);
+    try {
+      const rows = await adminReadRows("/rest/v1/store_collection_products?select=product_id,sort_order,store_products(id,name,category,image_url,price_bdt)&collection_id=eq." + encodeURIComponent(collectionId) + "&order=sort_order.asc");
+      return json({ ok: true, products: rows }, 200, origin);
+    } catch (error) {
+      return json({ error: "Collection products could not be loaded." }, 502, origin);
+    }
+  }
+
+  if (operation === "customers") {
+    try {
+      const orders = await adminReadRows("/rest/v1/store_orders?select=id,order_number,customer_name,customer_phone,customer_email,district,area,status,payment_status,subtotal_bdt,final_total_bdt,created_at&order=created_at.desc&limit=2000");
+      const customers = new Map<string, Record<string, any>>();
+      for (const order of orders) {
+        const phone = text(order.customer_phone, 30);
+        const email = text(order.customer_email, 254).toLowerCase();
+        const key = phone.replace(/\D/g, "") || email || ("name:" + text(order.customer_name, 100).toLowerCase());
+        if (!key) continue;
+        if (!customers.has(key)) {
+          customers.set(key, {
+            customer_key: key, name: order.customer_name, phone: phone || null, email: email || null,
+            district: order.district || null, area: order.area || null,
+            order_count: 0, delivered_count: 0, paid_order_count: 0, collected_spend_bdt: 0,
+            latest_order_at: order.created_at, latest_order_number: order.order_number,
+          });
+        }
+        const customer = customers.get(key)!;
+        customer.order_count += 1;
+        if (order.status === "delivered") customer.delivered_count += 1;
+        if (order.payment_status === "paid") {
+          customer.paid_order_count += 1;
+          customer.collected_spend_bdt += Number(order.final_total_bdt ?? order.subtotal_bdt ?? 0);
+        }
+      }
+      const list = Array.from(customers.values()).sort((a,b) => String(b.latest_order_at).localeCompare(String(a.latest_order_at)));
+      return json({ ok: true, customers: list, order_records: orders.length, limited: orders.length >= 2000 }, 200, origin);
+    } catch (error) {
+      console.error("Admin customer list failed:", error instanceof Error ? error.message : "unknown error");
+      return json({ error: "Customer records could not be loaded." }, 502, origin);
+    }
+  }
+
+  if (operation === "reviews") {
+    try {
+      const reviews = await adminReadRows("/rest/v1/store_product_reviews?select=id,order_id,product_id,reviewer_name,rating,review_text,publication_status,publication_consent,created_at,updated_at&order=created_at.desc&limit=500");
+      return json({ ok: true, reviews }, 200, origin);
+    } catch (error) {
+      return json({ error: "Product reviews could not be loaded." }, 502, origin);
+    }
+  }
+
+  if (operation === "review-update") {
+    const reviewId = text(body.review_id, 36);
+    const status = text(body.publication_status, 30);
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(reviewId)
+      || !["pending_review","published","hidden_for_policy"].includes(status)) return json({ error: "Invalid review update." }, 400, origin);
+    const current = await adminReadRows("/rest/v1/store_product_reviews?id=eq." + encodeURIComponent(reviewId) + "&select=*&limit=1");
+    if (!current.length) return json({ error: "Review not found." }, 404, origin);
+    const response = await adminFetch("/rest/v1/store_product_reviews?id=eq." + encodeURIComponent(reviewId), {
+      method: "PATCH", headers: { "Prefer": "return=representation" },
+      body: JSON.stringify({ publication_status: status, updated_at: new Date().toISOString() }),
+    });
+    const rows = await response.json().catch(() => []);
+    if (!response.ok || !Array.isArray(rows) || !rows.length) return json({ error: "Review could not be updated." }, 502, origin);
+    await recordAdminAudit(String(user.email || ADMIN_EMAIL), "review.update", "product_review", reviewId, "Changed review publication status to " + status, current[0], rows[0]);
+    return json({ ok: true, review: rows[0] }, 200, origin);
+  }
+
+  if (operation === "activity") {
+    try {
+      const [audit, orderEvents] = await Promise.all([
+        adminReadRows("/rest/v1/store_admin_audit_logs?select=*&order=created_at.desc&limit=150"),
+        adminReadRows("/rest/v1/store_order_events?select=id,order_id,event_type,old_status,new_status,note,actor_email,created_at&order=created_at.desc&limit=100"),
+      ]);
+      return json({ ok: true, audit, orderEvents }, 200, origin);
+    } catch (error) {
+      return json({ error: "Activity history could not be loaded." }, 502, origin);
+    }
+  }
+
+  if (operation === "order-events") {
+    const orderId = text(body.order_id, 36);
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(orderId)) return json({ error: "Invalid order reference." }, 400, origin);
+    try {
+      const events = await adminReadRows("/rest/v1/store_order_events?select=*&order_id=eq." + encodeURIComponent(orderId) + "&order=created_at.asc&limit=200");
+      return json({ ok: true, events }, 200, origin);
+    } catch (error) {
+      return json({ error: "Order history could not be loaded." }, 502, origin);
+    }
+  }
+
+  if (operation === "product-create") {
+    const input = body.fields;
+    if (!input || typeof input !== "object" || Array.isArray(input)) return json({ error: "Product details are missing." }, 400, origin);
+    const fields = input as Record<string, unknown>;
+    const name = text(fields.name, 180), category = text(fields.category, 120), description = text(fields.description, 2000);
+    const imageUrl = text(fields.image_url, 1000);
+    const id = adminSlug(fields.id || name, 100);
+    const price = fields.price_bdt;
+    const audience = fields.audience === null || fields.audience === "" || fields.audience === undefined ? null : text(fields.audience,20).toLowerCase();
+    const allowedImage = /^https:\/\/images\.unsplash\.com\/photo-[A-Za-z0-9-]+(?:\?[A-Za-z0-9_=&%.,-]*)?$/.test(imageUrl)
+      || /^\/fashionstore\/assets\/fashion-photos\/[a-z0-9-]+\.jpg$/i.test(imageUrl);
+    if (!id || !name || !category || !description || !allowedImage || !Number.isInteger(price) || Number(price) < 0 || Number(price) > 5000000) {
+      return json({ error: "Enter a unique product URL ID, name, category, description, valid image and whole-number price." }, 400, origin);
+    }
+    if (audience !== null && !["men","women","teens","kids","unisex"].includes(audience)) return json({ error: "Choose a valid audience." }, 400, origin);
+    const payload = {
+      id, name, category, description, image_url: imageUrl, price_bdt: Number(price),
+      compare_at_price_bdt: null, source: "admin", is_active: true,
+      details_verified: false, availability_status: "needs_confirmation",
+      audience, audience_verified: false, season_tags: [], season_verified: false,
+      size_options: [], color_options: [], search_keywords: [],
+      attributes_verified: false, price_verified: false, stock_quantity: null, stock_checked_at: null,
+    };
+    const response = await adminFetch("/rest/v1/store_products", {
+      method: "POST", headers: { "Prefer": "return=representation" }, body: JSON.stringify(payload),
+    });
+    const rows = await response.json().catch(() => []);
+    if (!response.ok || !Array.isArray(rows) || !rows.length) return json({ error: "Product could not be created. Check that its ID is unique." }, 400, origin);
+    await recordAdminAudit(String(user.email || ADMIN_EMAIL), "product.create", "product", id, "Created product " + name, null, rows[0]);
+    return json({ ok: true, product: rows[0] }, 201, origin);
+  }
+
 
   if (operation === "messages") {
     const response = await adminFetch("/rest/v1/store_contact_messages?select=id,name,phone,email,subject,message,status,created_at&order=created_at.desc&limit=200");
@@ -274,6 +769,7 @@ async function adminAction(body: Record<string, unknown>, req: Request, origin: 
     });
     const rows = await response.json().catch(() => []);
     if (!response.ok || !Array.isArray(rows) || !rows.length) return json({ error: "The customer message could not be updated." }, 502, origin);
+    await recordAdminAudit(String(user.email || ADMIN_EMAIL), "message.update", "customer_message", id, "Updated customer message status to " + status, null, { status });
     return json({ ok: true, message: rows[0] }, 200, origin);
   }
 
@@ -572,6 +1068,7 @@ async function adminAction(body: Record<string, unknown>, req: Request, origin: 
       console.error("Admin product update failed:", response.status);
       return json({ error: "The product could not be updated. Please try again." }, 502, origin);
     }
+    await recordAdminAudit(String(user.email || ADMIN_EMAIL), "product.update", "product", id, "Updated product " + id, current, rows[0]);
     return json({ ok: true, product: rows[0] }, 200, origin);
   }
 
@@ -580,6 +1077,9 @@ async function adminAction(body: Record<string, unknown>, req: Request, origin: 
     if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id)) return json({ error: "Invalid order reference." }, 400, origin);
     const fields = adminInputFields(body.fields);
     if (!fields) return json({ error: "No order changes were supplied." }, 400, origin);
+    const existingRows = await adminReadRows("/rest/v1/store_orders?id=eq." + encodeURIComponent(id) + "&select=id,status,order_number&limit=1");
+    const existingOrder = existingRows[0];
+    if (!existingOrder) return json({ error: "This order could not be found." }, 404, origin);
     const status = fields.status;
     if (status === "confirmed" || status === "processing" || status === "shipped" || status === "delivered") {
       const response = await adminFetch("/rest/v1/store_orders?id=eq." + encodeURIComponent(id) + "&select=id,subtotal_bdt,delivery_charge_bdt,final_total_bdt,price_verification");
@@ -606,6 +1106,19 @@ async function adminAction(body: Record<string, unknown>, req: Request, origin: 
       console.error("Admin order update failed:", response.status);
       return json({ error: "The order could not be updated. Please try again." }, 502, origin);
     }
+    if (typeof status === "string") {
+      const oldStatus = selectedOrderStatus;
+    }
+    const oldStatus = String(existingOrder.status || "unknown");
+    const newStatus = String(rows[0].status || oldStatus);
+    if (newStatus !== oldStatus) {
+      const eventResponse = await adminFetch("/rest/v1/store_order_events", {
+        method: "POST", headers: { "Prefer": "return=minimal" },
+        body: JSON.stringify({ order_id: id, event_type: "status_change", old_status: oldStatus, new_status: newStatus, note: "Order status updated in FORME Admin.", actor_email: String(user.email || ADMIN_EMAIL) }),
+      });
+      if (!eventResponse.ok) console.error("Order event history could not be stored:", eventResponse.status);
+    }
+    await recordAdminAudit(String(user.email || ADMIN_EMAIL), "order.update", "order", id, "Updated order " + String(existingOrder.order_number || id), existingOrder, rows[0]);
     return json({ ok: true, order: rows[0] }, 200, origin);
   }
   return json({ error: "Unknown admin operation." }, 400, origin);
