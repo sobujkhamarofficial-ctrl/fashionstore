@@ -536,6 +536,10 @@ jobs:
           PY
       - name: Validate Python build scripts
         run: python3 -m py_compile scripts/build_collection_pages.py scripts/build_men_catalog.py scripts/download_fashion_photos.py scripts/build_store_content.py scripts/build_blog.py scripts/verify_storefront.py
+      - name: Validate FORME admin JavaScript
+        run: |
+          test -s assets/admin-os.js
+          node --check assets/admin-os.js
       - name: Verify branded not-found page and image fallbacks
         run: |
           python3 - <<'PY'
