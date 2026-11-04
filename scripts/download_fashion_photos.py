@@ -62,6 +62,12 @@ PHOTO_IDS = {
         "photo-1602006110179-b0d24017550a", "photo-1758782213532-bbb5fd89885e",
         "photo-1709185726526-64f61e41cb8b",
     ],
+    "editorial": [
+        "photo-1529139574466-a303027c1d8b", "photo-1515886657613-9f3515b0c78f",
+        "photo-1483985988355-763728e1935b", "photo-1490481651871-ab68de25d43d",
+        "photo-1539109136881-3be0616acf4b", "photo-1617137968427-85924c800a22",
+        "photo-1519238263530-99bdd11df2ea", "photo-1503919005314-30d93d07d823",
+    ],
 }
 
 # Existing Men catalogue photography supplies the matching core clothing and accessory shots.
@@ -74,7 +80,7 @@ MEN_CATEGORY_POOLS = {
     "socks": ["socks"],
     "belt": ["belt"],
 }
-EXPECTED_KINDS = ("top", "bottoms", "outerwear", "wallet", "cap", "socks", "belt", "dress", "bag", "jewelry", "shoes", "sports", "kids")
+EXPECTED_KINDS = ("top", "bottoms", "outerwear", "wallet", "cap", "socks", "belt", "dress", "bag", "jewelry", "shoes", "sports", "kids", "editorial")
 
 def unique(items):
     return list(dict.fromkeys(item for item in items if item))
