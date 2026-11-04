@@ -63,7 +63,10 @@ jobs:
               total += len(products)
           assert len(all_ids) == len(set(all_ids)), "Duplicate database product IDs across Men categories"
           assert total == 133, total
-          assert Path("men/index.html").read_text().count('f-men-category-link') == 25
+          men_index = Path("men/index.html").read_text()
+          assert all(f'/fashionstore/men/{category["slug"]}/' in men_index for category in cats), "Men directory is missing a category link"
+          assert "Sweaters are coming soon" in Path("men/sweaters/index.html").read_text()
+          assert "Cardigans are coming soon" in Path("men/cardigans/index.html").read_text()
           print(f"Verified 25 categories, {total} DB-linked products, and matching Buy Now / Add to Cart IDs.")
           PY
 
