@@ -158,3 +158,15 @@ a{color:inherit;text-decoration:none}
 .fc-catalogue-success p{font-size:12px;line-height:1.7;color:#5e675e}
 .fc-catalogue-success a{display:inline-flex;margin-top:10px;padding:12px 16px;background:var(--green);color:#fffefa;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
 @media(max-width:520px){.fc-catalogue-modal{padding:8px}.fc-catalogue-dialog{padding:16px}.fc-catalogue-form{grid-template-columns:1fr}.fc-catalogue-field.wide,.fc-catalogue-check,.fc-catalogue-submit,.fc-catalogue-status{grid-column:1}.fc-catalogue-product{grid-template-columns:68px minmax(0,1fr);gap:10px;padding:9px}.fc-catalogue-product img{width:68px;height:84px}.fc-catalogue-product strong{font-size:15px}}
+
+/* Premium image-led seasonal category cards. */
+.category-card.has-image{position:relative;isolation:isolate;min-height:285px;padding:24px;justify-content:flex-end;overflow:hidden;border:0;color:#fff;background:#354238}
+.category-card.has-image:after{content:"";position:absolute;inset:25% 0 0;z-index:0;background:linear-gradient(180deg,transparent,rgba(16,25,20,.82))}
+.category-card.has-image .category-card-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-1;transition:transform .65s}
+.category-card.has-image:hover .category-card-image{transform:scale(1.045)}
+.category-card.has-image .card-kind,.category-card.has-image strong,.category-card.has-image .card-summary,.category-card.has-image .card-count,.category-card.has-image .card-arrow{position:relative;z-index:1;color:#fff}
+.category-card.has-image .card-kind{color:#f0d5bd}
+.category-card.has-image strong{font-size:29px}
+.category-card.has-image .card-summary{color:rgba(255,255,255,.82)}
+.category-card.has-image .card-count{padding-top:14px;color:#f4e9dc}
+@media(max-width:520px){.category-card.has-image{min-height:215px;padding:18px}.category-card.has-image strong{font-size:25px}}
