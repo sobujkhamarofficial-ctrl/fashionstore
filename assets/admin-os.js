@@ -219,13 +219,13 @@ async function loadFeedback(){
 
 function showTab(tab){
  activeTab=tab;
- const names=["overview","orders","products","inventory","customers","categories","messages","reviews","feedback","activity"];
+ const names=["overview","orders","products","inventory","customers","categories","messages","reviews","feedback","activity","content","journal","marketing","finance","delivery","ai-studio","system"];
  names.forEach(key=>{
   const nav=$("fa-"+key+"-tab"),panel=$(key==="overview"?"fa-overview-panel":"fa-"+key+"-panel"),active=key===tab;
   if(nav){nav.classList.toggle("active",active);nav.setAttribute("aria-selected",String(active));}
   if(panel)panel.hidden=!active;
  });
- const titles={overview:"Overview",orders:"Orders",products:"Products",inventory:"Inventory",customers:"Customers",categories:"Categories & collections",messages:"Messages",reviews:"Reviews",feedback:"AI insights",activity:"Activity log"};
+ const titles={overview:"Overview",orders:"Orders",products:"Products",inventory:"Inventory",customers:"Customers",categories:"Categories & collections",messages:"Messages",reviews:"Reviews",feedback:"AI insights",activity:"Activity log",content:"Content studio",journal:"Journal & SEO",marketing:"Marketing & offers",finance:"Finance & reports",delivery:"Delivery & payments","ai-studio":"AI & automation",system:"System & integrations"};
  $("fa-page-title").textContent=titles[tab]||"Overview";
  if(tab==="overview"&&!overviewLoaded)void loadOverview();
  if(tab==="products"&&!productsLoaded)void loadProducts();
@@ -236,6 +236,7 @@ function showTab(tab){
  if(tab==="reviews"&&!reviewsLoaded)void loadReviews();
  if(tab==="feedback"&&!feedbackLoaded)void loadFeedback();
  if(tab==="activity"&&!activityLoaded)void loadActivity();
+ if(window.FORME_PART2_LOADERS && typeof window.FORME_PART2_LOADERS[tab]==="function")void window.FORME_PART2_LOADERS[tab]();
  const side=$("fa-sidebar");if(side)side.classList.remove("open");
 }
 
@@ -596,5 +597,6 @@ $("fa-detail-content").addEventListener("submit",async e=>{
  }
 });
 
-(()=>{if(token()){showDashboard();void loadOrders();void loadOverview();}else showAuth();})();
+(()=>{if(token()){showDashboard();void loadOrders();void loadOverview();}else showAuth();window.FORME_ADMIN_REQUEST=adminRequest;
+})();
 })();
