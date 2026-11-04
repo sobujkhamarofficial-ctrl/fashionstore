@@ -636,6 +636,18 @@
       ]
     },
     {
+      "slug": "sweaters",
+      "title": "Sweaters",
+      "group": "Topwear",
+      "products": []
+    },
+    {
+      "slug": "cardigans",
+      "title": "Cardigans",
+      "group": "Topwear",
+      "products": []
+    },
+    {
       "slug": "comfy-trouser",
       "title": "Comfy Trouser",
       "group": "Bottomwear",
