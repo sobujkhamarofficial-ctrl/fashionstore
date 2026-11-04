@@ -26,7 +26,7 @@ async function adminRequest(payload){
  return data;
 }
 function showAuth(){ const auth=$("fa-auth"),dashboard=$("fa-dashboard");auth.hidden=false;auth.style.display="grid";dashboard.hidden=true;dashboard.style.display="none"; }
-function showDashboard(){ const auth=$("fa-auth"),dashboard=$("fa-dashboard");auth.hidden=true;auth.style.display="none";dashboard.hidden=false;dashboard.style.display="block"; }
+function showDashboard(){ const auth=$("fa-auth"),dashboard=$("fa-dashboard");auth.hidden=true;auth.style.display="none";dashboard.hidden=false;dashboard.style.display="grid"; }
 function date(value){if(!value)return "—";const d=new Date(value);return Number.isNaN(d.getTime())?"—":d.toLocaleString("en-BD",{dateStyle:"medium",timeStyle:"short"});}
 function statusLabel(value){return String(value||"pending_review").replaceAll("_"," ");}
 function alertBox(text){const el=$("fa-alert");el.textContent=text;el.hidden=!text;}
